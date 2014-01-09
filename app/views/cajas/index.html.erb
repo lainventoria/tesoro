@@ -1,0 +1,27 @@
+<h1>Listing cajas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Obra</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cajas.each do |caja| %>
+      <tr>
+        <td><%= caja.obra_id %></td>
+        <td><%= link_to 'Show', caja %></td>
+        <td><%= link_to 'Edit', edit_caja_path(caja) %></td>
+        <td><%= link_to 'Destroy', caja, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Caja', new_caja_path %>

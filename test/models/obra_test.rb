@@ -1,7 +1,17 @@
 require 'test_helper'
 
 class ObraTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'crea su cuenta asociada al crearse' do
+    obra = Obra.create(nombre: 'Sarasa')
+
+    assert_instance_of Cuenta, obra.cuenta
+    assert obra.cuenta.id == obra.id
+  end
+
+  test 'crea su caja asociada al crearse' do
+    obra = Obra.create(nombre: 'Sarasa')
+
+    assert_instance_of Caja, obra.caja
+    assert obra.caja.id == obra.id
+  end
 end
