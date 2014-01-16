@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.2'
 
 # Inflecciones en es
-gem 'inflections', require: 'inflections/es'
+gem 'inflections', '0.0.5', require: 'inflections/es'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
