@@ -44,6 +44,14 @@ ActiveRecord::Schema.define(version: 20140118002525) do
     t.datetime "updated_at"
   end
 
+  create_table "movimientos", force: true do |t|
+    t.integer  "caja_id"
+    t.integer  "monto_centavos", default: 0,     null: false
+    t.string   "monto_moneda",   default: "ARS", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "obras", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
