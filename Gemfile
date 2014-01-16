@@ -3,9 +3,6 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-# Inflecciones en es
-gem 'inflections', '0.0.5', require: 'inflections/es'
-
 gem 'money-rails'
 
 # Use sqlite3 as the database for Active Record
@@ -26,6 +23,10 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+# I18n
+gem 'rails-i18n'
+gem 'inflections', '0.0.5', require: 'inflections/es'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -43,11 +44,8 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-group :development do
-  gem 'pry-rails'
-end
-
 group :development, :test do
+  gem 'pry-rails'
   # Usar fábricas en vez de fixtures
   gem 'factory_girl_rails'
 end
