@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class ObraTest < ActiveSupport::TestCase
+  test 'es válida' do
+    assert (o = build(:obra)).valid?, o.errors.messages
+  end
+
   test 'crea su cuenta asociada al crearse' do
     obra = create :obra
 
