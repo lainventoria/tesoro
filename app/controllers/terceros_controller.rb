@@ -1,3 +1,4 @@
+# encoding: utf-8
 class TercerosController < ApplicationController
   before_action :set_tercero, only: [:show, :edit, :update, :destroy]
 
@@ -28,7 +29,7 @@ class TercerosController < ApplicationController
 
     respond_to do |format|
       if @tercero.save
-        format.html { redirect_to @tercero, notice: 'Tercero was successfully created.' }
+        format.html { redirect_to @tercero, notice: 'Tercero creado con éxito' }
         format.json { render action: 'show', status: :created, location: @tercero }
       else
         format.html { render action: 'new' }
@@ -42,7 +43,7 @@ class TercerosController < ApplicationController
   def update
     respond_to do |format|
       if @tercero.update(tercero_params)
-        format.html { redirect_to @tercero, notice: 'Tercero was successfully updated.' }
+        format.html { redirect_to @tercero, notice: 'Tercero actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
