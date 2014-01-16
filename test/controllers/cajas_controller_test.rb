@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CajasControllerTest < ActionController::TestCase
   setup do
-    @caja = cajas(:one)
+    @caja = create :caja
   end
 
   test "should get index" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CuentasControllerTest < ActionController::TestCase
   setup do
-    @cuenta = cuentas(:one)
+    @cuenta = create :cuenta
   end
 
   test "should get index" do
