@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @third_party.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @third_party.address %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @third_party.phone %>
+</p>
+
+<p>
+  <strong>Cellphone:</strong>
+  <%= @third_party.cellphone %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @third_party.email %>
+</p>
+
+<p>
+  <strong>Tax:</strong>
+  <%= @third_party.tax %>
+</p>
+
+<%= link_to 'Edit', edit_third_party_path(@third_party) %> |
+<%= link_to 'Back', third_parties_path %>
