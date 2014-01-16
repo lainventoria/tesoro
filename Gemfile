@@ -47,3 +47,8 @@ end
 group :development do
   gem 'pry-rails'
 end
+
+group :development, :test do
+  # Usar fábricas en vez de fixtures
+  gem 'factory_girl_rails'
+end

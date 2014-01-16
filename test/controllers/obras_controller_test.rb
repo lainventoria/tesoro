@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ObrasControllerTest < ActionController::TestCase
   setup do
-    @obra = obras(:one)
+    @obra = create :obra
   end
 
   test "should get index" do
