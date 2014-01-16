@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140109004559) do
+ActiveRecord::Schema.define(version: 20140116004751) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -28,6 +28,20 @@ ActiveRecord::Schema.define(version: 20140109004559) do
 
   create_table "obras", force: true do |t|
     t.string   "nombre"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "terceros", force: true do |t|
+    t.string   "nombre"
+    t.text     "direccions"
+    t.text     "telefono"
+    t.text     "celular"
+    t.string   "email"
+    t.float    "iva"
+    t.binary   "proveedor"
+    t.binary   "cliente"
+    t.string   "cuit"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
