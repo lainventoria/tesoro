@@ -52,3 +52,6 @@ group :development, :test do
   # Usar fábricas en vez de fixtures
   gem 'factory_girl_rails'
 end
+
+gem 'money-rails'
+gem 'rails-i18n'
