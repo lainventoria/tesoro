@@ -54,3 +54,4 @@ group :development, :test do
 end
 
 gem 'money-rails'
+gem 'rails-i18n'
