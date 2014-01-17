@@ -1,4 +1,6 @@
 Cp::Application.routes.draw do
+  resources :facturas
+
   resources :terceros
 
   root 'obras#index'
