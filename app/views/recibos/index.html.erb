@@ -1,0 +1,35 @@
+<h1>Listing recibos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Importe</th>
+      <th>Emitido</th>
+      <th>Recibido</th>
+      <th>Factura</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @recibos.each do |recibo| %>
+      <tr>
+        <td><%= recibo.fecha %></td>
+        <td><%= recibo.importe %></td>
+        <td><%= recibo.emitido %></td>
+        <td><%= recibo.recibido %></td>
+        <td><%= recibo.factura %></td>
+        <td><%= link_to 'Show', recibo %></td>
+        <td><%= link_to 'Edit', edit_recibo_path(recibo) %></td>
+        <td><%= link_to 'Destroy', recibo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Recibo', new_recibo_path %>

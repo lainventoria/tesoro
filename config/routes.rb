@@ -1,4 +1,6 @@
 Cp::Application.routes.draw do
+  resources :recibos
+
   resources :facturas
 
   resources :terceros
