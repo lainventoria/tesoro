@@ -7,10 +7,10 @@ class Recibo < ActiveRecord::Base
   validates_inclusion_of :emitido_o_recibido, in: situacion
 
   def recibido?
-    True if :emitido_o_recibido == 'recibido'
+    true if :emitido_o_recibido == 'recibido'
   end
 
   def emitido?
-    True if :emitido_o_recibido == 'emitido'
+    true if :emitido_o_recibido == 'emitido'
   end
 end
