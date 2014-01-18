@@ -3,10 +3,10 @@ class Factura < ActiveRecord::Base
   validates_inclusion_of :emitida_o_recibida, in: %w(emitida recibida)
 
   def recibida?
-    True if :emitida_o_recibida == 'recibido'
+    True if :emitida_o_recibida == 'recibida'
   end
 
   def emitida?
-    True if :emitida_o_recibida == 'emitido'
+    True if :emitida_o_recibida == 'emitida'
   end
 end
