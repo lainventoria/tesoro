@@ -19,4 +19,15 @@ class Caja < ActiveRecord::Base
       end
     end
   end
+
+  # El cambio de moneda registra la transacción con un movimiento de salida
+  # (negativo) y un movimiento de entrada en la nueva moneda.
+  #
+  # Este índice de cambio no se registra en el banco default
+  def cambiar(cantidad, moneda, indice)
+    movimiento = cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
+      movimientos.create monto: cantidad * -1
+      movimientos.create monto: Money.new(nuevo, moneda)
+    end
+  end
 end

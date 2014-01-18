@@ -40,4 +40,20 @@ class CajaTest < ActiveSupport::TestCase
     assert_equal Money.new(0), caja.total
     assert_equal ({ 'ARS' => Money.new(0) }), caja.totales
   end
+
+  test 'cambia moneda manteniendo el historial en forma de movimientos' do
+    caja = create(:caja)
+    create :movimiento, caja: caja, monto: Money.new(500, 'EUR')
+
+    assert_difference 'Movimiento.count', 2 do
+      @salida = caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
+    end
+
+    assert_instance_of Movimiento, @salida
+
+    # Historial de movimientos
+    assert caja.movimientos.collect(&:monto).include?(Money.new(500, 'EUR'))
+    assert caja.movimientos.collect(&:monto).include?(Money.new(-200, 'EUR'))
+    assert caja.movimientos.collect(&:monto).include?(Money.new(300))
+  end
 end
