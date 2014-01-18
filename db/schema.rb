@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118002525) do
+ActiveRecord::Schema.define(version: 20140118022540) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -29,19 +29,18 @@ ActiveRecord::Schema.define(version: 20140118002525) do
   create_table "facturas", force: true do |t|
     t.string   "tipo"
     t.string   "numero"
-    t.boolean  "emitida"
-    t.boolean  "recibida"
     t.text     "nombre"
     t.text     "domicilio"
     t.text     "cuit"
     t.float    "iva"
     t.text     "descripcion"
     t.integer  "importe_total_centavos", default: 0,     null: false
-    t.string   "importe_total_moneda",   default: "ARS", null: false
+    t.string   "importe_total_currency", default: "ARS", null: false
     t.datetime "fecha"
     t.datetime "fecha_pago"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "emitida_o_recibida"
   end
 
   create_table "movimientos", force: true do |t|
@@ -61,13 +60,12 @@ ActiveRecord::Schema.define(version: 20140118002525) do
 
   create_table "recibos", force: true do |t|
     t.datetime "fecha"
-    t.integer  "importe_centavos", default: 0,     null: false
-    t.string   "importe_moneda",   default: "ARS", null: false
-    t.boolean  "emitido"
-    t.boolean  "recibido"
+    t.integer  "importe_centavos",   default: 0,     null: false
+    t.string   "importe_currency",   default: "ARS", null: false
     t.integer  "factura_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "emitido_o_recibido"
   end
 
   add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id"
