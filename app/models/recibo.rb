@@ -1,6 +1,8 @@
 class Recibo < ActiveRecord::Base
   # Las facturas se cancelan con uno o más recibos
   belongs_to :factura
+  # Por eso cada recibo tiene que estar asociado a una factura
+  validates_presence_of :factura
 
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago)
