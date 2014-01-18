@@ -1,4 +1,5 @@
 class Factura < ActiveRecord::Base
+  has_many :recibos
 
   SITUACIONES = %w(cobro pago)
 
