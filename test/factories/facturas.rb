@@ -4,8 +4,7 @@ FactoryGirl.define do
   factory :factura do
     tipo "MyString"
     numero "MyString"
-    emitida false
-    recibida false
+    emitida_o_recibida "emitida"
     nombre "MyText"
     domicilio "MyText"
     cuit "MyText"
