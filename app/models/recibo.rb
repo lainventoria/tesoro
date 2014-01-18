@@ -1,16 +1,16 @@
 class Recibo < ActiveRecord::Base
   belongs_to :factura
 
-  situacion = %w(emitido recibido)
+  SITUACIONES = %w(cobro pago)
 
   monetize :importe_centavos
-  validates_inclusion_of :emitido_o_recibido, in: situacion
+  validates_inclusion_of :situacion, in: SITUACIONES
 
-  def recibido?
-    emitido_o_recibido == 'recibido'
+  def pago?
+    situacion == 'pago'
   end
 
-  def emitido?
-    emitido_o_recibido == 'emitido'
+  def cobro?
+    situacion == 'cobro'
   end
 end

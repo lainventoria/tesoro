@@ -1,15 +1,15 @@
 class Factura < ActiveRecord::Base
 
-  situacion = %w(emitida recibida)
+  SITUACIONES = %w(cobro pago)
 
   monetize :importe_total_centavos
-  validates_inclusion_of :emitida_o_recibida, in: situacion
+  validates_inclusion_of :situacion, in: SITUACIONES
 
-  def recibida?
-    emitida_o_recibida == 'recibida'
+  def pago?
+    situacion == 'pago'
   end
 
-  def emitida?
-    emitida_o_recibida == 'emitida'
+  def cobro?
+    situacion == 'cobro'
   end
 end
