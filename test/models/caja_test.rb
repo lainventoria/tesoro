@@ -31,4 +31,13 @@ class CajaTest < ActiveSupport::TestCase
                     'USD' => Money.new(1000, 'USD'),
                     'EUR' => Money.new(500, 'EUR') }), caja.totales
   end
+
+  test 'caja en cero devuelve money' do
+    caja = create(:caja)
+
+    assert caja.movimientos.empty?
+
+    assert_equal Money.new(0), caja.total
+    assert_equal ({ 'ARS' => Money.new(0) }), caja.totales
+  end
 end

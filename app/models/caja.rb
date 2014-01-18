@@ -10,9 +10,13 @@ class Caja < ActiveRecord::Base
   end
 
   def totales
-    movimientos.pluck(:monto_moneda).uniq.inject({}) do |hash, moneda|
-      hash[moneda] = total(moneda)
-      hash
+    if movimientos.empty?
+      { 'ARS' => Money.new(0) }
+    else
+      movimientos.pluck(:monto_moneda).uniq.inject({}) do |hash, moneda|
+        hash[moneda] = total(moneda)
+        hash
+      end
     end
   end
 end
