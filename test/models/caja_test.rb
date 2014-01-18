@@ -20,4 +20,15 @@ class CajaTest < ActiveSupport::TestCase
     assert_equal Money.new(2000), caja.total
     assert_equal Money.new(1000, 'USD'), caja.total('USD')
   end
+
+  test 'todos los totales' do
+    caja = create(:caja)
+    2.times { create :movimiento, caja: caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: caja, monto: Money.new(500, 'USD') }
+    create :movimiento, caja: caja, monto: Money.new(500, 'EUR')
+
+    assert_equal ({ 'ARS' => Money.new(2000),
+                    'USD' => Money.new(1000, 'USD'),
+                    'EUR' => Money.new(500, 'EUR') }), caja.totales
+  end
 end

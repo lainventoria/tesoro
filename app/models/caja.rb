@@ -8,4 +8,11 @@ class Caja < ActiveRecord::Base
   def total(moneda = 'ARS')
     Money.new(movimientos.where(monto_moneda: moneda).sum(:monto_centavos), moneda)
   end
+
+  def totales
+    movimientos.pluck(:monto_moneda).uniq.inject({}) do |hash, moneda|
+      hash[moneda] = total(moneda)
+      hash
+    end
+  end
 end
