@@ -18,4 +18,17 @@ class Factura < ActiveRecord::Base
   def cobro?
     situacion == 'cobro'
   end
+
+  # La factura está cancelada cuando la suma del monto de los recibos es
+  # igual al monto original
+  def cancelada?
+    saldo == importe_total
+  end
+
+  # Cuánto se adeuda de esta factura en base a todos los recibos
+  def saldo
+    # Obviamente esto no va a andar
+    # TODO encontrar la agregación de moneda
+    importe_total - Money.new(recibos.sum(:importe_moneda))
+  end
 end
