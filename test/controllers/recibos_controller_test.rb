@@ -2,7 +2,7 @@ require 'test_helper'
 
 class RecibosControllerTest < ActionController::TestCase
   setup do
-    @recibo = recibos(:one)
+    @recibo = create :recibo
   end
 
   test "should get index" do

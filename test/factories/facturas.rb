@@ -11,7 +11,7 @@ FactoryGirl.define do
     cuit "MyText"
     iva 1.5
     descripcion "MyText"
-    importe_total ""
+    importe_total { Money.new rand(1000) }
     fecha "2014-01-17 20:21:17"
     fecha_pago "2014-01-17 20:21:17"
   end

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TercerosControllerTest < ActionController::TestCase
   setup do
-    @tercero = terceros(:one)
+    @tercero = create :tercero
   end
 
   test "should get index" do

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class FacturasControllerTest < ActionController::TestCase
   setup do
-    @factura = facturas(:one)
+    @factura = create :factura
   end
 
   test "should get index" do
