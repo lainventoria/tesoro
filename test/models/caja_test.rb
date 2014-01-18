@@ -49,11 +49,22 @@ class CajaTest < ActiveSupport::TestCase
       @salida = caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
     end
 
-    assert_instance_of Movimiento, @salida
+    assert_equal Money.new(300), @salida
 
     # Historial de movimientos
     assert caja.movimientos.collect(&:monto).include?(Money.new(500, 'EUR'))
     assert caja.movimientos.collect(&:monto).include?(Money.new(-200, 'EUR'))
     assert caja.movimientos.collect(&:monto).include?(Money.new(300))
+  end
+
+  test 'no cambia moneda si no hay suficiente' do
+    caja = create(:caja)
+    create :movimiento, caja: caja, monto: Money.new(100, 'EUR')
+
+    assert_no_difference 'Movimiento.count' do
+      @salida = caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
+    end
+
+    assert_equal Money.new(0), @salida
   end
 end

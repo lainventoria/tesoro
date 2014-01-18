@@ -25,9 +25,14 @@ class Caja < ActiveRecord::Base
   #
   # Este índice de cambio no se registra en el banco default
   def cambiar(cantidad, moneda, indice)
-    movimiento = cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
-      movimientos.create monto: cantidad * -1
-      movimientos.create monto: Money.new(nuevo, moneda)
+    # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
+    if cantidad <= total(cantidad.currency.iso_code)
+      cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
+        movimientos.create monto: cantidad * -1
+        movimientos.create monto: Money.new(nuevo, moneda)
+      end.monto
+    else
+      Money.new(0)
     end
   end
 end
