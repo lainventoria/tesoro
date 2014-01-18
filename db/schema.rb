@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20140118002525) do
     t.float    "iva"
     t.text     "descripcion"
     t.integer  "importe_total_centavos", default: 0,     null: false
-    t.string   "importe_total_currency", default: "ARS", null: false
+    t.string   "importe_total_moneda",   default: "ARS", null: false
     t.datetime "fecha"
     t.datetime "fecha_pago"
     t.datetime "created_at"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20140118002525) do
   create_table "recibos", force: true do |t|
     t.datetime "fecha"
     t.integer  "importe_centavos", default: 0,     null: false
-    t.string   "importe_currency", default: "ARS", null: false
+    t.string   "importe_moneda",   default: "ARS", null: false
     t.boolean  "emitido"
     t.boolean  "recibido"
     t.integer  "factura_id"
