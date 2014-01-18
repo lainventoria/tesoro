@@ -19,16 +19,28 @@ class Factura < ActiveRecord::Base
     situacion == 'cobro'
   end
 
-  # La factura está cancelada cuando la suma del monto de los recibos es
-  # igual al monto original
+  # La factura está cancelada cuando el saldo es 0
   def cancelada?
-    saldo == importe_total
+    saldo == 0
+  end
+
+  # Si el saldo es menor al importe_total es porque se pagó de más
+  # Con las validaciones de Recibo no debería hacer falta
+  def reintegro?
+    saldo < importe_total
+  end
+
+  # Calcula el reintegro si se pagó de más
+  # Con las validaciones de Recibo no debería hacer falta
+  def reintegro
+    saldo * -1 if reintegro?
   end
 
   # Cuánto se adeuda de esta factura en base a todos los recibos
+  # TODO esto asume que los recibos se hacen en la misma moneda de la
+  # factura (y no que se está pagando una parte en una y otra en otra)
+  # Mandé un mail a la lista consultando qué hacer
   def saldo
-    # Obviamente esto no va a andar
-    # TODO encontrar la agregación de moneda
-    importe_total - Money.new(recibos.sum(:importe_moneda))
+    importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
   end
 end
