@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @tercero.nombre %>
+</p>
+
+<p>
+  <strong>Direccions:</strong>
+  <%= @tercero.direccions %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @tercero.telefono %>
+</p>
+
+<p>
+  <strong>Celular:</strong>
+  <%= @tercero.celular %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @tercero.email %>
+</p>
+
+<p>
+  <strong>Iva:</strong>
+  <%= @tercero.iva %>
+</p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @tercero.proveedor %>
+</p>
+
+<p>
+  <strong>Cliente:</strong>
+  <%= @tercero.cliente %>
+</p>
+
+<p>
+  <strong>Cuit:</strong>
+  <%= @tercero.cuit %>
+</p>
+
+<%= link_to 'Edit', edit_tercero_path(@tercero) %> |
+<%= link_to 'Back', terceros_path %>

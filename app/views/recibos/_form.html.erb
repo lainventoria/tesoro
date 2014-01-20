@@ -1,0 +1,33 @@
+<%= form_for(@recibo) do |f| %>
+  <% if @recibo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recibo.errors.count, "error") %> prohibited this recibo from being saved:</h2>
+
+      <ul>
+      <% @recibo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fecha %><br>
+    <%= f.datetime_select :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :importe %><br>
+    <%= f.text_field :importe %>
+  </div>
+  <div class="field">
+    <%= f.label :situacion %><br>
+    <%= f.text_field :situacion %>
+  </div>
+  <div class="field">
+    <%= f.label :factura_id %><br>
+    <%= f.text_field :factura_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

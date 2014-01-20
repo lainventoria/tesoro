@@ -1,0 +1,49 @@
+<h1>Listing facturas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Numero</th>
+      <th>Situación</th>
+      <th>Nombre</th>
+      <th>Domicilio</th>
+      <th>Cuit</th>
+      <th>Iva</th>
+      <th>Descripcion</th>
+      <th>Importe total</th>
+      <th>Fecha</th>
+      <th>Fecha pago</th>
+      <th>Recibos</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @facturas.each do |factura| %>
+      <tr>
+        <td><%= factura.tipo %></td>
+        <td><%= factura.numero %></td>
+        <td><%= factura.situacion %></td>
+        <td><%= factura.nombre %></td>
+        <td><%= factura.domicilio %></td>
+        <td><%= factura.cuit %></td>
+        <td><%= factura.iva %></td>
+        <td><%= factura.descripcion %></td>
+        <td><%= factura.importe_total %></td>
+        <td><%= factura.fecha %></td>
+        <td><%= factura.fecha_pago %></td>
+        <td><%= factura.recibos.count %></td>
+        <td><%= link_to 'Show', factura %></td>
+        <td><%= link_to 'Edit', edit_factura_path(factura) %></td>
+        <td><%= link_to 'Destroy', factura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Factura', new_factura_path %>
