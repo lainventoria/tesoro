@@ -8,4 +8,11 @@ class FacturaTest < ActiveSupport::TestCase
   test 'entonces no es cobro?' do
     assert_not build(:factura).cobro?
   end
+
+  test "se cancela con recibos" do
+    factura = create :factura, importe_total: Money.new(3000)
+    3.times { create :recibo, factura: factura, importe: Money.new(1000) }
+
+    assert factura.cancelada?
+  end
 end
