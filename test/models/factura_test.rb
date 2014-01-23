@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class FacturaTest < ActiveSupport::TestCase
+  test "es válida" do
+    # TODO arreglar las valicadiones en recibos y facturas
+    assert (f = create(:factura)).valid?, f.errors.messages
+  end
+
   test 'es un pago?' do
     assert build(:factura).pago?
   end
