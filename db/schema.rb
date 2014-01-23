@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140123171242) do
+ActiveRecord::Schema.define(version: 20140123204553) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 20140123171242) do
     t.text     "cuit"
     t.float    "iva"
     t.text     "descripcion"
-    t.integer  "importe_total_centavos", default: 0,     null: false
-    t.string   "importe_total_moneda",   default: "ARS", null: false
+    t.integer  "importe_total_centavos", default: 0,      null: false
+    t.string   "importe_total_moneda",   default: "ARS",  null: false
     t.datetime "fecha"
     t.datetime "fecha_pago"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "situacion"
+    t.string   "situacion",              default: "pago"
   end
 
   create_table "movimientos", force: true do |t|
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 20140123171242) do
 
   create_table "recibos", force: true do |t|
     t.datetime "fecha"
-    t.integer  "importe_centavos", default: 0,     null: false
-    t.string   "importe_moneda",   default: "ARS", null: false
+    t.integer  "importe_centavos", default: 0,      null: false
+    t.string   "importe_moneda",   default: "ARS",  null: false
     t.integer  "factura_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "situacion"
+    t.string   "situacion",        default: "pago"
   end
 
   add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id"
