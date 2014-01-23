@@ -70,6 +70,6 @@ class TercerosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tercero_params
-      params.require(:tercero).permit(:nombre, :direccions, :telefono, :celular, :email, :iva, :proveedor, :cliente, :cuit)
+      params.require(:tercero).permit(:nombre, :direccion, :telefono, :celular, :email, :iva, :proveedor, :cliente, :cuit)
     end
 end

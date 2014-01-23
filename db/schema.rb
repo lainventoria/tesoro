@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118035340) do
+ActiveRecord::Schema.define(version: 20140123171242) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20140118035340) do
 
   create_table "terceros", force: true do |t|
     t.string   "nombre"
-    t.text     "direccions"
+    t.text     "direccion"
     t.text     "telefono"
     t.text     "celular"
     t.string   "email"

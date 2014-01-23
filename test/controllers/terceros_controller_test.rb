@@ -18,7 +18,7 @@ class TercerosControllerTest < ActionController::TestCase
 
   test "should create tercero" do
     assert_difference('Tercero.count') do
-      post :create, tercero: { celular: @tercero.celular, cliente: @tercero.cliente, cuit: @tercero.cuit, direccions: @tercero.direccions, email: @tercero.email, iva: @tercero.iva, nombre: @tercero.nombre, proveedor: @tercero.proveedor, telefono: @tercero.telefono }
+      post :create, tercero: { celular: @tercero.celular, cliente: @tercero.cliente, cuit: @tercero.cuit, direccion: @tercero.direccion, email: @tercero.email, iva: @tercero.iva, nombre: @tercero.nombre, proveedor: @tercero.proveedor, telefono: @tercero.telefono }
     end
 
     assert_redirected_to tercero_path(assigns(:tercero))
@@ -35,7 +35,7 @@ class TercerosControllerTest < ActionController::TestCase
   end
 
   test "should update tercero" do
-    patch :update, id: @tercero, tercero: { celular: @tercero.celular, cliente: @tercero.cliente, cuit: @tercero.cuit, direccions: @tercero.direccions, email: @tercero.email, iva: @tercero.iva, nombre: @tercero.nombre, proveedor: @tercero.proveedor, telefono: @tercero.telefono }
+    patch :update, id: @tercero, tercero: { celular: @tercero.celular, cliente: @tercero.cliente, cuit: @tercero.cuit, direccion: @tercero.direccion, email: @tercero.email, iva: @tercero.iva, nombre: @tercero.nombre, proveedor: @tercero.proveedor, telefono: @tercero.telefono }
     assert_redirected_to tercero_path(assigns(:tercero))
   end
 
