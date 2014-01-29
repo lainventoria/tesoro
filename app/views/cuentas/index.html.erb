@@ -1,9 +1,9 @@
-<h1>Listing cuentas</h1>
+<h1>Listado de cuentas</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Numero</th>
+      <th>Número</th>
       <th>Obra</th>
       <th></th>
       <th></th>
@@ -16,9 +16,9 @@
       <tr>
         <td><%= cuenta.numero %></td>
         <td><%= cuenta.obra_id %></td>
-        <td><%= link_to 'Show', cuenta %></td>
-        <td><%= link_to 'Edit', edit_cuenta_path(cuenta) %></td>
-        <td><%= link_to 'Destroy', cuenta, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', cuenta %></td>
+        <td><%= link_to 'Editar', edit_cuenta_path(cuenta) %></td>
+        <td><%= link_to 'Borrar', cuenta, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Cuenta', new_cuenta_path %>
+<%= link_to 'Nueva Cuenta', new_cuenta_path %>
