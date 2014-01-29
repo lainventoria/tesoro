@@ -1,16 +1,16 @@
-<h1>Listing facturas</h1>
+<h1>Listado de facturas</h1>
 
 <table>
   <thead>
     <tr>
       <th>Tipo</th>
-      <th>Numero</th>
+      <th>Número</th>
       <th>Situación</th>
       <th>Nombre</th>
       <th>Domicilio</th>
       <th>Cuit</th>
       <th>Iva</th>
-      <th>Descripcion</th>
+      <th>Descripcioón</th>
       <th>Importe total</th>
       <th>Fecha</th>
       <th>Fecha pago</th>
@@ -36,9 +36,9 @@
         <td><%= factura.fecha %></td>
         <td><%= factura.fecha_pago %></td>
         <td><%= factura.recibos.count %></td>
-        <td><%= link_to 'Show', factura %></td>
-        <td><%= link_to 'Edit', edit_factura_path(factura) %></td>
-        <td><%= link_to 'Destroy', factura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', factura %></td>
+        <td><%= link_to 'Editar', edit_factura_path(factura) %></td>
+        <td><%= link_to 'Borrar', factura, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -46,4 +46,4 @@
 
 <br>
 
-<%= link_to 'New Factura', new_factura_path %>
+<%= link_to 'Nueva Factura', new_factura_path %>
