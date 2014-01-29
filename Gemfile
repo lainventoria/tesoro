@@ -19,6 +19,9 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 
+gem 'execjs'
+gem 'therubyracer'
+
 # I18n
 gem 'rails-i18n'
 gem 'inflections', '0.0.5', require: 'inflections/es'
