@@ -4,19 +4,6 @@ class Recibo < ActiveRecord::Base
   # Por eso cada recibo tiene que estar asociado a una factura
   validates_presence_of :factura
 
-  # Validar los montos ingresados para que después no haya que hacer
-  # reintegros
-  validate do |recibo|
-    # Si la factura ya fue cancelada no hace falta generar un recibo
-    recibo.errors[:base] << "La factura ya fue cancelada" if recibo.factura.cancelada?
-
-    # Si el saldo es menor al importe de este recibo, hay que hacer un
-    # recibo más chico
-    if recibo.factura.saldo < recibo.importe
-      recibo.errors[:base] << "El monto ingresado es superior al saldo #{recibo.factura.saldo}"
-    end
-  end
-
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago)
   validates_inclusion_of :situacion, in: SITUACIONES
