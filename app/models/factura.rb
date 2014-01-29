@@ -1,6 +1,8 @@
 class Factura < ActiveRecord::Base
   # Las facturas se pueden cancelar con muchos recibos
-  has_many :recibos
+  has_many :recibos, inverse_of: :factura
+  # Chequea que no nos pasemos con los recibos
+  accepts_nested_attributes_for :recibos, reject_if: :validate_saldo
 
   # Las situaciones posibles en que se genera una factura
   SITUACIONES = %w(cobro pago)
@@ -42,5 +44,15 @@ class Factura < ActiveRecord::Base
   # Mandé un mail a la lista consultando qué hacer
   def saldo
     importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
+  end
+
+  # Valida el saldo a medida que se cargan recibos
+  def validate_saldo(recibo)
+    if recibo.importe <= saldo
+      false
+    else
+      recibo.errors[:base] << "El recibo supera el saldo"
+      true
+    end
   end
 end
