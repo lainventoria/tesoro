@@ -1,11 +1,11 @@
-<h1>Listing terceros</h1>
+<h1>Listado de terceros</h1>
 
 <table>
   <thead>
     <tr>
       <th>Nombre</th>
-      <th>direccion</th>
-      <th>Telefono</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
       <th>Celular</th>
       <th>Email</th>
       <th>Iva</th>
@@ -30,9 +30,9 @@
         <td><%= tercero.proveedor %></td>
         <td><%= tercero.cliente %></td>
         <td><%= tercero.cuit %></td>
-        <td><%= link_to 'Show', tercero %></td>
-        <td><%= link_to 'Edit', edit_tercero_path(tercero) %></td>
-        <td><%= link_to 'Destroy', tercero, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', tercero %></td>
+        <td><%= link_to 'Editar', edit_tercero_path(tercero) %></td>
+        <td><%= link_to 'Borrar', tercero, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -40,4 +40,4 @@
 
 <br>
 
-<%= link_to 'New Tercero', new_tercero_path %>
+<%= link_to 'Nuevo Tercero', new_tercero_path %>

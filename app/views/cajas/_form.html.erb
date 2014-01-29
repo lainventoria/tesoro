@@ -1,7 +1,7 @@
 <%= form_for(@caja) do |f| %>
   <% if @caja.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@caja.errors.count, "error") %> prohibited this caja from being saved:</h2>
+      <h2><%= pluralize(@caja.errors.count, "error") %>. No se guardo la caja por:</h2>
 
       <ul>
       <% @caja.errors.full_messages.each do |msg| %>
@@ -11,11 +11,11 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field form-group">
     <%= f.label :obra_id %><br>
-    <%= f.number_field :obra_id %>
+    <%= f.number_field :obra_id, class: "form-control" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Guardar", class: "btn-primary btn submit" %>
   </div>
 <% end %>

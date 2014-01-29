@@ -1,4 +1,4 @@
-<h1>Listing recibos</h1>
+<h1>Listado de recibos</h1>
 
 <table>
   <thead>
@@ -20,9 +20,9 @@
         <td><%= recibo.importe %></td>
         <td><%= recibo.situacion %></td>
         <td><%= recibo.factura %></td>
-        <td><%= link_to 'Show', recibo %></td>
-        <td><%= link_to 'Edit', edit_recibo_path(recibo) %></td>
-        <td><%= link_to 'Destroy', recibo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Ver', recibo %></td>
+        <td><%= link_to 'Editar', edit_recibo_path(recibo) %></td>
+        <td><%= link_to 'Borrar', recibo, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Recibo', new_recibo_path %>
+<%= link_to 'Nuevo Recibo', new_recibo_path %>
