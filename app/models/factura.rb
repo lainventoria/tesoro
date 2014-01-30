@@ -9,6 +9,8 @@ class Factura < ActiveRecord::Base
 
   monetize :importe_total_centavos
 
+  accepts_nested_attributes_for :recibos
+
   # Chequea si la situación es pago
   def pago?
     situacion == 'pago'
