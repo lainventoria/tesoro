@@ -43,4 +43,12 @@ class Factura < ActiveRecord::Base
   def saldo
     importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
   end
+
+	def nombre_y_numero
+		"[#{numero}] #{nombre}"
+	end
+
+	def to_s
+		nombre_y_numero
+	end
 end

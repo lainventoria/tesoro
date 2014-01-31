@@ -47,12 +47,12 @@
 
 <p>
   <strong>Fecha:</strong>
-  <%= @factura.fecha %>
+  <%= formatted_date(@factura.fecha) %>
 </p>
 
 <p>
   <strong>Fecha pago:</strong>
-  <%= @factura.fecha_pago %>
+  <%= formatted_date(@factura.fecha_pago) %>
 </p>
 
 <%= link_to 'Editar', edit_factura_path(@factura) %> |
