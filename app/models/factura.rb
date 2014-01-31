@@ -1,6 +1,6 @@
 class Factura < ActiveRecord::Base
   # Las facturas se pueden cancelar con muchos recibos
-  has_many :recibos
+  has_many :recibos, inverse_of: :factura
 
   # Las situaciones posibles en que se genera una factura
   SITUACIONES = %w(cobro pago)
