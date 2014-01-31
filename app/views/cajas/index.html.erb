@@ -13,7 +13,7 @@
   <tbody>
     <% @cajas.each do |caja| %>
       <tr>
-        <td><%= caja.obra %></td>
+        <td><%= caja.obra.nombre %></td>
         <td><%= link_to 'Ver', caja %></td>
         <td><%= link_to 'Editar', edit_caja_path(caja) %></td>
         <td><%= link_to 'Borrar', caja, method: :delete, data: { confirm: '¿Está seguro?' } %></td>

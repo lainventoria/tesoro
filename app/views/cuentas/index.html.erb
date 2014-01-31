@@ -15,7 +15,7 @@
     <% @cuentas.each do |cuenta| %>
       <tr>
         <td><%= cuenta.numero %></td>
-        <td><%= cuenta.obra %></td>
+        <td><%= cuenta.obra.nombre %></td>
         <td><%= link_to 'Ver', cuenta %></td>
         <td><%= link_to 'Editar', edit_cuenta_path(cuenta) %></td>
         <td><%= link_to 'Borrar', cuenta, method: :delete, data: { confirm: '¿Está seguro?' } %></td>

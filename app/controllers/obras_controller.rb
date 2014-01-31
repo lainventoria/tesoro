@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 class ObrasController < ApplicationController
   before_action :set_obra, only: [:show, :edit, :update, :destroy]
 
