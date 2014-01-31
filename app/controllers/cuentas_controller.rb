@@ -1,3 +1,4 @@
+# encoding: utf-8
 class CuentasController < ApplicationController
   before_action :set_cuenta, only: [:show, :edit, :update, :destroy]
 
@@ -28,7 +29,7 @@ class CuentasController < ApplicationController
 
     respond_to do |format|
       if @cuenta.save
-        format.html { redirect_to @cuenta, notice: 'Cuenta was successfully created.' }
+        format.html { redirect_to @cuenta, notice: 'Cuenta creada con éxito.' }
         format.json { render action: 'show', status: :created, location: @cuenta }
       else
         format.html { render action: 'new' }
@@ -42,7 +43,7 @@ class CuentasController < ApplicationController
   def update
     respond_to do |format|
       if @cuenta.update(cuenta_params)
-        format.html { redirect_to @cuenta, notice: 'Cuenta was successfully updated.' }
+        format.html { redirect_to @cuenta, notice: 'Cuenta actualizada con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

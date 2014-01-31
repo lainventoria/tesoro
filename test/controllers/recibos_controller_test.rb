@@ -2,7 +2,8 @@ require 'test_helper'
 
 class RecibosControllerTest < ActionController::TestCase
   setup do
-    @recibo = create :recibo
+    factura = create :factura, importe_total: Money.new(3000)
+    @recibo = create :recibo, factura: factura
   end
 
   test "should get index" do
@@ -18,7 +19,7 @@ class RecibosControllerTest < ActionController::TestCase
 
   test "should create recibo" do
     assert_difference('Recibo.count') do
-      post :create, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: @recibo.importe }
+      post :create, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: Money.new(500) }
     end
 
     assert_redirected_to recibo_path(assigns(:recibo))
@@ -35,7 +36,7 @@ class RecibosControllerTest < ActionController::TestCase
   end
 
   test "should update recibo" do
-    patch :update, id: @recibo, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: @recibo.importe }
+    patch :update, id: @recibo, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: Money.new(800) }
     assert_redirected_to recibo_path(assigns(:recibo))
   end
 

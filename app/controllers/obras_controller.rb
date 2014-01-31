@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class ObrasController < ApplicationController
   before_action :set_obra, only: [:show, :edit, :update, :destroy]
 
@@ -28,7 +30,7 @@ class ObrasController < ApplicationController
 
     respond_to do |format|
       if @obra.save
-        format.html { redirect_to @obra, notice: 'Obra was successfully created.' }
+        format.html { redirect_to @obra, notice: "Obra creada con éxito." }
         format.json { render action: 'show', status: :created, location: @obra }
       else
         format.html { render action: 'new' }
@@ -42,7 +44,7 @@ class ObrasController < ApplicationController
   def update
     respond_to do |format|
       if @obra.update(obra_params)
-        format.html { redirect_to @obra, notice: 'Obra was successfully updated.' }
+        format.html { redirect_to @obra, notice: "Obra actualizada con éxito." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

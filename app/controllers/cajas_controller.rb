@@ -1,3 +1,4 @@
+# encoding: utf-8
 class CajasController < ApplicationController
   before_action :set_caja, only: [:show, :edit, :update, :destroy]
 
@@ -28,7 +29,7 @@ class CajasController < ApplicationController
 
     respond_to do |format|
       if @caja.save
-        format.html { redirect_to @caja, notice: 'Caja was successfully created.' }
+        format.html { redirect_to @caja, notice: 'Caja creada con éxito.' }
         format.json { render action: 'show', status: :created, location: @caja }
       else
         format.html { render action: 'new' }
@@ -42,7 +43,7 @@ class CajasController < ApplicationController
   def update
     respond_to do |format|
       if @caja.update(caja_params)
-        format.html { redirect_to @caja, notice: 'Caja was successfully updated.' }
+        format.html { redirect_to @caja, notice: 'Caja actualizada con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
