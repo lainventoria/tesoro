@@ -25,7 +25,7 @@
   </div>
   <div class="field form-group">
     <%= f.label :factura_id %><br>
-    <%= f.text_field :factura_id, class: "form-control" %>
+    <%= collection_select(:recibo, :factura_id, Factura.all, :id, :nombre_y_numero, class: "form-control" ) %>
   </div>
   <div class="actions">
     <%= f.submit "Guardar", class: "btn btn-primary submit" %>

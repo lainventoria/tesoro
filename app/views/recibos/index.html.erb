@@ -16,7 +16,7 @@
   <tbody>
     <% @recibos.each do |recibo| %>
       <tr>
-        <td><%= recibo.fecha %></td>
+        <td><%= formatted_date(recibo.fecha) %></td>
         <td><%= recibo.importe %></td>
         <td><%= recibo.situacion %></td>
         <td><%= recibo.factura %></td>
