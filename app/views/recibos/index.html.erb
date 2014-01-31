@@ -20,9 +20,9 @@
         <td><%= recibo.importe %></td>
         <td><%= recibo.situacion %></td>
         <td><%= recibo.factura %></td>
-        <td><%= link_to 'Ver', recibo %></td>
-        <td><%= link_to 'Editar', edit_recibo_path(recibo) %></td>
-        <td><%= link_to 'Borrar', recibo, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
+        <td><%= link_to 'Ver', [recibo.factura, recibo] %></td>
+        <td><%= link_to 'Editar', [:edit, recibo.factura, recibo] %></td>
+        <td><%= link_to 'Borrar', [recibo.factura, recibo], {method: :delete, data: { confirm: '¿Está seguro?' }} %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'Nuevo Recibo', new_recibo_path %>
+<%= link_to 'Nuevo Recibo', [:new,@factura,:recibo] %>

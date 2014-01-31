@@ -1,4 +1,4 @@
-<%= form_for(@recibo) do |f| %>
+<%= form_for([@factura, @recibo]) do |f| %>
   <% if @recibo.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@recibo.errors.count, "error") %>. No se guardo el recibo por:</h2>

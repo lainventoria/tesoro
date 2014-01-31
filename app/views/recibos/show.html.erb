@@ -20,5 +20,5 @@
   <%= @recibo.factura %>
 </p>
 
-<%= link_to 'Editar', edit_recibo_path(@recibo) %> |
-<%= link_to 'Volver', recibos_path %>
+<%= link_to 'Editar', [:edit,@recibo.factura,@recibo]  %> |
+<%= link_to 'Volver', [@recibo.factura,:recibos] %>
