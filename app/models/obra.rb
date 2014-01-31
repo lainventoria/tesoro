@@ -6,7 +6,7 @@ class Obra < ActiveRecord::Base
 
   validates_presence_of :nombre, :direccion
 
-	def to_s
-		nombre
-	end
+  def to_s
+    nombre
+  end
 end
