@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Ver', @recibo %> |
-<%= link_to 'Volver', recibos_path %>
+<%= link_to 'Ver', [@recibo.factura, @recibo] %> |
+<%= link_to 'Volver', [@recibo.factura,:recibos] %>

@@ -7,5 +7,10 @@
   <%= @obra.nombre %>
 </p>
 
+<p>
+  <strong>Dirección:</strong>
+  <%= @obra.direccion %>
+</p>
+
 <%= link_to 'Editar', edit_obra_path(@obra) %> |
 <%= link_to 'Volver', obras_path %>

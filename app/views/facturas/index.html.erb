@@ -37,10 +37,13 @@
         <td><%= formatted_date(factura.fecha_pago) %></td>
         <td>
 					<%= factura.recibos.count %>
-					<%= link_to raw('<i class="glyphicon glyphicon-plus-sign" title="Nuevo recibo"></i>'), new_factura_recibo_path(factura) %>
+          <span class="pull-right">
+					<%= link_to raw('<i class="glyphicon glyphicon-list" title="Ver recibos"></i>'), [factura,:recibos] %>
+					<%= link_to raw('<i class="glyphicon glyphicon-plus-sign" title="Nuevo recibo"></i>'), [:new, factura, :recibo] %>
+          </span>
 				</td>
         <td><%= link_to 'Ver', factura %></td>
-        <td><%= link_to 'Editar', edit_factura_path(factura) %></td>
+        <td><%= link_to 'Editar', [:edit, factura] %></td>
         <td><%= link_to 'Borrar', factura, method: :delete, data: { confirm: '¿Está seguro?' } %></td>
       </tr>
     <% end %>

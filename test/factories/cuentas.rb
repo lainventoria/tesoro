@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :cuenta do
+    obra
   end
 end

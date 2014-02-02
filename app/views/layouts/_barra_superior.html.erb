@@ -15,17 +15,14 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="<%= root_path %>">Inicio</a></li>
-        <li><a href="<%= cuentas_path %>">Cuentas</a></li>
-        <li><a href="<%= facturas_path %>">Facturas</a></li>
+        <li><%= link_to "Obras", obras_path %></li>
+        <li><%= link_to "Factura", facturas_path %></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Más <b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Bla</a></li>
-            <li><a href="#">Bla bla</a></li>
-            <li><a href="#">Yaquidish maquidish</a></li>
-            <li class="divider"></li>
-            <li class="dropdown-header">Un título de navegación</li>
-            <li><a href="#">Otro link</a></li>
+            <li><%= link_to "Cuentas", cuentas_path %></li>
+            <li><%= link_to "Cajas", cajas_path %></li>
+            <li><%= link_to "Terceros", terceros_path %></li>
           </ul>
         </li>
       </ul>

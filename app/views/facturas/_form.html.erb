@@ -21,7 +21,7 @@
   </div>
   <div class="field form-group">
     <%= f.label :situacion %><br>
-    <%= f.text_field :situacion, class: "form-control" %>
+    <%= collection_select(:factura, :situacion, Factura::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
   </div>
   <div class="field form-group">
     <%= f.label :nombre %><br>

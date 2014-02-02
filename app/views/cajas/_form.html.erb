@@ -13,7 +13,7 @@
 
   <div class="field form-group">
     <%= f.label :obra_id %><br>
-    <%= f.number_field :obra_id, class: "form-control" %>
+    <%= collection_select(:caja, :obra_id, Obra.all, :id, :nombre, class: "form-control" ) %>
   </div>
   <div class="actions">
     <%= f.submit "Guardar", class: "btn-primary btn submit" %>
