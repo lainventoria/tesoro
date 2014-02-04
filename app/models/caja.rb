@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Caja < ActiveRecord::Base
   belongs_to :obra
   has_many :movimientos
@@ -40,6 +41,7 @@ class Caja < ActiveRecord::Base
   # Este índice de cambio no se registra en el banco default
   def cambiar(cantidad, moneda, indice)
     # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
+    # FIXME envolver esto en una transacción
     if cantidad <= total(cantidad.currency.iso_code)
       cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
         movimientos.create monto: cantidad * -1
