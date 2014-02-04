@@ -44,16 +44,19 @@ class Caja < ActiveRecord::Base
   #
   # Este índice de cambio no se registra en el banco default
   def cambiar(cantidad, moneda, indice)
+    cambio = Money.new(0)
+
     # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
-    # FIXME envolver esto en una transacción
-    if cantidad <= total(cantidad.currency.iso_code)
+    Caja.transaction do
       cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
-        movimientos.create monto: cantidad * -1
-        movimientos.create monto: Money.new(nuevo, moneda)
-      end.monto
-    else
-      Money.new(0)
+        unless extraer(cantidad)
+          raise ActiveRecord::Rollback, 'Monto insuficiente'
+        end
+        cambio = depositar Money.new(nuevo, moneda)
+      end
     end
+
+    cambio
   end
 
   # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
