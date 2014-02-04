@@ -41,6 +41,40 @@ class CajaTest < ActiveSupport::TestCase
     assert_equal ({ 'ARS' => Money.new(0) }), @caja.totales
   end
 
+  test 'extrae si alcanza' do
+    create :movimiento, caja: @caja, monto: Money.new(2000)
+    assert_equal 1, @caja.movimientos.count
+
+    assert_equal Money.new(1000), @caja.extraer(Money.new(1000))
+    assert_equal 2, @caja.movimientos.count
+
+    assert_nil @caja.extraer(Money.new(1001))
+    assert_equal 2, @caja.movimientos.count
+  end
+
+  test 'extrae en cualquier moneda si alcanza' do
+    create :movimiento, caja: @caja, monto: Money.new(2000, 'USD')
+
+    assert_equal Money.new(1000, 'USD'), @caja.extraer(Money.new(1000, 'USD'))
+    assert_equal 2, @caja.movimientos.count
+
+    assert_nil @caja.extraer(Money.new(500))
+    assert_equal 2, @caja.movimientos.count
+  end
+
+  test 'deposita' do
+    assert_equal Money.new(100), @caja.depositar(Money.new(100))
+    assert_equal Money.new(100), @caja.depositar(Money.new(100))
+    assert_equal 2, @caja.movimientos.count
+    assert_equal Money.new(200), @caja.total
+  end
+
+  test 'deposita en cualquier moneda' do
+    assert_equal Money.new(100, 'USD'), @caja.depositar(Money.new(100, 'USD'))
+    assert_equal 1, @caja.movimientos.count
+    assert_equal Money.new(100, 'USD'), @caja.total('USD')
+  end
+
   test 'cambia moneda manteniendo el historial en forma de movimientos' do
     create :movimiento, caja: @caja, monto: Money.new(500, 'EUR')
 

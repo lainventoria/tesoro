@@ -19,6 +19,10 @@ class Caja < ActiveRecord::Base
     end
   end
 
+  def self.tipos
+    pluck(:tipo).uniq
+  end
+
   # TODO ver si hace falta un caso especial con movimientos sin guardar
   def total(moneda = 'ARS')
     Money.new(movimientos.where(monto_moneda: moneda).sum(:monto_centavos), moneda)
@@ -52,7 +56,18 @@ class Caja < ActiveRecord::Base
     end
   end
 
-  def self.tipos
-    pluck(:tipo).uniq
+  # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
+  # caso contrario no devolvemos nada
+  def extraer(cantidad)
+    if cantidad <= total(cantidad.currency.iso_code)
+      depositar(cantidad * -1)
+      cantidad
+    end
+  end
+
+  # Devolvemos cantidad para mantener consistente la API
+  def depositar(cantidad)
+    movimientos.create monto: cantidad
+    cantidad
   end
 end
