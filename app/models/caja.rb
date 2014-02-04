@@ -4,7 +4,19 @@ class Caja < ActiveRecord::Base
 
   validates_presence_of :obra_id, :tipo
 
-  normalize_attribute :tipo, with: :squish
+  # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
+  # con los valores viejos
+  normalize_attribute :tipo, with: [ :squish, :blank ] do |valor|
+    tipos_normalizados = tipos.inject({}) do |hash_de_tipos, tipo|
+      hash_de_tipos[tipo.parameterize] = tipo and hash_de_tipos
+    end
+
+    if tipos_normalizados.keys.include?(valor.parameterize)
+      tipos_normalizados[valor.parameterize]
+    else
+      valor
+    end
+  end
 
   # TODO ver si hace falta un caso especial con movimientos sin guardar
   def total(moneda = 'ARS')
@@ -36,5 +48,9 @@ class Caja < ActiveRecord::Base
     else
       Money.new(0)
     end
+  end
+
+  def self.tipos
+    pluck(:tipo).uniq
   end
 end

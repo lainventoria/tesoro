@@ -74,5 +74,7 @@ class CajaTest < ActiveSupport::TestCase
     create(:caja, tipo: tipo_existente)
 
     assert_equal tipo_existente, create(:caja, tipo: ' Cajón    sarasa ').tipo
+    assert_equal tipo_existente, create(:caja, tipo: 'Cajon sarasa').tipo
+    assert_equal tipo_existente, create(:caja, tipo: 'cajón sarasa').tipo
   end
 end
