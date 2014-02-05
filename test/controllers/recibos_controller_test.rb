@@ -2,47 +2,51 @@ require 'test_helper'
 
 class RecibosControllerTest < ActionController::TestCase
   setup do
-    factura = create :factura, importe_total: Money.new(3000)
-    @recibo = create :recibo, factura: factura
+    @factura = create :factura, importe_total: Money.new(3000)
+    @recibo = create :recibo, factura: @factura
   end
 
-  test "should get index" do
-    get :index, :factura_id => @recibo.factura.id
+  test "accede a la lista de recibos de la factura" do
+    get :index, factura_id: @factura
     assert_response :success
     assert_not_nil assigns(:recibos)
   end
 
-  test "should get new" do
-    get :new, :factura_id => @recibo.factura.id
+  test "accede a crear" do
+    get :new, factura_id: @factura
     assert_response :success
   end
 
-  test "should create recibo" do
+  test "crea" do
+    importe_permitido = @factura.saldo
     assert_difference('Recibo.count') do
-      post :create, :factura_id => @recibo.factura.id, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: Money.new(500) }
+      post :create, factura_id: @factura, recibo: attributes_for(
+        :recibo, importe: importe_permitido, factura_id: @factura)
     end
 
-    assert_redirected_to factura_recibo_path(@recibo.factura,assigns(:recibo))
+    assert_redirected_to factura_recibo_path(@recibo.factura, assigns(:recibo))
   end
 
-  test "should show recibo" do
-    get :show, id: @recibo, :factura_id => @recibo.factura.id
+  test "muestra" do
+    get :show, id: @recibo, factura_id: @factura
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, id: @recibo, :factura_id => @recibo.factura.id
+  test "accede a editar" do
+    get :edit, id: @recibo, factura_id: @factura
     assert_response :success
   end
 
-  test "should update recibo" do
-    patch :update, id: @recibo, :factura_id => @recibo.factura.id, recibo: { situacion: @recibo.situacion, factura_id: @recibo.factura_id, fecha: @recibo.fecha, importe: Money.new(800) }
+  test "actualiza" do
+    importe_permitido = @factura.saldo
+    patch :update, id: @recibo, factura_id: @factura, recibo: attributes_for(
+      :recibo, importe: importe_permitido, factura_id: @factura)
     assert_redirected_to factura_recibo_path(@recibo.factura,assigns(:recibo))
   end
 
-  test "should destroy recibo" do
+  test "destruye" do
     assert_difference('Recibo.count', -1) do
-      delete :destroy, id: @recibo, :factura_id => @recibo.factura.id
+      delete :destroy, id: @recibo, factura_id: @factura
     end
 
     assert_redirected_to factura_recibos_path
