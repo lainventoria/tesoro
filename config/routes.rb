@@ -7,6 +7,10 @@ Cp::Application.routes.draw do
 
   resources :cuentas
 
+  # Filtrar facturas por situacion
+  get "facturas/cobros", to: "facturas#cobros"
+  get "facturas/pagos", to: "facturas#pagos"
+
   resources :facturas do
     resources :recibos
   end
