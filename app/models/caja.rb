@@ -48,29 +48,34 @@ class Caja < ActiveRecord::Base
 
     # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
     Caja.transaction do
-      cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
-        unless extraer(cantidad)
-          raise ActiveRecord::Rollback, 'Monto insuficiente'
-        end
-        cambio = depositar Money.new(nuevo, moneda)
+      extraer(cantidad, true)
+      cambio = cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
+        depositar(Money.new(nuevo, moneda), true)
       end
     end
 
-    cambio
+    cambio || Money.new(0)
   end
 
   # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
-  # caso contrario no devolvemos nada
-  def extraer(cantidad)
+  # caso contrario no devolvemos nada, opcionalmente una excepción para frenar
+  # la transacción
+  def extraer(cantidad, lanzar_excepcion = false)
     if cantidad <= total(cantidad.currency.iso_code)
       depositar(cantidad * -1)
       cantidad
+    else
+      raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
     end
   end
 
-  # Devolvemos cantidad para mantener consistente la API
-  def depositar(cantidad)
-    movimientos.create monto: cantidad
-    cantidad
+  # Devolvemos cantidad para mantener consistente la API, opcionalmente una
+  # excepción para frenar la transacción
+  def depositar(cantidad, lanzar_excepcion = false)
+    if movimientos.create(monto: cantidad)
+      cantidad
+    else
+      raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
+    end
   end
 end

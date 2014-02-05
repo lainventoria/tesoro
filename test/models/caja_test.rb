@@ -90,6 +90,23 @@ class CajaTest < ActiveSupport::TestCase
     assert @caja.movimientos.collect(&:monto).include?(Money.new(300))
   end
 
+  test 'extraer lanza excepciones opcionalmente' do
+    assert_raise ActiveRecord::Rollback do
+      @caja.extraer(Money.new(100), true)
+    end
+  end
+
+  test 'depositar lanza excepciones opcionalmente' do
+    # fingimos una falla en movimientos.create
+    no_movimientos = MiniTest::Mock.new.expect :create, false, [Hash]
+
+    @caja.stub :movimientos, no_movimientos do
+      assert_raise ActiveRecord::Rollback do
+        @caja.depositar(Money.new(100), true)
+      end
+    end
+  end
+
   test 'no cambia moneda si no hay suficiente' do
     create :movimiento, caja: @caja, monto: Money.new(100, 'EUR')
 
