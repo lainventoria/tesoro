@@ -36,14 +36,6 @@ class Factura < ActiveRecord::Base
     saldo * -1 if reintegro?
   end
 
-  # Cuánto se adeuda de esta factura en base a todos los recibos
-  # TODO esto asume que los recibos se hacen en la misma moneda de la
-  # factura (y no que se está pagando una parte en una y otra en otra)
-  # Mandé un mail a la lista consultando qué hacer
-  def saldo
-    importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
-  end
-
 	def nombre_y_numero
 		"[#{numero}] #{nombre}"
 	end
