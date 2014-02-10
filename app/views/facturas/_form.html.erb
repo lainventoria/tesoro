@@ -11,51 +11,84 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
-    <%= f.label :tipo %><br>
-    <%= f.text_field :tipo, class: "form-control" %>
+  <div class="row">
+    <div class="field form-group col-md-1">
+      <%= f.label :situacion %><br>
+      <%= f.text_field :situacion, class: "form-control" %>
+    </div>
+     <div class="field form-group col-md-1">
+      <%= f.label :tipo %><br>
+      <%= f.text_field :tipo, class: "form-control" %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :numero %><br>
+      <%= f.text_field :numero, class: "form-control" %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :fecha %><br>
+      <div class="input-group date">
+        <%= f.text_field :fecha, class: "form-control" %>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      </div>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :fecha_pago %><br>
+      <div class="input-group date">
+        <%= f.text_field :fecha_pago, class: "form-control" %>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      </div>
+    </div>
   </div>
-  <div class="field form-group">
-    <%= f.label :numero %><br>
-    <%= f.text_field :numero, class: "form-control" %>
+
+  <div class="row">
+    <div class="field form-group col-md-6">
+      <%= f.label :nombre %><br>
+      <%= f.text_field :nombre, class: "form-control" %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :cuit %><br>
+      <%= f.text_field :cuit, class: "form-control" %>
+    </div>
   </div>
-  <div class="field form-group">
-    <%= f.label :situacion %><br>
-    <%= collection_select(:factura, :situacion, Factura::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
+
+  <div class="row">
+    <div class="field form-group col-md-8">
+      <%= f.label :domicilio %><br>
+      <%= f.text_area :domicilio, class: "form-control" %>
+    </div>
   </div>
-  <div class="field form-group">
-    <%= f.label :nombre %><br>
-    <%= f.text_area :nombre, class: "form-control" %>
+
+  <div class="row">
+    <div class="field form-group col-md-8">
+      <%= f.label :descripcion %><br>
+      <%= f.text_area :descripcion, class: "form-control" %>
+    </div>
   </div>
-  <div class="field form-group">
-    <%= f.label :domicilio %><br>
-    <%= f.text_area :domicilio, class: "form-control" %>
+
+  <div class="row">
+    <%# dejo lugar para el campo importe_neto que esta faltando %>
+    <div class="field form-group col-md-2 col-md-offset-2">
+      <%= f.label :iva %><br>
+      <%= f.text_field :iva, class: "form-control" %>
+    </div>
+    <div class="field form-group col-md-2">
+      <%= f.label :importe_total %><br>
+      <%= f.text_field :importe_total, class: "form-control" %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Guardar", class: "btn btn-primary btn-lg submit" %>
+    </div>
   </div>
-  <div class="field form-group">
-    <%= f.label :cuit %><br>
-    <%= f.text_area :cuit, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :iva %><br>
-    <%= f.text_field :iva, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :descripcion %><br>
-    <%= f.text_area :descripcion, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :importe_total %><br>
-    <%= f.text_field :importe_total, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :fecha %><br>
-    <%= f.date_select :fecha, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :fecha_pago %><br>
-    <%= f.date_select :fecha_pago, class: "form-control" %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Guardar", class: "btn btn-primary submit" %>
-  </div>
+
+  <%# script para el selector de fechas que muestra el calendario del mes
+      inicialmente estaba app/assests/javascripts/ pero no funcionaba al navegar usando el menu 
+      hacia la pagina y era necesario refrescarla para que funcione.
+      aca funciona bien. 
+      tendemos que copiar el script en cada formulario y revisar que las preferencias sean las mismas %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.input-group.date').datepicker({format: "dd/mm/yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false})
+    })
+  </script>
+
 <% end %>

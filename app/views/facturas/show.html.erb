@@ -1,59 +1,70 @@
-<p id="notice"><%= notice %></p>
+<%# No se que es esto del 'notice' ya que aparece vacio en la vista actual
+    Agrego un 'h1' para tener coherencia visual con la pantalla de creacion
+    y de edicion de nuevas facturas y paso notice a small-h1 %>
+    <h1>Detalle de Factura <small id="notice"><%= notice %></small></h1>
 
-<p>
-  <strong>Tipo:</strong>
-  <%= @factura.tipo %>
-</p>
+<div class="row">
+  <div class="field form-group col-md-1">
+    <label>Situación:</label><br>
+    <span class="form-control"><%= @factura.situacion %></span>
+  </div>
+  <div class="field form-group col-md-1">
+    <label>Tipo</label><br>
+    <span class="form-control"><%= @factura.tipo %></span>
+  </div>
+  <div class="field form-group col-md-2">
+    <label>Número:</label><br>
+    <span class="form-control"><%= @factura.numero %></span>
+  </div>
+  <div class="field form-group col-md-2">
+    <label>Fecha:</label><br>
+    <span class="form-control"><%= formatted_date(@factura.fecha) %></span>
+  </div>
+  <div class="field form-group col-md-2">
+    <label>Fecha pago:</label><br>
+    <span class="form-control"><%= formatted_date(@factura.fecha_pago) %></span>
+  </div>
+</div>
 
-<p>
-  <strong>Número:</strong>
-  <%= @factura.numero %>
-</p>
+<div class="row">
+  <div class="field form-group col-md-6">
+    <label>Nombre:</label><br>
+    <span class="form-control"><%= @factura.nombre %></span>
+  </div>
+  <div class="field form-group col-md-2">
+    <label>Cuit:</label><br>
+    <span class="form-control"><%= @factura.cuit %></span>
+  </div>
+</div>
 
-<p>
-  <strong>Situación:</strong>
-  <%= @factura.situacion %>
-</p>
+<div class="row">
+  <div class="field form-group col-md-8">
+    <label>Domicilio:</label><br>
+    <span class="form-control"><%= @factura.domicilio %></span>
+  </div>
+</div>
 
-<p>
-  <strong>Nombre:</strong>
-  <%= @factura.nombre %>
-</p>
+<div class="row">
+  <div class="field form-group col-md-8">
+    <label>Descripción:</label><br>
+    <span class="form-control"><%= @factura.descripcion %></span>
+  </div>
+</div>
 
-<p>
-  <strong>Domicilio:</strong>
-  <%= @factura.domicilio %>
-</p>
+<div class="row">
+  <div class="field form-group col-md-2 col-md-offset-3">
+    <label>Iva:</label><br>
+    <span class="form-control"><%= @factura.iva %></span>
+  </div>
+  <div class="field form-group col-md-2 col-md-offset-1">
+    <label>Importe total:</label><br>
+    <span class="form-control"><%= @factura.importe_total %></span>
+  </div>
+</div>
 
-<p>
-  <strong>Cuit:</strong>
-  <%= @factura.cuit %>
-</p>
-
-<p>
-  <strong>Iva:</strong>
-  <%= @factura.iva %>
-</p>
-
-<p>
-  <strong>Descripción:</strong>
-  <%= @factura.descripcion %>
-</p>
-
-<p>
-  <strong>Importe total:</strong>
-  <%= @factura.importe_total %>
-</p>
-
-<p>
-  <strong>Fecha:</strong>
-  <%= formatted_date(@factura.fecha) %>
-</p>
-
-<p>
-  <strong>Fecha pago:</strong>
-  <%= formatted_date(@factura.fecha_pago) %>
-</p>
-
-<%= link_to 'Editar', edit_factura_path(@factura) %> |
-<%= link_to 'Volver', facturas_path %>
+<a type="button" class="btn btn-success" href="<%= facturas_path %>">
+  <span class="glyphicon glyphicon-list-alt"> Listado</span>
+</a>
+<a type="button" class="btn btn-warning" href="<%= edit_factura_path(@factura) %>">
+  <span class="glyphicon glyphicon-edit"> Editar</span>
+</a>
