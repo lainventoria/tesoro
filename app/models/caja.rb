@@ -44,17 +44,13 @@ class Caja < ActiveRecord::Base
   #
   # Este índice de cambio no se registra en el banco default
   def cambiar(cantidad, moneda, indice)
-    cambio = Money.new(0)
-
     # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
     Caja.transaction do
       extraer(cantidad, true)
-      cambio = cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
+      cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
         depositar(Money.new(nuevo, moneda), true)
       end
-    end
-
-    cambio || Money.new(0)
+    end || Money.new(0)
   end
 
   # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
