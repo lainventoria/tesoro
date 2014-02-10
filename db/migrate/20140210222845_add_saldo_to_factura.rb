@@ -1,5 +1,5 @@
 class AddSaldoToFactura < ActiveRecord::Migration
   def change
-    add_column :facturas, :saldo, :money
+    add_money :facturas, :saldo
   end
 end
