@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Caja < ActiveRecord::Base
   belongs_to :obra
   has_many :movimientos
@@ -16,6 +17,10 @@ class Caja < ActiveRecord::Base
     else
       valor
     end
+  end
+
+  def self.tipos
+    pluck(:tipo).uniq
   end
 
   # TODO ver si hace falta un caso especial con movimientos sin guardar
@@ -40,17 +45,33 @@ class Caja < ActiveRecord::Base
   # Este índice de cambio no se registra en el banco default
   def cambiar(cantidad, moneda, indice)
     # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido
-    if cantidad <= total(cantidad.currency.iso_code)
+    Caja.transaction do
+      extraer(cantidad, true)
       cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
-        movimientos.create monto: cantidad * -1
-        movimientos.create monto: Money.new(nuevo, moneda)
-      end.monto
+        depositar(Money.new(nuevo, moneda), true)
+      end
+    end || Money.new(0)
+  end
+
+  # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
+  # caso contrario no devolvemos nada, opcionalmente una excepción para frenar
+  # la transacción
+  def extraer(cantidad, lanzar_excepcion = false)
+    if cantidad <= total(cantidad.currency.iso_code)
+      depositar(cantidad * -1)
+      cantidad
     else
-      Money.new(0)
+      raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
     end
   end
 
-  def self.tipos
-    pluck(:tipo).uniq
+  # Devolvemos cantidad para mantener consistente la API, opcionalmente una
+  # excepción para frenar la transacción
+  def depositar(cantidad, lanzar_excepcion = false)
+    if movimientos.create(monto: cantidad)
+      cantidad
+    else
+      raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
+    end
   end
 end

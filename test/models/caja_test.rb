@@ -2,68 +2,116 @@
 require 'test_helper'
 
 class CajaTest < ActiveSupport::TestCase
+  setup do
+    # Caja sin movimientos para la mayoría de los tests
+    @caja = create :caja
+  end
+
   test 'es válida' do
     assert (c = build(:caja)).valid?, c.errors.messages
   end
 
   test 'totaliza en pesos por default' do
-    caja = create(:caja)
-    2.times { create :movimiento, caja: caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
 
-    assert_equal Money.new(2000), caja.total
+    assert_equal Money.new(2000), @caja.total
   end
 
   test 'totaliza por moneda' do
-    caja = create(:caja)
-    2.times { create :movimiento, caja: caja, monto: Money.new(1000) }
-    2.times { create :movimiento, caja: caja, monto: Money.new(500, 'USD') }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(500, 'USD') }
 
-    assert_equal Money.new(2000), caja.total
-    assert_equal Money.new(1000, 'USD'), caja.total('USD')
+    assert_equal Money.new(2000), @caja.total
+    assert_equal Money.new(1000, 'USD'), @caja.total('USD')
   end
 
   test 'todos los totales' do
-    caja = create(:caja)
-    2.times { create :movimiento, caja: caja, monto: Money.new(1000) }
-    2.times { create :movimiento, caja: caja, monto: Money.new(500, 'USD') }
-    create :movimiento, caja: caja, monto: Money.new(500, 'EUR')
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(500, 'USD') }
+    create :movimiento, caja: @caja, monto: Money.new(500, 'EUR')
 
     assert_equal ({ 'ARS' => Money.new(2000),
                     'USD' => Money.new(1000, 'USD'),
-                    'EUR' => Money.new(500, 'EUR') }), caja.totales
+                    'EUR' => Money.new(500, 'EUR') }), @caja.totales
   end
 
   test 'caja en cero devuelve money' do
-    caja = create(:caja)
+    assert @caja.movimientos.empty?
+    assert_equal Money.new(0), @caja.total
+    assert_equal ({ 'ARS' => Money.new(0) }), @caja.totales
+  end
 
-    assert caja.movimientos.empty?
+  test 'extrae si alcanza' do
+    create :movimiento, caja: @caja, monto: Money.new(2000)
+    assert_equal 1, @caja.movimientos.count
 
-    assert_equal Money.new(0), caja.total
-    assert_equal ({ 'ARS' => Money.new(0) }), caja.totales
+    assert_equal Money.new(1000), @caja.extraer(Money.new(1000))
+    assert_equal 2, @caja.movimientos.count
+
+    assert_nil @caja.extraer(Money.new(1001))
+    assert_equal 2, @caja.movimientos.count
+  end
+
+  test 'extrae en cualquier moneda si alcanza' do
+    create :movimiento, caja: @caja, monto: Money.new(2000, 'USD')
+
+    assert_equal Money.new(1000, 'USD'), @caja.extraer(Money.new(1000, 'USD'))
+    assert_equal 2, @caja.movimientos.count
+
+    assert_nil @caja.extraer(Money.new(500))
+    assert_equal 2, @caja.movimientos.count
+  end
+
+  test 'deposita' do
+    assert_equal Money.new(100), @caja.depositar(Money.new(100))
+    assert_equal Money.new(100), @caja.depositar(Money.new(100))
+    assert_equal 2, @caja.movimientos.count
+    assert_equal Money.new(200), @caja.total
+  end
+
+  test 'deposita en cualquier moneda' do
+    assert_equal Money.new(100, 'USD'), @caja.depositar(Money.new(100, 'USD'))
+    assert_equal 1, @caja.movimientos.count
+    assert_equal Money.new(100, 'USD'), @caja.total('USD')
   end
 
   test 'cambia moneda manteniendo el historial en forma de movimientos' do
-    caja = create(:caja)
-    create :movimiento, caja: caja, monto: Money.new(500, 'EUR')
+    create :movimiento, caja: @caja, monto: Money.new(500, 'EUR')
 
     assert_difference 'Movimiento.count', 2 do
-      @salida = caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
+      @salida = @caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
     end
 
     assert_equal Money.new(300), @salida
 
     # Historial de movimientos
-    assert caja.movimientos.collect(&:monto).include?(Money.new(500, 'EUR'))
-    assert caja.movimientos.collect(&:monto).include?(Money.new(-200, 'EUR'))
-    assert caja.movimientos.collect(&:monto).include?(Money.new(300))
+    assert @caja.movimientos.collect(&:monto).include?(Money.new(500, 'EUR'))
+    assert @caja.movimientos.collect(&:monto).include?(Money.new(-200, 'EUR'))
+    assert @caja.movimientos.collect(&:monto).include?(Money.new(300))
+  end
+
+  test 'extraer lanza excepciones opcionalmente' do
+    assert_raise ActiveRecord::Rollback do
+      @caja.extraer(Money.new(100), true)
+    end
+  end
+
+  test 'depositar lanza excepciones opcionalmente' do
+    # fingimos una falla en movimientos.create
+    no_movimientos = MiniTest::Mock.new.expect :create, false, [Hash]
+
+    @caja.stub :movimientos, no_movimientos do
+      assert_raise ActiveRecord::Rollback do
+        @caja.depositar(Money.new(100), true)
+      end
+    end
   end
 
   test 'no cambia moneda si no hay suficiente' do
-    caja = create(:caja)
-    create :movimiento, caja: caja, monto: Money.new(100, 'EUR')
+    create :movimiento, caja: @caja, monto: Money.new(100, 'EUR')
 
     assert_no_difference 'Movimiento.count' do
-      @salida = caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
+      @salida = @caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
     end
 
     assert_equal Money.new(0), @salida
