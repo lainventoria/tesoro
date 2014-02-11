@@ -8,6 +8,15 @@ class Factura < ActiveRecord::Base
   validates_inclusion_of :situacion, in: SITUACIONES
 
   monetize :importe_total_centavos
+  monetize :saldo_centavos
+
+  after_initialize do |factura|
+    calcular_saldo
+  end
+
+  before_validation do |factura|
+    calcular_saldo
+  end
 
   # Chequea si la situación es pago
   def pago?
@@ -21,7 +30,8 @@ class Factura < ActiveRecord::Base
 
   # La factura está cancelada cuando el saldo es 0
   def cancelada?
-    saldo == 0
+    calcular_saldo
+    saldo == Money.new(0)
   end
 
   # Si el saldo es menor al importe_total es porque se pagó de más
@@ -34,6 +44,18 @@ class Factura < ActiveRecord::Base
   # Con las validaciones de Recibo no debería hacer falta
   def reintegro
     saldo * -1 if reintegro?
+  end
+
+  # Recalcula el saldo
+  #
+  # Cuánto se adeuda de esta factura en base a todos los recibos
+  # NOTA esto asume que los recibos se hacen en la misma moneda de la
+  # factura (y no que se está pagando una parte en una y otra en otra)
+  # 
+  # Antes de guardar un recibo se tiene que hacer la conversión a la
+  # moneda de la factura
+  def calcular_saldo
+    self.saldo = importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
   end
 
 	def nombre_y_numero
