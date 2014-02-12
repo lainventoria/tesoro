@@ -6,17 +6,13 @@ class Factura < ActiveRecord::Base
   SITUACIONES = %w(cobro pago)
   # Sólo aceptamos esas :3
   validates_inclusion_of :situacion, in: SITUACIONES
+  validate :validate_saldo
 
   monetize :importe_total_centavos
   monetize :saldo_centavos
 
-  after_initialize do |factura|
-    calcular_saldo
-  end
-
-  before_validation do |factura|
-    calcular_saldo
-  end
+  # Cuando se crea una Factura, el saldo es igual al importe_total
+  before_create do |f| f.saldo = f.importe_total end
 
   # Chequea si la situación es pago
   def pago?
@@ -30,7 +26,6 @@ class Factura < ActiveRecord::Base
 
   # La factura está cancelada cuando el saldo es 0
   def cancelada?
-    calcular_saldo
     saldo == Money.new(0)
   end
 
@@ -65,4 +60,9 @@ class Factura < ActiveRecord::Base
 	def to_s
 		nombre_y_numero
 	end
+
+  # Valida el saldo de la factura
+  def validate_saldo
+    errors[:base] << "El saldo no puede ser negativo #{self.saldo}" if self.saldo < 0
+  end
 end
