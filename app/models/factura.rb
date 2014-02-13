@@ -6,7 +6,7 @@ class Factura < ActiveRecord::Base
   SITUACIONES = %w(cobro pago)
   # Sólo aceptamos esas :3
   validates_inclusion_of :situacion, in: SITUACIONES
-  validate :validate_saldo
+  validates_numericality_of :saldo, greater_than_or_equal_to: 0
 
   monetize :importe_total_centavos
   monetize :saldo_centavos
@@ -60,9 +60,4 @@ class Factura < ActiveRecord::Base
 	def to_s
 		nombre_y_numero
 	end
-
-  # Valida el saldo de la factura
-  def validate_saldo
-    errors[:base] << "El saldo no puede ser negativo #{self.saldo}" if self.saldo < 0
-  end
 end
