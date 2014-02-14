@@ -10,6 +10,9 @@
       </ul>
     </div>
   <% end %>
+  
+<%# (des)habilita la edicion del formulario dependiendo del valor de @editar %>
+<fieldset <% if not @editar %> disabled <% end %> >
 
   <div class="row">
     <div class="field form-group col-md-1">
@@ -75,10 +78,18 @@
       <%= f.label :importe_total %><br>
       <%= f.text_field :importe_total, class: "form-control" %>
     </div>
-    <div class="actions">
-      <%= f.submit "Guardar", class: "btn btn-primary btn-lg submit" %>
-    </div>
+
+    <%# dependiendo del valor de @editar, incluye en el formulario
+        el boton 'Guardar' %>
+    <% if @editar %>
+      <div class="actions">
+        <%= f.submit "Guardar", class: "btn btn-primary btn-lg submit" %>
+      </div>
+    <% end %>
+
   </div>
+
+</fieldset> 
 
   <%# script para el selector de fechas que muestra el calendario del mes
       inicialmente estaba app/assests/javascripts/ pero no funcionaba al navegar usando el menu 
