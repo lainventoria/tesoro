@@ -24,15 +24,18 @@ class FacturasController < ApplicationController
   # GET /facturas/1
   # GET /facturas/1.json
   def show
+    @editar = false
   end
 
   # GET /facturas/new
   def new
     @factura = Factura.new
+    @editar = true
   end
 
   # GET /facturas/1/edit
   def edit
+    @editar = true
   end
 
   # POST /facturas
