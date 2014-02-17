@@ -8,6 +8,7 @@ class Factura < ActiveRecord::Base
   validates_inclusion_of :situacion, in: SITUACIONES
   validates_numericality_of :saldo, greater_than_or_equal_to: 0
 
+  monetize :importe_neto_centavos
   monetize :importe_total_centavos
   monetize :saldo_centavos
 
