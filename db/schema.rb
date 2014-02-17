@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140210222845) do
+ActiveRecord::Schema.define(version: 20140217232538) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -33,7 +33,6 @@ ActiveRecord::Schema.define(version: 20140210222845) do
     t.text     "nombre"
     t.text     "domicilio"
     t.text     "cuit"
-    t.float    "iva"
     t.text     "descripcion"
     t.integer  "importe_total_centavos", default: 0,      null: false
     t.string   "importe_total_moneda",   default: "ARS",  null: false
@@ -44,6 +43,10 @@ ActiveRecord::Schema.define(version: 20140210222845) do
     t.string   "situacion",              default: "pago"
     t.integer  "saldo_centavos",         default: 0,      null: false
     t.string   "saldo_moneda",           default: "ARS",  null: false
+    t.integer  "importe_neto_centavos",  default: 0,      null: false
+    t.string   "importe_neto_moneda",    default: "ARS",  null: false
+    t.integer  "iva_centavos",           default: 0,      null: false
+    t.string   "iva_moneda",             default: "ARS",  null: false
   end
 
   create_table "movimientos", force: true do |t|
