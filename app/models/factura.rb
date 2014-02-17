@@ -11,6 +11,7 @@ class Factura < ActiveRecord::Base
   monetize :importe_neto_centavos
   monetize :importe_total_centavos
   monetize :saldo_centavos
+  monetize :iva_centavos
 
   # Cuando se crea una Factura, el saldo es igual al importe_total
   before_create do |f| f.saldo = f.importe_total end
@@ -53,6 +54,11 @@ class Factura < ActiveRecord::Base
   # moneda de la factura
   def calcular_saldo
     self.saldo = importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
+  end
+
+  # El importe total o bruto es el neto con el IVA incluido
+  def calcular_importe_total
+    self.importe_total = self.importe_neto + self.iva
   end
 
 	def nombre_y_numero
