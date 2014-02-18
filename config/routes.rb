@@ -13,8 +13,12 @@ Cp::Application.routes.draw do
       get 'cobros'
       get 'pagos'
     end
+
+    # Ver los recibos de cada factura
     resources :recibos
   end
 
+  # Permitir /recibos
+  resources :recibos
   resources :terceros
 end
