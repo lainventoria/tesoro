@@ -15,17 +15,17 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test "se cancela con recibos" do
-    factura = create :factura, importe_total: Money.new(3000)
-    3.times { create :recibo, factura: factura, importe: Money.new(1000) }
+    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    3.times { create :recibo, factura: factura, importe: Money.new(1000*1.21) }
 
     assert factura.cancelada?
   end
 
   test "el saldo tiene que ser igual en memoria que en la bd" do
-    factura = create :factura, importe_total: Money.new(3000)
-    3.times { create :recibo, factura: factura, importe: Money.new(1000) }
+    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    3.times { create :recibo, factura: factura, importe: Money.new(1000*1.21) }
 
-    assert factura.valid?, factura.errors.messages
+    assert factura.valid?, factura.saldo
     assert factura.cancelada?
     assert factura.save
     assert factura.reload
@@ -34,12 +34,12 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test "desbloquear factura despues de cancelada" do
-    factura = create :factura, importe_total: Money.new(3000)
-    recibo = create :recibo, factura: factura, importe: Money.new(3000)
+    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    recibo = create :recibo, factura: factura, importe: Money.new(3000*1.21)
 
     assert factura.save
 
-    factura.importe_total = Money.new(4000)
+    factura.importe_neto = Money.new(4000)
 
     assert factura.save
     assert factura.reload
