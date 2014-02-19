@@ -19,6 +19,11 @@ Cp::Application.routes.draw do
   end
 
   # Permitir /recibos
-  resources :recibos
+  resources :recibos do
+    collection do
+      get 'cobros'
+      get 'pagos'
+    end
+  end
   resources :terceros
 end

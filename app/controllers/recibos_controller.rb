@@ -14,6 +14,19 @@ class RecibosController < ApplicationController
     end
   end
 
+  # Solo mostrar recibos de cobro reciclando la vista de lista
+  def cobros
+    @recibos = Recibo.where(situacion: "cobro")
+
+    render "index"
+  end
+
+  def pagos
+    @recibos = Recibo.where(situacion: "pago")
+
+    render "index"
+  end
+
   # GET /recibos/1
   # GET /recibos/1.json
   def show
