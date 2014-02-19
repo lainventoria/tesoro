@@ -32,4 +32,21 @@ class FacturaTest < ActiveSupport::TestCase
     assert factura.cancelada?
 
   end
+
+  test "desbloquear factura despues de cancelada" do
+    factura = create :factura, importe_total: Money.new(3000)
+    recibo = create :recibo, factura: factura, importe: Money.new(3000)
+
+    assert factura.save
+
+    factura.importe_total = Money.new(4000)
+
+    assert factura.save
+    assert factura.reload
+
+    recibo = create :recibo, factura: factura, importe: Money.new(1000)
+
+    assert factura.save
+
+  end
 end

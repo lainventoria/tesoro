@@ -13,6 +13,7 @@ class Factura < ActiveRecord::Base
 
   # Cuando se crea una Factura, el saldo es igual al importe_total
   before_create do |f| f.saldo = f.importe_total end
+  before_update :calcular_saldo
 
   # Chequea si la situación es pago
   def pago?
