@@ -1,12 +1,30 @@
 # encoding: utf-8
 class RecibosController < ApplicationController
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
-  before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
+  before_action :set_factura, only: [:show, :edit, :update, :destroy, :create, :new]
 
   # GET /recibos
   # GET /recibos.json
   def index
-    @recibos = Recibo.all
+    # Filtrar por factura si venimos de /factura/:factura_id
+    if params[:factura_id]
+      @recibos = Recibo.where(factura_id: params[:factura_id])
+    else
+      @recibos = Recibo.all
+    end
+  end
+
+  # Solo mostrar recibos de cobro reciclando la vista de lista
+  def cobros
+    @recibos = Recibo.where(situacion: "cobro")
+
+    render "index"
+  end
+
+  def pagos
+    @recibos = Recibo.where(situacion: "pago")
+
+    render "index"
   end
 
   # GET /recibos/1
