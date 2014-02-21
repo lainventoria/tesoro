@@ -11,23 +11,66 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
-    <%= f.label :fecha %><br>
-    <%= f.date_select :fecha, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :importe %><br>
-    <%= f.text_field :importe, class: "form-control" %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :situacion %><br>
-    <%= collection_select(:recibo, :situacion, Recibo::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
-  </div>
-  <div class="field form-group">
-    <%= f.label :factura_id %><br>
-    <%= collection_select(:recibo, :factura_id, Factura.all, :id, :nombre_y_numero, class: "form-control" ) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Guardar", class: "btn btn-primary submit" %>
-  </div>
+  <%# (des)habilita la edicion del formulario dependiendo del valor de @editar %>
+  <fieldset <% if not @editar %> disabled <% end %> >
+
+    <div class="row">
+      <div class="field form-group col-md-3">
+        <%= f.label :fecha %><br>
+        <div class="input-group date">
+          <%= f.text_field :fecha, class: "form-control" %>
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+      </div>
+      <div class="field form-group col-md-3 pull-right">
+        <%= f.label :importe %><br>
+        <%= f.text_field :importe, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field form-group col-md-9">
+        <label>Tercero</label>
+        <span class="form-control" disabled><%= @factura.nombre.first(80) %></span>
+      </div>
+      <div class="field form-group col-md-3" >
+        <label>Nro. Factura</label>
+        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <br>
+    </div>
+    <%# comento estas lineas para guardar un ejemplo de dropdown
+        no logrue que Bootstrap les aplique css %>
+    <% if false %>
+      <div class="row">
+        <div class="field form-group">
+          <%= f.label :situacion %><br>
+          <%= collection_select(:recibo, :situacion, Recibo::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
+        </div>
+        <div class="field form-group">
+          <%= f.label :factura_id %><br>
+          <%= collection_select(:recibo, :factura_id, Factura.all, :id,:tipo, class: "form-control" ) %>
+        </div>
+        <div class="actions">
+          <%= f.submit "Guardar", class: "btn btn-primary submit" %>
+        </div>
+      </div>
+    <% end %>
+
+  </fieldset> 
+
+  <%# script para el selector de fechas que muestra el calendario del mes
+      inicialmente estaba app/assests/javascripts/ pero no funcionaba al navegar usando el menu 
+      hacia la pagina y era necesario refrescarla para que funcione.
+      aca funciona bien. 
+      tendemos que copiar el script en cada formulario y revisar que las preferencias sean las mismas %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false})
+    })
+  </script>
+
 <% end %>
