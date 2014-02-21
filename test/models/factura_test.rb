@@ -40,11 +40,12 @@ class FacturaTest < ActiveSupport::TestCase
     assert factura.save
 
     factura.importe_neto = Money.new(4000)
+    factura.iva = Money.new(4000*0.105)
 
     assert factura.save
     assert factura.reload
 
-    recibo = create :recibo, factura: factura, importe: Money.new(1000)
+    recibo = create :recibo, factura: factura, importe: factura.saldo
 
     assert factura.save
 

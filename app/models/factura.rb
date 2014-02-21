@@ -15,6 +15,8 @@ class Factura < ActiveRecord::Base
   monetize :saldo_centavos
   monetize :iva_centavos
 
+  # Mantener actualizados los valores calculados cada vez que se hace
+  # una modificación
   before_create :calcular_importe_total, :calcular_saldo
   before_update :calcular_importe_total, :calcular_saldo
 
