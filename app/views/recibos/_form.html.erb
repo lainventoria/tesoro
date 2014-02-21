@@ -42,10 +42,11 @@
     <div class="row">
       <br>
     </div>
-    <%# comento estas lineas para guardar un ejemplo de dropdown
-        no logrue que Bootstrap les aplique css %>
+
+    <div class="row">
+    <%# comento estas lineas para guardar un ejemplo de dropdown no
+        logre que Bootstrap les aplique css %>
     <% if false %>
-      <div class="row">
         <div class="field form-group">
           <%= f.label :situacion %><br>
           <%= collection_select(:recibo, :situacion, Recibo::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
@@ -54,11 +55,11 @@
           <%= f.label :factura_id %><br>
           <%= collection_select(:recibo, :factura_id, Factura.all, :id,:tipo, class: "form-control" ) %>
         </div>
-        <div class="actions">
-          <%= f.submit "Guardar", class: "btn btn-primary submit" %>
-        </div>
-      </div>
     <% end %>
+      <div class="actions">
+        <%= f.submit "Guardar", class: "btn btn-primary submit" %>
+      </div>
+    </div>
 
   </fieldset>
 
