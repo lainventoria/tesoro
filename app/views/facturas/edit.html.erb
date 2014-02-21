@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 <div class="row">
   <h2>Editar Factura</h2>
 </div>
-=======
-<h1>Editar Factura</h1>
->>>>>>> 2733efd5b0038449aa4b8d59f57c28e39cf60d71
 
 <div class="row">
   <div class="col-md-8">
@@ -12,7 +8,6 @@
       <%= render 'form' %>
     </div>
 
-<<<<<<< HEAD
     <div class="row">
       <a type="button" class="btn btn-danger col-md-3" href="<%= factura_path %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
         <span class="glyphicon glyphicon-remove-circle"> Borrar Factura</span>
@@ -35,11 +30,3 @@
       $('#btnGuardar').on('click', function() { $('#edit_factura_<%= @factura.id %>').submit(); });
   });
 </script>
-=======
-<a type="button" class="btn btn-success" href="<%= facturas_path %>">
-  <span class="glyphicon glyphicon-list-alt"> Listado</span>
-</a>
-<a type="button" class="btn btn-warning" href="<%= factura_path(@factura) %>">
-  <span class="glyphicon glyphicon-eye-open"> Factura</span>
-</a>
->>>>>>> 2733efd5b0038449aa4b8d59f57c28e39cf60d71
