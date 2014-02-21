@@ -1,52 +1,68 @@
-<%# No se que es esto del 'notice' ya que aparece vacio en la vista actual
-    Agrego un 'h1' para tener coherencia visual con la pantalla de creacion
-    y de edicion de nuevas facturas y paso notice a small-h1 %>
-    <h1>Detalle de Factura <small id="notice"><%= notice %></small></h1>
 
-    
-    <div class="row">
+<div class="row">
+  <h2>Detalle de Factura por 
+    <% if @factura.situacion == "pago" %>
+      Pagar
+    <% else %>
+      Cobrar
+    <% end %>
+  </h2> 
+  <% if !notice.nil? %>
+    <div id="notice" class="alert alert-info"><%= notice %></div>
+  <% end %>
+</div>
+
+<div class="row">
   <div class="col-md-8">
+    <div class="row">
+      <%= render 'form' %>
+    </div>
 
-  <%= render 'form' %>
+    <div class="row">
+      <a type="button" class="btn btn-success col-md-3" href="
+        <% if @factura.situacion == "cobro" %>
+          <%= cobros_facturas_path %>
+        <% else %>
+          <%= pagos_facturas_path %>
+        <% end %>
+        ">
+        <span class="glyphicon glyphicon-list-alt"> Listar Facturas</span>
+      </a>
+      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= edit_factura_path(@factura) %>">
+        <span class="glyphicon glyphicon-edit"> Editar Factura</span>
+      </a>
 
+    </div>
   </div>
 
   <div class="col-md-4">
+    <div class="row">
+      <div class="field form-group col-md-5 col-md-offset-1">
+        <label>Total Recibos</label><br>
+        <span class="form-control" disabled ><%= @factura.importe_total - @factura.saldo %></span>
+      </div>
+      <div class="field form-group col-md-5">
+        <label>Saldo remanente</label><br>
+        <span class="form-control" disabled ><%= @factura.saldo %></span>
+      </div>
+    </div>
 
-    <table class="table table-hover table-condensed">
-      <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Importe</th>
-          <th>Situación</th>
-          <th>Factura</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
+    <div class="row col-md-offset-1">
+      <h4>Detalle de Recibos</h4>
+      <% @recibos = @factura.recibos %>
+      <%# nested-layout: CSS adicional para el objeto a renderizar %>
+      <% content_for :stylesheets do %>
+        #lista-corta {display: none}
+      <% end %>
+      <%= render 'recibos/list' %>
+    </div>
 
-      <tbody>
-        <% @factura.recibos.each do |recibo| %>
-          <tr>
-            <td><%= formatted_date(recibo.fecha) %></td>
-            <td><%= recibo.importe %></td>
-            <td><%= recibo.situacion %></td>
-            <td><%= recibo.factura %></td>
-            <td><%= link_to 'Ver', [recibo.factura, recibo] %></td>
-            <td><%= link_to 'Editar', [:edit, recibo.factura, recibo] %></td>
-            <td><%= link_to 'Borrar', [recibo.factura, recibo], {method: :delete, data: { confirm: '¿Está seguro?' }} %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="row pull-right">
+      <a type="button" class="btn btn-primary" href="<%= new_factura_recibo_path(@factura) %>">
+        <span class="glyphicon glyphicon-plus"> Nuevo Recibo</span>
+      </a>
+    </div>
 
   </div>
 </div>
 
-<a type="button" class="btn btn-success" href="<%= facturas_path %>">
-  <span class="glyphicon glyphicon-list-alt"> Listado</span>
-</a>
-<a type="button" class="btn btn-warning" href="<%= edit_factura_path(@factura) %>">
-  <span class="glyphicon glyphicon-edit"> Editar</span>
-</a>
