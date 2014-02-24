@@ -1,6 +1,6 @@
 <div class="row">
-  <h2>Listado de Facturas por <%= @situacion %>
-    <a type="button" class="btn btn-primary pull-right" href="<%= new_factura_path %>">
+  <h2>Listado de Facturas por <% if @situacion == "cobro" %>Cobrar<% else %>Pagar<% end %>
+    <a type="button" class="btn btn-primary pull-right" href="<%= new_factura_path(situacion: @situacion ) %>">
       <span class="glyphicon glyphicon-plus"> Nueva Factura</span>
     </a>
   </h2>

@@ -73,7 +73,7 @@ class RecibosController < ApplicationController
   def destroy
     @recibo.destroy
     respond_to do |format|
-      format.html { redirect_to [@factura, :recibos] }
+      format.html { redirect_to [@factura] }
       format.json { head :no_content }
     end
   end

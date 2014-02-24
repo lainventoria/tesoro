@@ -31,16 +31,11 @@
 
     <div class="row col-md-offset-1">
       <h4>Detalle de Movimientos</h4>
-      <% @recibos = @factura.recibos %>
-      <%# nested-layout: CSS adicional para el objeto a renderizar %>
-      <% content_for :stylesheets do %>
-        #lista-corta {display: none}
-      <% end %>
-      <%= render 'recibos/list' %>
+      <%# incorporar aqui la lista de movimientos %>
     </div>
 
     <div class="row pull-right">
-      <a type="button" class="btn btn-primary" href="<%= new_factura_recibo_path(@factura) %>">
+      <a type="button" class="btn btn-primary" href="#">
         <span class="glyphicon glyphicon-plus"> Nuevo Movimiento</span>
       </a>
     </div>
