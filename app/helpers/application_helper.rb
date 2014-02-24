@@ -10,7 +10,7 @@ module ApplicationHelper
     nil
   end
 
-  def formatted_date(date)
+	def formatted_date(date)
 	  date.strftime("%d %b %Y")
 	end
 end
