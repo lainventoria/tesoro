@@ -7,13 +7,14 @@
     <% end %>
   </h2> 
   <% if !notice.nil? %>
-    <div id="notice" class="alert alert-info"><%= notice %></div>
+    <div id="notice" class="alert alert-success"><%= notice %></div>
   <% end %>
 </div>
 
 <div class="row">
   <div class="col-md-8">
     <div class="row">
+      <% @editar = false %>
       <%= render 'form' %>
     </div>
 

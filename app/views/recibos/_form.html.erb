@@ -1,11 +1,11 @@
 <%= form_for([@factura, @recibo]) do |f| %>
   <% if @recibo.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@recibo.errors.count, "error") %>. No se guardo el recibo por:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
+      <strong>No se guardo el recibo.</strong> Debe corregir <%= pluralize(@recibo.errors.count, "error") %>
       <ul>
       <% @recibo.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
+        <% @editar = true %>
       <% end %>
       </ul>
     </div>

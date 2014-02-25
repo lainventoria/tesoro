@@ -24,7 +24,6 @@ class FacturasController < ApplicationController
   # GET /facturas/1
   # GET /facturas/1.json
   def show
-    @editar = false
     expires_now()
   end
 
@@ -32,12 +31,10 @@ class FacturasController < ApplicationController
   def new
     @situacion = params[:situacion]
     @factura = Factura.new
-    @editar = true
   end
 
   # GET /facturas/1/edit
   def edit
-    @editar = true
   end
 
   # POST /facturas
