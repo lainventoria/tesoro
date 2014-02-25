@@ -43,10 +43,9 @@
       <br>
     </div>
 
-    <div class="row">
     <%# comento estas lineas para guardar un ejemplo de dropdown no
         logre que Bootstrap les aplique css %>
-    <% if false %>
+      <% if false %>
         <div class="field form-group">
           <%= f.label :situacion %><br>
           <%= collection_select(:recibo, :situacion, Recibo::SITUACIONES, :to_s, :capitalize, class: "form-control" ) %>
@@ -55,14 +54,35 @@
           <%= f.label :factura_id %><br>
           <%= collection_select(:recibo, :factura_id, Factura.all, :id,:tipo, class: "form-control" ) %>
         </div>
-    <% end %>
-      <div class="actions">
-        <%= f.submit "Guardar cambios", class: "pull-right btn btn-success col-md-3 submit" %>
-      </div>
-    </div>
+      <% end %>
 
   </fieldset>
 
+  <%# DEBUG %>
+  <%# campos necesarios para crear nuevos recibos %>
+
+  <% if ! mostrar_ocultos %>
+    <div class="row hidden">
+  <% else %>
+    <div class="row">
+    <h6>Campos Ocultos (debug)<small>
+  <% end %>
+        <% @recibo.factura_id = @factura.id %>
+        factura_id
+        <%= f.text_field :factura_id %>
+        
+        <% @recibo.situacion = @factura.situacion %>
+        situacion
+        <%= f.text_field :situacion %>
+      </small>
+    </h6>
+
+  </div>
+
+  <div class="row">
+    <br>
+  </div>
+      
   <%# script para el selector de fechas que muestra el calendario del
   mes inicialmente estaba app/assests/javascripts/ pero no funcionaba
   al navegar usando el menu hacia la pagina y era necesario refrescarla

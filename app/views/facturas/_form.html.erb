@@ -79,6 +79,36 @@
 
   </fieldset>
 
+  <%# DEBUG %>
+  <%# campos necesarios para crear nuevos recibos %>
+
+  <% if ! mostrar_ocultos %>
+    <div class="row hidden">
+  <% else %>
+    <div class="row">
+    <h6>Campos Ocultos (debug)<small>
+  <% end %>
+        id
+        <%= f.text_field :id %>
+
+        <%# en facturas nuevas, toma el valor de situacion de @situacion
+        parametro pasado al controlador por el entorno del boton Nueva Factura %>
+
+        <% if @factura.id.nil? %>
+          <% @factura.situacion = @situacion %>
+        <% end %>
+
+        situacion
+        <%= f.text_field :situacion %>
+
+        domicilio
+        <%= f.text_field :domicilio %>
+      </small>
+    </h6>
+    <br>
+  </div>
+
+
   <%# script para el selector de fechas que muestra el calendario del
   mes inicialmente estaba app/assests/javascripts/ pero no funcionaba
   al navegar usando el menu hacia la pagina y era necesario refrescarla
