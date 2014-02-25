@@ -9,7 +9,13 @@
     </div>
 
     <div class="row">
-      <a type="button" class="btn btn-warning col-md-3 col-md-offset-4" href="<%= facturas_path %>">
+      <a type="button" class="btn btn-warning col-md-3 col-md-offset-4" href="
+        <% if @factura.situacion == "cobro" %>
+          <%= cobros_facturas_path %>
+        <% else %>
+          <%= pagos_facturas_path %>
+        <% end %>
+        ">
         <span class="glyphicon glyphicon-eye-open"> Volver al Listado</span>
       </a>
 
