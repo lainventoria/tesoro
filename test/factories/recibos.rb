@@ -5,7 +5,7 @@ FactoryGirl.define do
     factura
 
     fecha "2014-01-17 21:25:25"
-    importe { Money.new rand(factura.importe_total_centavos) }
+    importe { factura.importe_total }
     situacion "pago"
   end
 end
