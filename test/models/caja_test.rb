@@ -5,7 +5,6 @@ class CajaTest < ActiveSupport::TestCase
   setup do
     # Caja sin movimientos para la mayoría de los tests
     @caja = create :caja
-    @recibo = create :recibo
   end
 
   test 'es válida' do
@@ -13,22 +12,22 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'totaliza en pesos por default' do
-    2.times { create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
 
     assert_equal Money.new(2000), @caja.total
   end
 
   test 'totaliza por moneda' do
-    2.times { create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(1000) }
-    2.times { create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(500, 'USD') }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(500, 'USD') }
 
     assert_equal Money.new(2000), @caja.total
     assert_equal Money.new(1000, 'USD'), @caja.total('USD')
   end
 
   test 'todos los totales' do
-    2.times { create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(1000) }
-    2.times { create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(500, 'USD') }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(1000) }
+    2.times { create :movimiento, caja: @caja, monto: Money.new(500, 'USD') }
     create :movimiento, caja: @caja, monto: Money.new(500, 'EUR')
 
     assert_equal ({ 'ARS' => Money.new(2000),
@@ -43,7 +42,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'extrae si alcanza' do
-    create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(2000)
+    create :movimiento, caja: @caja, monto: Money.new(2000)
     assert_equal 1, @caja.movimientos.count
 
     assert_equal Money.new(1000), @caja.extraer(Money.new(1000))
@@ -54,7 +53,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'extrae en cualquier moneda si alcanza' do
-    create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(2000, 'USD')
+    create :movimiento, caja: @caja, monto: Money.new(2000, 'USD')
 
     assert_equal Money.new(1000, 'USD'), @caja.extraer(Money.new(1000, 'USD'))
     assert_equal 2, @caja.movimientos.count
@@ -77,7 +76,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'cambia moneda manteniendo el historial en forma de movimientos' do
-    create :movimiento, recibo: @recibo, caja: @caja, monto: Money.new(500, 'EUR')
+    create :movimiento, caja: @caja, monto: Money.new(500, 'EUR')
 
     assert_difference 'Movimiento.count', 2 do
       @salida = @caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
