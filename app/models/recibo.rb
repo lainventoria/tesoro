@@ -1,6 +1,8 @@
 class Recibo < ActiveRecord::Base
   # Las facturas se cancelan con uno o más recibos
   belongs_to :factura, inverse_of: :recibos
+  # Los recibos disparan movimientos
+  has_many :movimientos, inverse_of: :recibo
   # Por eso cada recibo tiene que estar asociado a una factura
   validates_presence_of :factura
   validate :validate_cancelacion, :validate_saldo
