@@ -115,9 +115,14 @@
   cada formulario y revisar que las preferencias sean las mismas %>
 
   <script type="text/javascript">
+    function parse_float (s){
+      return parseFloat (s.replace(/,/,'.'));
+    };
     $(document).ready(function(){
-      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false})
-    })
-  </script>
+      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false});
+      $('#factura_importe_neto').on('keyup', function() { $('#factura_importe_total')[0].value = parse_float($('#factura_importe_neto')[0].value) + parse_float($('#factura_iva')[0].value); });
+      $('#factura_iva').on('keyup', function() { $('#factura_importe_total')[0].value = parse_float($('#factura_importe_neto')[0].value) + parse_float($('#factura_iva')[0].value); });
+  });
+</script>
 
 <% end %>
