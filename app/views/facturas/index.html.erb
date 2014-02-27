@@ -26,19 +26,19 @@
     <% @facturas.each do |factura| %>
       <tr>
         <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver factura"></i>'), [factura] %></td>
-        <td><%= factura.tipo.first(1) %></td>
-        <td><%= factura.numero.first(10) %></td>
-        <td><%= formatted_date(factura.fecha) %></td>
-        <td><%= formatted_date(factura.fecha_pago) %></td>
-        <td><%= factura.nombre.first(20) %></td>
-        <td><%= factura.descripcion.first(40) %></td>
-        <td><%= factura.importe_total %></td>
-        <td><%= factura.saldo %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.tipo.first(1) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.numero.first(10) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= formatted_date(factura.fecha) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= formatted_date(factura.fecha_pago) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.nombre.first(20) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.descripcion.first(40) %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.importe_total %></td>
+        <td class="ir-a" id="<%= factura_path(factura.id) %>"><%= factura.saldo %></td>
         <td>
           <span class="pull-right">
-					<%= link_to raw('<i class="glyphicon glyphicon-plus-sign" title="Nuevo recibo"></i>'), [:new, factura, :recibo] %>
+            <%= link_to raw('<i class="glyphicon glyphicon-plus-sign" title="Nuevo recibo"></i>'), [:new, factura, :recibo] %>
           </span>
-				</td>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -46,3 +46,12 @@
 
 <br>
 
+<%# script: al hacer click en una celda de la tabla, redirige a la vista detallada
+    no se puede aplicar al renglon entero porque sobreescribe al boton de agregar recibo
+    el id de cada celda de la lista tiene que contener el path de destino %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.ir-a').on('click', function() { window.location = this.id});
+  });
+</script>

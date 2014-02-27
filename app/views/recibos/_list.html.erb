@@ -12,7 +12,7 @@
 
   <tbody>
     <% @recibos.each do |recibo| %>
-      <tr>
+      <tr id="<%= factura_recibo_path(recibo.factura, recibo) %>">
         <td><%= link_to '', [recibo.factura, recibo], class:"glyphicon glyphicon-eye-open" %></td>
         <td><%= formatted_date(recibo.fecha) %></td>
         <td id="lista-corta"><%= recibo.factura.nombre.first(30) %></td>
@@ -23,3 +23,13 @@
     <% end %>
   </tbody>
 </table>
+
+
+<%# script: al hacer click en un renglon, redirige a la vista detallada
+    el id de cada renglon de la lista tiene que contener el path de destino %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('tr').on('click', function() { window.location = this.id});
+  });
+</script>
