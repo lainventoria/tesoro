@@ -6,7 +6,7 @@ class ReciboTest < ActiveSupport::TestCase
   end
 
   test "El recibo es válido si no completa la factura" do
-    factura = create :factura, importe_total: Money.new(1000)
+    factura = create :factura, importe_neto: Money.new(1000)
     recibo = factura.recibos.build importe: Money.new(800)
 
     assert recibo.valid?, recibo.errors.messages
@@ -15,7 +15,7 @@ class ReciboTest < ActiveSupport::TestCase
   end
 
   test "El recibo es inválido si se pasa del valor de la factura" do
-    factura = create :factura, importe_total: 1000
+    factura = create :factura, importe_neto: 1000
     recibo = factura.recibos.build importe: 1800
 
     assert recibo.invalid?, recibo.errors.messages
@@ -23,8 +23,8 @@ class ReciboTest < ActiveSupport::TestCase
   end
 
   test "La factura ya fue cancelada" do
-    factura = create :factura, importe_total: 1000
-    recibo1 = factura.recibos.build importe: 1000
+    factura = create :factura, importe_neto: 1000, iva: 1000*0.21
+    recibo1 = factura.recibos.build importe: 1000*1.21
     recibo2 = factura.recibos.build importe: 800
 
     assert recibo1.valid?, recibo1.errors.messages

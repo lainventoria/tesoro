@@ -49,6 +49,6 @@ class RecibosControllerTest < ActionController::TestCase
       delete :destroy, id: @recibo, factura_id: @factura
     end
 
-    assert_redirected_to factura_recibos_path
+    assert_redirected_to factura_path
   end
 end

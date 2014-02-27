@@ -59,8 +59,8 @@
     <div class="row">
       <%# lugar para el campo importe_neto que esta faltando %>
       <div class="field form-group col-md-3 col-md-offset-4">
-        <%= f.label :iva %><br>
-        <%= f.text_field :iva, class: "form-control" %>
+        <%= f.label :importe_neto %><br>
+        <%= f.text_field :importe_neto, class: "form-control" %>
       </div>
       <div class="field form-group col-md-2 ">
         <%= f.label :iva %><br>
@@ -68,7 +68,7 @@
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :importe_total %><br>
-        <%= f.text_field :importe_total, class: "form-control" %>
+        <%= f.text_field :importe_total, class: "form-control", disabled: "true" %>
       </div>
     </div>
 
@@ -115,9 +115,14 @@
   cada formulario y revisar que las preferencias sean las mismas %>
 
   <script type="text/javascript">
+    function parse_float (s){
+      return parseFloat (s.replace(/,/,'.'));
+    };
     $(document).ready(function(){
-      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false})
-    })
-  </script>
+      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false});
+      $('#factura_importe_neto').on('keyup', function() { $('#factura_importe_total')[0].value = parse_float($('#factura_importe_neto')[0].value) + parse_float($('#factura_iva')[0].value); });
+      $('#factura_iva').on('keyup', function() { $('#factura_importe_total')[0].value = parse_float($('#factura_importe_neto')[0].value) + parse_float($('#factura_iva')[0].value); });
+  });
+</script>
 
 <% end %>
