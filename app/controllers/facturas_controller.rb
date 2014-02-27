@@ -24,7 +24,6 @@ class FacturasController < ApplicationController
   # GET /facturas/1
   # GET /facturas/1.json
   def show
-    expires_now()
   end
 
   # GET /facturas/new
