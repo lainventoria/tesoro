@@ -26,7 +26,6 @@ gem 'jquery-rails'
 gem 'jquery-turbolinks', github: 'kossnocorp/jquery.turbolinks'
 gem 'turbolinks'
 
-gem 'execjs'
 gem 'therubyracer'
 
 # I18n
