@@ -81,4 +81,11 @@ class Factura < ActiveRecord::Base
     errors[:base] << "El total sobrepasa el saldo de la factura" if self.saldo < 0
   end
 
+  # Devuelve nil si no pudo pagar por alguna razón
+  # FIXME null object?
+  def pagar(importe)
+    nuevo = recibos.create(importe: importe)
+
+    nuevo.persisted? ? nuevo : nil
+  end
 end
