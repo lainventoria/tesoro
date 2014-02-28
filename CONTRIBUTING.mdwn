@@ -15,6 +15,9 @@
         :sarasa => true
   siempre que se pueda
 
+* No uses CSS ni javascript inline, siempre en los archivos de `app/assets/`
+  correspondientes a la vista (y no en los `applicacion.{js,css}`)
+
 ## Peer Review / Pull Request
 
 * Usamos git-flow
