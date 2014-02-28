@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class ChequeTest < ActiveSupport::TestCase
+<<<<<<< HEAD
+=======
+  # test "the truth" do
+  #   assert true
+  # end
+>>>>>>> 67ab0c05c4114a4cb90e1136b3f1ff91b5354426
 
   test "es valido" do
     assert (c = create(:cheque)).valid?, c.errors.messages
