@@ -1,9 +1,8 @@
 Cp::Application.routes.draw do
   root 'obras#index'
 
-  resources :obras do
-    resources :cajas
-  end
+  resources :obras
+  resources :cajas
 
   resources :facturas do
   # Filtrar facturas por situacion
