@@ -27,9 +27,5 @@ Cp::Application.routes.draw do
   end
   resources :terceros
 
-  resource :cheques do
-    collection do
-      get 'vencidos'
-    end
-  end
+  resource :cheques, only: [ :index, :show ]
 end
