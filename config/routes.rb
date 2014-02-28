@@ -26,4 +26,10 @@ Cp::Application.routes.draw do
     end
   end
   resources :terceros
+
+  resource :cheques do
+    collection do
+      get 'vencidos'
+    end
+  end
 end
