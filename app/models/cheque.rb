@@ -4,6 +4,7 @@ class Cheque < ActiveRecord::Base
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
   validates_presence_of :fecha_vencimiento, :monto
+  validates_presence_of :cuenta_id, unless: :terceros?
 
   monetize :monto_centavos
 
