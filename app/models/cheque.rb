@@ -8,7 +8,7 @@ class Cheque < ActiveRecord::Base
   monetize :monto_centavos
 
   def vencido?
-    fecha_vencimiento > Time.now
+    fecha_vencimiento < Time.now
   end
 
   def propio?
