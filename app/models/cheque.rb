@@ -8,6 +8,13 @@ class Cheque < ActiveRecord::Base
 
   monetize :monto_centavos
 
+  # Trae todos los cheques vencidos, si se le pasa una fecha trae los
+  # vencidos a ese momento
+  scope :vencidos, lambda { |time = nil|
+    time = Time.now if not time
+    where("fecha_vencimiento < ?", time)
+  }
+
   def vencido?
     fecha_vencimiento < Time.now
   end
