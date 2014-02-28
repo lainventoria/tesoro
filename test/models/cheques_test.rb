@@ -10,13 +10,13 @@ class ChequeTest < ActiveSupport::TestCase
   end
 
   test "el cheque está vencido" do
-    cheque = create :cheque, fecha_vencimiento: Time.now - 360000
+    cheque = create :cheque, fecha_vencimiento: Time.now - rand(360000)
 
     assert cheque.vencido?, "#{Time.now} > #{cheque.fecha_vencimiento}"
   end
 
   test "el cheque no está vencido" do
-    cheque = create :cheque
+    cheque = create :cheque, fecha_vencimiento: Time.now + rand(360000)
 
     assert_not cheque.vencido?, "#{Time.now} > #{cheque.fecha_vencimiento}"
   end
