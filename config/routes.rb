@@ -27,5 +27,5 @@ Cp::Application.routes.draw do
   end
   resources :terceros
 
-  resource :cheques, only: [ :index, :show ]
+  resources :cheques, only: [ :index, :show ]
 end
