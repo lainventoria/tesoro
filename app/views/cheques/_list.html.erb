@@ -1,0 +1,35 @@
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Situación</th>
+      <th>Fecha</th>
+      <th>Vencimiento</th>
+      <th>Cheque</th>
+      <th>Monto</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cheques.each do |cheque| %>
+      <tr id="">
+        <td><%= link_to '', cheque, class:"glyphicon glyphicon-eye-open" %></td>
+        <td><%= cheque.situacion %></td>
+        <td><%= formatted_date(cheque.fecha) %></td>
+        <td><%= formatted_date(cheque.fecha_vencimiento) %></td>
+        <td><%= cheque.numero %></td>
+        <td><%= cheque.monto %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%# script: al hacer click en un renglon, redirige a la vista detallada
+    el id de cada renglon de la lista tiene que contener el path de destino %>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('tr').on('click', function() { window.location = this.id});
+  });
+</script>
