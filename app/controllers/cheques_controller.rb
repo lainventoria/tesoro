@@ -1,7 +1,8 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
+
   def index
-    @cheques = Cheques.all
+    @cheques = Cheque.all
   end
 
   def show
