@@ -58,29 +58,4 @@
 
   </fieldset>
 
-  <%# DEBUG %>
-  <%# campos necesarios para crear nuevos recibos %>
-
-  <% if ! mostrar_ocultos %>
-    <div class="row hidden">
-  <% else %>
-    <div class="row">
-    <h6>Campos Ocultos (debug)<small>
-  <% end %>
-        <% @recibo.factura_id = @factura.id %>
-        factura_id
-        <%= f.text_field :factura_id %>
-        
-        <% @recibo.situacion = @factura.situacion %>
-        situacion
-        <%= f.text_field :situacion %>
-      </small>
-    </h6>
-
-  </div>
-
-  <div class="row">
-    <br>
-  </div>
-
 <% end %>
