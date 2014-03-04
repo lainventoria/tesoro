@@ -20,8 +20,8 @@ module ApplicationHelper
     # era una cadena
     cuit_sin_validar = cuit.to_s.gsub /[^0-9]/, ''
 
-    # parece que el cuit es siempre de 11 letras
-    return nil if cuit_sin_validar.length < 11
+    # parece que el cuit es siempre de 11 cifras
+    return nil if not cuit_sin_validar.length == 11
 
     multiplicadores = [ 5, 4, 3, 2, 7, 6, 5, 4, 3, 2, 1 ]
     resultado = 0
