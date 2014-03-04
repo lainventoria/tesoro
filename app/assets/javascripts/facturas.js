@@ -1,12 +1,4 @@
 $(document).ready(function(){
-// Inicializar los datepicker
-  $('.input-group.date').datepicker({
-    format: "dd M yyyy",
-    weekStart: 1,
-    autoclose: true,
-    language: "es",
-    forceParse: false
-  });
 
 // cuando se hace un cambio en IVA o importe neto, calcular el importe
 // bruto
@@ -27,5 +19,8 @@ $(document).ready(function(){
 // script que permite que un boton ubicado fuera del formulario lo
 // postee hay que referirse al formulario por su id para el caso de una
 // nueva factura el id del formulario es siempre new_factura
-  $('#btnGuardar').on('click', function() { $('#new_factura').submit(); });
+  $('#btnGuardar').on('click', function() {
+    $('#new_factura').submit();
+    $('.edit_factura').submit();
+  });
 });
