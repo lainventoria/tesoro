@@ -1,4 +1,6 @@
 class Factura < ActiveRecord::Base
+  include ApplicationHelper
+
   # Las facturas se pueden cancelar con muchos recibos
   has_many :recibos, inverse_of: :factura
 
@@ -11,8 +13,7 @@ class Factura < ActiveRecord::Base
   monetize :importe_total_centavos
   monetize :saldo_centavos
 
-  validates :cuit, format: { with: /[0-9]{2}-[0-9]+-[0-9]/,
-                             message: "no válido" }
+  validate :validate_cuit
 
   # Cuando se crea una Factura, el saldo es igual al importe_total
   before_create do |f| f.saldo = f.importe_total end
@@ -63,4 +64,8 @@ class Factura < ActiveRecord::Base
 	def to_s
 		nombre_y_numero
 	end
+
+  def validate_cuit
+    errors[:base] << "El CUIT no es válido" if not validar_cuit(self.cuit)
+  end
 end
