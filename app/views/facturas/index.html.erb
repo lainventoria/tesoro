@@ -45,13 +45,3 @@
 </table>
 
 <br>
-
-<%# script: al hacer click en una celda de la tabla, redirige a la vista detallada
-    no se puede aplicar al renglon entero porque sobreescribe al boton de agregar recibo
-    el id de cada celda de la lista tiene que contener el path de destino %>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.ir-a').on('click', function() { window.location = this.id});
-  });
-</script>
