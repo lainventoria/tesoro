@@ -1,4 +1,6 @@
 class Factura < ActiveRecord::Base
+  include ApplicationHelper
+
   # Las facturas se pueden cancelar con muchos recibos
   has_many :recibos, inverse_of: :factura
 
@@ -20,8 +22,7 @@ class Factura < ActiveRecord::Base
   before_create :calcular_importe_total, :calcular_saldo
   before_update :calcular_importe_total, :calcular_saldo
   
-  validates :cuit, format: { with: /[0-9]{2}-[0-9]+-[0-9]/,
-                             message: "no válido" }
+  validate :validate_cuit
 
   # Chequea si la situación es pago
   def pago?
@@ -79,4 +80,8 @@ class Factura < ActiveRecord::Base
 	def to_s
 		nombre_y_numero
 	end
+
+  def validate_cuit
+    errors[:base] << "El CUIT no es válido" if not validar_cuit(self.cuit)
+  end
 end
