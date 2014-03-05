@@ -2,60 +2,67 @@
 ---
 cheque_0:
   cuenta_id: 54837154
+  recibo_id: 201161864
   situacion: propio
   numero: 308
   monto_centavos: 726
   monto_moneda: ARS
   fecha_vencimiento: '2015-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_1:
   cuenta_id: 495116819
+  recibo_id: 201161864
   situacion: propio
   numero: 543
   monto_centavos: 910
   monto_moneda: ARS
   fecha_vencimiento: '2015-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_2:
   cuenta_id: 887179049
+  recibo_id: 38482093
   situacion: terceros
   numero: 776
   monto_centavos: 589
   monto_moneda: ARS
   fecha_vencimiento: '2015-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_3:
   cuenta_id: 887179049
+  recibo_id: 38482093
   situacion: terceros
   numero: 969
   monto_centavos: 61
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_4:
   cuenta_id: 864846658
+  recibo_id: 201161864
   situacion: propio
   numero: 404
   monto_centavos: 789
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_5:
   cuenta_id: 65435570
+  recibo_id: 38482093
   situacion: terceros
   numero: 958
   monto_centavos: 94
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_6:
   cuenta_id: 335258163
+  recibo_id: 201161864
   situacion: propio
   numero: 412
   monto_centavos: 598
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_7:
   cuenta_id: 54837154
   situacion: propio
@@ -63,7 +70,7 @@ cheque_7:
   monto_centavos: 889
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_8:
   cuenta_id: 335258163
   situacion: propio
@@ -71,7 +78,7 @@ cheque_8:
   monto_centavos: 282
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_9:
   cuenta_id: 876842807
   situacion: propio
@@ -79,7 +86,7 @@ cheque_9:
   monto_centavos: 26
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_10:
   cuenta_id: 1029114640
   situacion: propio
@@ -87,7 +94,7 @@ cheque_10:
   monto_centavos: 733
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_11:
   cuenta_id: 173030301
   situacion: propio
@@ -95,7 +102,7 @@ cheque_11:
   monto_centavos: 760
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_12:
   cuenta_id: 76264363
   situacion: propio
@@ -103,7 +110,7 @@ cheque_12:
   monto_centavos: 142
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_13:
   cuenta_id: 345400876
   situacion: propio
@@ -111,7 +118,7 @@ cheque_13:
   monto_centavos: 828
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_14:
   cuenta_id: 620532392
   situacion: propio
@@ -119,7 +126,7 @@ cheque_14:
   monto_centavos: 761
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_15:
   cuenta_id: 65435570
   situacion: propio
@@ -127,7 +134,7 @@ cheque_15:
   monto_centavos: 907
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_16:
   cuenta_id: 1039516444
   situacion: propio
@@ -135,7 +142,7 @@ cheque_16:
   monto_centavos: 757
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_17:
   cuenta_id: 495116819
   situacion: propio
@@ -143,7 +150,7 @@ cheque_17:
   monto_centavos: 704
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_18:
   cuenta_id: 335258163
   situacion: propio
@@ -151,7 +158,7 @@ cheque_18:
   monto_centavos: 57
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_19:
   cuenta_id: 54837154
   situacion: propio
@@ -159,7 +166,7 @@ cheque_19:
   monto_centavos: 84
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_20:
   cuenta_id: 983041797
   situacion: propio
@@ -167,7 +174,7 @@ cheque_20:
   monto_centavos: 67
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_21:
   cuenta_id: 183694219
   situacion: propio
@@ -175,7 +182,7 @@ cheque_21:
   monto_centavos: 400
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_22:
   cuenta_id: 65435570
   situacion: propio
@@ -183,7 +190,7 @@ cheque_22:
   monto_centavos: 569
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_23:
   cuenta_id: 183694219
   situacion: propio
@@ -191,7 +198,7 @@ cheque_23:
   monto_centavos: 666
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_24:
   cuenta_id: 451880458
   situacion: propio
@@ -199,7 +206,7 @@ cheque_24:
   monto_centavos: 886
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_25:
   cuenta_id: 620532392
   situacion: propio
@@ -207,7 +214,7 @@ cheque_25:
   monto_centavos: 725
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_26:
   cuenta_id: 1039516444
   situacion: propio
@@ -215,7 +222,7 @@ cheque_26:
   monto_centavos: 400
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_27:
   cuenta_id: 495116819
   situacion: propio
@@ -223,7 +230,7 @@ cheque_27:
   monto_centavos: 381
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_28:
   cuenta_id: 65435570
   situacion: propio
@@ -231,7 +238,7 @@ cheque_28:
   monto_centavos: 29
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_29:
   cuenta_id: 596727489
   situacion: propio
@@ -239,7 +246,7 @@ cheque_29:
   monto_centavos: 192
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_30:
   cuenta_id: 54837154
   situacion: propio
@@ -247,7 +254,7 @@ cheque_30:
   monto_centavos: 153
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_31:
   cuenta_id: 183694219
   situacion: propio
@@ -255,7 +262,7 @@ cheque_31:
   monto_centavos: 410
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_32:
   cuenta_id: 983041797
   situacion: propio
@@ -263,7 +270,7 @@ cheque_32:
   monto_centavos: 495
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_33:
   cuenta_id: 451880458
   situacion: propio
@@ -271,7 +278,7 @@ cheque_33:
   monto_centavos: 591
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_34:
   cuenta_id: 713413254
   situacion: propio
@@ -279,7 +286,7 @@ cheque_34:
   monto_centavos: 414
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_35:
   cuenta_id: 864846658
   situacion: propio
@@ -287,7 +294,7 @@ cheque_35:
   monto_centavos: 151
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_36:
   cuenta_id: 54837154
   situacion: propio
@@ -295,7 +302,7 @@ cheque_36:
   monto_centavos: 366
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_37:
   cuenta_id: 983041797
   situacion: propio
@@ -303,7 +310,7 @@ cheque_37:
   monto_centavos: 346
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_38:
   cuenta_id: 770184861
   situacion: propio
@@ -311,7 +318,7 @@ cheque_38:
   monto_centavos: 273
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'
 cheque_39:
   cuenta_id: 183694219
   situacion: propio
@@ -319,4 +326,4 @@ cheque_39:
   monto_centavos: 681
   monto_moneda: ARS
   fecha_vencimiento: '2014-03-03 20:23:38 -0300'
-  fecha: '2014-03-03 20:23:38 -0300'
+  fecha_emision: '2014-03-03 20:23:38 -0300'

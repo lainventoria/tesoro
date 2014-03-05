@@ -33,7 +33,7 @@ factura_0:
   importe_total_moneda: ARS
   fecha: '2014-02-27 18:21:12 -0300'
   fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
+  situacion: pago
   saldo_centavos: 127
   saldo_moneda: ARS
   importe_neto_centavos: 9700
@@ -79,7 +79,7 @@ factura_1:
   importe_total_moneda: ARS
   fecha: '2014-02-27 18:21:12 -0300'
   fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
+  situacion: pago
   saldo_centavos: 140
   saldo_moneda: ARS
   importe_neto_centavos: 30900
@@ -125,7 +125,7 @@ factura_2:
   importe_total_moneda: ARS
   fecha: '2014-02-27 18:21:12 -0300'
   fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
+  situacion: pago
   saldo_centavos: 203
   saldo_moneda: ARS
   importe_neto_centavos: 360
@@ -172,7 +172,7 @@ factura_3:
   importe_total_moneda: ARS
   fecha: '2014-02-27 18:21:12 -0300'
   fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
+  situacion: pago
   saldo_centavos: 611
   saldo_moneda: ARS
   importe_neto_centavos: 91000
