@@ -3,9 +3,10 @@
 FactoryGirl.define do
   factory :cheque do
     cuenta
+    recibo
 
-    monto { Money.new rand(1000) }
-    fecha { Time.now }
+    monto { Money.new rand(10) }
+    fecha_emision { Time.now }
     fecha_vencimiento { Time.now + rand(360000) }
   end
 end

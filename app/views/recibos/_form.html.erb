@@ -31,11 +31,11 @@
     <div class="row">
       <div class="field form-group col-md-9">
         <label>Tercero</label>
-        <span class="form-control" disabled><%= @factura.nombre.first(80) %></span>
+        <span class="form-control" disabled><%= @recibo.factura.nombre.first(80) %></span>
       </div>
       <div class="field form-group col-md-3" >
         <label>Nro. Factura</label>
-        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %></span>
+        <span class="form-control" disabled><%= @recibo.factura.tipo.first(1) %>-<%= @recibo.factura.numero.first(10) %></span>
       </div>
     </div>
 
@@ -67,11 +67,10 @@
     <div class="row">
     <h6>Campos Ocultos (debug)<small>
   <% end %>
-        <% @recibo.factura_id = @factura.id %>
         factura_id
         <%= f.text_field :factura_id %>
         
-        <% @recibo.situacion = @factura.situacion %>
+        <% @recibo.situacion = @recibo.factura.situacion %>
         situacion
         <%= f.text_field :situacion %>
       </small>

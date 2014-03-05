@@ -1,5 +1,6 @@
 class Cheque < ActiveRecord::Base
   belongs_to :cuenta
+  belongs_to :recibo
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES

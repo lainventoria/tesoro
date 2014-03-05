@@ -13,7 +13,6 @@ module ApplicationHelper
 	def formatted_date(date)
 	  date.strftime("%d %b %Y")
 	end
-end
 
   ### DEBUG ###
   # Mostrar campos ocultos en formularios
@@ -21,3 +20,4 @@ end
     true 
   end
 
+end
