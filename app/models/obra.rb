@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Obra < ActiveRecord::Base
   has_many :cajas
   has_one :cuenta
