@@ -1,6 +1,11 @@
+# Los cheques son promesas de cobro o pago, es decir que son movimientos
+# futuros
+# Solo se pueden depositar cuando están vencidos 
+# Solo cuando se depositan generan un movimiento (positivo o negativo)
+# en el recibo al que pertenecen
 class Cheque < ActiveRecord::Base
   belongs_to :cuenta
-  belongs_to :recibo
+  belongs_to :recibo, inverse_of: :cheques
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
@@ -27,5 +32,12 @@ class Cheque < ActiveRecord::Base
 
   def terceros?
     situacion == 'terceros'
+  end
+
+  # al depositar un cheque se genera un movimiento en el recibo de este
+  # cheque y se marca como estado = depositado
+  def depositar
+    return nil if :tercero?
+# TODO hasta que mergee recibos-movimientos
   end
 end

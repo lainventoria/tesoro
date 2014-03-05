@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20140304212300) do
     t.string   "monto_moneda",   default: "ARS", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "recibo_id"
   end
 
   create_table "obras", force: true do |t|
