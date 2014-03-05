@@ -1,6 +1,7 @@
 class Recibo < ActiveRecord::Base
   # Las facturas se cancelan con uno o más recibos
   belongs_to :factura, inverse_of: :recibos
+  # los cheques son movimientos futuros
   has_many :cheques, inverse_of: :recibo
   # Los recibos disparan movimientos
   has_many :movimientos, inverse_of: :recibo

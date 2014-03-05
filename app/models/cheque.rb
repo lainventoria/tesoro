@@ -9,9 +9,14 @@ class Cheque < ActiveRecord::Base
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
-  validates_presence_of :fecha_vencimiento, :monto
+  # campos requeridos
+  validates_presence_of :fecha_emision, :fecha_vencimiento, :monto,
+                        :beneficiario
   # Todos los cheques propios tienen una cuenta
   validates_presence_of :cuenta_id, if: :propio?
+
+  # todos los cheques tiene un recibo
+  validates_presence_of :recibo_id
 
   monetize :monto_centavos
 
@@ -37,7 +42,11 @@ class Cheque < ActiveRecord::Base
   # al depositar un cheque se genera un movimiento en el recibo de este
   # cheque y se marca como estado = depositado
   def depositar
-    return nil if :tercero?
-# TODO hasta que mergee recibos-movimientos
+    # solo los cheques de terceros se depositan
+    return nil if :propio?
+
+    recibo.movimientos.create(monto: self.monto, recibo: self.recibo)
+
+
   end
 end
