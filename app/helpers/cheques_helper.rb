@@ -1,7 +1,7 @@
 module ChequesHelper
 
   def titulo_vista_cheque
-    if @cheque.propio?
+    if :propio?
       "Detalles de Cheque Propio"
     else
       "Detalles de Cheque de Tercero"
@@ -17,7 +17,7 @@ module ChequesHelper
   end
 
   def path_a_listado
-    if @cheque.propio?
+    if :propio?
       propios_cheques_path
     else
       terceros_cheques_path
@@ -25,7 +25,7 @@ module ChequesHelper
   end
 
   def path_a_recibo
-    recibo_path(@cheque.recibo)
+    recibo_path(:recibo)
   end
 
 end
