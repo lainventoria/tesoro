@@ -8,7 +8,6 @@ FactoryGirl.define do
     nombre "MyText"
     domicilio "MyText"
     cuit "20-31278322-4"
-    iva 1.5
     descripcion "MyText"
     importe_neto { Money.new rand(1000) }
     iva { Money.new(importe_neto * 0.21) }
