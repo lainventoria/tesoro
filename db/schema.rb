@@ -11,13 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140304212300) do
+ActiveRecord::Schema.define(version: 20140305233818) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tipo",       default: "De obra", null: false
+    t.string   "banco"
+    t.string   "numero"
+    t.string   "situacion"
   end
 
   create_table "cheques", force: true do |t|
@@ -33,17 +36,12 @@ ActiveRecord::Schema.define(version: 20140304212300) do
     t.integer  "recibo_id"
     t.string   "beneficiario"
     t.string   "banco"
+    t.integer  "caja_id"
   end
 
+  add_index "cheques", ["caja_id"], name: "index_cheques_on_caja_id"
   add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
   add_index "cheques", ["recibo_id"], name: "index_cheques_on_recibo_id"
-
-  create_table "cuentas", force: true do |t|
-    t.string   "numero"
-    t.integer  "obra_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"

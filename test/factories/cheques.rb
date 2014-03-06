@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :cheque do
-    cuenta
+    caja
     recibo
 
     beneficiario "pepe honguito"

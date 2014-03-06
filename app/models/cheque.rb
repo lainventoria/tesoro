@@ -4,7 +4,7 @@
 # Solo cuando se depositan generan un movimiento (positivo o negativo)
 # en el recibo al que pertenecen
 class Cheque < ActiveRecord::Base
-  belongs_to :cuenta
+  belongs_to :caja
   belongs_to :recibo, inverse_of: :cheques
 
   SITUACIONES = %w(propio terceros)
@@ -12,8 +12,8 @@ class Cheque < ActiveRecord::Base
   # campos requeridos
   validates_presence_of :fecha_emision, :fecha_vencimiento, :monto,
                         :beneficiario
-  # Todos los cheques propios tienen una cuenta
-  validates_presence_of :cuenta_id, if: :propio?
+  # Todos los cheques propios tienen una caja
+  validates_presence_of :caja_id, if: :propio?
 
   # todos los cheques tiene un recibo
   validates_presence_of :recibo_id

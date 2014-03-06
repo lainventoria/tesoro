@@ -5,8 +5,6 @@ Cp::Application.routes.draw do
     resources :cajas
   end
 
-  resources :cuentas
-
   resources :facturas do
   # Filtrar facturas por situacion
     collection do

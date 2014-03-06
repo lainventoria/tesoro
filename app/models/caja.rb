@@ -5,6 +5,10 @@ class Caja < ActiveRecord::Base
 
   validates_presence_of :obra_id, :tipo
 
+  # Las cajas son de efectivo o bancarias
+  SITUACIONES = %w(efectivo banco)
+  validates_inclusion_of :situacion, in: SITUACIONES
+
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
   # con los valores viejos
   normalize_attribute :tipo, with: [ :squish, :blank ] do |valor|
@@ -17,6 +21,14 @@ class Caja < ActiveRecord::Base
     else
       valor
     end
+  end
+
+  def banco?
+    :situacion == 'banco'
+  end
+
+  def efectivo?
+    :situacion == 'efectivo'
   end
 
   def self.tipos

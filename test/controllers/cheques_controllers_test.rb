@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ChequesControllerTest < ActionController::TestCase
   setup do
-    @cuenta = create :cuenta
+    @caja = create :caja
     @cheque = create :cheque
   end
 
