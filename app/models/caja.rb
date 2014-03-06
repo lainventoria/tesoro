@@ -117,4 +117,13 @@ class Caja < ActiveRecord::Base
   def emitir_cheque(*args)
     Cheque.create(*args)
   end
+
+  # transferir un monto de una caja a otra
+  def transferir(monto, caja, recibo = nil)
+    recibo = crear_recibo_interno if not recibo
+    Caja.transaction do
+      self.extraer monto, false, recibo
+      caja.depositar monto, true, recibo
+    end
+  end
 end

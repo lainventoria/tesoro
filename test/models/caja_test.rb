@@ -144,4 +144,17 @@ class CajaTest < ActiveSupport::TestCase
     # el saldo de la factura no varía
     assert_equal factura_saldo, cheque.recibo.factura.saldo
   end
+
+  test 'transferir dineros de una caja a otra' do
+    caja1 = create :caja
+    caja2 = create :caja
+    dineros = Money.new(rand(1000))
+
+    assert caja1.depositar dineros, caja1.errors.messages
+    assert_equal dineros, caja1.total
+
+    assert caja1.transferir(dineros, caja2)
+    assert_equal dineros, caja2.total
+    assert_equal 0, caja1.total
+  end
 end
