@@ -126,15 +126,22 @@ class CajaTest < ActiveSupport::TestCase
     assert_equal tipo_existente, create(:caja, tipo: 'cajón sarasa').tipo
   end
 
-  test 'depositar un cheque de terceros' do
+  test 'depositar y cobrar un cheque de terceros' do
     cheque = create :cheque, caja: @caja, situacion: 'terceros'
     movimientos = cheque.recibo.movimientos.count
+    factura_saldo = cheque.recibo.factura.saldo
+
+    assert @caja.depositar_cheque(cheque)
+    assert_equal 'depositado', cheque.estado
 
     # el deposito genera un movimiento en el recibo y un cambio de
     # estado en el cheque
-    assert (movimiento = @caja.depositar_cheque(cheque))
-    assert_equal 'depositado', cheque.estado
+    assert (movimiento = @caja.cobrar_cheque(cheque))
+    assert_equal 'cobrado', cheque.estado
     assert_equal movimientos + 1, cheque.recibo.movimientos.count
     assert_equal cheque.monto, movimiento.monto
+
+    # el saldo de la factura no varía
+    assert_equal factura_saldo, cheque.recibo.factura.saldo
   end
 end

@@ -11,7 +11,7 @@ class Cheque < ActiveRecord::Base
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
 
-  ESTADOS = %w(chequera depositado rechazado)
+  ESTADOS = %w(chequera depositado cobrado rechazado)
   validates_inclusion_of :estado, in: ESTADOS
 
   # campos requeridos
@@ -44,16 +44,27 @@ class Cheque < ActiveRecord::Base
     situacion == 'terceros'
   end
 
-  # al depositar un cheque se genera un movimiento en el recibo de este
-  # cheque y se marca como estado = depositado
+  def depositado?
+    estado == 'depositado'
+  end
+
   def depositar
     # solo los cheques de terceros se depositan
     return nil unless :terceros?
 
+    self.estado = 'depositado'
+  end
+
+  # al cobrar un cheque se genera un movimiento en el recibo de este
+  # cheque y se marca como estado = cobrado
+  def cobrar
+    # solo los cheques depositados se pueden cobrar
+    return nil unless :depositado?
+
     Cheque.transaction do
       recibo.movimientos.create(monto: self.monto, caja: self.caja)
 
-      self.estado = 'depositado'
+      self.estado = 'cobrado'
     end
 
     # devolver el movimiento

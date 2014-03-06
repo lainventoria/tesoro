@@ -104,4 +104,8 @@ class Caja < ActiveRecord::Base
   def depositar_cheque(cheque)
     cheque.depositar
   end
+
+  def cobrar_cheque(cheque)
+    cheque.cobrar
+  end
 end
