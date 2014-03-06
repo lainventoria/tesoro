@@ -100,4 +100,8 @@ class Caja < ActiveRecord::Base
                            situacion: 'interno',
                            fecha: Time.now)
   end
+
+  def depositar_cheque(cheque)
+    cheque.depositar
+  end
 end

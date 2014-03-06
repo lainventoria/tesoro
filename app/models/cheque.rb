@@ -1,3 +1,4 @@
+# encoding: utf-8
 # Los cheques son promesas de cobro o pago, es decir que son movimientos
 # futuros
 # Solo se pueden depositar cuando están vencidos 
@@ -9,6 +10,10 @@ class Cheque < ActiveRecord::Base
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
+
+  ESTADOS = %w(chequera depositado rechazado)
+  validates_inclusion_of :estado, in: ESTADOS
+
   # campos requeridos
   validates_presence_of :fecha_emision, :fecha_vencimiento, :monto,
                         :beneficiario
@@ -43,10 +48,16 @@ class Cheque < ActiveRecord::Base
   # cheque y se marca como estado = depositado
   def depositar
     # solo los cheques de terceros se depositan
-    return nil if :propio?
+    return nil unless :terceros?
 
-    recibo.movimientos.create(monto: self.monto, recibo: self.recibo)
+    Cheque.transaction do
+      recibo.movimientos.create(monto: self.monto, caja: self.caja)
 
+      self.estado = 'depositado'
+    end
+
+    # devolver el movimiento
+    self.recibo.movimientos.last
 
   end
 end
