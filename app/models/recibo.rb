@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Recibo < ActiveRecord::Base
   # Las facturas se cancelan con uno o más recibos
   belongs_to :factura, inverse_of: :recibos

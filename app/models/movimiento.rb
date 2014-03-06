@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Movimiento < ActiveRecord::Base
   belongs_to :caja
 
