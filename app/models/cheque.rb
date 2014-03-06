@@ -32,6 +32,11 @@ class Cheque < ActiveRecord::Base
     where("fecha_vencimiento < ?", time)
   }
 
+  # Trae todos los cheques depositados
+  scope :depositados, lambda {
+    where(estado: 'depositado')
+  }
+
   def vencido?
     fecha_vencimiento < Time.now
   end
