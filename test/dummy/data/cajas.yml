@@ -1,73 +1,62 @@
-# 'cajas' data generated automatically by dummy at 18:21 02/27/2014 (20 records).
+# 'cajas' data generated automatically by dummy at 01:36 03/06/2014 (20 records).
 ---
 caja_0:
-  obra_id: 558027150
-  tipo: Non quae consequatur quo voluptatem.
-caja_1:
   obra_id: 26687635
-  tipo: Quis eum quisquam qui optio. Temporibus id dolor voluptas consequatur. Magnam
-    nemo aliquid velit quo.
+  tipo: De obra
+caja_1:
+  obra_id: 640619927
+  tipo: De obra
 caja_2:
-  obra_id: 373678365
-  tipo: Earum quis iste maxime accusamus. Quas placeat quia expedita quis. Sunt delectus
-    fugit voluptatem sit.
+  obra_id: 287843590
+  tipo: De obra
 caja_3:
-  obra_id: 1059472431
-  tipo: Nesciunt tenetur quidem inventore corrupti.
+  obra_id: 915408900
+  tipo: De obra
 caja_4:
   obra_id: 287843590
-  tipo: Quia ea non illo nesciunt. Est aliquam minima voluptatum quam. Dolorem sunt
-    minima quis voluptas.
+  tipo: De administración
 caja_5:
-  obra_id: 26687635
-  tipo: Possimus aut atque est repellendus.
+  obra_id: 944472118
+  tipo: De obra
 caja_6:
   obra_id: 1059472431
-  tipo: Sint ea ea eos repudiandae.
+  tipo: De obra
 caja_7:
-  obra_id: 915408900
-  tipo: Quidem rerum hic eligendi ad.
+  obra_id: 640619927
+  tipo: De administración
 caja_8:
-  obra_id: 944472118
-  tipo: Doloribus dolore similique commodi inventore. Provident nihil fugit nesciunt
-    non. Vel autem voluptatem fugiat rerum.
+  obra_id: 640619927
+  tipo: De seguridad
 caja_9:
-  obra_id: 1059472431
-  tipo: Ipsum quo modi voluptatem voluptatum.
+  obra_id: 256684193
+  tipo:  De administración
 caja_10:
   obra_id: 640619927
-  tipo: Officia veniam magnam veritatis ea. Vero quidem cupiditate rerum sint. Cum
-    quos quod veniam quisquam.
+  tipo: De seguridad
 caja_11:
-  obra_id: 1059472431
-  tipo: Omnis rerum cupiditate eveniet dolor. Consequatur ut delectus eligendi nemo.
-    At voluptatem dolor quasi ut.
+  obra_id: 287843590
+  tipo: De obra
 caja_12:
-  obra_id: 26687635
-  tipo: Saepe quidem labore excepturi aut.
+  obra_id: 287843590
+  tipo: De obra
 caja_13:
-  obra_id: 944472118
-  tipo: Est sit eius velit sapiente. Expedita quis molestias ipsam laborum. Et consequatur
-    et aperiam ut.
+  obra_id: 256684193
+  tipo: De obra
 caja_14:
-  obra_id: 1059472431
-  tipo: Quo vero a deserunt occaecati.
-caja_15:
-  obra_id: 944472118
-  tipo: Voluptatem facere non ea excepturi. Est enim magnam cum dolor. Aliquid velit
-    quaerat voluptatibus autem.
-caja_16:
-  obra_id: 373678365
-  tipo: Sunt laudantium est nostrum nemo. Libero sit aliquid neque ad. Adipisci facere
-    dignissimos nobis animi.
-caja_17:
   obra_id: 640619927
-  tipo: Est fuga est perspiciatis sit. Id possimus consequatur explicabo est. Eos
-    vero qui est perspiciatis.
+  tipo:  De administración
+caja_15:
+  obra_id: 287843590
+  tipo: De obra
+caja_16:
+  obra_id: 26687635
+  tipo: De seguridad
+caja_17:
+  obra_id: 256684193
+  tipo: De obra
 caja_18:
-  obra_id: 558027150
-  tipo: Voluptas corporis fugiat magni quo.
+  obra_id: 26687635
+  tipo:  De administración
 caja_19:
-  obra_id: 373678365
-  tipo: Unde id saepe autem dolor. Magni ab placeat sunt omnis. Est dolorum distinctio
-    necessitatibus quam.
+  obra_id: 915408900
+  tipo: De obra

@@ -1,475 +1,208 @@
-# 'facturas' data generated automatically by dummy at 18:21 02/27/2014 (10 records).
+# 'facturas' data generated automatically by dummy at 01:36 03/06/2014 (10 records).
 ---
 factura_0:
-  tipo: In id sapiente aut autem.
-  numero: Iusto rerum est unde cumque.
-  nombre: Qui deserunt quos nisi eligendi. Sed ullam voluptate rerum et. Possimus
-    impedit vero quo omnis. Sit et qui pariatur quis. Nobis et est iure accusamus.
-    Ullam consequatur aut veritatis alias. Alias suscipit eius voluptas soluta. Hic
-    commodi voluptatem aut et. Exercitationem aut in nulla deserunt.
-  domicilio: Atque cum sunt minima explicabo. Quam dolores impedit velit autem. Quis
-    reiciendis sed qui ut. Quo quam est quae sint. Consequatur veritatis est doloribus
-    et. Cumque non deleniti alias nihil. Vero necessitatibus cupiditate et necessitatibus.
-    Qui aperiam voluptatum labore voluptatem. Ut odit dicta soluta expedita. Deserunt
-    ut non soluta magni. Numquam voluptas minus voluptatem sed. Suscipit dolor sunt
-    assumenda fugiat. Sed voluptatem velit voluptates quisquam. Odit dolores dignissimos
-    voluptas quidem. Et recusandae aut exercitationem doloremque. Facilis eius eligendi
-    vitae quia. Molestiae repellat minima repellendus quam. Neque ullam architecto
-    quo aut. Fugiat fugit expedita praesentium atque. Totam voluptates dicta officiis
-    natus. Ratione ut illo eum nam. Esse exercitationem itaque dolores quod. Assumenda
-    quis repudiandae nesciunt velit. Quae natus ut laudantium in. Temporibus et enim
-    ut dolores. At ullam corporis consequatur harum. Perspiciatis molestiae architecto
-    ea autem.
-  cuit: Porro ducimus quos eum eaque. Iste aut non consequuntur maiores. Molestiae
-    architecto fugit rerum eveniet. Aliquid totam quo voluptatum deserunt. Occaecati
-    omnis tenetur consequatur cupiditate. Assumenda numquam ratione cumque nostrum.
-    Temporibus consectetur autem tempora perferendis. Dolores dignissimos quod vero
-    reprehenderit. Iusto in nostrum earum dolore.
-  descripcion: Eum voluptatem aut modi quia. Doloribus omnis sed a ut. Eum qui ipsum
-    at hic. Minus dolores minus qui et. Ipsa et delectus nulla provident. Corporis
-    consequuntur autem dolore perferendis. Eum soluta amet quis adipisci. Voluptatem
-    aliquam nam aut et. Labore fugiat est quos exercitationem.
-  importe_total_centavos: 12600
+  tipo: A
+  numero: 7
+  nombre: Vera Aléntova
+  domicilio: Av. Libertad 987
+  cuit: 30-44233123-7
+  descripcion: Praesentium enim ut aut suscipit. Vero ut ea dicta ad.
+  importe_total_centavos: 249
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 127
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 263
   saldo_moneda: ARS
-  importe_neto_centavos: 9700
+  importe_neto_centavos: 520
   importe_neto_moneda: ARS
-  iva_centavos: 323
+  iva_centavos: 301
   iva_moneda: ARS
 factura_1:
-  tipo: Harum sit odio sed eum.
-  numero: Pariatur ratione quasi ducimus id.
-  nombre: Expedita quo commodi reiciendis sed. Minima quis aut et aut. Quaerat cum
-    a rem ut. Dicta occaecati enim accusamus quibusdam. Culpa est deserunt nisi veniam.
-    Aut nam facere assumenda quasi. Nobis possimus officia velit voluptas. Aut veniam
-    ut dolorem facilis. Aliquid et enim rem dolor.
-  domicilio: Minus sequi doloremque enim id. Dolores et animi et sunt. Cupiditate
-    quis cumque sit harum. Ut architecto fugiat et explicabo. Magni fugiat rerum odit
-    eligendi. Nam qui possimus quae enim. Reiciendis impedit soluta non quo. Magni
-    ipsa voluptatibus voluptatem ut. Ea optio voluptate aliquid aliquid. Incidunt
-    amet at ut est. Sint ex ut nisi autem. Et placeat sequi est architecto. Dolorem
-    molestiae alias aut harum. Sed veniam perferendis error voluptas. Pariatur nesciunt
-    maxime nisi ut. Id voluptates doloribus qui deleniti. Quidem aut quia nulla cupiditate.
-    Fugiat aperiam amet ipsum ullam. Perferendis sed neque sint illo. Soluta ipsum
-    ullam delectus suscipit. Qui et nostrum cupiditate mollitia. Sed velit sapiente
-    et et. Perferendis labore voluptas qui ex. Possimus sed totam aspernatur nemo.
-    Minima quibusdam qui deleniti ullam. Nam aut voluptatibus qui quidem. Doloribus
-    quis quis id molestiae.
-  cuit: Qui eius architecto quia reiciendis. Iusto autem et dolor non. Iste labore
-    eum sit assumenda. Qui quia eum porro dolorem. Et adipisci quaerat hic est. Tempore
-    cumque et accusantium voluptatem. Quo et nam necessitatibus suscipit. Ea non dolorem
-    autem ut. Amet perferendis reprehenderit nobis hic.
-  descripcion: Neque libero tempore quis deleniti. Labore vero dignissimos nihil vero.
-    Id aperiam et ex ea. Rem labore fugit labore voluptatum. Amet officia fuga perspiciatis
-    quos. Quis mollitia officia et sunt. Laborum quos corporis soluta iusto. Nemo
-    repellat quos magnam culpa. Est asperiores nihil ex quo. Libero perspiciatis quibusdam
-    numquam perspiciatis. Eum nesciunt voluptatem expedita eligendi. Voluptatibus
-    officia voluptatum incidunt sequi. Non et laborum quisquam ducimus. Voluptatum
-    est omnis quod suscipit. Molestiae non error maxime veritatis. Delectus ipsum
-    iure culpa officiis. Eius accusantium perspiciatis autem eos. Iste dolorem voluptatem
-    autem aspernatur. Non ex velit et qui. Omnis sunt est consequuntur reprehenderit.
-    Facilis rerum provident aut et. Ratione voluptate quam dolor molestiae. Quibusdam
-    perspiciatis ex perferendis sed. Modi est ducimus dolor cupiditate. Vel est incidunt
-    in voluptatem. Tenetur amet ea vel deleniti. Porro laboriosam et iste est.
-  importe_total_centavos: 401
+  tipo: C
+  numero: 333
+  nombre: Olga Baclanova
+  domicilio: San Martin 999
+  cuit: 20-55555555-9
+  descripcion: Sin descripcion.
+  importe_total_centavos: 164
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 140
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 386
   saldo_moneda: ARS
-  importe_neto_centavos: 30900
+  importe_neto_centavos: 480
   importe_neto_moneda: ARS
-  iva_centavos: 184
+  iva_centavos: 221
   iva_moneda: ARS
 factura_2:
-  tipo: Et qui sunt error est. Necessitatibus sit qui quisquam dolorem. Velit nihil
-    ad quae nobis.
-  numero: Rem tempore saepe sunt sed.
-  nombre: Nesciunt sit pariatur voluptate fuga. Porro nemo ad expedita quis. Enim
-    placeat dolorem iure sequi. Ullam hic cumque error nulla. Dolorem ea eveniet tempore
-    eos. Quas voluptas molestiae voluptatem dolorem. Quasi et omnis aut sit. Ipsum
-    consequatur deleniti in omnis. Quod molestiae officiis amet deleniti.
-  domicilio: Eaque magni et recusandae omnis. Unde quas non in aliquid. Quaerat in
-    vero quis eum. Vero velit non perspiciatis debitis. Molestiae fuga ipsam id voluptates.
-    Vel quia qui doloribus cupiditate. Et autem non necessitatibus aut. Ut enim cumque
-    omnis nemo. Exercitationem sapiente enim omnis cumque.
-  cuit: Aspernatur inventore ut in unde. Dolorem iure enim sed impedit. Esse dolorum
-    nisi quia voluptas. Inventore sint reiciendis voluptas sed. Vero architecto fuga
-    expedita molestiae. Aut culpa ab sunt illum. Minima asperiores ut deserunt quia.
-    Ratione non occaecati pariatur quis. Est omnis repellendus nesciunt id. Architecto
-    et repudiandae illo facilis. Pariatur quia quas possimus consequuntur. Ullam saepe
-    commodi distinctio possimus. Omnis dignissimos nostrum iste recusandae. Laboriosam
-    adipisci nemo blanditiis libero. Fuga aut aut modi eum. Ab quia et quia minima.
-    Doloribus sed vel eligendi delectus. Eligendi debitis est et nulla. Nesciunt sed
-    tenetur distinctio qui. Cupiditate ea consequatur placeat delectus. Fugiat architecto
-    quod odio rerum. Vitae blanditiis exercitationem et deserunt. Voluptas sequi modi
-    repellendus modi. Quae in nulla occaecati cumque. Rerum cumque voluptate et quas.
-    Nostrum ipsam quia asperiores voluptatem. Ullam labore nobis velit omnis.
-  descripcion: Rerum temporibus odio sunt aut. Maxime deserunt quam sint asperiores.
-    Asperiores ea est cum repudiandae. Ratione omnis atque sunt adipisci. Eos reprehenderit
-    adipisci eaque nihil. Pariatur iure voluptates iusto aut. Quis qui enim rem aut.
-    Voluptates ut omnis inventore dolores. Sit qui distinctio omnis alias. Commodi
-    sunt rerum incidunt ut. At unde qui sit deserunt. Amet in aliquam optio sit. Dolorem
-    in quia necessitatibus ducimus. Adipisci ducimus eius fuga blanditiis. Velit dolores
-    quia eum fuga. Voluptas et nobis vero suscipit. Sunt ut exercitationem in rem.
-    Cumque tempore et quis esse. Voluptatem et laborum et modi. Blanditiis earum repellendus
-    ut labore. Rerum sed eos officiis cupiditate. Incidunt ut eligendi non totam.
-    Minima illum at provident non. Perferendis fugiat est quae animi. Cupiditate praesentium
-    tenetur amet vel. Natus dolorum nam non minima. Ut eius perferendis vero similique.
-  importe_total_centavos: 48000
+  tipo: R
+  numero: 88
+  nombre: Alekséi Batálov
+  domicilio: Av. Mbaracuya 1234
+  cuit: 14-88456321-9
+  descripcion: Id est mollitia quisquam porro. Deserunt quidem aspernatur nemo voluptas.
+    Ut est voluptas necessitatibus nulla. Modi ad eum aut quaerat. Minus accusamus
+    a similique ipsam. 
+  importe_total_centavos: 797
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
   situacion: cobro
-  saldo_centavos: 203
+  saldo_centavos: 132
   saldo_moneda: ARS
-  importe_neto_centavos: 360
+  importe_neto_centavos: 439
   importe_neto_moneda: ARS
-  iva_centavos: 252
+  iva_centavos: 885
   iva_moneda: ARS
 factura_3:
-  tipo: Rerum nesciunt et deserunt amet.
-  numero: Consequatur voluptatem aperiam facilis laudantium. Blanditiis perspiciatis
-    consequatur et neque. Quia et reiciendis vitae in.
-  nombre: Consequatur sit voluptatem autem quam. Quis qui molestiae quas esse. Perspiciatis
-    libero rerum qui libero. Quia velit deleniti in voluptatibus. Vitae odit nesciunt
-    est sed. Voluptate dolor vero similique voluptatem. Molestiae ut est non doloremque.
-    Aut est cupiditate aspernatur modi. Corrupti rem aut ut sunt. Voluptatem iusto
-    sunt ut minus. Consequatur fugit libero et exercitationem. Sapiente possimus officiis
-    omnis occaecati. Nemo tempora perferendis ut ullam. Nihil aut quaerat dicta sed.
-    Et animi a pariatur vero. Esse et officiis molestiae nostrum. Quis ad sed tempora
-    omnis. Ut sunt placeat quam ut. Tempora sunt temporibus consequatur esse. Dolores
-    enim voluptates qui quibusdam. Nihil magnam ullam fugiat est. Quasi reprehenderit
-    quis laboriosam est. Quis officia magni itaque accusantium. Accusamus in culpa
-    corrupti labore. Repellendus id quod magni consequatur. Vero quis sit laboriosam
-    odit. Culpa aut soluta aliquid modi.
-  domicilio: Molestiae et distinctio quo rem. Ut aliquam sit consequatur dolore. Magnam
-    pariatur aliquid rem ipsam. Et ut est blanditiis ut. Velit dolorum et itaque at.
-    Aut perferendis quia qui labore. Aut minima pariatur necessitatibus nihil. Dolorum
-    exercitationem et qui in. Officiis consectetur unde numquam quod. Ipsa eum consequatur
-    tenetur repudiandae. Dolor nihil sit accusamus minima. Labore animi optio sequi
-    corrupti. Eum voluptas est dolorem incidunt. Nulla ipsam tempore est laboriosam.
-    Qui in tenetur ab possimus. Necessitatibus nihil labore accusantium quod. Et expedita
-    et dicta animi. Non quae qui et quo. Provident at ut maiores numquam. Quia aut
-    consequatur laudantium maiores. Modi voluptatem omnis deleniti aliquam. Provident
-    neque magni distinctio aspernatur. Qui consequatur inventore voluptatibus et.
-    Saepe labore aut et nisi. Quia et totam molestiae tempore. Ea et nesciunt ut totam.
-    Ut necessitatibus ut eveniet ipsa.
-  cuit: Atque voluptates quidem quia dicta. Ad alias reiciendis enim quos. Optio voluptatibus
-    dolore officiis rem. Vitae ipsum aut aut ullam. Enim aut velit eos libero. Consectetur
-    magni modi et tempore. Sint adipisci molestiae esse laboriosam. Nisi quia in qui
-    nisi. Dolore sunt quia tenetur aspernatur.
-  descripcion: Est dolor omnis sint et. Natus deleniti voluptas quia voluptate. Dolorem
-    iste temporibus repudiandae occaecati. Ut quia facere esse iure. Illo dolore tempora
-    minima labore. Sed voluptate vitae repudiandae commodi. Et voluptatem quis molestias
-    optio. Enim delectus alias architecto placeat. Quis non dolores velit enim.
-  importe_total_centavos: 325
+  tipo: A
+  numero: 22
+  nombre: Sofiko Chiaureli
+  domicilio: Av. La Paz 789
+  cuit: 12-34567891-8
+  descripcion: Qui iure quidem optio sequi. A officiis quo aut quos. Tempore et autem
+    dolore officia. Accusamus omnis ipsa delectus accusamus. Iste quibusdam distinctio
+    odio ratione.
+  importe_total_centavos: 263
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
   situacion: cobro
-  saldo_centavos: 611
+  saldo_centavos: 290
   saldo_moneda: ARS
-  importe_neto_centavos: 91000
+  importe_neto_centavos: 981
   importe_neto_moneda: ARS
-  iva_centavos: 710
+  iva_centavos: 168
   iva_moneda: ARS
 factura_4:
-  tipo: Earum voluptate incidunt voluptas tempore. Eum dolores vel consequatur doloribus.
-    Aperiam et eum est nisi.
-  numero: Adipisci doloribus pariatur tempora voluptate.
-  nombre: Accusantium et distinctio hic eveniet. Beatae quae illo aut ut. Nihil quis
-    mollitia est ut. Aspernatur voluptas et ut possimus. Ipsum voluptate neque amet
-    rerum. Illo quos officiis ea nemo. Ut possimus qui deserunt explicabo. Saepe repellat
-    vero rerum aut. Eveniet qui velit odio esse. Illo modi dolores eligendi rem. Accusantium
-    sunt fugit ipsam nihil. Esse ipsa necessitatibus soluta omnis. Cum dolores distinctio
-    dolore id. Aspernatur voluptas dolor voluptate corrupti. Exercitationem voluptas
-    aut aspernatur sequi. Officiis suscipit qui ea perferendis. Dolorem quaerat ut
-    repellendus aliquid. Sunt autem natus est ipsa. Adipisci cum cum harum nihil.
-    Dolorum cupiditate debitis et eum. Culpa quae facilis architecto ut. Assumenda
-    pariatur est odit et. Sapiente quos dolorem autem maiores. Architecto repellendus
-    ad corrupti doloremque. Earum eum quia veniam sit. Explicabo possimus expedita
-    et et. Aut unde hic dolores dolores.
-  domicilio: Alias dolorum dolorem et accusantium. Ut tenetur et omnis quae. Illo
-    aut nemo quisquam autem. Sapiente qui nobis porro nihil. Omnis mollitia deleniti
-    qui ipsum. Veniam omnis voluptatum repudiandae placeat. Et asperiores sint iure
-    vitae. Non reprehenderit provident odit aliquid. Est dolor facilis qui rerum.
-    Eos voluptatem iusto blanditiis sequi. Dolorum mollitia voluptatem aut in. Est
-    amet tempore et accusantium. Dolores cupiditate tenetur non voluptatem. Voluptas
-    nihil quia eius eveniet. Eius quia blanditiis et autem. Debitis ut ut iure enim.
-    In pariatur voluptatem numquam itaque. Harum debitis quaerat error cumque. Et
-    voluptatem placeat voluptates temporibus. Debitis doloremque occaecati atque quidem.
-    Quibusdam autem aliquid autem at. Sint reiciendis ipsum laboriosam qui. Vitae
-    cum reprehenderit ex exercitationem. Nostrum ea tempore odit excepturi. Molestiae
-    quibusdam libero minima eum. Explicabo maxime nihil quia eius. Fugiat modi pariatur
-    minus qui.
-  cuit: Sed maiores nesciunt omnis eaque. Magnam architecto libero voluptatum nihil.
-    Sit ut eos nostrum quos. Repellendus libero reprehenderit voluptatum labore. Ut
-    nihil eos fuga ut. Sed amet nam sit ipsa. Delectus sed magni doloribus vel. Et
-    et illum sunt rerum. Reiciendis sit quod aperiam omnis.
-  descripcion: Sint voluptatem laudantium et ea. Molestiae possimus voluptatem non
-    ipsam. Eligendi sunt ipsa perspiciatis reiciendis. Aperiam consequatur a illum
-    ipsum. Ratione facilis qui similique impedit. Eaque ullam optio fuga sint. Sed
-    voluptatem debitis officiis corrupti. Tempora non quidem optio mollitia. Aut impedit
-    est sed modi. Ipsa dicta nisi quos quod. Id quae sunt cum tempora. Ut consequatur
-    eligendi ipsum repellendus. Quisquam quae cupiditate ex suscipit. Ut aut autem
-    consequatur ducimus. Illo optio harum pariatur inventore. Nesciunt consequatur
-    aut voluptas velit. Accusantium aperiam quia libero dignissimos. Libero fugit
-    magni adipisci sapiente. Omnis sed earum distinctio quia. Sed eligendi dignissimos
-    dolor sit. Hic debitis fugiat quos aut. Voluptatem repellendus veniam officiis
-    alias. Quo perspiciatis impedit error rem. Nesciunt quasi id mollitia placeat.
-    Minima omnis ut corporis veritatis. Autem qui occaecati vitae qui. Aut iure porro
-    sed recusandae.
-  importe_total_centavos: 829
+  tipo: B
+  numero: 14
+  nombre: Liubov Orlova
+  domicilio: Av. Pichincha 999
+  cuit: 12-12356489-7
+  descripcion: Laboriosam in quod eos culpa. 
+  importe_total_centavos: 275
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 81
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 352
   saldo_moneda: ARS
-  importe_neto_centavos: 93000
+  importe_neto_centavos: 625
   importe_neto_moneda: ARS
-  iva_centavos: 109
+  iva_centavos: 538
   iva_moneda: ARS
 factura_5:
-  tipo: Nulla voluptate dolores voluptatem et. Officiis aut nulla eos explicabo. Aliquam
-    eaque aut ipsum aut.
-  numero: Voluptas harum omnis soluta enim. Corrupti sed eum non molestias. Fuga suscipit
-    labore quos beatae.
-  nombre: Voluptatem voluptatem dolores distinctio quia. Excepturi quod sequi incidunt
-    dolor. Quia in quaerat nostrum est. Consequatur eos id recusandae magnam. Sint
-    voluptatem numquam et dolor. Et dolores molestiae cumque corrupti. Molestiae veritatis
-    consequatur ut quos. Non in dolores sapiente qui. Dolor reiciendis quia quidem
-    officia. Et natus id tenetur aut. Nihil perferendis dolorem culpa sequi. Dolores
-    fuga voluptatum ipsum et. Esse vel sed officia omnis. Cumque quia reprehenderit
-    nisi aliquid. Qui magnam eveniet corporis nulla. Ducimus voluptatum harum fugiat
-    nihil. Illum quod alias quidem iusto. Ea beatae excepturi porro laudantium. Delectus
-    explicabo qui natus eum. Eligendi maxime nostrum minima inventore. Totam ut aut
-    molestiae facere. Eum rerum et ullam non. Quasi ratione ipsum asperiores eos.
-    Facilis suscipit fugiat est hic. Voluptas eaque officiis suscipit quas. Voluptatem
-    quibusdam consequatur ut voluptatibus. Accusamus provident aspernatur dolores
-    repudiandae.
-  domicilio: Et corrupti quae neque perspiciatis. Sed quisquam qui cum animi. Porro
-    dolores sed aut odio. Quia eos unde sapiente ratione. Ipsam provident cumque ducimus
-    quia. Temporibus et nisi excepturi labore. Odit quibusdam quaerat aperiam et.
-    Molestias dolores ratione quod ea. Veritatis sint modi totam magnam.
-  cuit: Et ut laboriosam eos aut. Et aspernatur velit ipsum corrupti. Incidunt magni
-    labore rerum eos. Illum voluptatem quas voluptatem dolores. Fugit est qui ab quidem.
-    Sit rerum in velit sit. Earum voluptatem natus nobis nobis. Laudantium est dolorum
-    perspiciatis consequatur. Incidunt et deleniti doloremque quod.
-  descripcion: Iste et fuga vitae delectus. Laudantium cupiditate et possimus debitis.
-    Alias excepturi maxime et dolor. Nam sit est dicta eveniet. Est occaecati voluptatum
-    eos facilis. Harum qui soluta ex rerum. Quisquam iste ad quia deleniti. Illo repellat
-    placeat quo voluptatem. Exercitationem vitae ipsa et culpa. Nihil dignissimos
-    ut vero quia. Quo eveniet architecto iusto quae. Quos nulla ut culpa aut. Occaecati
-    ea consequatur sunt distinctio. Culpa deserunt quis qui corporis. Dolor architecto
-    libero itaque blanditiis. Et autem aut quidem omnis. Provident est necessitatibus
-    tempora et. Recusandae quas cupiditate ratione qui. Nemo nam qui assumenda illum.
-    Dolore et earum veritatis numquam. Voluptate sunt eligendi quia aut. Libero enim
-    accusantium doloribus omnis. Non velit ut facere commodi. Quasi magni iusto quae
-    beatae. Est hic officiis neque magni. Ullam voluptatem et qui dolore. Alias corporis
-    et et quam.
-  importe_total_centavos: 444
+  tipo: B
+  numero: 42
+  nombre: Faína Ranévskaya
+  domicilio: Av. Non dignissimos 2355
+  cuit: 99-99999999-9
+  descripcion: Eum sed adipisci saepe vel. 
+  importe_total_centavos: 351
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 134
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 246
   saldo_moneda: ARS
-  importe_neto_centavos: 86400
+  importe_neto_centavos: 378
   importe_neto_moneda: ARS
-  iva_centavos: 348
+  iva_centavos: 644
   iva_moneda: ARS
 factura_6:
-  tipo: Aliquid perspiciatis temporibus ad itaque. Expedita ut enim quos sed. Et et
-    dolor quos itaque.
-  numero: Ea distinctio neque quo laudantium. Eum natus doloribus rem non. Cumque
-    explicabo ex et fugiat.
-  nombre: Sapiente dignissimos earum iure quisquam. Voluptas reiciendis laboriosam
-    laudantium tempore. Tempore est saepe est vitae. Voluptatem consequatur et voluptatem
-    voluptatem. A omnis rem molestiae sed. Beatae praesentium aut maiores quo. Aut
-    et alias eius nobis. Impedit quia asperiores dolorem qui. Enim rerum dolor non
-    sint. Totam optio assumenda iure nemo. Voluptatem sit ab omnis qui. Sit et qui
-    sit rerum. Ipsum maiores aut corporis distinctio. Accusamus id laborum occaecati
-    ut. Dicta magnam earum perferendis aspernatur. Deleniti et consequatur aut impedit.
-    Architecto dolor sunt rerum esse. Consequatur beatae eos est et. Ut minima cumque
-    sunt consequatur. Pariatur tenetur aspernatur ut quia. Repudiandae ipsam voluptas
-    illo ea. Nesciunt asperiores numquam dicta ea. Incidunt amet neque consequatur
-    eum. Pariatur officia sit temporibus reiciendis. Ut sed quisquam autem recusandae.
-    Quae nulla sunt dolorem ex. Eius commodi sed quo perspiciatis.
-  domicilio: Possimus ipsa sequi voluptatem saepe. Excepturi mollitia natus deserunt
-    ipsa. Ratione et nam ut neque. Sunt voluptas maxime eos quaerat. Eum ipsam qui
-    labore voluptatum. Quia dolor minima natus tempore. Vel culpa et qui optio. Iste
-    dolorem perspiciatis ipsam nihil. Sequi animi aut placeat voluptatibus.
-  cuit: Aliquid magni ut maxime inventore. Distinctio illo recusandae nisi aut. Nam
-    sit voluptas cupiditate dolor. Veniam velit ipsa ab optio. Aut maiores aliquam
-    voluptatem rerum. Modi quis quaerat eos dolorem. Sunt in est hic optio. Totam
-    in temporibus dicta nisi. Similique molestiae id voluptatum dolorum.
-  descripcion: Et rerum quisquam accusamus et. Accusamus autem doloribus exercitationem
-    ullam. Vitae corrupti ex voluptatem quisquam. Quis et libero quos a. Nisi cumque
-    autem sed enim. Soluta voluptatem sint enim impedit. Voluptate voluptatum est
-    maxime impedit. Dolores nam id rerum laborum. Doloribus a esse placeat sit.
-  importe_total_centavos: 104
+  tipo: A
+  numero: 654
+  nombre: Liubov Orlova
+  domicilio: Av. Kingston 331
+  cuit: 33-11122233-1
+  descripcion: Expedita fugit repudiandae
+  importe_total_centavos: 963
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
   situacion: cobro
-  saldo_centavos: 404
+  saldo_centavos: 363
   saldo_moneda: ARS
-  importe_neto_centavos: 73100
+  importe_neto_centavos: 908
   importe_neto_moneda: ARS
-  iva_centavos: 300
+  iva_centavos: 216
   iva_moneda: ARS
 factura_7:
-  tipo: Saepe rerum quibusdam modi sint.
-  numero: Repudiandae ut id debitis voluptatem. Consectetur pariatur provident est
-    qui. Dolor molestiae accusamus rem et.
-  nombre: Magnam dolor magnam voluptates assumenda. Qui reiciendis inventore consequatur
-    sint. Quaerat consequuntur odit qui illum. Dolorem quo recusandae optio impedit.
-    Non debitis ut officiis nam. Minus dolore ipsum necessitatibus laboriosam. Id
-    quia suscipit recusandae facilis. Et sint et architecto fugiat. Temporibus architecto
-    iure ex eaque. Sit architecto omnis consectetur quisquam. Ratione accusantium
-    similique saepe culpa. Architecto molestias occaecati animi voluptatem. Eaque
-    magnam nihil error eveniet. Dolore aspernatur corporis sed deserunt. Nobis sit
-    exercitationem ut atque. Aut omnis sapiente iusto dolor. Et fuga eum maxime dolorem.
-    Est nostrum ipsum maiores atque. Iste animi quos reiciendis mollitia. Reprehenderit
-    minus molestiae ut tempore. Voluptatem fugiat doloribus qui quod. Magnam cumque
-    et laboriosam similique. Rerum corporis aut vel magnam. Voluptatem aperiam dolores
-    animi aliquam. Corrupti repudiandae et sequi at. Saepe neque at cum rerum. Aut
-    qui esse veniam unde.
-  domicilio: Non aliquam expedita sed illo. Eligendi sit illum excepturi repellendus.
-    Officia sunt illum natus est. Aut similique quis sunt asperiores. Sed perspiciatis
-    asperiores eum laborum. Id officiis quibusdam doloribus quia. Ipsam iusto quo
-    maxime et. Explicabo quam deleniti dolorem distinctio. Aut doloremque et numquam
-    sit.
-  cuit: Aliquid totam nesciunt deleniti voluptates. Maiores officiis qui corrupti
-    quia. Et dolor facere aut deserunt. Quas error minus esse ratione. Quis necessitatibus
-    laudantium quod est. Quidem et et maxime aut. Aut saepe minima eos sequi. Libero
-    accusantium odit necessitatibus consequatur. Repellendus in voluptatum omnis aut.
-    Enim quisquam id amet aut. Ipsum cumque ratione ut sequi. Quaerat non quaerat
-    veniam tempore. Quia a nam autem et. Qui quia praesentium et quaerat. Porro delectus
-    nostrum sit veritatis. Est maiores velit consequatur atque. Consequatur unde sunt
-    laudantium et. Hic exercitationem rerum ut dolores. Sequi temporibus aliquam excepturi
-    rerum. Dolore odio vitae expedita in. Iusto hic rerum nemo dolorem. Neque commodi
-    provident nobis repellendus. Harum velit nostrum vel occaecati. Quis et in blanditiis
-    sunt. Nam veritatis porro vitae quia. Dolores enim dolor perferendis autem. Non
-    modi illum velit molestias.
-  descripcion: Sed repellat fuga perferendis sint. Architecto qui quasi alias ut.
-    Iusto enim nihil eum voluptas. Nesciunt voluptate non sed ipsum. Non sunt blanditiis
-    perspiciatis consectetur. Laboriosam et eligendi consequatur voluptatem. Explicabo
-    ut exercitationem qui doloremque. Consequatur sint aliquam quia molestiae. Eum
-    et est ullam qui.
-  importe_total_centavos: 154
+  tipo: C
+  numero: 66
+  nombre: Vladímir Vysotski
+  domicilio: Saepe magnam 55
+  cuit: 23-11111154-5
+  descripcion: Quam delectus molestiae modi ullam. Ut necessitatibus blanditiis dicta
+    sed. Nihil reprehenderit quibusdam reiciendis et. Ea rerum nesciunt facere et.
+    Quia quod libe
+  importe_total_centavos: 363
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 210
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 106
   saldo_moneda: ARS
-  importe_neto_centavos: 15900
+  importe_neto_centavos: 184
   importe_neto_moneda: ARS
-  iva_centavos: 877
+  iva_centavos: 626
   iva_moneda: ARS
 factura_8:
-  tipo: Sit et tempora magni fugiat. Fugiat facilis id quidem deleniti. Aut officiis
-    et tenetur dicta.
-  numero: Consectetur non nam qui est. Atque et expedita neque reprehenderit. Ut ipsam
-    provident at nostrum.
-  nombre: Explicabo quaerat recusandae optio non. Quia et ratione occaecati quis.
-    Accusantium enim quasi quia omnis. Debitis quaerat qui dignissimos dicta. Esse
-    est qui similique expedita. Nam expedita excepturi omnis hic. Quibusdam in quia
-    soluta quia. Quia molestiae sed iusto minima. Suscipit enim possimus reprehenderit
-    dolores. Aut numquam ab illum debitis. Est repellat exercitationem beatae quisquam.
-    Fuga ut sequi expedita quis. Aut eum fuga consectetur minus. Eum sequi qui ea
-    consequatur. Dicta repudiandae aut et voluptatem. Architecto sed excepturi accusantium
-    repudiandae. Alias assumenda provident porro voluptatibus. Aliquid nulla dolorem
-    et cupiditate. Quos iusto nulla accusamus eius. Sit minima provident sit quis.
-    Quo delectus accusantium eius voluptatem. Vel repellat ullam nihil consequatur.
-    Soluta sed natus asperiores unde. Omnis saepe quas aliquam voluptatem. Aut temporibus
-    consequatur sed nulla. Vero recusandae ullam provident voluptatibus. Dolorum et
-    voluptates dolores quia.
-  domicilio: Vero molestiae architecto rerum corrupti. Delectus veritatis corporis
-    unde esse. Voluptatum quam consequatur maiores voluptatem. Sed ut aut est et.
-    Reprehenderit quas expedita recusandae aut. Voluptates nemo rerum dolor quibusdam.
-    A facere in fugiat non. Labore maiores saepe ab quis. Veniam sed non et ipsum.
-  cuit: Quos ex saepe voluptates veritatis. Vel magni voluptas possimus ea. Est laboriosam
-    occaecati est consectetur. Enim velit quisquam facilis commodi. Asperiores illum
-    voluptas fugiat nesciunt. Voluptatum doloribus ut quia molestiae. Molestias debitis
-    aliquam et aperiam. Labore sit minima dolores incidunt. Voluptatem doloribus dolorem
-    sunt aliquam. Mollitia nihil officiis officiis perspiciatis. Quis aliquam vel
-    molestiae harum. Facilis repellat voluptatibus est neque. Explicabo minus consequatur
-    sunt accusamus. Odio sit commodi corrupti sed. Velit molestiae et iure incidunt.
-    Corrupti rerum ullam vel ut. Itaque pariatur accusantium corrupti est. Veniam
-    aut nulla voluptas consequatur. Perspiciatis aspernatur doloribus voluptatem ullam.
-    Porro eveniet laboriosam molestiae sint. Officia facilis maiores architecto et.
-    Reprehenderit nulla animi quae quia. Qui nobis quia quod perspiciatis. Qui sunt
-    sunt fugiat vel. Et molestiae hic enim ducimus. Quaerat officia hic et rerum.
-    Est consequatur cupiditate illum ab.
-  descripcion: Recusandae ea consequatur vel architecto. Neque perspiciatis nulla
-    illum optio. Nisi cum voluptatem reiciendis vel. Reprehenderit tempora doloribus
-    voluptatibus possimus. Voluptas provident veniam omnis consequatur. Enim aperiam
-    voluptas accusantium soluta. Modi vero explicabo quis quam. Aliquam sit aliquam
-    eos in. Dolor velit suscipit dolorem consequatur.
-  importe_total_centavos: 459
+  tipo: A
+  numero: 88
+  nombre: Valeri Zolotujin
+  domicilio: Iure 142
+  cuit: 11-42111333-2
+  descripcion: Minima aliquam facere aut architecto. Dolor et nemo quaerat nostrum.
+  importe_total_centavos: 944
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
-  situacion: cobro
-  saldo_centavos: 809
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  situacion: pago
+  saldo_centavos: 259
   saldo_moneda: ARS
-  importe_neto_centavos: 79800
+  importe_neto_centavos: 566
   importe_neto_moneda: ARS
-  iva_centavos: 330
+  iva_centavos: 971
   iva_moneda: ARS
 factura_9:
-  tipo: Suscipit voluptas reprehenderit quod iusto.
-  numero: Eos molestiae qui quia cupiditate. Deleniti dolores sequi sed voluptatum.
-    Hic ad id et facere.
-  nombre: Quidem id est voluptatem occaecati. Accusantium quidem dolorum autem quam.
-    Fugit porro id sint ducimus. Atque vitae nemo architecto ut. Porro deleniti aut
-    omnis quia. Unde ad consequuntur quisquam quam. Veritatis eaque sint et ut. Ea
-    praesentium iste excepturi reiciendis. Est inventore quaerat sapiente ex. In sequi
-    dignissimos nam sed. Illo et eum qui unde. Autem aut molestias ratione a. Et ullam
-    consectetur et cupiditate. Dolorum ut maiores a dicta. Minus consequuntur rerum
-    reiciendis voluptatem. Dolores itaque quo atque laborum. Aut quaerat deserunt
-    tenetur aperiam. Est aperiam at expedita omnis. Dicta quas aut dicta quia. Sunt
-    distinctio aut et sint. Corporis qui maxime temporibus suscipit. Recusandae ea
-    minima magnam ad. Qui rerum itaque perspiciatis optio. Quaerat est minima quidem
-    velit. Ratione est dolor voluptate quo. Placeat quo ducimus numquam odio. Expedita
-    nemo fugiat quod ipsum.
-  domicilio: Error sunt enim adipisci eos. Ratione ut soluta veritatis libero. Voluptates
-    quaerat laboriosam et illo. Eos quia rem officia sunt. Enim est dolore et velit.
-    Totam quo aut officiis maxime. Voluptas odit eos aut ut. Repellendus aspernatur
-    sint doloribus delectus. Sequi est ab porro aliquid.
-  cuit: Architecto et eos autem qui. Sed suscipit itaque repellendus odio. Beatae
-    modi fugit sequi autem. Quae voluptatem magni mollitia enim. Quas rerum et praesentium
-    aspernatur. Blanditiis dolorum enim autem quae. Ut beatae eius molestias enim.
-    At et assumenda qui ut. Praesentium cum necessitatibus eveniet ut.
-  descripcion: Ut dolor sed iste laboriosam. Inventore omnis aut dolor quia. Debitis
-    a porro enim sed. Velit qui cupiditate omnis quasi. Qui ipsam aut itaque enim.
-    Occaecati et est a soluta. Omnis amet et nulla sunt. Ipsum labore sit et est.
-    Molestias eum dicta laudantium qui. Perspiciatis eius neque ut veniam. Et deleniti
-    accusamus repellat dolorem. Libero rerum repudiandae excepturi officiis. Eveniet
-    totam soluta eligendi voluptatibus. Occaecati eum vitae necessitatibus non. Eligendi
-    est veniam sed magni. Enim accusantium mollitia at molestiae. Vel dolores et officiis
-    consequatur. Recusandae quo dolores sit laudantium. Temporibus illum aspernatur
-    blanditiis perspiciatis. Qui totam ipsa et fuga. Sint eos neque omnis deserunt.
-    Repellat ipsam molestiae et impedit. Nostrum odio ex et perspiciatis. Dicta adipisci
-    quod porro possimus. Labore officiis et reiciendis aperiam. Maiores inventore
-    aperiam et dolorem. Beatae est sunt consectetur fugit.
-  importe_total_centavos: 46
+  tipo: B
+  numero: 75
+  nombre: Andréi Tarkovski
+  domicilio: Mollitia 4523 15 Z
+  cuit: 11-42111333-2
+  descripcion: Exercitationem aut rerum deserunt blanditiis. 
+  importe_total_centavos: 269
   importe_total_moneda: ARS
-  fecha: '2014-02-27 18:21:12 -0300'
-  fecha_pago: '2014-02-27 18:21:12 -0300'
+  fecha: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
+  fecha_pago: !binary |-
+    MjAxNC0wMy0wNiAwMTozNjoyNSAtMDMwMA==
   situacion: cobro
-  saldo_centavos: 249
+  saldo_centavos: 311
   saldo_moneda: ARS
-  importe_neto_centavos: 44000
+  importe_neto_centavos: 79
   importe_neto_moneda: ARS
-  iva_centavos: 955
+  iva_centavos: 341
   iva_moneda: ARS
