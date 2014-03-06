@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20140305233818) do
   end
 
   create_table "cheques", force: true do |t|
-    t.integer  "cuenta_id"
     t.string   "situacion",         default: "propio"
     t.integer  "numero"
     t.integer  "monto_centavos",    default: 0,        null: false
@@ -40,7 +39,6 @@ ActiveRecord::Schema.define(version: 20140305233818) do
   end
 
   add_index "cheques", ["caja_id"], name: "index_cheques_on_caja_id"
-  add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
   add_index "cheques", ["recibo_id"], name: "index_cheques_on_recibo_id"
 
   create_table "facturas", force: true do |t|
