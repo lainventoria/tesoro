@@ -8,16 +8,22 @@ class Factura < ActiveRecord::Base
   SITUACIONES = %w(cobro pago)
   # Sólo aceptamos esas :3
   validates_inclusion_of :situacion, in: SITUACIONES
+  validates_numericality_of :importe_neto, greater_than_or_equal_to: 0
+  validates_numericality_of :importe_total, greater_than_or_equal_to: 0
   validates_numericality_of :saldo, greater_than_or_equal_to: 0
 
+  monetize :importe_neto_centavos
   monetize :importe_total_centavos
   monetize :saldo_centavos
+  monetize :iva_centavos
 
-  validate :validate_cuit
+  validate :cuit
 
-  # Cuando se crea una Factura, el saldo es igual al importe_total
-  before_create do |f| f.saldo = f.importe_total end
-
+  # Mantener actualizados los valores calculados cada vez que se hace
+  # una modificación
+  before_create :calcular_importe_total, :calcular_saldo
+  before_update :calcular_importe_total, :calcular_saldo
+  
   # Chequea si la situación es pago
   def pago?
     situacion == 'pago'
@@ -54,7 +60,17 @@ class Factura < ActiveRecord::Base
   # Antes de guardar un recibo se tiene que hacer la conversión a la
   # moneda de la factura
   def calcular_saldo
-    self.saldo = importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
+    # Cuando se crea una Factura, el saldo es igual al importe_total
+    if self.new_record?
+      self.saldo = importe_total
+    else
+      self.saldo = importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
+    end
+  end
+
+  # El importe total o bruto es el neto con el IVA incluido
+  def calcular_importe_total
+    self.importe_total = self.importe_neto + self.iva
   end
 
 	def nombre_y_numero

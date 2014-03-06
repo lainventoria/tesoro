@@ -11,13 +11,13 @@ class FacturasController < ApplicationController
   # Solo mostrar facturas para cobrar reciclando la vista de lista
   def cobros
     @facturas = Factura.where(situacion: "cobro")
-
+    @situacion = "cobro"
     render "index"
   end
 
   def pagos
     @facturas = Factura.where(situacion: "pago")
-
+    @situacion = "pago"
     render "index"
   end
 
@@ -28,6 +28,7 @@ class FacturasController < ApplicationController
 
   # GET /facturas/new
   def new
+    @situacion = params[:situacion]
     @factura = Factura.new
   end
 
@@ -83,6 +84,6 @@ class FacturasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def factura_params
-      params.require(:factura).permit(:tipo, :numero, :situacion, :nombre, :domicilio, :cuit, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
+      params.require(:factura).permit(:tipo, :numero, :situacion, :nombre, :domicilio, :cuit, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
     end
 end
