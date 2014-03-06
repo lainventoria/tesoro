@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
 	def formatted_date(date)
-	  date.strftime("%d %b %Y")
+    date.nil? ? '' : date.strftime("%d %b %Y")
 	end
 
   # seguramente hay una forma más elegante de hacer esto...
