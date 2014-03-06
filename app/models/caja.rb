@@ -84,6 +84,9 @@ class Caja < ActiveRecord::Base
 
   # Devolvemos cantidad para mantener consistente la API, opcionalmente una
   # excepción para frenar la transacción
+  # 
+  # Si el tipo de caja es banco, esto se considera una transferencia
+  # bancaria
   def depositar(cantidad, lanzar_excepcion = false, recibo = nil)
     # Crear un recibo adhoc para este movimiento
     recibo = crear_recibo_interno unless recibo
@@ -107,5 +110,11 @@ class Caja < ActiveRecord::Base
 
   def cobrar_cheque(cheque)
     cheque.cobrar
+  end
+
+  # emitir un cheque acepta todos los argumentos de un cheque normal y
+  # devuelve uno
+  def emitir_cheque(*args)
+    Cheque.create(*args)
   end
 end

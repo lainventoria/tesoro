@@ -53,6 +53,8 @@ class Cheque < ActiveRecord::Base
     estado == 'depositado'
   end
 
+  # para poder cobrar un cheque de terceros, antes se deposita y se
+  # espera que el banco lo verifique
   def depositar
     # solo los cheques de terceros se depositan
     return nil unless :terceros?
