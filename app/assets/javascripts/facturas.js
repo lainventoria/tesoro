@@ -16,7 +16,7 @@ $(document).ready(function(){
 // contener el path de destino
   $(document).on('click', '.ir-a', function(e) {
     e.preventDefault();
-    window.location.href = 'http://localhost:3000' + $(e.target).data('uri');
+    window.location.href = $(e.target).data('uri');
     return false;
   });
 
