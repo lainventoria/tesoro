@@ -24,11 +24,11 @@ class Caja < ActiveRecord::Base
   end
 
   def banco?
-    :situacion == 'banco'
+    situacion == 'banco'
   end
 
   def efectivo?
-    :situacion == 'efectivo'
+    situacion == 'efectivo'
   end
 
   def self.tipos
