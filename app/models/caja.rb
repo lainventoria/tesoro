@@ -35,6 +35,11 @@ class Caja < ActiveRecord::Base
     pluck(:tipo).uniq
   end
 
+  # Traer todas las monedas usadas
+  def monedas
+    movimientos.pluck(:monto_moneda).uniq
+  end
+
   # TODO ver si hace falta un caso especial con movimientos sin guardar
   def total(moneda = 'ARS')
     Money.new(movimientos.where(monto_moneda: moneda).sum(:monto_centavos), moneda)
