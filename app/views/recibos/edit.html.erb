@@ -42,14 +42,4 @@
     </div>
 
   </div>
-
-<%# script que permite que un boton ubicado fuera del formulario lo postee
-    hay que referirse al formulario por su id
-    al editar un recibo el id es edit_recibo_@recibo.id %>
-<script type="text/javascript">
-  $(document).ready(function() {
-      $('#btnGuardar').on('click', function() { $('#edit_recibo_<%= @recibo.id %>').submit(); });
-  });
-</script>
-
 </div>

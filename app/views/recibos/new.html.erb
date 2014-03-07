@@ -52,13 +52,3 @@
   </div>
 
 </div>
-
-
-<%# script que permite que un boton ubicado fuera del formulario lo postee
-    hay que referirse al formulario por su id
-    para el caso de una nueva factura el id del formulario es siempre new_factura %>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#btnGuardar').on('click', function() { $('#new_recibo').submit(); });
-  });
-</script>
