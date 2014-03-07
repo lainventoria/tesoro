@@ -51,22 +51,4 @@ class FacturaTest < ActiveSupport::TestCase
 
   end
 
-  test "chequeo de cuit valido" do
-    
-    factura = create :factura, cuit:"20-31278322-4"
-    assert factura.valid?    
-    
-  end
-
-  # armar un test que me permita probar el rechazo de un cuit
-  # este no sirve porque falla el test al intentar crear una
-  # factura con cuit invalido :p
-#  test "chequeo de cuit invalido" do
-#  
-#    factura = create :factura, cuit:"12-34567890-1"
-#
-#    refute factura.valid?
-#    
-#  end
-
 end

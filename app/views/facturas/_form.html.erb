@@ -40,12 +40,12 @@
 
     <div class="row">
       <div class="field form-group col-md-8">
-        <%= f.label :nombre %><br>
-        <%= f.text_field :nombre, class: "form-control" %>
+        <%= f.label :tercero %><br>
+        <%= collection_select(:factura, :tercero_id, Tercero.all, :id, :nombre, class: "form-control") %>
       </div>
       <div class="field form-group col-md-4">
-        <%= f.label :cuit %><br>
-        <%= f.text_field :cuit, class: "form-control" %>
+        <%# f.label :cuit %><br>
+        <%# f.text_field @tercero.cuit, class: "form-control" %>
       </div>
     </div>
 
@@ -57,7 +57,6 @@
     </div>
 
     <div class="row">
-      <%# lugar para el campo importe_neto que esta faltando %>
       <div class="field form-group col-md-3 col-md-offset-4">
         <%= f.label :importe_neto %><br>
         <%= f.text_field :importe_neto, class: "form-control" %>

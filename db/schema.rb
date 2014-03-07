@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140306210751) do
+ActiveRecord::Schema.define(version: 20140307043029) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -48,9 +48,6 @@ ActiveRecord::Schema.define(version: 20140306210751) do
   create_table "facturas", force: true do |t|
     t.string   "tipo"
     t.string   "numero"
-    t.text     "nombre"
-    t.text     "domicilio"
-    t.text     "cuit"
     t.text     "descripcion"
     t.integer  "importe_total_centavos", default: 0,      null: false
     t.string   "importe_total_moneda",   default: "ARS",  null: false
@@ -65,7 +62,10 @@ ActiveRecord::Schema.define(version: 20140306210751) do
     t.string   "importe_neto_moneda",    default: "ARS",  null: false
     t.integer  "iva_centavos",           default: 0,      null: false
     t.string   "iva_moneda",             default: "ARS",  null: false
+    t.integer  "tercero_id"
   end
+
+  add_index "facturas", ["tercero_id"], name: "index_facturas_on_tercero_id"
 
   create_table "movimientos", force: true do |t|
     t.integer  "caja_id"

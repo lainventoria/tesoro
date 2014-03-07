@@ -82,8 +82,19 @@ class FacturasController < ApplicationController
       @factura = Factura.find(params[:id])
     end
 
+    def set_tercero
+      if params[:tercero_id]
+        @tercero = Tercero.find(params[:tercero_id])
+      end
+
+      if ( ! @tercero.nil? && ! @factura.nil? )
+        @factura.tercero = @tercero
+      end
+    end
+
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def factura_params
-      params.require(:factura).permit(:tipo, :numero, :situacion, :nombre, :domicilio, :cuit, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
+      params.require(:factura).permit(:tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
     end
 end
