@@ -2,6 +2,9 @@
 class Factura < ActiveRecord::Base
   include ApplicationHelper
 
+  # Las facturas pertenecen a un tercero
+  belongs_to :tercero, inverse_of: :facturas
+
   # Las facturas se pueden cancelar con muchos recibos
   has_many :recibos, inverse_of: :factura
 
@@ -17,8 +20,6 @@ class Factura < ActiveRecord::Base
   monetize :importe_total_centavos
   monetize :saldo_centavos
   monetize :iva_centavos
-
-  validate :cuit
 
   # Mantener actualizados los valores calculados cada vez que se hace
   # una modificación
@@ -74,15 +75,4 @@ class Factura < ActiveRecord::Base
     self.importe_total = self.importe_neto + self.iva
   end
 
-	def nombre_y_numero
-		"[#{numero}] #{nombre}"
-	end
-
-	def to_s
-		nombre_y_numero
-	end
-
-  def validate_cuit
-    errors[:base] << "El CUIT no es válido" if not validar_cuit(self.cuit)
-  end
 end
