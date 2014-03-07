@@ -57,7 +57,7 @@ class Cheque < ActiveRecord::Base
   # espera que el banco lo verifique
   def depositar
     # solo los cheques de terceros se depositan
-    return nil unless :terceros?
+    return nil unless self.terceros?
 
     self.estado = 'depositado'
   end
@@ -66,7 +66,7 @@ class Cheque < ActiveRecord::Base
   # cheque y se marca como estado = cobrado
   def cobrar
     # solo los cheques depositados se pueden cobrar
-    return nil unless :depositado?
+    return nil unless self.depositado?
 
     Cheque.transaction do
       recibo.movimientos.create(monto: self.monto, caja: self.caja)
