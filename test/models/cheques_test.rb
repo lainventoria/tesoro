@@ -28,4 +28,10 @@ class ChequeTest < ActiveSupport::TestCase
     assert_equal Cheque.vencidos.count, 1
 
   end
+
+  test "los cheques propios no se depositan" do
+    cheque = create :cheque, situacion: 'propio', estado: 'chequera'
+
+    assert_not cheque.depositar
+  end
 end
