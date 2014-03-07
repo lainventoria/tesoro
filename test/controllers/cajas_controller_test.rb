@@ -19,7 +19,7 @@ class CajasControllerTest < ActionController::TestCase
 
   test "crea" do
     assert_difference('Caja.count') do
-      post :create, obra_id: @obra, caja: { tipo: 'sarasa' }
+      post :create, obra_id: @obra, caja: attributes_for(:caja)
     end
 
     assert_redirected_to obra_caja_path(@obra, assigns(:caja))

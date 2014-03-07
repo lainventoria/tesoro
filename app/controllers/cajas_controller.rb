@@ -66,6 +66,6 @@ class CajasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def caja_params
-      params.require(:caja).permit(:obra_id)
+      params.require(:caja).permit(:obra_id, :situacion, :tipo, :banco, :numero)
     end
 end
