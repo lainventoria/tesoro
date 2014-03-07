@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20140306210751) do
     t.string   "cuit"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cliente_o_proveedor"
+    t.string   "relacion"
     t.string   "contacto"
     t.text     "notas"
   end
