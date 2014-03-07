@@ -3,13 +3,13 @@
 FactoryGirl.define do
   factory :tercero do
     nombre "MyString"
-    cuit "20-24229800-5"
+    cuit "20-31278322-4"
     contacto "MyString"
     telefono "MyString"
     celular "MyString"
     email "MyString"
     iva { rand(50) }
-    cliente_o_proveedor "MyString"
+    relacion "ambos"
     direccion "MyString"
     notas "MyText"
   end
