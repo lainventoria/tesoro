@@ -58,41 +58,4 @@
 
   </fieldset>
 
-  <%# DEBUG %>
-  <%# campos necesarios para crear nuevos recibos %>
-
-  <% if ! mostrar_ocultos %>
-    <div class="row hidden">
-  <% else %>
-    <div class="row">
-    <h6>Campos Ocultos (debug)<small>
-  <% end %>
-        <% @recibo.factura_id = @factura.id %>
-        factura_id
-        <%= f.text_field :factura_id %>
-        
-        <% @recibo.situacion = @factura.situacion %>
-        situacion
-        <%= f.text_field :situacion %>
-      </small>
-    </h6>
-
-  </div>
-
-  <div class="row">
-    <br>
-  </div>
-      
-  <%# script para el selector de fechas que muestra el calendario del
-  mes inicialmente estaba app/assests/javascripts/ pero no funcionaba
-  al navegar usando el menu hacia la pagina y era necesario refrescarla
-  para que funcione. aca funciona bien. tendemos que copiar el script en
-  cada formulario y revisar que las preferencias sean las mismas %>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.input-group.date').datepicker({format: "dd M yyyy", weekStart: 1, autoclose: true, language: "es", forceParse: false})
-    })
-  </script>
-
 <% end %>

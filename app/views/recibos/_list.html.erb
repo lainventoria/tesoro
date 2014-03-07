@@ -24,12 +24,3 @@
   </tbody>
 </table>
 
-
-<%# script: al hacer click en un renglon, redirige a la vista detallada
-    el id de cada renglon de la lista tiene que contener el path de destino %>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('tr').on('click', function() { window.location = this.id});
-  });
-</script>

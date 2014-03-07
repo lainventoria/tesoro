@@ -53,4 +53,4 @@ group :development, :test do
 end
 
 # selector de fechas con calendario mensual
-  gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails'
