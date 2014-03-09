@@ -11,7 +11,7 @@
   <% end %>
 
   <%# (des)habilita la edicion del formulario dependiendo del valor de @editar %>
-  <fieldset <% if not @editar %> disabled <% end %> >
+  <fieldset <%= editar_o_bloquear %> >
 
     <div class="row">
       <div class="field form-group col-md-2">
