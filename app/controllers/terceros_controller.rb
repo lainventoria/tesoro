@@ -11,15 +11,18 @@ class TercerosController < ApplicationController
   # GET /terceros/1
   # GET /terceros/1.json
   def show
+    @editar=false
   end
 
   # GET /terceros/new
   def new
     @tercero = Tercero.new
+    @editar = true
   end
 
   # GET /terceros/1/edit
   def edit
+    @editar=true
   end
 
   # POST /terceros

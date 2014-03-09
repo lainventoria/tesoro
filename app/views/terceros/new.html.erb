@@ -1,5 +1,17 @@
-<h1>Nuevo tercero</h1>
+<div class="row">
+  <h2>Nuevo tercero</h2>
+</div>
+<div class="row">
+  <%= render 'form' %>
 
-<%= render 'form' %>
+  <div class="row">
+    <a type="button" class="btn btn-warning col-md-2 col-md-offset-3" href="<%= terceros_path %>">
+      <span class="glyphicon glyphicon-eye-open"> Volver al Listado</span>
+    </a>
+    <button class="btn btn-success col-md-2 col-md-offset-2" id="btnGuardar">
+      <span class="glyphicon glyphicon-ok"> Guardar Cambios</span>
+    </button>
+  </div>
+
 
 <%= link_to 'Volver', terceros_path %>
