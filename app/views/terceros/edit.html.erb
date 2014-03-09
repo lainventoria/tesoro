@@ -1,6 +1,19 @@
-<h1>Editando tercero</h1>
+<div class="row">
+  <h2>Editar Tercero</h2>
+</div>
 
-<%= render 'form' %>
+<div class="row">
+  <%= render 'form' %>
 
-<%= link_to 'Ver', @tercero %> |
-<%= link_to 'Volver', terceros_path %>
+  <div class="row">
+    <a type="button" class="btn btn-danger col-md-2" href="<%= tercero_path %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
+      <span class="glyphicon glyphicon-remove-circle"> Borrar Tercero</span>
+    </a>
+    <a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= tercero_path(@tercero) %>">
+      <span class="glyphicon glyphicon-eye-open"> Ver Tercero</span>
+    </a>
+    <button class="btn btn-success col-md-2 col-md-offset-2" id="btnGuardar">
+      <span class="glyphicon glyphicon-ok"> Guardar Cambios</span>
+    </button>
+  </div>
+</div>
