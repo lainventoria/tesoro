@@ -14,7 +14,11 @@ $(document).ready(function(){
 // detallada no se puede aplicar al renglon entero porque sobreescribe
 // al boton de agregar recibo el id de cada celda de la lista tiene que
 // contener el path de destino
-  $('.ir-a').on('click', function() { window.location = this.id});
+  $(document).on('click', '.ir-a', function(e) {
+    e.preventDefault();
+    window.location.href = $(e.target).data('uri');
+    return false;
+  });
 
 // script que permite que un boton ubicado fuera del formulario lo
 // postee hay que referirse al formulario por su id para el caso de una
