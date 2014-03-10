@@ -35,11 +35,3 @@ module ApplicationHelper
     (resultado % 11) == 0
   end
 end
-
-  ### DEBUG ###
-  # Mostrar campos ocultos en formularios
-  def mostrar_ocultos
-    true 
-  end
-
-end
