@@ -15,9 +15,7 @@ class Recibo < ActiveRecord::Base
   after_save :actualizar_saldo, unless: :interno?
   after_destroy :actualizar_saldo, unless: :interno?
 
-  before_save :actualizar_situacion
-
-  before_save :actualizar_situacion
+  before_save :actualizar_situacion, unless: :interno?
 
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago interno)
