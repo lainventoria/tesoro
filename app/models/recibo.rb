@@ -17,6 +17,8 @@ class Recibo < ActiveRecord::Base
 
   before_save :actualizar_situacion
 
+  before_save :actualizar_situacion
+
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago interno)
   validates_inclusion_of :situacion, in: SITUACIONES
