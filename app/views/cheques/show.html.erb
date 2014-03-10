@@ -1,0 +1,24 @@
+<div class="row">
+  <span class="h2"><%= titulo_vista_cheque %></span>  
+  <% if !notice.nil? %>
+    <div id="notice" class="alert alert-success"><%= notice %></div>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="row">
+      <%#= render 'form' %>
+    </div>
+
+    <div class="row">
+      <a type="button" class="btn btn-success col-md-3" href="<%= path_a_listado %>">
+        <span class="glyphicon glyphicon-list-alt"> Listar Cheques</span>
+      </a>
+      <a type="button" class="btn btn-success col-md-3 col-md-offset-1" href="<%= path_a_recibo %>">
+        <span class="glyphicon glyphicon-eye-open"> Ver Recibo</span>
+      </a>
+
+    </div>
+  </div>
+</div>

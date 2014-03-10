@@ -1,9 +1,8 @@
 # encoding: utf-8
 class Obra < ActiveRecord::Base
   has_many :cajas
-  has_one :cuenta
 
-  after_create :create_cuenta, :crear_cajas
+  after_create :crear_cajas
 
   validates_presence_of :nombre, :direccion
 
@@ -11,7 +10,9 @@ class Obra < ActiveRecord::Base
 
     def crear_cajas
       ['De obra', 'De administración', 'De seguridad'].each do |tipo|
-        cajas.create tipo: tipo
+        cajas.create tipo: tipo, situacion: 'efectivo'
       end
+
+      cajas.create tipo: 'Caja de Ahorro', situacion: 'banco'
     end
 end

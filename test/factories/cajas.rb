@@ -5,5 +5,6 @@ FactoryGirl.define do
     obra
 
     tipo 'De obra'
+    situacion 'efectivo'
   end
 end
