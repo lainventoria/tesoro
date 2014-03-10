@@ -43,6 +43,9 @@
       <br>
     </div>
 
+    <%# campo necesario para crear un recibo nuevo %>
+    <%= f.hidden_field :factura_id, value: @factura.id %>
+
     <%# comento estas lineas para guardar un ejemplo de dropdown no
         logre que Bootstrap les aplique css %>
       <% if false %>

@@ -1,7 +1,7 @@
 <%= form_for(@factura) do |f| %>
   <% if @factura.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
-      <strong>No se guardo la factura.</strong> Debe corregir <%= pluralize(@factura.errors.count, "error") %>
+      <strong>No se guardo la Factura. </strong>Debe corregir <%= pluralize(@factura.errors.count, "error") %>
       <ul>
       <% @factura.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,7 +10,6 @@
     </div>
   <% end %>
 
-  <%# (des)habilita la edicion del formulario dependiendo del valor de @editar %>
   <fieldset <%= editar_o_bloquear %> >
 
     <div class="row">
@@ -45,7 +44,7 @@
       </div>
       <div class="field form-group col-md-4">
         <%# f.label :cuit %><br>
-        <%# f.text_field @tercero.cuit, class: "form-control" %>
+        <%# f.text_field :cuit, class: "form-control" %>
       </div>
     </div>
 
@@ -74,6 +73,9 @@
     <div class="row">
       <br>
     </div>
+
+    <%# campo necesario para crear/editar facturas %>
+    <%= f.hidden_field :situacion, value: determina_situacion %>
 
   </fieldset>
 
