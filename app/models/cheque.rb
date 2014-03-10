@@ -53,6 +53,10 @@ class Cheque < ActiveRecord::Base
     estado == 'depositado'
   end
 
+  def pagado?
+    estado == 'pagado'
+  end
+
   # para poder cobrar un cheque de terceros, antes se deposita y se
   # espera que el banco lo verifique
   def depositar
@@ -69,26 +73,29 @@ class Cheque < ActiveRecord::Base
     return nil unless self.depositado?
 
     Cheque.transaction do
-      self.recibo.movimientos.create(monto: self.monto, caja: self.caja)
+      self.caja.depositar(self.monto, true, self.recibo)
 
       self.estado = 'cobrado'
     end
 
     # devolver el movimiento
-    self.recibo.movimientos.last
-
+    self.caja.movimientos.last
   end
 
   # Los cheques propios generan movimientos de salida (negativos) cuando
   # se pagan
   def pagar
+    # Solo los cheques propios se pueden pagar
     return nil unless self.propio?
+    # Los cheques pagados no se pueden pagar dos veces!
+    return nil if self.pagado?
 
+    # Usamos las operaciones de caja
     Cheque.transaction do
-      self.recibo.movimientos.create(monto: self.monto * -1, caja: self.caja)
+      self.caja.extraer(self.monto, true, self.recibo)
       self.estado = 'pagado'
     end
 
-    self.recibo.movimientos.last
+    self.caja.movimientos.last
   end
 end
