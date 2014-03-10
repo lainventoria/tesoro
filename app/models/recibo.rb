@@ -10,6 +10,8 @@ class Recibo < ActiveRecord::Base
   after_save :actualizar_saldo
   after_destroy :actualizar_saldo
 
+  before_save :actualizar_situacion
+
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago)
   validates_inclusion_of :situacion, in: SITUACIONES
@@ -18,17 +20,17 @@ class Recibo < ActiveRecord::Base
 
   # Es un recibo de pago?
   def pago?
-    situacion == 'pago'
+    self.situacion == 'pago'
   end
 
   # Es un recibo de cobro?
   def cobro?
-    situacion == 'cobro'
+    self.situacion == 'cobro'
   end
 
   # Eso mismo
   def validate_cancelacion
-    errors[:base] << "La factura ya fue cancelada" if factura.cancelada?
+    errors[:base] << "La factura ya fue cancelada" if self.factura.cancelada?
   end
 
   # Valida el saldo de la factura
@@ -49,4 +51,9 @@ class Recibo < ActiveRecord::Base
     self.factura.calcular_saldo
     self.factura.save
   end
+
+  def actualizar_situacion
+    self.situacion = self.factura.situacion
+  end
+
 end

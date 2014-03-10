@@ -28,29 +28,29 @@ class Factura < ActiveRecord::Base
   
   # Chequea si la situación es pago
   def pago?
-    situacion == 'pago'
+    self.situacion == 'pago'
   end
 
   # Chequea si la situación es cobro
   def cobro?
-    situacion == 'cobro'
+    self.situacion == 'cobro'
   end
 
   # La factura está cancelada cuando el saldo es 0
   def cancelada?
-    saldo == Money.new(0)
+    self.saldo == Money.new(0)
   end
 
   # Si el saldo es menor al importe_total es porque se pagó de más
   # Con las validaciones de Recibo no debería hacer falta
   def reintegro?
-    saldo < importe_total
+    self.saldo < self.importe_total
   end
 
   # Calcula el reintegro si se pagó de más
   # Con las validaciones de Recibo no debería hacer falta
   def reintegro
-    saldo * -1 if reintegro?
+    self.saldo * -1 if reintegro?
   end
 
   # Recalcula el saldo

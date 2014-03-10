@@ -6,12 +6,20 @@ class FacturaTest < ActiveSupport::TestCase
     assert (f = create(:factura)).valid?, f.errors.messages
   end
 
-  test 'es un pago?' do
-    assert build(:factura).pago?
+  test "es un pago?" do
+    @pago = create :factura, situacion: "pago"
+    @cobro = create :factura, situacion: "cobro"
+    
+    assert @pago.pago?
+    assert_not @cobro.pago?
   end
 
-  test 'entonces no es cobro?' do
-    assert_not build(:factura).cobro?
+  test "es un cobro?" do
+    @pago = create :factura, situacion: "pago"
+    @cobro = create :factura, situacion: "cobro"
+    
+    assert_not @pago.cobro?
+    assert @cobro.cobro?
   end
 
   test "se cancela con recibos" do
@@ -37,6 +45,7 @@ class FacturaTest < ActiveSupport::TestCase
     factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
     recibo = create :recibo, factura: factura, importe: Money.new(3000*1.21)
 
+    assert factura.cancelada?
     assert factura.save
 
     factura.importe_neto = Money.new(4000)
@@ -44,10 +53,12 @@ class FacturaTest < ActiveSupport::TestCase
 
     assert factura.save
     assert factura.reload
+    assert_not factura.cancelada?
 
     recibo = create :recibo, factura: factura, importe: factura.saldo
 
     assert factura.save
+    assert factura.cancelada?
 
   end
 
