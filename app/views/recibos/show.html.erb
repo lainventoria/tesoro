@@ -28,13 +28,7 @@
     </div>
 
     <div class="row">  
-      <a type="button" class="btn btn-success col-md-3" href="
-        <% if @recibo.situacion == "cobro" %>
-          <%= cobros_recibos_path %>
-        <% else %>
-          <%= pagos_recibos_path %>
-        <% end %>
-        ">
+      <a type="button" class="btn btn-success col-md-3" href="<%= recibos_por_tipo_path %>">
         <span class="glyphicon glyphicon-list"></span>
         Listar Recibos
       </a>
