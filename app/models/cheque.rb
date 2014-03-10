@@ -11,7 +11,7 @@ class Cheque < ActiveRecord::Base
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
 
-  ESTADOS = %w(chequera depositado cobrado rechazado)
+  ESTADOS = %w(chequera depositado cobrado rechazado pagado)
   validates_inclusion_of :estado, in: ESTADOS
 
   # campos requeridos
@@ -69,7 +69,7 @@ class Cheque < ActiveRecord::Base
     return nil unless self.depositado?
 
     Cheque.transaction do
-      recibo.movimientos.create(monto: self.monto, caja: self.caja)
+      self.recibo.movimientos.create(monto: self.monto, caja: self.caja)
 
       self.estado = 'cobrado'
     end
@@ -77,5 +77,18 @@ class Cheque < ActiveRecord::Base
     # devolver el movimiento
     self.recibo.movimientos.last
 
+  end
+
+  # Los cheques propios generan movimientos de salida (negativos) cuando
+  # se pagan
+  def pagar
+    return nil unless self.propio?
+
+    Cheque.transaction do
+      self.recibo.movimientos.create(monto: self.monto * -1, caja: self.caja)
+      self.estado = 'pagado'
+    end
+
+    self.recibo.movimientos.last
   end
 end

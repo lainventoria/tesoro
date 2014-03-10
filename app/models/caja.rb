@@ -123,6 +123,10 @@ class Caja < ActiveRecord::Base
     Cheque.create(*args)
   end
 
+  def pagar_cheque(cheque)
+    cheque.pagar
+  end
+
   # transferir un monto de una caja a otra
   def transferir(monto, caja, recibo = nil)
     recibo = crear_recibo_interno if not recibo

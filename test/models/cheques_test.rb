@@ -34,4 +34,13 @@ class ChequeTest < ActiveSupport::TestCase
 
     assert_not cheque.depositar
   end
+
+  test 'pagar un cheque genera movimientos en negativo' do
+    cheque = create :cheque
+    monto = cheque.monto
+
+    assert cheque.pagar, cheque.errors.messages
+    assert_equal monto * -1, cheque.recibo.movimientos.last.monto
+
+  end
 end
