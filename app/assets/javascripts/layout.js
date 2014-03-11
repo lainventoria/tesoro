@@ -22,13 +22,17 @@ $(document).ready(function(){
   // redirige al path almacenado en data-uri
   // ej: se utiliza en listados para redirigir a vista detallada 
   $(document).on('click', '.ir-a', function(e) {
-    e.preventDefault();
+//    e.preventDefault();
       if ( $(e.target).data('uri') ) {
         window.location.href = $(e.target).data('uri');
-      } else {
-        window.location.href = $(e.target.parentElement).data('uri');
+        return false;
       }
-    return false;
+
+      if ( $(e.target.parentElement).data('uri') ) {
+        window.location.href = $(e.target.parentElement).data('uri');
+        return false;
+      }
+
   });
 
 });
