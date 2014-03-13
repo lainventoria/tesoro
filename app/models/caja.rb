@@ -6,7 +6,7 @@ class Caja < ActiveRecord::Base
   validates_presence_of :obra_id, :tipo
 
   # Las cajas son de efectivo o bancarias
-  SITUACIONES = %w(efectivo banco)
+  SITUACIONES = %w(efectivo banco chequera)
   validates_inclusion_of :situacion, in: SITUACIONES
 
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
