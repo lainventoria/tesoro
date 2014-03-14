@@ -97,16 +97,14 @@ class Caja < ActiveRecord::Base
   # Si el tipo de caja es banco, esto se considera una transferencia
   # bancaria
   def depositar(cantidad, lanzar_excepcion = false, recibo = nil)
-    Caja.transaction do
     # Crear un recibo adhoc para este movimiento
-      recibo = crear_recibo_interno unless recibo
-      if movimientos.create(monto: cantidad, recibo: recibo)
-        recibo
-      else
-        raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
-      end
-
+    recibo = crear_recibo_interno unless recibo
+    if movimientos.create(monto: cantidad, recibo: recibo)
+      recibo
+    else
+      raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
     end
+
   end
 
   # Crear un recibo interno para una transacción específica
