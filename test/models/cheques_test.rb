@@ -68,7 +68,7 @@ class ChequeTest < ActiveSupport::TestCase
     # al depositar un cheque, se asocia a una caja diferente
     assert cheque.depositar(otra_caja), cheque.errors.messages
     assert_equal 'depositado', cheque.estado
-    assert_equal otra_caja, cheque.destino
+    assert_equal otra_caja, cheque.caja
 
     assert cheque.save, cheque.errors.messages
     assert cheque.reload

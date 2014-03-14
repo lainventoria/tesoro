@@ -7,7 +7,8 @@
 class Cheque < ActiveRecord::Base
   belongs_to :caja
   belongs_to :recibo, inverse_of: :cheques
-  belongs_to :destino, class_name: 'Caja', inverse_of: :cheques
+  # aca van recibos internos!
+  belongs_to :destino, class_name: 'Recibo', inverse_of: :cheques
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
@@ -18,8 +19,9 @@ class Cheque < ActiveRecord::Base
   # campos requeridos
   validates_presence_of :fecha_emision, :fecha_vencimiento, :monto,
                         :beneficiario
-  # Todos los cheques propios tienen una caja
-  validates_presence_of :caja_id, if: :propio?
+  # Todos los cheques tienen una caja, los de terceros una chequera, los
+  # propios un banco
+  validates_presence_of :caja_id
 
   # todos los cheques tiene un recibo
   validates_presence_of :recibo_id
@@ -62,18 +64,24 @@ class Cheque < ActiveRecord::Base
   end
 
   # para poder cobrar un cheque de terceros, antes se deposita en una
-  # caja y se # espera que el banco lo verifique
+  # caja y se espera que el banco lo verifique.  equivale a una
+  # transferencia de una caja a otra pero en dos pasos (o confirmación
+  # manual).
   def depositar(caja_destino)
     # solo los cheques de terceros se depositan
     return nil unless self.terceros?
     # no se pueden depositar cheques en chequeras
     return nil if caja_destino.chequera?
 
-    # El cheque se deposita en otra caja a partir de un recibo interno
+    # El cheque se saca de una caja y se deposita en otra, como todavía
+    # no lo cobramos, se registra como una salida 
     Cheque.transaction do
-      self.destino = caja_destino
+      self.destino = self.caja.extraer(self.monto)
+      self.caja = caja_destino
       self.estado = 'depositado'
     end
+
+    self.destino
   end
 
   # cuando se cobra un cheque depositado, se hace una transferencia de
@@ -81,18 +89,17 @@ class Cheque < ActiveRecord::Base
   def cobrar
     # solo los cheques depositados se pueden cobrar
     return nil unless self.depositado?
-    return nil unless self.destino
 
-    recibo = nil
     Cheque.transaction do
-      # transferir el monto del cheque de la chequera a la caja destino
-      recibo = self.caja.transferir(self.monto, self.destino)
+      # terminar de transferir el monto del cheque de la chequera a la
+      # caja destino
+      self.caja.depositar(self.monto, true, self.destino)
       # marcar el cheque como cobrado
       self.estado = 'cobrado'
     end
 
     # devolver el recibo
-    recibo
+    self.destino
   end
 
   # Los cheques propios generan movimientos de salida (negativos) cuando
