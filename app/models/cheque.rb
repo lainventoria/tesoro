@@ -7,6 +7,7 @@
 class Cheque < ActiveRecord::Base
   belongs_to :caja
   belongs_to :recibo, inverse_of: :cheques
+  belongs_to :destino, class_name: 'Caja', inverse_of: :cheques
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
@@ -22,6 +23,9 @@ class Cheque < ActiveRecord::Base
 
   # todos los cheques tiene un recibo
   validates_presence_of :recibo_id
+  # solo tiene un destino luego de depositado
+  # TODO validar que el destino no desaparezca cuando se cobra el cheque
+  validates_presence_of :destino_id, if: :depositado?
 
   monetize :monto_centavos
 
@@ -57,29 +61,38 @@ class Cheque < ActiveRecord::Base
     estado == 'pagado'
   end
 
-  # para poder cobrar un cheque de terceros, antes se deposita y se
-  # espera que el banco lo verifique
-  def depositar
+  # para poder cobrar un cheque de terceros, antes se deposita en una
+  # caja y se # espera que el banco lo verifique
+  def depositar(caja_destino)
     # solo los cheques de terceros se depositan
     return nil unless self.terceros?
+    # no se pueden depositar cheques en chequeras
+    return nil if caja_destino.chequera?
 
-    self.estado = 'depositado'
+    # El cheque se deposita en otra caja a partir de un recibo interno
+    Cheque.transaction do
+      self.destino = caja_destino
+      self.estado = 'depositado'
+    end
   end
 
-  # al cobrar un cheque se genera un movimiento en el recibo de este
-  # cheque y se marca como estado = cobrado
+  # cuando se cobra un cheque depositado, se hace una transferencia de
+  # la chequera a la caja destino
   def cobrar
     # solo los cheques depositados se pueden cobrar
     return nil unless self.depositado?
+    return nil unless self.destino
 
+    recibo = nil
     Cheque.transaction do
-      self.caja.depositar(self.monto, true, self.recibo)
-
+      # transferir el monto del cheque de la chequera a la caja destino
+      recibo = self.caja.transferir(self.monto, self.destino)
+      # marcar el cheque como cobrado
       self.estado = 'cobrado'
     end
 
-    # devolver el movimiento
-    self.caja.movimientos.last
+    # devolver el recibo
+    recibo
   end
 
   # Los cheques propios generan movimientos de salida (negativos) cuando

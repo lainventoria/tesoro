@@ -2,6 +2,7 @@
 class Caja < ActiveRecord::Base
   belongs_to :obra
   has_many :movimientos
+  has_many :cheques
 
   validates_presence_of :obra_id, :tipo
 
@@ -29,6 +30,10 @@ class Caja < ActiveRecord::Base
 
   def efectivo?
     situacion == 'efectivo'
+  end
+
+  def chequera?
+    situacion == 'chequera'
   end
 
   def self.tipos
@@ -93,24 +98,27 @@ class Caja < ActiveRecord::Base
   # Si el tipo de caja es banco, esto se considera una transferencia
   # bancaria
   def depositar(cantidad, lanzar_excepcion = false, recibo = nil)
+    Caja.transaction do
     # Crear un recibo adhoc para este movimiento
-    recibo = crear_recibo_interno unless recibo
-    if movimientos.create(monto: cantidad, recibo: recibo)
-      cantidad
-    else
-      raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
+      recibo = crear_recibo_interno unless recibo
+      if movimientos.create(monto: cantidad, recibo: recibo)
+        cantidad
+      else
+        raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
+      end
+
     end
   end
 
   # Crear un recibo interno para una transacción específica
   def crear_recibo_interno
-    recibo = Recibo.create(importe: 0,
-                           situacion: 'interno',
-                           fecha: Time.now)
+    Recibo.create(importe: 0,
+                  situacion: 'interno',
+                  fecha: Time.now)
   end
 
   def depositar_cheque(cheque)
-    cheque.depositar
+    cheque.depositar self
   end
 
   def cobrar_cheque(cheque)
@@ -129,10 +137,12 @@ class Caja < ActiveRecord::Base
 
   # transferir un monto de una caja a otra
   def transferir(monto, caja, recibo = nil)
-    recibo = crear_recibo_interno if not recibo
     Caja.transaction do
-      self.extraer monto, false, recibo
+      recibo = self.crear_recibo_interno if not recibo
+      self.extraer monto, true, recibo
       caja.depositar monto, true, recibo
     end
+
+    recibo
   end
 end
