@@ -1,9 +1,21 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <h2>Detalles de Caja</h2> 
+  <% if !notice.nil? %>
+    <div id="notice" class="alert alert-success"><%= notice %></div>
+  <% end %>
+</div>
 
-<p>
-  <strong>Obra:</strong>
-  <%= @caja.obra.nombre %>
-</p>
+<div class="row">
+  <%= render 'form' %>
+</div>
 
-<%= link_to 'Editar', edit_caja_path(@caja) %> |
-<%= link_to 'Volver', cajas_path %>
+<div class="row">
+  <a type="button" class="btn btn-success col-md-2" href="<%= cajas_path %>">
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Listar Cajas
+  </a>
+  <a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= edit_caja_path(@caja) %>">
+    <span class="glyphicon glyphicon-edit"></span>
+    Editar Caja
+  </a>
+</div>

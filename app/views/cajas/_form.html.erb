@@ -1,8 +1,7 @@
 <%= form_for @caja do |f| %>
   <% if @caja.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@caja.errors.count, "error") %>. No se guardo la caja por:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
+      <strong>No se guardo la Caja. </strong><%= pluralize(@caja.errors.count, "error") %>
       <ul>
       <% @caja.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -11,11 +10,25 @@
     </div>
   <% end %>
 
-  <div class="field form-group">
-    <%= f.label :obra_id %><br>
-    <%= collection_select(:caja, :obra_id, Obra.all, :id, :nombre, class: "form-control" ) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Guardar", class: "btn-primary btn submit" %>
-  </div>
+  <fieldset <%= editar_o_bloquear %> >
+
+    <div class="row">
+      
+      <div class="field form-group col-md-2">
+        <%= f.label :obra_id %><br>
+        <%= collection_select(:caja, :obra_id, Obra.all, :id, :nombre, class: "form-control" ) %>
+      </div>
+
+      <div class="field form-group col-md-2">
+        <%= f.label :tipo %><br>
+        <%= f.text_field :tipo, class:"form-control" %>
+      </div>
+
+      <div class="field form-group col-md-2">
+        <%= f.label :situacion%><br>
+        <%= f.text_field :situacion, class:"form-control" %>
+      </div>
+      
+  </fieldset>
+
 <% end %>

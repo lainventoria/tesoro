@@ -1,19 +1,23 @@
 # encoding: utf-8
 class CajasController < ApplicationController
   before_action :set_caja, only: [:show, :edit, :update, :destroy]
+  before_action :set_movimientos, only: [:show]
 
   def index
     @cajas = Caja.all
   end
 
   def show
+    @editar = false
   end
 
   def new
     @caja = Caja.new
+    @editar = true
   end
 
   def edit
+    @editar = true
   end
 
   def create
@@ -57,6 +61,15 @@ class CajasController < ApplicationController
     def set_caja
       @caja = Caja.find(params[:id])
     end
+
+    def set_movimientos
+      @movimientos = Movimiento.where(caja_id: @caja.id)
+
+      if ( ! @caja.nil? && ! @movimientos.nil? )
+        @caja.movimientos = @movimientos
+      end
+    end
+        
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def caja_params
