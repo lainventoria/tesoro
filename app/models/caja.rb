@@ -86,7 +86,6 @@ class Caja < ActiveRecord::Base
     # Se arrastra el recibo si hay
     if cantidad <= total(cantidad.currency.iso_code)
       depositar(cantidad * -1, false, recibo)
-      cantidad
     else
       raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
     end
@@ -102,7 +101,7 @@ class Caja < ActiveRecord::Base
     # Crear un recibo adhoc para este movimiento
       recibo = crear_recibo_interno unless recibo
       if movimientos.create(monto: cantidad, recibo: recibo)
-        cantidad
+        recibo
       else
         raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
       end

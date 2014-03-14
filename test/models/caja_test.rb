@@ -45,7 +45,7 @@ class CajaTest < ActiveSupport::TestCase
     create :movimiento, caja: @caja, monto: Money.new(2000)
     assert_equal 1, @caja.movimientos.count
 
-    assert_equal Money.new(1000), @caja.extraer(Money.new(1000))
+    assert @caja.movimientos.where(recibo_id: @caja.extraer(Money.new(1000))).any?
     assert_equal 2, @caja.movimientos.count
 
     assert_nil @caja.extraer(Money.new(1001))
@@ -55,7 +55,7 @@ class CajaTest < ActiveSupport::TestCase
   test 'extrae en cualquier moneda si alcanza' do
     create :movimiento, caja: @caja, monto: Money.new(2000, 'USD')
 
-    assert_equal Money.new(1000, 'USD'), @caja.extraer(Money.new(1000, 'USD'))
+    assert @caja.movimientos.where(recibo_id: @caja.extraer(Money.new(1000, 'USD'))).any?
     assert_equal 2, @caja.movimientos.count
 
     assert_nil @caja.extraer(Money.new(500))
@@ -63,14 +63,14 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'deposita' do
-    assert_equal Money.new(100), @caja.depositar(Money.new(100))
-    assert_equal Money.new(100), @caja.depositar(Money.new(100))
+    assert @caja.movimientos.where(recibo_id: @caja.depositar(Money.new(100))).any?
+    assert @caja.movimientos.where(recibo_id: @caja.depositar(Money.new(100))).any?
     assert_equal 2, @caja.movimientos.count
     assert_equal Money.new(200), @caja.total
   end
 
   test 'deposita en cualquier moneda' do
-    assert_equal Money.new(100, 'USD'), @caja.depositar(Money.new(100, 'USD'))
+    assert @caja.movimientos.where(recibo_id: @caja.depositar(Money.new(100, 'USD'))).any?
     assert_equal 1, @caja.movimientos.count
     assert_equal Money.new(100, 'USD'), @caja.total('USD')
   end
@@ -82,7 +82,7 @@ class CajaTest < ActiveSupport::TestCase
       @salida = @caja.cambiar(Money.new(200, 'EUR'), 'ARS', 1.5)
     end
 
-    assert_equal Money.new(300), @salida
+    assert @caja.movimientos.where(recibo_id: @salida).any?
 
     # Historial de movimientos
     assert @caja.movimientos.collect(&:monto).include?(Money.new(500, 'EUR'))
