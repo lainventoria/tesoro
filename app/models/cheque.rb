@@ -13,7 +13,7 @@ class Cheque < ActiveRecord::Base
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
 
-  ESTADOS = %w(chequera depositado cobrado rechazado pagado)
+  ESTADOS = %w(chequera depositado cobrado rechazado pagado pasamanos)
   validates_inclusion_of :estado, in: ESTADOS
 
   # campos requeridos
@@ -63,6 +63,14 @@ class Cheque < ActiveRecord::Base
     estado == 'pagado'
   end
 
+  def chequera?
+    estado == 'chequera'
+  end
+
+  def pasamanos?
+    estado == 'pasamanos'
+  end
+
   # para poder cobrar un cheque de terceros, antes se deposita en una
   # caja y se espera que el banco lo verifique.  equivale a una
   # transferencia de una caja a otra pero en dos pasos (o confirmación
@@ -102,20 +110,53 @@ class Cheque < ActiveRecord::Base
     self.destino
   end
 
-  # Los cheques propios generan movimientos de salida (negativos) cuando
-  # se pagan
+  # Los cheques generan movimientos de salida (negativos) cuando
+  # se pagan, pueden ser cheques propios o de terceros si fueron pasados
+  # de mano
   def pagar
-    # Solo los cheques propios se pueden pagar
-    return nil unless self.propio?
     # Los cheques pagados no se pueden pagar dos veces!
     return nil if self.pagado?
+    # solo los cheques de terceros que se pasaron de manos se pueden
+    # pagar
+    return nil if self.terceros? and not self.pasamanos?
+
+    # dependiendo del tipo de cheque usamos el recibo de origen o el de
+    # destino
+    # TODO para simplificar, usar solo los recibos de destino y setearlo
+    # por defecto al recibo de origen
+    if self.propio?
+      recibo_a_pagar = self.recibo
+    else
+      recibo_a_pagar = self.destino
+    end
 
     # Usamos las operaciones de caja
     Cheque.transaction do
-      self.caja.extraer(self.monto, true, self.recibo)
+      self.caja.extraer(self.monto, true, recibo_a_pagar)
       self.estado = 'pagado'
     end
 
-    self.caja.movimientos.last
+    recibo_a_pagar
+  end
+
+  # Cuando se pasa de mano un cheque, se asocia a un recibo de pago para
+  # luego pagarlo
+  def pasamanos(recibo_destino)
+    # solo los cheques de terceros se pasan de manos
+    return nil unless self.terceros?
+    # no tienen que estar vencidos
+    return nil if self.vencido?
+    # tienen que estar en la chequera
+    return nil unless self.chequera?
+    # y se asocian a recibos de pago
+    return nil unless recibo_destino.pago?
+
+    # se cambia el recibo de destino y se marca como pasamanos
+    Cheque.transaction do
+      self.destino = recibo_destino
+      self.estado = 'pasamanos'
+    end
+
+    self.destino
   end
 end
