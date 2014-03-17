@@ -101,5 +101,8 @@ class ChequeTest < ActiveSupport::TestCase
     assert_equal recibo_de_pago, cheque.pasamanos(recibo_de_pago)
     assert_equal recibo_de_pago, cheque.pagar
     assert recibo_de_pago.movimientos.where(caja_id: chequera).any?
+
+    assert 0, chequera.total
+    assert cheque.monto, recibo_de_pago.movimientos.last.monto
   end
 end
