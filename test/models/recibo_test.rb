@@ -2,7 +2,9 @@ require 'test_helper'
 
 class ReciboTest < ActiveSupport::TestCase
   test "es válido" do
-    assert (r = create(:recibo)).valid?, r.errors.messages
+    [ :build, :build_stubbed, :create].each do |metodo|
+      assert_valid_factory metodo, :recibo
+    end
   end
 
   test "El recibo es válido si no completa la factura" do
@@ -34,8 +36,8 @@ class ReciboTest < ActiveSupport::TestCase
   end
 
   test "es un pago?" do
-    assert (recibo_pago = build(:recibo, situacion: "pago")), recibo_pago.inspect
-    assert (recibo_cobro = build(:recibo, situacion: "cobro")), recibo_cobro.inspect
+    recibo_pago = create :recibo, situacion: "pago"
+    recibo_cobro = build :recibo, situacion: "cobro"
 
     assert recibo_pago.pago?
     assert_not recibo_cobro.pago?
@@ -48,5 +50,4 @@ class ReciboTest < ActiveSupport::TestCase
     assert_not recibo_pago.cobro?
     assert recibo_cobro.cobro?
   end
-
 end
