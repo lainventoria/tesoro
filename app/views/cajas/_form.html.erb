@@ -1,5 +1,6 @@
 <%= form_for @caja do |f| %>
   <% if @caja.errors.any? %>
+    <% @editar = true %>
     <div id="error_explanation" class="alert alert-danger">
       <strong>No se guardo la Caja. </strong><%= pluralize(@caja.errors.count, "error") %>
       <ul>
@@ -15,17 +16,17 @@
     <div class="row">
       
       <div class="field form-group col-md-2">
-        <%= f.label :obra_id %><br>
-        <%= collection_select(:caja, :obra_id, Obra.all, :id, :nombre, class: "form-control" ) %>
+        <%= f.label :obra_id %>
+        <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, options={ prompt: "-Seleccione Obra-" }, html_options={ class: "form-control" } ) %>
       </div>
 
       <div class="field form-group col-md-2">
-        <%= f.label :tipo %><br>
+        <%= f.label :tipo %>
         <%= f.text_field :tipo, class:"form-control" %>
       </div>
 
       <div class="field form-group col-md-2">
-        <%= f.label :situacion%><br>
+        <%= f.label :situacion%>
         <%= f.text_field :situacion, class:"form-control" %>
       </div>
       
