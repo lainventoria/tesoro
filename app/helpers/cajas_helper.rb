@@ -9,4 +9,12 @@ module CajasHelper
     end
   end
 
+  def valor_situacion
+    if @caja.new_record? 
+      params[:situacion]
+    else
+      @caja.situacion
+    end
+  end
+
 end
