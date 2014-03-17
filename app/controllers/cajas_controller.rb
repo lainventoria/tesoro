@@ -4,7 +4,8 @@ class CajasController < ApplicationController
   before_action :set_movimientos, only: [:show]
 
   def index
-    @cajas = Caja.all
+    @cajas = Caja.where(situacion: 'efectivo')
+    @cuentas = Caja.where(situacion: 'banco')
   end
 
   def show
