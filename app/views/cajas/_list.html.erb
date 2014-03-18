@@ -3,8 +3,11 @@
     <tr>
       <th></th>
       <th>Obra</th>
-      <th>Tipo de Caja</th>
-      <th>Saldo</th>
+      <th id="lista_banco">Banco</th>
+      <th>Tipo</th>
+      <th id="lista_banco">Numero</th>
+      <th>Saldo ARS</th>
+      <th id="lista_caja">Saldo USD</th>
       <th></th>
     </tr>
   </thead>
@@ -14,10 +17,12 @@
       <tr class="ir-a" data-uri="<%= caja_path(caja.id)%>">
         <td><%= link_to '', [caja], class:"glyphicon glyphicon-eye-open" %></td>
         <td><%= caja.obra.nombre %></td>
+        <td id="lista_banco"><%= caja.banco %></td>
         <td><%= caja.tipo %></td>
-        <td><%= saldo_movimientos (caja.id) %></td>
+        <td id="lista_banco"><%= caja.numero %></td>
+        <td><%= caja.total %></td>
+        <td id="lista_caja"><%= caja.total('USD') %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
