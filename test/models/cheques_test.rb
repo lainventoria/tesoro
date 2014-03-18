@@ -63,7 +63,7 @@ class ChequeTest < ActiveSupport::TestCase
 
     # asegurar que haya dinero disponible en la caja
     assert caja.depositar(cheque.monto)
-    assert cheque.monto, caja.total
+    assert_equal cheque.monto, caja.total
 
     # al depositar un cheque, se asocia a una caja diferente
     assert cheque.depositar(otra_caja), cheque.errors.messages
@@ -102,7 +102,7 @@ class ChequeTest < ActiveSupport::TestCase
     assert_equal recibo_de_pago, cheque.pagar
     assert recibo_de_pago.movimientos.where(caja_id: chequera).any?
 
-    assert 0, chequera.total
-    assert cheque.monto, recibo_de_pago.movimientos.last.monto
+    assert_equal 0, chequera.total
+    assert_equal cheque.monto * -1, recibo_de_pago.movimientos.last.monto
   end
 end
