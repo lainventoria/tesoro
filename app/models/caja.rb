@@ -17,7 +17,7 @@ class Caja < ActiveRecord::Base
       hash_de_tipos[tipo.parameterize] = tipo and hash_de_tipos
     end
 
-    if ! valor.nil?
+    if valor.present?
       if tipos_normalizados.keys.include?(valor.parameterize)
         tipos_normalizados[valor.parameterize]
       else

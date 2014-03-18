@@ -31,6 +31,7 @@ class CajasController < ApplicationController
           render action: 'show', status: :created, location: @caja
         }
       else
+        # FIXME pasar situacion via controlador o helper
         params[:situacion] = @caja.situacion
         format.html { render action: 'new' }
         format.json { render json: @caja.errors, status: :unprocessable_entity }
