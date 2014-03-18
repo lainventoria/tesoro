@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20140318051816) do
     t.string   "banco"
     t.string   "numero"
     t.string   "situacion"
-    t.string   "tipo"
+    t.string   "tipo",       null: false
   end
 
   create_table "cheques", force: true do |t|
