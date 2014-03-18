@@ -153,6 +153,7 @@ class Cheque < ActiveRecord::Base
     Cheque.transaction do
       self.destino = recibo_destino
       self.estado = 'pasamanos'
+      self.pagar
     end
 
     self.destino

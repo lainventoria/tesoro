@@ -99,7 +99,7 @@ class ChequeTest < ActiveSupport::TestCase
 
     assert chequera.depositar(cheque.monto)
     assert_equal recibo_de_pago, cheque.pasamanos(recibo_de_pago)
-    assert_equal recibo_de_pago, cheque.pagar
+    assert_equal recibo_de_pago, cheque.destino
     assert recibo_de_pago.movimientos.where(caja_id: chequera).any?
 
     assert_equal 0, chequera.total
