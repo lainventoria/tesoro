@@ -49,7 +49,9 @@ class ChequeTest < ActiveSupport::TestCase
     monto = cheque.monto
 
     assert cheque.pagar, cheque.errors.messages
-    assert_equal monto * -1, cheque.recibo.movimientos.last.monto
+    assert cheque.recibo.movimientos.
+             where(monto_centavos: cheque.monto_centavos * -1).
+             where(monto_moneda: cheque.monto_moneda).any?
 
   end
 
@@ -83,8 +85,12 @@ class ChequeTest < ActiveSupport::TestCase
     # el recibo registra un movimiento de salida de una caja y entrada
     # en otra
     assert_equal 2, recibo_interno.movimientos.count, cheque.inspect
-    assert_equal cheque.monto * -1, recibo_interno.movimientos.first.monto
-    assert_equal cheque.monto, recibo_interno.movimientos.last.monto
+    assert recibo_interno.movimientos.
+             where(monto_centavos: cheque.monto_centavos * -1).
+             where(monto_moneda: cheque.monto_moneda).any?
+    assert recibo_interno.movimientos.
+             where(monto_centavos: cheque.monto_centavos).
+             where(monto_moneda: cheque.monto_moneda).any?
 
     # deberia haber una salida de una caja y una entrada en otra
     assert_equal 0, caja.total
@@ -103,6 +109,8 @@ class ChequeTest < ActiveSupport::TestCase
     assert recibo_de_pago.movimientos.where(caja_id: chequera).any?
 
     assert_equal 0, chequera.total
-    assert_equal cheque.monto * -1, recibo_de_pago.movimientos.last.monto
+    assert recibo_de_pago.movimientos.
+             where(monto_centavos: cheque.monto_centavos * -1).
+             where(monto_moneda: cheque.monto_moneda).any?
   end
 end
