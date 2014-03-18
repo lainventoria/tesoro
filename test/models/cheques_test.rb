@@ -98,7 +98,7 @@ class ChequeTest < ActiveSupport::TestCase
 
   end
 
-  test 'pasar un cheque de manos y despues cobrarlo' do
+  test 'pasar un cheque de manos y despues pagarlo' do
     chequera = create :caja, situacion: 'chequera'
     cheque = create :cheque, situacion: 'terceros', caja: chequera
     recibo_de_pago = create :recibo, situacion: 'pago'
