@@ -144,8 +144,6 @@ class Cheque < ActiveRecord::Base
   def pasamanos(recibo_destino)
     # solo los cheques de terceros se pasan de manos
     return nil unless self.terceros?
-    # no tienen que estar vencidos
-    return nil if self.vencido?
     # tienen que estar en la chequera
     return nil unless self.chequera?
     # y se asocian a recibos de pago
