@@ -36,10 +36,10 @@ class ChequeTest < ActiveSupport::TestCase
     assert_not cheque.depositar(caja)
   end
 
-  test "los cheques de terceros no se pagan" do
-    cheque = create :cheque, situacion: 'terceros'
-
+  test "los cheques de terceros no se pagan si estan en chequera" do
+    cheque = create :cheque, situacion: 'terceros', estado: 'chequera'
     assert_not cheque.pagar, cheque.errors.messages
+
   end
 
   test 'pagar un cheque genera movimientos en negativo' do
