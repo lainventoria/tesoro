@@ -1,11 +1,12 @@
 # encoding: utf-8
 class FacturasController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
+  before_action :set_obra
 
   # GET /facturas
   # GET /facturas.json
   def index
-    @facturas = Factura.all
+    @facturas = @obra ? @obra.facturas : Factura.all
   end
 
   # Solo mostrar facturas para cobrar reciclando la vista de lista
@@ -98,5 +99,9 @@ class FacturasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def factura_params
       params.require(:factura).permit(:tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
+    end
+
+    def set_obra
+      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
     end
 end
