@@ -1,19 +1,30 @@
 module CajasHelper
 
-  def saldo_movimientos (caja_id)
-    @movs = Movimiento.where(caja_id: caja_id)
-    if @movs.empty?
-      saldo = 0
-    else
-      saldo = @movs.monto.sum 
-    end
-  end
-
   def valor_situacion
     if @caja.new_record? 
       params[:situacion]
     else
       @caja.situacion
+    end
+  end
+
+  def adaptar_formulario_caja
+    if valor_situacion == "efectivo"
+      content_for :stylesheets do
+        '#form_banco {display: none}'
+      end
+    else
+      content_for :stylesheets do
+        '#form_caja {display: none}'
+      end
+    end
+  end
+
+  def caja_o_cuenta
+    if ( @caja.efectivo? ) or ( params[:situacion] == 'efectivo' )
+      'Caja'
+    else
+      'Cuenta'
     end
   end
 
