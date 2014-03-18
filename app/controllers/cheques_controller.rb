@@ -1,9 +1,10 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
   before_action :set_cheque, only: [:show, :edit, :update, :destroy]
+  before_action :set_obra
 
   def index
-    @cheques = Cheque.all
+    @cheques = @obra ? @obra.cheques : Cheque.all
   end
 
   def show
@@ -31,6 +32,10 @@ class ChequesController < ApplicationController
       params.require(:cheque).permit(:situacion, :numero,
       :monto_centavos, :monto_moneda, :fecha_vencimiento,
       :fecha_emision, :beneficiario, :banco, :estado)
+    end
+
+    def set_obra
+      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
     end
 
 end

@@ -2,10 +2,11 @@
 class CajasController < ApplicationController
   before_action :set_caja, only: [:show, :edit, :update, :destroy]
   before_action :set_movimientos, only: [:show]
+  before_action :set_obra
 
   def index
-    @cajas = Caja.where(situacion: 'efectivo')
-    @cuentas = Caja.where(situacion: 'banco')
+    @cajas = @obra ? @obra.cajas.where(situacion: 'efectivo') : Caja.where(situacion: 'efectivo')
+    @cuentas = @obra ? @obra.cajas.where(situacion: 'banco') : Caja.where(situacion: 'banco')
   end
 
   def show
@@ -77,5 +78,9 @@ class CajasController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def caja_params
       params.require(:caja).permit(:obra_id, :situacion, :tipo, :banco, :numero)
+    end
+
+    def set_obra
+      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
     end
 end
