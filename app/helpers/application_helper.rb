@@ -48,8 +48,11 @@ module ApplicationHelper
     true
   end
 
+  # decidir si vamos a incluir /obra/:obra_id en las urls o no, para
+  # filtrar por obra
   def con_obra?(url)
-    if @obra
+    # los /obra/new tienen una obra que todavía no existe seteada
+    if @obra and not @obra.new_record?
       obra_path(@obra) + url
     else
       url
