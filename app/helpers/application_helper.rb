@@ -41,11 +41,18 @@ module ApplicationHelper
       'disabled'
     end
   end
-  
+
   ### DEBUG ###
   # Mostrar campos ocultos en formularios
   def mostrar_ocultos
-    true 
+    true
   end
 
+  def con_obra?(url)
+    if @obra
+      obra_path(@obra) + url
+    else
+      url
+    end
+  end
 end
