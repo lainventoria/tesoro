@@ -4,7 +4,7 @@ Cp::Application.routes.draw do
   resources :obras
   resources :cajas
 
-  resources :facturas do
+  resources :facturas, except: [ :index ] do
   # Filtrar facturas por situacion
     collection do
       get 'cobros'
