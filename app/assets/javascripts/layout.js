@@ -22,7 +22,6 @@ $(document).ready(function(){
   // redirige al path almacenado en data-uri
   // ej: se utiliza en listados para redirigir a vista detallada 
   $(document).on('click', '.ir-a', function(e) {
-//    e.preventDefault();
       if ( $(e.target).data('uri') ) {
         window.location.href = $(e.target).data('uri');
         return false;
@@ -32,7 +31,6 @@ $(document).ready(function(){
         window.location.href = $(e.target.parentElement).data('uri');
         return false;
       }
-
   });
 
 });
