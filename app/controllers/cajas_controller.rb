@@ -5,8 +5,8 @@ class CajasController < ApplicationController
   before_action :set_obra
 
   def index
-    @cajas = @obra ? Caja.where(obra_id: @obra).where(situacion: 'efectivo') : Caja.where(situacion: 'efectivo')
-    @cuentas = @obra ? Caja.where(obra_id: @obra).where(situacion: 'banco') : Caja.where(situacion: 'banco')
+    @cajas = @obra ? @obra.cajas.where(situacion: 'efectivo') : Caja.where(situacion: 'efectivo')
+    @cuentas = @obra ? @obra.cajas.where(situacion: 'banco') : Caja.where(situacion: 'banco')
   end
 
   def show
