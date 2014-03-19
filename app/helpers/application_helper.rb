@@ -7,7 +7,7 @@ module ApplicationHelper
   # Por defecto, no se usa nada. Cada helper específico redefine este método si
   # quiere un título específico
   def titulo
-    nil
+    @obra ? @obra.nombre : nil
   end
 
 	def formatted_date(date)
