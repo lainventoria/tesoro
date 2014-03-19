@@ -41,15 +41,22 @@ module ApplicationHelper
       'disabled'
     end
   end
-  
+
   ### DEBUG ###
   # Mostrar campos ocultos en formularios
   def mostrar_ocultos
-    true 
+    true
   end
   
   def formatted_number(numero)
     number_with_delimiter(numero, delimiter: ".", separator: ",")
   end
 
+  def con_obra?(url)
+    if @obra
+      obra_path(@obra) + url
+    else
+      url
+    end
+  end
 end
