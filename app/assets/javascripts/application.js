@@ -12,9 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-// TODO seleccionar los componentes necesarios
-//= require jquery.ui.all
-//= require autocomplete-rails
 //= require turbolinks
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
