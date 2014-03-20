@@ -24,7 +24,7 @@
       </div>
       <div class="field form-group col-md-3 pull-right">
         <%= f.label :importe %><br>
-        <%= f.text_field :importe, class: "form-control" %>
+        <%= f.text_field :importe, { class: "form-control", data: {role:'money', a_sep:'.', a_dec:',' } }  %>
       </div>
     </div>
 

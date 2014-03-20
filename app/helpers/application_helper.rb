@@ -47,5 +47,9 @@ module ApplicationHelper
   def mostrar_ocultos
     true 
   end
+  
+  def formatear_numero(numero)
+    number_with_delimiter(numero, delimiter: ".", separator: ",")
+  end
 
 end
