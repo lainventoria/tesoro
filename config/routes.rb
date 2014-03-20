@@ -1,9 +1,13 @@
 Cp::Application.routes.draw do
   root 'obras#index'
 
+  # facturas, recibos, cajas y cheques se modifican dentro de una obra,
+  # el resto son listados con distintos niveles de generalidad
   resources :obras do
 
-    resources :cajas
+    resources :cajas do
+      resources :cheques
+    end
 
     resources :facturas do
     # Filtrar facturas por situacion
@@ -12,49 +16,38 @@ Cp::Application.routes.draw do
         get 'pagos'
       end
 
-      # Ver los recibos de cada factura
+      # Trabajar los recibos de cada factura
       resources :recibos
     end
-
-    # Permitir /recibos pero no crear recibos sin facturas asociadas
-    resources :recibos, except: [ :new ] do
-      collection do
-        get 'cobros'
-        get 'pagos'
-      end
-    end
-
-    resources :cheques, only: [ :index, :show ] do
-      collection do
-        get 'propios'
-        get 'terceros'
-      end
-    end
   end
 
-  resources :cajas
+  resources :cajas, only: [ :index, :show ] do
+    resources :cheques, only: [ :index, :show ]
+  end
 
-  resources :facturas, except: [ :index ] do
-  # Filtrar facturas por situacion
+  # ver las facturas y filtrarlas por situacion
+  resources :facturas, only: [ :index, :show ] do
     collection do
       get 'cobros'
       get 'pagos'
     end
 
-    # Ver los recibos de cada factura
-    resources :recibos
+    # Permitir ver los /recibos de esta factura
+    resources :recibos, only: [ :index, :show ]
   end
 
-  # Permitir /recibos pero no crear recibos sin facturas asociadas
-  resources :recibos, except: [ :new, :index, :create ] do
+  # ver /recibos y filtrarlos por situacion
+  resources :recibos, only: [ :index, :show ] do
     collection do
       get 'cobros'
       get 'pagos'
     end
   end
 
+  # los terceros se crean independientemente de las obras
   resources :terceros
 
+  # ver /cheques y filtrarlos por situacion
   resources :cheques, only: [ :index, :show ] do
     collection do
       get 'propios'
