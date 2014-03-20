@@ -48,7 +48,7 @@ module ApplicationHelper
     true 
   end
   
-  def formatear_numero(numero)
+  def formatted_number(numero)
     number_with_delimiter(numero, delimiter: ".", separator: ",")
   end
 

@@ -35,8 +35,8 @@
             formatted_date(factura.fecha_pago),
             factura.tercero.nombre.first(20),
             factura.descripcion.first(40),
-            formatear_numero(factura.importe_total),
-            formatear_numero(factura.saldo)
+            formatted_number(factura.importe_total),
+            formatted_number(factura.saldo)
           ] 
         %>
         <% @campos.each do |campo| %>
