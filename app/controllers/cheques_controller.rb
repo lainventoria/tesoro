@@ -1,10 +1,10 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
   before_action :set_cheque, only: [:show, :edit, :update, :destroy]
-  before_action :set_obra
+  before_action :set_caja
 
   def index
-    @cheques = @obra ? @obra.cheques : Cheque.all
+    @cheques = @caja ? @caja.cheques : Cheque.all
   end
 
   def show
@@ -34,8 +34,8 @@ class ChequesController < ApplicationController
       :fecha_emision, :beneficiario, :banco, :estado)
     end
 
-    def set_obra
-      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
+    def set_caja
+      @caja = params[:caja_id].present? ? Caja.find(params[:caja_id]) : nil
     end
 
 end
