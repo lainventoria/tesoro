@@ -1,3 +1,8 @@
+<%# parametros ( form_banco )
+    form_banco: oculta campos usados solo en el formulario de banco
+    valor = [ "hidden", "" ]
+%>
+
 <%= form_for @caja do |f| %>
   <% if @caja.errors.any? %>
     <% @editar = true %>
