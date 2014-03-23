@@ -46,4 +46,7 @@ class Recibo < ActiveRecord::Base
     end
   end
 
+  def pagar_con(medio_de_pago)
+    self.movimientos << medio_de_pago.pagar(self)
+  end
 end

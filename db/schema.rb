@@ -73,7 +73,11 @@ ActiveRecord::Schema.define(version: 20140325001353) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "recibo_id"
+    t.integer  "causa_id"
+    t.string   "causa_type"
   end
+
+  add_index "movimientos", ["causa_id", "causa_type"], name: "index_movimientos_on_causa_id_and_causa_type"
 
   create_table "obras", force: true do |t|
     t.string   "nombre"
