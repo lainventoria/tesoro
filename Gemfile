@@ -11,7 +11,7 @@ gem 'yaml_db', github: 'mauriciopasquier/yaml_db'
 # selector de fechas con calendario mensual
 gem 'bootstrap-datepicker-rails'
 # implementa typeahead.js
-gem 'twitter-typeahead-rails'
+gem 'twitter-typeahead-rails', github: 'yourabi/twitter-typeahead-rails'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

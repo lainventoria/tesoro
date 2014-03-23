@@ -18,4 +18,5 @@
 //= require twitter/bootstrap
 //= require autoNumeric/autoNumeric
 //= require_tree .
+//= require twitter/typeahead
 //= require turbolinks
