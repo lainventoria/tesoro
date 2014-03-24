@@ -101,8 +101,4 @@ class FacturasController < ApplicationController
     def factura_params
       params.require(:factura).permit(:tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago)
     end
-
-    def set_obra
-      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
-    end
 end

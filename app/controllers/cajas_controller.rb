@@ -79,8 +79,4 @@ class CajasController < ApplicationController
     def caja_params
       params.require(:caja).permit(:obra_id, :situacion, :tipo, :banco, :numero)
     end
-
-    def set_obra
-      @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
-    end
 end

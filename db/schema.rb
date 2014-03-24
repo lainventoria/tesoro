@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20140318231717) do
     t.integer  "obra_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tipo",       null: false
     t.string   "banco"
     t.string   "numero"
     t.string   "situacion"
-    t.string   "tipo",       null: false
   end
 
   create_table "cheques", force: true do |t|
