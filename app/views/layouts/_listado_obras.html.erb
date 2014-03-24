@@ -3,7 +3,7 @@
   <ul class="dropdown-menu">
     <% Obra.find_each do |obra| %>
       <li>
-      <%= link_to obra.nombre, obra_path(obra)  %>
+      <%= link_to obra.nombre, url_for(params.merge(obra_id: obra.id))  %>
       </li>
     <% end %>
   </ul>
