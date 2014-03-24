@@ -3,11 +3,7 @@
   <ul class="dropdown-menu">
     <% Obra.find_each do |obra| %>
       <li>
-      <% if params[:action] == 'show' %>
-      <%= link_to obra.nombre, url_for(params.merge(obra_id: obra.id, action: 'index'))  %>
-      <% else %>
-      <%= link_to obra.nombre, url_for(params.merge(obra_id: obra.id))  %>
-      <% end %>
+      <%= link_to_obra(obra) %>
       </li>
     <% end %>
   </ul>

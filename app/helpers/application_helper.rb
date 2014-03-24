@@ -47,7 +47,7 @@ module ApplicationHelper
   def mostrar_ocultos
     true
   end
-  
+
   def formatted_number(numero)
     number_with_delimiter(numero, delimiter: ".", separator: ",")
   end
@@ -61,5 +61,18 @@ module ApplicationHelper
     else
       url
     end
+  end
+
+  # genera un link a la url actual en otra obra (o al listado
+  # correspondiente en otra obra)
+  def link_to_obra(obra)
+    if params[:action] == 'show'
+      # al dessetear el id se corrige el ?id=X flotante
+      url = url_for(params.merge(obra_id: obra.id, id: nil, action: 'index'))
+    else
+      url = url_for(params.merge(obra_id: obra.id))
+    end
+
+    link_to obra.nombre, url
   end
 end
