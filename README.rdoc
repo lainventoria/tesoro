@@ -1,18 +1,13 @@
 # Entorno de desarrollo
 
 * Instalar gemas (correr cada vez que haya un cambio en Gemfile)
-
-    bundle install
+      bundle install
 
 * Migrar base de datos (después de cada cambio en la base)
-
-    bundle exec rake db:migrate
+      bundle exec rake db:migrate
 
 * Generar datos de relleno
-
-    bundle exec rails generate dummy:data
-    bundle exec rake dummy:data:import
+      bundle exec rake db:data:load
 
 * Correr servidor de prueba
-
-    bundle exec rails s
+      bundle exec rails s
