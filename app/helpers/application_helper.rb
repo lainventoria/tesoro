@@ -7,7 +7,7 @@ module ApplicationHelper
   # Por defecto, no se usa nada. Cada helper específico redefine este método si
   # quiere un título específico
   def titulo
-    nil
+    @obra ? @obra.nombre : nil
   end
 
 	def formatted_date(date)
@@ -41,15 +41,38 @@ module ApplicationHelper
       'disabled'
     end
   end
-  
+
   ### DEBUG ###
   # Mostrar campos ocultos en formularios
   def mostrar_ocultos
-    true 
+    true
   end
-  
+
   def formatted_number(numero)
     number_with_delimiter(numero, delimiter: ".", separator: ",")
   end
 
+  # decidir si vamos a incluir /obra/:obra_id en las urls o no, para
+  # filtrar por obra
+  def con_obra?(url)
+    # los /obra/new tienen una obra que todavía no existe seteada
+    if @obra and not @obra.new_record?
+      obra_path(@obra) + url
+    else
+      url
+    end
+  end
+
+  # genera un link a la url actual en otra obra (o al listado
+  # correspondiente en otra obra)
+  def link_to_obra(obra)
+    if params[:action] == 'show'
+      # al dessetear el id se corrige el ?id=X flotante
+      url = url_for(params.merge(obra_id: obra.id, id: nil, action: 'index'))
+    else
+      url = url_for(params.merge(obra_id: obra.id))
+    end
+
+    link_to obra.nombre, url
+  end
 end
