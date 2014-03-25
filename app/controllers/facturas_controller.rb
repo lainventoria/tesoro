@@ -1,6 +1,7 @@
 # encoding: utf-8
 class FacturasController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
+  autocomplete :tercero, :nombre
 
   # GET /facturas
   # GET /facturas.json
