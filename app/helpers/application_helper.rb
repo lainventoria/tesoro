@@ -66,15 +66,21 @@ module ApplicationHelper
   # genera un link a la url actual en otra obra (o al listado
   # correspondiente en otra obra)
   def link_to_obra(obra)
+    extra_params = {}
+
     if params[:controller] == 'obras'
-      url = url_for(params.merge(id: obra.id, action: 'show'))
+      extra_params.merge!({id: obra.id, action: 'show'})
     elsif params[:action] == 'show'
       # al dessetear el id se corrige el ?id=X flotante
-      url = url_for(params.merge(obra_id: obra.id, id: nil, action: 'index'))
+      extra_params.merge!({obra_id: obra.id, id: nil, action: 'index'})
     else
-      url = url_for(params.merge(obra_id: obra.id))
+      extra_params.merge!({obra_id: obra.id})
     end
 
-    link_to obra.nombre, url
+    # capoooo
+    extra_params.merge!({action: pluralize(@factura.situacion), id: nil}) if @factura
+    extra_params.merge!({action: pluralize(@recibo.situacion), factura_id: nil, id: nil}) if @recibo
+
+    link_to obra.nombre, url_for(params.merge(extra_params))
   end
 end
