@@ -77,4 +77,14 @@ module ApplicationHelper
 
     link_to obra.nombre, url
   end
+
+  def alert_range(num)
+    if num == 0
+      'info'
+    elsif num > 0
+      'success'
+    elsif num < 0
+      'danger'
+    end
+  end
 end
