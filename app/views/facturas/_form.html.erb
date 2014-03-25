@@ -40,10 +40,7 @@
     <div class="row">
       <div class="field form-group col-md-8">
         <%= f.label :tercero %><br>
-        <%# f.collection_select(:tercero_id, Tercero.all, :id, :nombre, { prompt: "--Seleccione Tercero--" }, { class: "form-control" } ) %>
-        <div id="the-basics">
-          <input class="typeahead" type="text" placeholder="Seleccione Tercero..."></input>
-        </div>
+        <%= f.collection_select(:tercero_id, Tercero.all, :id, :nombre, { prompt: "--Seleccione Tercero--" }, { class: "form-control" } ) %>
       </div>
       <div class="field form-group col-md-4">
         <%= f.label '', 'CUIT' %><br>

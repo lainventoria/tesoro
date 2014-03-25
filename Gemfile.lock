@@ -198,6 +198,5 @@ DEPENDENCIES
   sqlite3
   therubyracer
   turbolinks
-  twitter-typeahead-rails
   uglifier (>= 1.3.0)
   yaml_db!
