@@ -1,13 +1,6 @@
 $(document).ready(function(){
 
-  //iniciar campos autoNumeric
   $('input[data-role=money]').autoNumeric('init');
-
-  // twitter/typeahead
-  $('.typeahead').typeahead({
-    name: 'people',
-    local: ['Ana', 'Juana', 'Fer', Fede', 'Fedo']
-  });
 
   // Inicializar los datepicker
   $('.input-group.date').datepicker({
