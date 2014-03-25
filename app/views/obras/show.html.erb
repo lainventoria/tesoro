@@ -22,8 +22,40 @@
       </a>
     </div>
 
-    <div class="col-md-4">
-    <%# TODO agregar informacion destacada de la obra %>
+    <div>
+      <h3>Balances</h3>
+
+      <h4>Saldo General
+          <span class="pull-right label label-<%= alert_range @obra.saldo_general %>">
+          <%= formatted_number @obra.saldo_general %>
+          </span></h4>
+      <p>El saldo general es la suma de todos los saldos.</p>
+
+      <h4>Saldo de pagos
+          <span class="pull-right label label-<%= alert_range @obra.saldo_de_pago %>">
+          <%= formatted_number @obra.saldo_de_pago %>
+          </span></h4>
+      <p>El saldo de pagos es la suma de todos los saldos de
+        <%= link_to 'facturas de pago', pagos_obra_facturas_path(@obra) %></p>
+
+      <h4>Saldo de cobros
+          <span class="pull-right label label-<%= alert_range @obra.saldo_de_cobro %>">
+          <%= formatted_number @obra.saldo_de_cobro %>
+          </span></h4>
+      <p>El saldo de cobros es la suma de todos los saldos de
+        <%= link_to 'facturas de cobro', cobros_obra_facturas_path(@obra) %></p>
+
+      <h4>Cajas en pesos
+          <span class="pull-right label label-<%= alert_range(@obra.total_general('ARS')) %>">
+          <%= @obra.total_general 'ARS' %>
+          </span></h4>
+      <p>Saldo de movimientos en pesos</p>
+
+      <h4>Cajas en dólares
+          <span class="pull-right label label-<%= alert_range(@obra.total_general('USD')) %>">
+          <%= @obra.total_general 'USD' %>
+          </span></h4>
+      <p>Saldo de movimientos en dólares</p>
     </div>
   </div>
 </div>
