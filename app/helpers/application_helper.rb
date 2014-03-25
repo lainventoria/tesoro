@@ -66,7 +66,7 @@ module ApplicationHelper
   # genera un link a la url actual en otra obra (o al listado
   # correspondiente en otra obra)
   def link_to_obra(obra)
-    if params[:controller] == 'obras' # and params[:action] == 'index'
+    if params[:controller] == 'obras'
       url = url_for(params.merge(id: obra.id, action: 'show'))
     elsif params[:action] == 'show'
       # al dessetear el id se corrige el ?id=X flotante
