@@ -13,15 +13,20 @@
   <fieldset <%= editar_o_bloquear %> >
 
     <div class="row">
-      <div class="field form-group col-md-2">
+
+      <div class="field form-group col-md-3">
+        <%= f.label :obra_id %><br>
+        <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, { prompt: "-Seleccione Obra-", selected: params[:obra_id] }, { class: "form-control" } ) %>
+      </div>
+      <div class="field form-group col-md-1">
         <%= f.label :tipo %><br>
         <%= f.text_field :tipo, class: "form-control" %>
       </div>
-      <div class="field form-group col-md-3">
+      <div class="field form-group col-md-2">
         <%= f.label :numero %><br>
         <%= f.text_field :numero, class: "form-control" %>
       </div>
-      <div class="field form-group col-md-3 col-md-offset-1">
+      <div class="field form-group col-md-3">
         <%= f.label :fecha %><br>
         <div class="input-group date<%= editar_o_bloquear %>">
           <%= f.text_field :fecha, { class: "form-control", value:formatted_date(@factura.fecha) } %>
