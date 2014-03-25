@@ -17,6 +17,7 @@
       <th>Vence</th>
       <th>Tercero</th>
       <th>Descripción</th>
+      <th>Moneda</th>
       <th>Importe total</th>
       <th>Saldo</th>
       <th></th>
@@ -35,6 +36,7 @@
             formatted_date(factura.fecha_pago),
             factura.tercero.nombre.first(20),
             factura.descripcion.first(40),
+            factura.importe_neto_moneda,
             formatted_number(factura.importe_total),
             formatted_number(factura.saldo)
           ] 
