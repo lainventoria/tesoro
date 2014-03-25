@@ -2,6 +2,7 @@
 class FacturasController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
   autocomplete :tercero, :nombre
+  autocomplete :tercero, :cuit
 
   # GET /facturas
   # GET /facturas.json
