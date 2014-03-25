@@ -34,6 +34,17 @@ class Obra < ActiveRecord::Base
     saldo_de_cobro + saldo_de_pago
   end
 
+  # devuelve el total de todas las cajas para una moneda
+  def total_general(moneda = 'ARS')
+    total = Money.new(0, moneda)
+
+    cajas.find_each do |caja|
+      total += caja.total(moneda)
+    end
+
+    total
+  end
+
   private
 
     def crear_cajas
