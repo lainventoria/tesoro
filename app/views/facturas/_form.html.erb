@@ -16,7 +16,7 @@
 
       <div class="field form-group col-md-3">
         <%= f.label :obra_id %><br>
-        <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, { prompt: "-Seleccione Obra-", selected: params[:obra_id] }, { class: "form-control" } ) %>
+        <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, { prompt: "-Seleccione Obra-", selected: obra_factura }, { class: "form-control" } ) %>
       </div>
       <div class="field form-group col-md-1">
         <%= f.label :tipo %><br>

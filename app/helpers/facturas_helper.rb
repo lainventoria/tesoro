@@ -39,4 +39,8 @@ module FacturasHelper
       @factura.importe_neto_moneda
     end
   end
+
+  def obra_factura
+    @factura.new_record? ? params[:obra_id] : @factura.obra_id
+  end
 end

@@ -32,4 +32,7 @@ module CajasHelper
     end
   end
 
+  def obra_caja
+    @caja.new_record? ? params[:obra_id] : @caja.obra_id
+  end
 end
