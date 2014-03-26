@@ -37,10 +37,9 @@ class Obra < ActiveRecord::Base
   end
 
   # devuelve el total de todas las cajas para una moneda
-  def total_general(moneda = 'ARS')
+  def total_general(moneda = 'ARS', parametros = {})
     total = Money.new(0, moneda)
-
-    cajas.find_each do |caja|
+    cajas.where(parametros).find_each do |caja|
       total += caja.total(moneda)
     end
 
