@@ -2,14 +2,15 @@ require 'test_helper'
 
 class FacturaTest < ActiveSupport::TestCase
   test "es válida" do
-    # TODO arreglar las valicadiones en recibos y facturas
-    assert (f = create(:factura)).valid?, f.errors.messages
+    [ :build, :build_stubbed, :create].each do |metodo|
+      assert_valid_factory metodo, :factura
+    end
   end
 
   test "es un pago?" do
     @pago = create :factura, situacion: "pago"
     @cobro = create :factura, situacion: "cobro"
-    
+
     assert @pago.pago?
     assert_not @cobro.pago?
   end
@@ -17,7 +18,7 @@ class FacturaTest < ActiveSupport::TestCase
   test "es un cobro?" do
     @pago = create :factura, situacion: "pago"
     @cobro = create :factura, situacion: "cobro"
-    
+
     assert_not @pago.cobro?
     assert @cobro.cobro?
   end
@@ -62,4 +63,28 @@ class FacturaTest < ActiveSupport::TestCase
 
   end
 
+  test "se puede pagar" do
+    factura = create :factura
+    monto = factura.importe_total
+
+    assert factura.recibos.empty?
+
+    recibo = factura.pagar monto
+
+    assert_equal 1, factura.recibos.count
+    assert_instance_of Recibo, recibo
+    assert_equal monto, recibo.importe
+  end
+
+  test "no se puede pagar de más" do
+    factura = create :factura
+    monto = 2 * factura.importe_total
+
+    assert factura.recibos.empty?
+
+    recibo = factura.pagar monto
+
+    assert_nil recibo
+    assert_equal 0, factura.recibos.count
+  end
 end

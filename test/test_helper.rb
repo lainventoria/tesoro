@@ -9,4 +9,10 @@ class ActiveSupport::TestCase
 
   # permite usar create, build, etc directamente
   include FactoryGirl::Syntax::Methods
+
+  # Prueba que la fábrica construya objetos válidos, :build por default
+  def assert_valid_factory(metodo, tipo)
+    coso = FactoryGirl.send(metodo, tipo)
+    assert coso.valid?, "#{metodo}: #{coso.errors.messages.inspect}"
+  end
 end

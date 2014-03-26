@@ -2,12 +2,15 @@
 class Caja < ActiveRecord::Base
   belongs_to :obra
   has_many :movimientos
-  has_many :cheques
+  has_many :cheques_propios, ->{ where(situacion: 'propio') },
+    foreign_key: 'cuenta_id', class_name: 'Cheque'
+  has_many :cheques_de_terceros, ->{ where(situacion: 'terceros') },
+    foreign_key: 'chequera_id', class_name: 'Cheque'
 
   validates_presence_of :obra_id, :tipo
   validates_uniqueness_of :tipo, scope: [:obra_id, :numero]
 
-  # Las cajas son de efectivo o bancarias
+  # Las cajas son de efectivo, bancarias o chequeras
   SITUACIONES = %w(efectivo banco chequera)
   validates_inclusion_of :situacion, in: SITUACIONES
 
@@ -73,74 +76,99 @@ class Caja < ActiveRecord::Base
     Caja.transaction do
       # Crear un recibo que agrupe todos los movimientos producto de
       # este cambio
-      recibo = self.crear_recibo_interno
+      recibo = Recibo.interno_nuevo
 
-      extraer(cantidad, true, recibo)
+      # FIXME agregar causa los movimientos
+      recibo.movimientos << extraer(cantidad, true)
       cantidad.bank.exchange cantidad.fractional, indice do |nuevo|
-        depositar(Money.new(nuevo, moneda), true, recibo)
+        recibo.movimientos << depositar(Money.new(nuevo, moneda), true)
       end
-    end || Money.new(0)
+
+      recibo
+    end || nil
   end
 
-  # Sólo si la caja tiene suficiente saldo devolvemos el monto convertido,
-  # caso contrario no devolvemos nada, opcionalmente una excepción para frenar
-  # la transacción
-  def extraer(cantidad, lanzar_excepcion = false, recibo = nil)
-    # Se arrastra el recibo si hay
-    if cantidad <= total(cantidad.currency.iso_code)
-      depositar(cantidad * -1, false, recibo)
+  # Sólo si la caja tiene suficiente saldo o es una chequera, devolvemos el
+  # movimiento realizado, caso contrario no devolvemos nada, opcionalmente una
+  # excepción para frenar la transacción
+  def extraer(cantidad, lanzar_excepcion = false)
+    if cantidad <= total(cantidad.currency.iso_code) || chequera?
+      depositar(cantidad * -1, false)
     else
       raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
     end
   end
 
-  # Devolvemos cantidad para mantener consistente la API, opcionalmente una
-  # excepción para frenar la transacción
-  # 
+  # Carga una extracción en esta caja respaldada con un recibo interno
+  def extraer!(cantidad)
+    Caja.transaction do
+      recibo = Recibo.interno_nuevo
+      # FIXME agregar causa al movimiento
+      recibo.movimientos << extraer(cantidad, true)
+      recibo
+    end
+  end
+
+  # Devolvemos el movimiento realizado, u opcionalmente una excepción para
+  # frenar la transacción.
+  #
   # Si el tipo de caja es banco, esto se considera una transferencia
   # bancaria
-  def depositar(cantidad, lanzar_excepcion = false, recibo = nil)
-    # Crear un recibo adhoc para este movimiento
-    recibo = crear_recibo_interno unless recibo
-    if movimientos.create(monto: cantidad, recibo: recibo)
-      recibo
+  def depositar(cantidad, lanzar_excepcion = false)
+    if movimiento = movimientos.build(monto: cantidad)
+      movimiento
     else
       raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
     end
-
   end
 
-  # Crear un recibo interno para una transacción específica
-  def crear_recibo_interno
-    Recibo.create(importe: 0,
-                  situacion: 'interno',
-                  fecha: Time.now)
+  # Carga un depósito en esta caja respaldado con un recibo interno
+  def depositar!(cantidad)
+    Caja.transaction do
+      recibo = Recibo.interno_nuevo
+      # FIXME agregar causa al movimiento
+      recibo.movimientos << depositar(cantidad, true)
+      recibo
+    end
   end
 
+  # TODO revisar necesidad
   def depositar_cheque(cheque)
     cheque.depositar self
   end
 
+  # TODO revisar necesidad
   def cobrar_cheque(cheque)
     cheque.cobrar
   end
 
-  # emitir un cheque acepta todos los argumentos de un cheque normal y
-  # devuelve uno
-  def emitir_cheque(*args)
-    Cheque.create(*args)
+  # Devuelve un cheque nuevo que puede usarse para pagar algún recibo.
+  # Recién cuando se usa se extrae el monto de la chequera. Recién cuando se
+  # paga se extrae el monto de la cuenta y se salda la chequera
+  # TODO validar que self sea una cuenta
+  # TODO validar parametros?
+  def emitir_cheque(parametros = {})
+    # Siempre emitimos desde la chequera de la obra
+    parametros.merge!(chequera: obra.chequera_propia)
+    # y cuando corresponda sacaremos el monto de esta cuenta
+    cheques_propios.create parametros
   end
 
+  # TODO revisar necesidad. puede ser que complete el ciclo de movimientos pero
+  # mejor haría un 'pagar_todo'
   def pagar_cheque(cheque)
     cheque.pagar
   end
 
   # transferir un monto de una caja a otra
-  def transferir(monto, caja, recibo = nil)
+  def transferir(monto, caja)
+    recibo = nil
+
     Caja.transaction do
-      recibo = self.crear_recibo_interno if not recibo
-      self.extraer monto, true, recibo
-      caja.depositar monto, true, recibo
+      recibo = Recibo.interno_nuevo
+      # FIXME agregar causa los movimientos
+      recibo.movimientos << extraer(monto, true)
+      recibo.movimientos << caja.depositar(monto, true)
     end
 
     recibo

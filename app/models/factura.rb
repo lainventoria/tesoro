@@ -58,7 +58,7 @@ class Factura < ActiveRecord::Base
   # Cuánto se adeuda de esta factura en base a todos los recibos
   # NOTA esto asume que los recibos se hacen en la misma moneda de la
   # factura (y no que se está pagando una parte en una y otra en otra)
-  # 
+  #
   # Antes de guardar un recibo se tiene que hacer la conversión a la
   # moneda de la factura
   def saldo
@@ -66,7 +66,7 @@ class Factura < ActiveRecord::Base
     if self.new_record?
       importe_total
     else
-      importe_total - Money.new(self.recibos.sum(:importe_centavos), self.importe_total_moneda)
+      importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
     end
   end
 
@@ -78,7 +78,14 @@ class Factura < ActiveRecord::Base
   # TODO esto en realidad tiene que calcular el saldo en base a los
   # recibos en memoria, no a los que ya están en la base de datos
   def validate_saldo
-    errors[:base] << "El total sobrepasa el saldo de la factura" if self.saldo < 0
+    errors[:base] << "El total sobrepasa el saldo de la factura" if saldo < 0
   end
 
+  # Devuelve nil si no pudo pagar por alguna razón
+  # FIXME Pasar a build
+  def pagar(importe)
+    nuevo = recibos.create(importe: importe)
+
+    nuevo.persisted? ? nuevo : nil
+  end
 end

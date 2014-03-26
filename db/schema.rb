@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325001353) do
+ActiveRecord::Schema.define(version: 20140326084814) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -32,17 +32,15 @@ ActiveRecord::Schema.define(version: 20140325001353) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "fecha_emision"
-    t.integer  "recibo_id"
     t.string   "beneficiario"
     t.string   "banco"
-    t.integer  "caja_id"
+    t.integer  "cuenta_id"
     t.string   "estado",            default: "chequera"
-    t.integer  "destino_id"
+    t.integer  "chequera_id"
   end
 
-  add_index "cheques", ["caja_id"], name: "index_cheques_on_caja_id"
-  add_index "cheques", ["destino_id"], name: "index_cheques_on_destino_id"
-  add_index "cheques", ["recibo_id"], name: "index_cheques_on_recibo_id"
+  add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id"
+  add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"
@@ -73,7 +71,11 @@ ActiveRecord::Schema.define(version: 20140325001353) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "recibo_id"
+    t.integer  "causa_id"
+    t.string   "causa_type"
   end
+
+  add_index "movimientos", ["causa_id", "causa_type"], name: "index_movimientos_on_causa_id_and_causa_type"
 
   create_table "obras", force: true do |t|
     t.string   "nombre"
@@ -93,6 +95,22 @@ ActiveRecord::Schema.define(version: 20140325001353) do
   end
 
   add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id"
+
+  create_table "retenciones", force: true do |t|
+    t.integer  "factura_id"
+    t.integer  "recibo_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "monto_centavos",         default: 0,     null: false
+    t.string   "monto_moneda",           default: "ARS", null: false
+    t.string   "documento_file_name"
+    t.string   "documento_content_type"
+    t.integer  "documento_file_size"
+    t.datetime "documento_updated_at"
+  end
+
+  add_index "retenciones", ["factura_id"], name: "index_retenciones_on_factura_id"
+  add_index "retenciones", ["recibo_id"], name: "index_retenciones_on_recibo_id"
 
   create_table "terceros", force: true do |t|
     t.string   "nombre"

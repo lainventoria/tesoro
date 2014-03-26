@@ -2,6 +2,8 @@
 class Obra < ActiveRecord::Base
   has_many :cajas
   has_many :facturas
+  has_one :chequera_propia, ->{ where(tipo: 'Chequera propia') },
+    class_name: 'Caja'
 
   after_create :crear_cajas
 
@@ -43,5 +45,6 @@ class Obra < ActiveRecord::Base
 
       cajas.create tipo: 'Caja de Ahorro', situacion: 'banco'
       cajas.create tipo: 'Chequera', situacion: 'chequera'
+      cajas.create tipo: 'Chequera propia', situacion: 'chequera'
     end
 end

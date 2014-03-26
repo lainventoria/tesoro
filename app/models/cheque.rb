@@ -1,14 +1,24 @@
 # encoding: utf-8
 # Los cheques son promesas de cobro o pago, es decir que son movimientos
 # futuros
-# Solo se pueden depositar cuando están vencidos 
+# Solo se pueden depositar cuando están vencidos
 # Solo cuando se depositan generan un movimiento (positivo o negativo)
 # en el recibo al que pertenecen
 class Cheque < ActiveRecord::Base
-  belongs_to :caja
-  belongs_to :recibo, inverse_of: :cheques
-  # aca van recibos internos!
-  belongs_to :destino, class_name: 'Recibo', inverse_of: :cheques
+  include MedioDePago
+
+  # Los cheques tienen una cuenta sólo si son propios o han sido depositados
+  belongs_to :cuenta, ->{ where(situacion: 'banco') },
+    class_name: 'Caja'
+  belongs_to :chequera, ->{ where(situacion: 'chequera') },
+    class_name: 'Caja'
+
+  has_many :recibos, through: :movimientos do
+    # TODO hay casos donde haya más de un recibo interno?
+    def interno
+      where(situacion: 'interno').first
+    end
+  end
 
   SITUACIONES = %w(propio terceros)
   validates_inclusion_of :situacion, in: SITUACIONES
@@ -19,20 +29,18 @@ class Cheque < ActiveRecord::Base
   # campos requeridos
   validates_presence_of :fecha_emision, :fecha_vencimiento, :monto,
                         :beneficiario
-  # Todos los cheques tienen una caja, los de terceros una chequera, los
-  # propios un banco
-  validates_presence_of :caja_id
 
-  # todos los cheques tiene un recibo
-  validates_presence_of :recibo_id
-  # solo tiene un destino luego de depositado
-  # TODO validar que el destino no desaparezca cuando se cobra el cheque
-  validates_presence_of :destino_id, if: :depositado?
+  # Todos los cheques pertenecen a una chequera, si son de terceros es donde se
+  # contabiliza el pago, si son propios es de donde se contabiliza la emisión
+  # del cheque
+  validates_presence_of :chequera
+  validate :tipo_de_chequera, :tipo_de_cuenta
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
   # Trae todos los cheques vencidos, si se le pasa una fecha trae los
   # vencidos a ese momento
+  # TODO testear
   scope :vencidos, lambda { |time = nil|
     time = Time.now if not time
     where("fecha_vencimiento < ?", time)
@@ -71,91 +79,128 @@ class Cheque < ActiveRecord::Base
     estado == 'pasamanos'
   end
 
-  # para poder cobrar un cheque de terceros, antes se deposita en una
-  # caja y se espera que el banco lo verifique.  equivale a una
+  # Para poder cobrar un cheque de terceros, antes se deposita en una
+  # caja y se espera que el banco lo verifique. Equivale a una
   # transferencia de una caja a otra pero en dos pasos (o confirmación
   # manual).
-  def depositar(caja_destino)
+  def depositar(cuenta_destino)
+    # TODO validar
     # solo los cheques de terceros se depositan
-    return nil unless self.terceros?
+    return nil unless terceros?
     # no se pueden depositar cheques en chequeras
-    return nil if caja_destino.chequera?
+    return nil if cuenta_destino.chequera?
 
     # El cheque se saca de una caja y se deposita en otra, como todavía
-    # no lo cobramos, se registra como una salida 
+    # no lo cobramos, se registra como una salida
     Cheque.transaction do
-      self.destino = self.caja.extraer(self.monto)
-      self.caja = caja_destino
+      recibo = Recibo.interno_nuevo
+      movimiento = chequera.extraer(monto, true)
+      movimiento.causa = self
+      recibo.movimientos << movimiento
+
+      # FIXME update
       self.estado = 'depositado'
+      self.cuenta = cuenta_destino
+      save
     end
 
-    self.destino
+    self
   end
 
-  # cuando se cobra un cheque depositado, se hace una transferencia de
+  # Cuando se cobra un cheque depositado, se termina una transferencia de
   # la chequera a la caja destino
   def cobrar
     # solo los cheques depositados se pueden cobrar
-    return nil unless self.depositado?
+    return nil unless depositado?
 
     Cheque.transaction do
       # terminar de transferir el monto del cheque de la chequera a la
       # caja destino
-      self.caja.depositar(self.monto, true, self.destino)
+      movimiento = cuenta.depositar(monto, true)
+      movimiento.causa = self
+      recibos.interno.movimientos << movimiento
+
       # marcar el cheque como cobrado
       self.estado = 'cobrado'
+      save
     end
 
-    # devolver el recibo
-    self.destino
+    self
   end
 
-  # Los cheques generan movimientos de salida (negativos) cuando
-  # se pagan, pueden ser cheques propios o de terceros si fueron pasados
-  # de mano
+  # Los cheques extraen de su cuenta y saldan la chequera cuando
+  # se pagan, sólo pueden ser cheques propios
+  # TODO verificar esto ↑
   def pagar
     # Los cheques pagados no se pueden pagar dos veces!
-    return nil if self.pagado?
+    return nil if pagado?
     # solo los cheques de terceros que se pasaron de manos se pueden
     # pagar
-    return nil if self.terceros? and not self.pasamanos?
+    return nil if terceros?
 
-    # dependiendo del tipo de cheque usamos el recibo de origen o el de
-    # destino
-    # TODO para simplificar, usar solo los recibos de destino y setearlo
-    # por defecto al recibo de origen
-    if self.propio?
-      recibo_a_pagar = self.recibo
-    else
-      recibo_a_pagar = self.destino
-    end
-
-    # Usamos las operaciones de caja
     Cheque.transaction do
-      self.caja.extraer(self.monto, true, recibo_a_pagar)
       self.estado = 'pagado'
+      recibo = Recibo.interno_nuevo
+
+      salida = cuenta.extraer(monto, true)
+      salida.causa = self
+      entrada = chequera.depositar(monto, true)
+      entrada.causa = self
+
+      recibo.movimientos << salida << entrada
+
+      save
     end
 
-    recibo_a_pagar
+    self
   end
 
-  # Cuando se pasa de mano un cheque, se asocia a un recibo de pago para
-  # luego pagarlo
-  def pasamanos(recibo_destino)
-    # solo los cheques de terceros se pasan de manos
-    return nil unless self.terceros?
+  # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento
+  # de extracción de su caja, y asociamos el recibo de pago al movimiento.
+  def usar_para_pagar(este_recibo)
+    # TODO cambiar estos checks por errores
     # tienen que estar en la chequera
-    return nil unless self.chequera?
+    return nil unless chequera?
     # y se asocian a recibos de pago
-    return nil unless recibo_destino.pago?
+    return nil unless este_recibo.pago?
 
-    # se cambia el recibo de destino y se marca como pasamanos
     Cheque.transaction do
-      self.destino = recibo_destino
-      self.estado = 'pasamanos'
-      self.pagar
+      # TODO Qué estado ponerle a un cheque propio usado como pago?
+      self.estado = 'pasamanos' if terceros?
+      movimiento = chequera.extraer(monto)
+      movimiento.causa = self
+      este_recibo.movimientos << movimiento
+      save
     end
 
-    self.destino
+    self
   end
+
+  # TODO pasar un concern
+  def usar_para_cobrar(este_recibo)
+    if terceros?
+      Cheque.transaction do
+        movimiento = chequera.depositar(monto)
+        movimiento.causa = self
+        este_recibo.movimientos << movimiento
+        save
+      end
+    else
+      errors.add(:situacion, :debe_ser_de_terceros)
+    end
+
+    self
+  end
+
+  private
+
+    def tipo_de_chequera
+      errors.add(:chequera_id, :debe_ser_una_chequera) unless chequera.chequera?
+    end
+
+    def tipo_de_cuenta
+      if cuenta.present?
+        errors.add(:cuenta_id, :debe_ser_una_cuenta_de_banco) unless cuenta.banco?
+      end
+    end
 end
