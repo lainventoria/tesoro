@@ -57,17 +57,23 @@
       <p>El saldo de cobros es la suma de todos los saldos de
         <%= link_to 'facturas de cobro', cobros_obra_facturas_path(@obra) %></p>
 
-      <h4>Cajas en pesos
+      <h4>Cajas en efectivo
           <span class="pull-right label label-<%= alert_range(@obra.total_general('ARS')) %>">
-          <%= @obra.total_general 'ARS' %>
-          </span></h4>
-      <p>Saldo de movimientos en pesos</p>
-
-      <h4>Cajas en dólares
+          ARS <%= @obra.total_general('ARS', { situacion: 'efectivo' }) %>
+          </span>
           <span class="pull-right label label-<%= alert_range(@obra.total_general('USD')) %>">
-          <%= @obra.total_general 'USD' %>
+          USD <%= @obra.total_general('USD', { situacion: 'efectivo' }) %>
           </span></h4>
-      <p>Saldo de movimientos en dólares</p>
+
+      <h4>Cuentas bancarias
+          <span class="pull-right label label-<%= alert_range(@obra.total_general('ARS')) %>">
+          ARS <%= @obra.total_general('ARS', { situacion: 'banco' }) %>
+          </span></h4>
+
+      <h4>Chequeras
+          <span class="pull-right label label-<%= alert_range(@obra.total_general('ARS')) %>">
+          ARS <%= @obra.total_general('ARS', { situacion: 'chequera' }) %>
+          </span></h4>
     </div>
   </div>
 </div>
