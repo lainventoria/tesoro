@@ -1,6 +1,8 @@
 # encoding: utf-8
 class FacturasController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
+  before_filter :set_tercer, only: [:create, :update]
+
   autocomplete :tercero, :nombre, :extra_data => [:cuit]
   autocomplete :tercero, :cuit, :extra_data => [:nombre]
 
@@ -34,6 +36,7 @@ class FacturasController < ApplicationController
   def new
     @editar = true
     @factura = Factura.new
+    @factura.tercero = Tercero.new
   end
 
   # GET /facturas/1/edit
@@ -93,10 +96,11 @@ class FacturasController < ApplicationController
         @tercero = Tercero.find(params[:tercero_id])
       end
 
-      if ( ! @tercero.nil? && ! @factura.nil? )
+      if ( @tercero.present? && @factura.present? )
         @factura.tercero = @tercero
       end
     end
+
 
 
     # Never trust parameters from the scary internet, only allow the white list through.

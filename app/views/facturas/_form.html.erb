@@ -41,17 +41,17 @@
       <div class="field form-group col-md-8">
         <%= f.hidden_field :tercero_id %>
         <%= f.label :tercero %><br>
-        <%= autocomplete_field_tag 'nombre_tercero','', autocomplete_tercero_nombre_facturas_path, { class: "form-control" } %>
+        <%= autocomplete_field_tag 'nombre_tercero',@factura.tercero.nombre, autocomplete_tercero_nombre_facturas_path, { class: "form-control" } %>
       </div>
       <div class="field form-group col-md-4">
         <%= f.label '', 'CUIT' %><br>
-        <%= autocomplete_field_tag 'cuit_tercero','', autocomplete_tercero_cuit_facturas_path, { class: "form-control" } %>
+        <%= autocomplete_field_tag 'cuit_tercero',@factura.tercero.cuit, autocomplete_tercero_cuit_facturas_path, { class: "form-control" } %>
       </div>
     </div>
 
     <div class="alert alert-info" id="factura_tercero_msg" style="display:none">
       <span></span>
-      <button id="factura_tercero_clear" class="btn btn-small btn-primary pull-right">Limpiar Selección</button>
+      <button id="factura_tercero_clear" class="btn btn-sm btn-primary pull-right">Limpiar Selección</button>
     </div>
 
 
