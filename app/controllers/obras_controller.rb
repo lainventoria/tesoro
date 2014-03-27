@@ -58,10 +58,17 @@ class ObrasController < ApplicationController
   # DELETE /obras/1
   # DELETE /obras/1.json
   def destroy
-    @obra.destroy
-    respond_to do |format|
-      format.html { redirect_to obras_url }
-      format.json { head :no_content }
+    if @obra.destroy
+      respond_to do |format|
+        format.html { redirect_to obras_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to edit_obra_url(@obra),
+          notice: 'No se pudo borrar la obra porque tiene facturas y/o cajas asociadas' }
+        format.json { render json: @obra.errors }
+      end
     end
   end
 
