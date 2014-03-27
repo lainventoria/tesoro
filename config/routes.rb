@@ -41,6 +41,10 @@ Cp::Application.routes.draw do
       get 'pagos'
     end
 
+    # Autocompletar Terceros
+    get :autocomplete_tercero_nombre, :on => :collection
+    get :autocomplete_tercero_cuit, :on => :collection
+
     # Ver los recibos de cada factura
     resources :recibos
   end

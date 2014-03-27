@@ -2,6 +2,10 @@
 class FacturasController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
   before_action :set_obra
+  before_filter :set_tercer, only: [:create, :update]
+
+  autocomplete :tercero, :nombre, :extra_data => [:cuit]
+  autocomplete :tercero, :cuit, :extra_data => [:nombre]
 
   # GET /facturas
   # GET /facturas.json
@@ -32,6 +36,7 @@ class FacturasController < ApplicationController
   def new
     @editar = true
     @factura = Factura.new
+    @factura.tercero = Tercero.new
   end
 
   # GET /facturas/1/edit
@@ -89,12 +94,18 @@ class FacturasController < ApplicationController
     def set_tercero
       if params[:tercero_id]
         @tercero = Tercero.find(params[:tercero_id])
+      else
+        @tercero = Tercero.new(
+          nombre: params[:nombre_tercero],
+          cuit: params[:cuit_tercero]
+        )
       end
 
-      if ( ! @tercero.nil? && ! @factura.nil? )
+      if ( @tercero.present? && @factura.present? )
         @factura.tercero = @tercero
       end
     end
+
 
 
     # Never trust parameters from the scary internet, only allow the white list through.
