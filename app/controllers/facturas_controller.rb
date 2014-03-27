@@ -94,6 +94,11 @@ class FacturasController < ApplicationController
     def set_tercero
       if params[:tercero_id]
         @tercero = Tercero.find(params[:tercero_id])
+      else
+        @tercero = Tercero.new(
+          nombre: params[:nombre_tercero],
+          cuit: params[:cuit_tercero]
+        )
       end
 
       if ( @tercero.present? && @factura.present? )
