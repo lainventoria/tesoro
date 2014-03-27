@@ -13,9 +13,11 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require jquery.ui.all
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require twitter/bootstrap
+//= require autocomplete-rails
 //= require autoNumeric/autoNumeric
 //= require_tree .
 //= require turbolinks
