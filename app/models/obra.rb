@@ -1,10 +1,9 @@
 # encoding: utf-8
 class Obra < ActiveRecord::Base
-  has_many :cajas
+  has_many :cajas, dependent: :restrict_with_error
   has_many :cheques, through: :cajas
-  has_many :facturas
+  has_many :facturas, dependent: :restrict_with_error
   has_many :recibos, through: :facturas
-
   has_one :chequera_propia, ->{ where(tipo: 'Chequera propia') },
     class_name: 'Caja'
   has_one :caja_afip, ->{ where(tipo: 'Caja AFIP') },
