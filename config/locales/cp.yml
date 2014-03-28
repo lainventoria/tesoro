@@ -24,3 +24,7 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar esta factura porque tiene #{record.recibos} asociados"
+        caja:
+          attributes:
+            base:
+              no_archivar_con_saldo: "No se puede archivar una caja con saldos restantes"
