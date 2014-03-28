@@ -24,7 +24,7 @@ class RecibosControllerTest < ActionController::TestCase
         :recibo, importe: importe_permitido, factura_id: @factura)
     end
 
-    assert_redirected_to factura_recibo_path(@recibo.factura, assigns(:recibo))
+    assert_redirected_to obra_factura_recibo_path(@recibo.factura.obra, @recibo.factura, assigns(:recibo))
   end
 
   test "muestra" do
