@@ -86,10 +86,16 @@ class RecibosController < ApplicationController
   # DELETE /recibos/1
   # DELETE /recibos/1.json
   def destroy
-    @recibo.destroy
-    respond_to do |format|
-      format.html { redirect_to [@factura] }
-      format.json { head :no_content }
+    if @recibo.destroy
+      respond_to do |format|
+        format.html { redirect_to [@factura] }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { render action: 'edit', location: @recibo }
+        format.json { render json: @recibo.errors, status: :unprocessable_entity }
+      end
     end
   end
 

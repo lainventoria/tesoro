@@ -5,7 +5,7 @@ class Recibo < ActiveRecord::Base
   # los cheques son movimientos futuros
   has_many :cheques, inverse_of: :recibo
   # Los recibos disparan movimientos
-  has_many :movimientos, inverse_of: :recibo
+  has_many :movimientos, inverse_of: :recibo, dependent: :restrict_with_error
   # Por eso cada recibo tiene que estar asociado a una factura
   # a menos que sea un recibo interno (burocracia!)
   validates_presence_of :factura, unless: :interno?
