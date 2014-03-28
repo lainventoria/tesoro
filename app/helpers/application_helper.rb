@@ -86,4 +86,14 @@ module ApplicationHelper
 
     link_to nombre, url_for(params.merge(extra_params))
   end
+
+  def alert_range(num)
+    if num == 0
+      'info'
+    elsif num > 0
+      'success'
+    elsif num < 0
+      'danger'
+    end
+  end
 end
