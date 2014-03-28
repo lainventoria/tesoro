@@ -46,11 +46,15 @@ class Recibo < ActiveRecord::Base
   end
 
   def pagar_con(medio_de_pago)
-    if pago = medio_de_pago.usar_para_pagar(self)
-      self.movimientos << pago
-      true
+    if medio_de_pago.present?
+      if pago = medio_de_pago.usar_para_pagar(self)
+        self.movimientos << pago
+        true
+      else
+        false
+      end
     else
-      false
+      true # noop, como un save sin cambios
     end
   end
 

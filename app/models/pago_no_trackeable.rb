@@ -28,8 +28,17 @@ class PagoNoTrackeable
   end
 
   def initialize(opciones = {})
-    @caja = Caja.find(opciones[:caja_id]) if opciones[:caja_id]
-    @monto = opciones[:monto].try :to_money
+    @caja = if opciones[:caja_id]
+      Caja.find(opciones[:caja_id])
+    else
+      opciones[:caja]
+    end
+
+    @monto = if opciones[:monto].class == Money
+      opciones[:monto]
+    else
+      opciones[:monto].try :to_money
+    end
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación

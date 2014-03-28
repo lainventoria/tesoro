@@ -24,6 +24,6 @@ class ApplicationController < ActionController::Base
     end
 
     def causa_params
-      params.require(:causa)
+      params[:causa] || {}
     end
 end
