@@ -2,6 +2,7 @@
 # Representa una clase de pago con una única instancia en el sistema, a la cual
 # no nos interesa seguirle el rastro (e.g. efectivo).
 class PagoNoTrackeable
+  include ActiveModel::Naming
   # Datos necesarios para generar los movimientos
   attr_accessor :monto, :caja
 
