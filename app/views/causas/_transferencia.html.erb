@@ -1,7 +1,7 @@
 <h3>Transferencia bancaria</h3>
 
 <%= fields_for :causa, @causa do |f| %>
-  <%= hidden_field_tag 'causa[tipo]', 'transferencia' %>
+  <%= hidden_field_tag 'causa_tipo', 'transferencia' %>
 
   <div class="field form-group col-md-6" >
     <%= f.label :monto %>

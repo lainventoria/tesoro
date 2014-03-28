@@ -4,6 +4,7 @@ class RecibosController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
   before_action :set_obra
   before_action :set_facturas, only: [ :index, :cobros, :pagos ]
+  before_action :set_causa, only: [ :update, :create ]
 
   # GET /recibos
   # GET /recibos.json
@@ -45,6 +46,7 @@ class RecibosController < ApplicationController
   # GET /recibos/new
   def new
     @recibo = Recibo.new
+
     @editar = true
   end
 
@@ -60,8 +62,7 @@ class RecibosController < ApplicationController
     @recibo = Recibo.new(recibo_params)
 
     respond_to do |format|
-      if @recibo.save &&
-         @recibo.pagar_con(causa.try :new, causa_params)
+      if @recibo.save && @recibo.pagar_con(@causa)
 
         format.html { seguir_agregando_o_mostrar }
         format.json { render action: 'show', status: :created, location: [@recibo.factura,@recibo] }
@@ -77,8 +78,7 @@ class RecibosController < ApplicationController
   def update
     @editar = true
     respond_to do |format|
-      if @recibo.update(recibo_params) &&
-         @recibo.pagar_con(causa.try :new, causa_params)
+      if @recibo.update(recibo_params) && @recibo.pagar_con(@causa)
 
         format.html { seguir_agregando_o_mostrar }
         format.json { head :no_content }
@@ -131,6 +131,15 @@ class RecibosController < ApplicationController
         render action: @recibo.persisted? ? 'edit' : 'new'
       else
         redirect_to [@recibo.factura, @recibo], notice: 'Recibo actualizado con éxito.'
+      end
+    end
+
+    def set_causa
+      @causa = case params[:causa_tipo]
+        when 'retencion'
+          @factura.retencion
+        else
+          causa.try :new, causa_params
       end
     end
 end

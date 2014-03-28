@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326084814) do
+ActiveRecord::Schema.define(version: 20140328153014) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20140326084814) do
 
   create_table "retenciones", force: true do |t|
     t.integer  "factura_id"
-    t.integer  "recibo_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "monto_centavos",         default: 0,     null: false
@@ -107,10 +106,13 @@ ActiveRecord::Schema.define(version: 20140326084814) do
     t.string   "documento_content_type"
     t.integer  "documento_file_size"
     t.datetime "documento_updated_at"
+    t.integer  "cuenta_id"
+    t.integer  "caja_afip_id"
   end
 
+  add_index "retenciones", ["caja_afip_id"], name: "index_retenciones_on_caja_afip_id"
+  add_index "retenciones", ["cuenta_id"], name: "index_retenciones_on_cuenta_id"
   add_index "retenciones", ["factura_id"], name: "index_retenciones_on_factura_id"
-  add_index "retenciones", ["recibo_id"], name: "index_retenciones_on_recibo_id"
 
   create_table "terceros", force: true do |t|
     t.string   "nombre"

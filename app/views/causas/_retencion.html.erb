@@ -1,7 +1,7 @@
-<h3>Pago en efectivo</h3>
+<h3>Retención de impuestos</h3>
 
 <%= fields_for :causa, @causa do |f| %>
-  <%= hidden_field_tag 'causa_tipo', 'efectivo' %>
+  <%= hidden_field_tag 'causa_tipo', 'retencion' %>
 
   <div class="field form-group col-md-6" >
     <%= f.label :monto %>
@@ -9,9 +9,8 @@
   </div>
 
   <div class="field form-group col-md-6" >
-    <%= f.label :caja %>
-    <%= f.collection_select(:caja_id, @obra.cajas.de_efectivo, :id, :tipo,
-      { prompt: "-Seleccione Caja-" }, { class: "form-control" } ) %>
+    <%= f.label :documento %><br>
+    <%= link_to 'Descargar el comprobante', @causa.documento.url %>
   </div>
 
   <div class="field form-group col-md-12" >

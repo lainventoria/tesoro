@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
     def causa_conocida
       if %w{
         cheque-propio cheque-de-terceros efectivo transferencia retencion
-      }.include? causa_params[:tipo]
-        causa_params[:tipo].underscore
+      }.include? params[:causa_tipo]
+        params[:causa_tipo].underscore
       else
         nil
       end
@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
     end
 
     def causa_params
-      params[:causa] || {}
+      if params[:causa].present?
+        params[:causa].permit(:monto, :caja_id)
+      else
+        {}
+      end
     end
 end
