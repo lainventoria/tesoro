@@ -94,7 +94,9 @@ class FacturasController < ApplicationController
     def set_tercero
       if params[:tercero_id]
         @tercero = Tercero.find(params[:tercero_id])
-      else
+      end
+
+      if @tercero.nil?
         @tercero = Tercero.new(
           nombre: params[:nombre_tercero],
           cuit: params[:cuit_tercero]
