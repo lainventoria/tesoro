@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140328163726) do
     t.string   "numero"
     t.string   "situacion"
     t.string   "tipo",       null: false
+    t.boolean  "archivada"
   end
 
   create_table "cheques", force: true do |t|
