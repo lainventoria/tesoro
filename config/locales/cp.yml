@@ -19,6 +19,7 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar esta obra porque tiene #{record.facturas} asociadas"
+                one: "No se puede borrar esta obra porque tiene #{record.chequera_propia} asociada"
         factura:
           attributes:
             base:
