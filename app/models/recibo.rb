@@ -2,8 +2,7 @@
 class Recibo < ActiveRecord::Base
   # Las facturas se cancelan con uno o más recibos
   belongs_to :factura, inverse_of: :recibos
-  # los cheques son movimientos futuros
-  has_many :cheques, inverse_of: :recibo
+  has_one :obra, through: :factura
   # Los recibos disparan movimientos
   has_many :movimientos, inverse_of: :recibo
   # Por eso cada recibo tiene que estar asociado a una factura
@@ -47,7 +46,16 @@ class Recibo < ActiveRecord::Base
   end
 
   def pagar_con(medio_de_pago)
-    self.movimientos << medio_de_pago.usar_para_pagar(self)
+    if medio_de_pago.present?
+      if pago = medio_de_pago.usar_para_pagar(self)
+        self.movimientos << pago
+        true
+      else
+        false
+      end
+    else
+      true # noop, como un save sin cambios
+    end
   end
 
   # Crear un recibo interno para una transacción específica

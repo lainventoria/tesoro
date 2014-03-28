@@ -15,6 +15,11 @@ class PagoNoTrackeableTest < ActiveSupport::TestCase
       Sarasa.new(monto: Money.new(100, 'USD')).monto
   end
 
+  test 'registra el monto con string y to_money' do
+    assert_equal Money.new(100),
+      Sarasa.new(monto: '1').monto
+  end
+
   test 'el id es siempre el mismo' do
     assert_equal 1, Sarasa.new.id
   end
@@ -22,5 +27,10 @@ class PagoNoTrackeableTest < ActiveSupport::TestCase
   test 'registra la caja a la que pertenece el movimiento de pago' do
     caja = create(:caja)
     assert_equal caja, Sarasa.new(caja: caja).caja
+  end
+
+  test 'registra por id la caja a la que pertenece' do
+    caja = create(:caja)
+    assert_equal caja, Sarasa.new(caja_id: caja.id).caja
   end
 end

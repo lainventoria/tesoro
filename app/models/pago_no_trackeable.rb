@@ -2,8 +2,9 @@
 # Representa una clase de pago con una única instancia en el sistema, a la cual
 # no nos interesa seguirle el rastro (e.g. efectivo).
 class PagoNoTrackeable
+  include ActiveModel::Naming
   # Datos necesarios para generar los movimientos
-  attr_accessor :monto, :caja
+  attr_accessor :monto, :caja, :caja_id
 
   # Crea una asociación falsa. Por ejemplo
   #
@@ -27,8 +28,17 @@ class PagoNoTrackeable
   end
 
   def initialize(opciones = {})
-    @caja = opciones[:caja]
-    @monto = opciones[:monto]
+    @caja = if opciones[:caja_id]
+      Caja.find(opciones[:caja_id])
+    else
+      opciones[:caja]
+    end
+
+    @monto = if opciones[:monto].class == Money
+      opciones[:monto]
+    else
+      opciones[:monto].try :to_money
+    end
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación
