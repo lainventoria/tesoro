@@ -7,7 +7,7 @@ class Factura < ActiveRecord::Base
   belongs_to :obra, inverse_of: :facturas
 
   # Las facturas se pueden cancelar con muchos recibos
-  has_many :recibos, inverse_of: :factura
+  has_many :recibos, inverse_of: :factura, dependent: :restrict_with_error
 
   # Puede tener varias retenciones de varios tipos
   has_many :retenciones, inverse_of: :factura
