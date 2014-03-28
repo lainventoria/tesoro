@@ -56,11 +56,14 @@ class RecibosController < ApplicationController
   # POST /recibos
   # POST /recibos.json
   def create
+    @editar = true
     @recibo = Recibo.new(recibo_params)
 
     respond_to do |format|
-      if @recibo.save
-        format.html { redirect_to [@recibo.factura.obra, @recibo.factura, @recibo], notice: 'Recibo creado con éxito.' }
+      if @recibo.save &&
+         @recibo.pagar_con(causa.try :new, causa_params)
+
+        format.html { seguir_agregando_o_mostrar }
         format.json { render action: 'show', status: :created, location: [@recibo.factura,@recibo] }
       else
         format.html { render action: 'new' }
@@ -72,9 +75,12 @@ class RecibosController < ApplicationController
   # PATCH/PUT /recibos/1
   # PATCH/PUT /recibos/1.json
   def update
+    @editar = true
     respond_to do |format|
-      if @recibo.update(recibo_params)
-        format.html { redirect_to [@recibo.factura, @recibo], notice: 'Recibo actualizado con éxito.' }
+      if @recibo.update(recibo_params) &&
+         @recibo.pagar_con(causa.try :new, causa_params)
+
+        format.html { seguir_agregando_o_mostrar }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -118,5 +124,13 @@ class RecibosController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def recibo_params
       params.require(:recibo).permit(:fecha, :importe, :situacion, :factura_id)
+    end
+
+    def seguir_agregando_o_mostrar
+      if params[:agregar_causa]
+        render action: @recibo.persisted? ? 'edit' : 'new'
+      else
+        redirect_to [@recibo.factura, @recibo], notice: 'Recibo actualizado con éxito.'
+      end
     end
 end

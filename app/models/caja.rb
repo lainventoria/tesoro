@@ -14,6 +14,9 @@ class Caja < ActiveRecord::Base
   SITUACIONES = %w(efectivo banco chequera)
   validates_inclusion_of :situacion, in: SITUACIONES
 
+  scope :cuentas, ->{ where(situacion: 'banco') }
+  scope :chequeras, ->{ where(situacion: 'chequera') }
+  scope :de_efectivo, ->{ where(situacion: 'efectivo') }
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
   # con los valores viejos
   normalize_attribute :tipo, with: [ :squish, :blank ] do |valor|

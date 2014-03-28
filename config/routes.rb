@@ -67,4 +67,6 @@ Cp::Application.routes.draw do
   end
 
   resources :retenciones
+
+  resources :causas, only: [ :new ]
 end

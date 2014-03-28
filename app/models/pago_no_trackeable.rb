@@ -4,7 +4,7 @@
 class PagoNoTrackeable
   include ActiveModel::Naming
   # Datos necesarios para generar los movimientos
-  attr_accessor :monto, :caja
+  attr_accessor :monto, :caja, :caja_id
 
   # Crea una asociación falsa. Por ejemplo
   #
@@ -28,8 +28,8 @@ class PagoNoTrackeable
   end
 
   def initialize(opciones = {})
-    @caja = opciones[:caja]
-    @monto = opciones[:monto]
+    @caja = Caja.find(opciones[:caja_id]) if opciones[:caja_id]
+    @monto = opciones[:monto].try :to_money
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación

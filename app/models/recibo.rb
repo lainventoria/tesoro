@@ -46,7 +46,12 @@ class Recibo < ActiveRecord::Base
   end
 
   def pagar_con(medio_de_pago)
-    self.movimientos << medio_de_pago.usar_para_pagar(self)
+    if pago = medio_de_pago.usar_para_pagar(self)
+      self.movimientos << pago
+      true
+    else
+      false
+    end
   end
 
   # Crear un recibo interno para una transacción específica
