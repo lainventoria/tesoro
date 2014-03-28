@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Caja < ActiveRecord::Base
-  belongs_to :obra
+  belongs_to :obra, inverse_of: :cajas
   has_many :movimientos
   has_many :cheques_propios, ->{ where(situacion: 'propio') },
     foreign_key: 'cuenta_id', class_name: 'Cheque'
@@ -172,5 +172,18 @@ class Caja < ActiveRecord::Base
     end
 
     recibo
+  end
+
+  # las cajas no se pueden destruir, solo se marcan como archivadas 
+  def archivar
+    totales.each do |total|
+      if total[1] > 0
+        errors.add :base, :no_archivar_con_saldo
+        return nil
+      end
+    end
+
+    self.archivada = true
+    save
   end
 end
