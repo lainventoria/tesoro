@@ -6,6 +6,7 @@ class Caja < ActiveRecord::Base
     foreign_key: 'cuenta_id', class_name: 'Cheque'
   has_many :cheques_de_terceros, ->{ where(situacion: 'terceros') },
     foreign_key: 'chequera_id', class_name: 'Cheque'
+  has_many :retenciones
 
   validates_presence_of :obra_id, :tipo
   validates_uniqueness_of :tipo, scope: [:obra_id, :numero]
@@ -14,6 +15,9 @@ class Caja < ActiveRecord::Base
   SITUACIONES = %w(efectivo banco chequera)
   validates_inclusion_of :situacion, in: SITUACIONES
 
+  scope :cuentas, ->{ where(situacion: 'banco') }
+  scope :chequeras, ->{ where(situacion: 'chequera') }
+  scope :de_efectivo, ->{ where(situacion: 'efectivo') }
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
   # con los valores viejos
   normalize_attribute :tipo, with: [ :squish, :blank ] do |valor|

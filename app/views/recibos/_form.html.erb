@@ -44,12 +44,19 @@
     </div>
 
     <div class="row">
-      <br>
+      <br><%# TODO margen con csssss!! %>
+    </div>
+
+    <div class="row" id='nuevo-movimiento'>
+      <%# TODO Arrancar con retenciones si existe %>
+    </div>
+
+    <div class="row">
+      <br><%# TODO margen con csssss!! %>
     </div>
 
     <%# campo necesario para crear un recibo nuevo %>
     <%= f.hidden_field :factura_id, value: @factura.id %>
-
   </fieldset>
 
 <% end %>

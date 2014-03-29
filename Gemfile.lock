@@ -82,6 +82,9 @@ GEM
       railties (>= 3.0.0)
     hike (1.2.3)
     hirb (0.7.1)
+    httparty (0.13.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     i18n (0.6.9)
     inflections (0.0.5)
       activesupport (>= 2.2.1)
@@ -91,6 +94,10 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.2.0)
+      railties (>= 3.2.16)
+    jquery-ui-themes (0.0.11)
+      httparty
     json (1.8.1)
     libv8 (3.16.14.3)
     mail (2.5.4)
@@ -108,6 +115,7 @@ GEM
       money (~> 6.0.0)
       railties (>= 3.0)
     multi_json (1.9.2)
+    multi_xml (0.5.5)
     paperclip (4.1.1)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -134,6 +142,8 @@ GEM
     rails-i18n (4.0.1)
       i18n (~> 0.6)
       rails (~> 4.0)
+    rails3-jquery-autocomplete (1.0.13)
+      rails (>= 3.0)
     railties (4.0.2)
       actionpack (= 4.0.2)
       activesupport (= 4.0.2)
@@ -197,11 +207,14 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   jquery-turbolinks!
+  jquery-ui-rails
+  jquery-ui-themes
   money-rails
   paperclip
   pry-rails
   rails (= 4.0.2)
   rails-i18n
+  rails3-jquery-autocomplete
   sass-rails (~> 4.0.0)
   sdoc
   sqlite3
