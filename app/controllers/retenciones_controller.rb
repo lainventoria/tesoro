@@ -57,6 +57,16 @@ class RetencionesController < ApplicationController
       @retencion = Retencion.find(params[:id])
     end
 
+    def set_factura
+      if params[:factura_id]
+        @factura = Factura.find(params[:factura_id])
+      end
+
+      if ( ! @factura.nil? && ! @retencion.nil? )
+        @retencion.factura = @factura
+      end
+    end
+
     def retencion_params
       params.require(:retencion).permit(
         :monto, :documento, :factura_id

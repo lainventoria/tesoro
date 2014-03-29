@@ -14,6 +14,9 @@ Cp::Application.routes.draw do
 
       # Ver los recibos de cada factura
       resources :recibos
+
+      # Ver las retenciones de cada factura
+      resources :retenciones
     end
 
     # Permitir /recibos pero no crear recibos sin facturas asociadas
@@ -49,6 +52,9 @@ Cp::Application.routes.draw do
     resources :recibos
 
     resources :causas, only: [ :new ]
+
+    # Ver las retenciones de cada factura
+    resources :retenciones
   end
 
   # Permitir /recibos pero no crear recibos sin facturas asociadas
@@ -68,5 +74,5 @@ Cp::Application.routes.draw do
     end
   end
 
-  resources :retenciones
+  resources :retenciones, except: [ :new ]
 end
