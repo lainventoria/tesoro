@@ -1,6 +1,7 @@
 # encoding: utf-8
 class RetencionesController < ApplicationController
   before_action :set_retencion, only: [:show, :edit, :update, :destroy]
+  before_action :set_factura, only: [:show, :edit, :update, :new]
 
   def index
     @retencions = Retencion.all
@@ -53,6 +54,16 @@ class RetencionesController < ApplicationController
   private
     def set_retencion
       @retencion = Retencion.find(params[:id])
+    end
+
+    def set_factura
+      if params[:factura_id]
+        @factura = Factura.find(params[:factura_id])
+      end
+
+      if ( ! @factura.nil? && ! @retencion.nil? )
+        @retencion.factura = @factura
+      end
     end
 
     def retencion_params

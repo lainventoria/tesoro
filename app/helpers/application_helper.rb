@@ -75,8 +75,8 @@ module ApplicationHelper
     end
 
     # capoooo
-    extra_params.merge!({action: @factura.situacion + 's', id: nil}) if @factura and not @factura.new_record?
-    extra_params.merge!({action: @recibo.situacion + 's', factura_id: nil, id: nil}) if @recibo and not @recibo.new_record?
+    extra_params.merge!({action: @factura.situacion + 's', id: nil}) if @factura && not @factura.new_record?
+    extra_params.merge!({action: @recibo.situacion + 's', factura_id: nil, id: nil}) if @recibo && not @recibo.new_record?
 
     link_to nombre, url_for(params.merge(extra_params))
   end
