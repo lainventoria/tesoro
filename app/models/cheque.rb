@@ -13,6 +13,8 @@ class Cheque < ActiveRecord::Base
   belongs_to :chequera, ->{ where(situacion: 'chequera') },
     class_name: 'Caja'
 
+  has_one :obra, through: :chequera
+
   has_many :recibos, through: :movimientos do
     # TODO hay casos donde haya más de un recibo interno?
     def interno
@@ -50,6 +52,9 @@ class Cheque < ActiveRecord::Base
   scope :depositados, lambda {
     where(estado: 'depositado')
   }
+
+  scope :de_terceros, ->{ where(situacion: 'tercero') }
+  scope :propios, ->{ where(situacion: 'propio') }
 
   def vencido?
     fecha_vencimiento < Time.now

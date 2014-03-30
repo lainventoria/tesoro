@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Obra < ActiveRecord::Base
   has_many :cajas
+  has_many :cheques, through: :cajas
   has_many :facturas
   has_one :chequera_propia, ->{ where(tipo: 'Chequera propia') },
     class_name: 'Caja'
