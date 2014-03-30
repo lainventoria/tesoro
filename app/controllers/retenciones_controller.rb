@@ -26,7 +26,7 @@ class RetencionesController < ApplicationController
 
     respond_to do |format|
       if @retencion.save
-        format.html { redirect_to @retencion, notice: "Retención creada con éxito." }
+        format.html { redirect_to [@retencion.factura, @retencion], notice: "Retención creada con éxito." }
         format.json { render action: 'show', status: :created, location: @retencion }
       else
         format.html { render action: 'new' }
@@ -38,7 +38,7 @@ class RetencionesController < ApplicationController
   def update
     respond_to do |format|
       if @retencion.update(retencion_params)
-        format.html { redirect_to @retencion, notice: "Retención actualizada con éxito." }
+        format.html { redirect_to [@retencion.factura, @retencion], notice: "Retención actualizada con éxito." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -50,7 +50,7 @@ class RetencionesController < ApplicationController
   def destroy
     @retencion.destroy
     respond_to do |format|
-      format.html { redirect_to retencions_url }
+      format.html { redirect_to retenciones_url }
       format.json { head :no_content }
     end
   end
@@ -61,8 +61,10 @@ class RetencionesController < ApplicationController
     end
 
     def set_factura
-      if params[:factura_id]
+      if params[:action] == 'new'
         @factura = Factura.find(params[:factura_id])
+      else
+        @factura = Factura.find(@retencion.factura_id)
       end
 
       if ( ! @factura.nil? && ! @retencion.nil? )
@@ -72,7 +74,7 @@ class RetencionesController < ApplicationController
 
     def retencion_params
       params.require(:retencion).permit(
-        :monto, :documento, :factura_id
+        :monto, :documento, :factura_id, :fecha_vencimiento, :documento_file_name, :documento_content_type, :documento_file_size, :documento_uploaded_at
       )
     end
 end

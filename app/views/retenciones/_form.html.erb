@@ -1,8 +1,8 @@
-<%= form_for([@factura, @retencion]) do |f| %>
+<%= form_for([@factura, @retencion], { multipart: true } ) do |f| %>
   <% if @retencion.errors.any? %>
     <% @editar = true %>
     <div id="error_explanation" class="alert alert-danger">
-      <strong>No se guardo la Retencion. </strong>Debe corregir <%= pluralize(@recibo.errors.count, "error") %>
+      <strong>No se guardo la Retencion. </strong>Debe corregir <%= pluralize(@retencion.errors.count, "error") %>
       <ul>
       <% @retencion.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -15,11 +15,11 @@
   <fieldset <%= editar_o_bloquear %> >
 
     <div class="row">
-      <div class="field form-group col-md-6">
-        <label>Tercero</label>
-        <span class="form-control" disabled><%= @factura.tercero.cuit %>: <%= @factura.tercero.nombre.first(40) %></span>
+      <div class="field form-group col-md-9">
+        <label>Comprobante de Retencion</label><br>
+        <%= f.file_field :documento, { class: 'filestyle', type: 'file' } %>
       </div>
-      <div class="field form-group col-md-3 col-md-offset-3">
+      <div class="field form-group col-md-3">
         <%= f.label :fecha_vencimiento %><br>
         <div class="input-group date<%= editar_o_bloquear %>">
           <%= f.text_field :fecha_vencimiento, { class: "form-control", value:formatted_date(@retencion.fecha_vencimiento) } %>
@@ -29,9 +29,9 @@
     </div>
 
     <div class="row">
-      <div class="field form-group col-md-6" >
-        <label>Nro. Factura</label>
-        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %>: <%= @factura.descripcion.first(40) %></span>
+      <div class="field form-group col-md-6">
+        <label>Tercero</label>
+        <span class="form-control" disabled><%= @factura.tercero.cuit %>: <%= @factura.tercero.nombre.first(40) %></span>
       </div>
       <div class="field form-group col-md-2 col-md-offset-1">
         <label>Moneda</label>
@@ -44,13 +44,18 @@
     </div>
 
     <div class="row">
-      <%= f.label :documento %><br>
-      <%= f.file_field :documento, { class: 'file-input filestyle', type: 'file' } %>
-      <br>
+      <div class="field form-group col-md-6" >
+        <label>Nro. Factura</label>
+        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %>: <%= @factura.descripcion.first(40) %></span>
+      </div>
     </div>
 
     <%# campo necesario para crear un recibo nuevo %>
     <%= f.hidden_field :factura_id, value: @factura.id %>
+
+    <div class="row">
+      <br>
+    </div>
 
   </fieldset>
 
