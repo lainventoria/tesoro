@@ -8,3 +8,17 @@ body {
   margin-right: 5px;
 }
 
+// estilo para selector de archivos bootstrap-filestyle
+ form {
+   .filestyle {
+     &[type='text'] {
+       width: 80%;
+       float: left;
+     }
+     &.btn {
+       margin-left: 0;
+       width: 20%;
+       float: right;
+     }
+   }
+ }
