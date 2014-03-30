@@ -106,12 +106,9 @@ ActiveRecord::Schema.define(version: 20140328163726) do
     t.string   "documento_content_type"
     t.integer  "documento_file_size"
     t.datetime "documento_updated_at"
-<<<<<<< HEAD
+    t.date     "fecha_vencimiento"
     t.integer  "cuenta_id"
     t.integer  "caja_afip_id"
-=======
-    t.date     "fecha_vencimiento"
->>>>>>> trabajo inicial en gui retenciones
   end
 
   add_index "retenciones", ["caja_afip_id"], name: "index_retenciones_on_caja_afip_id"

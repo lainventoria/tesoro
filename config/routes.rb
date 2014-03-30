@@ -33,6 +33,8 @@ Cp::Application.routes.draw do
         get 'terceros'
       end
     end
+
+    resources :retenciones, only: [ :index, :show ]
   end
 
   resources :cajas

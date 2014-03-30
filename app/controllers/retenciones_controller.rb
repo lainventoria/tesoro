@@ -2,19 +2,23 @@
 class RetencionesController < ApplicationController
   before_action :set_retencion, only: [:show, :edit, :update, :destroy]
   before_action :set_factura, only: [:show, :edit, :update, :new]
+  before_action :set_obra
 
   def index
-    @retencions = Retencion.all
+    @retenciones = Retencion.all
   end
 
   def show
+    @editar = false
   end
 
   def new
     @retencion = Retencion.new
+    @editar = true
   end
 
   def edit
+    @editar = true
   end
 
   def create
