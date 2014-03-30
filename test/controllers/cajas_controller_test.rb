@@ -30,6 +30,18 @@ class CajasControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "muestra a través de su obra" do
+    get :show, obra_id: @caja.obra, id: @caja
+    assert_response :success
+  end
+
+  test "no muestra a través de otra obra" do
+    # Rails devuelve un 404 por default con estos errores en producción
+    assert_raise ActiveRecord::RecordNotFound do
+      get :show, obra_id: create(:obra), id: @caja
+    end
+  end
+
   test "accede a editar" do
     get :edit, id: @caja
     assert_response :success
