@@ -1,6 +1,6 @@
 class RetencionAgregaFecha < ActiveRecord::Migration
   def up
-    add_column :retenciones, :fecha_vencimiento, :date
+    add_column :retenciones, :fecha_vencimiento, :datetime
   end
 
   def down
