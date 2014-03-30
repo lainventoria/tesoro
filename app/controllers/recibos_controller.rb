@@ -46,7 +46,6 @@ class RecibosController < ApplicationController
   # GET /recibos/new
   def new
     @recibo = Recibo.new
-
     @editar = true
   end
 
