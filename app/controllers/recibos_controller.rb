@@ -1,13 +1,11 @@
 # encoding: utf-8
 class RecibosController < ApplicationController
-  before_action :set_recibo, only: [:show, :edit, :update, :destroy]
-  before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
   before_action :set_obra
+  before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
+  before_action :set_recibo, only: [:show, :edit, :update, :destroy]
   before_action :set_facturas, only: [ :index, :cobros, :pagos ]
   before_action :set_causa, only: [ :update, :create ]
 
-  # GET /recibos
-  # GET /recibos.json
   def index
     if @facturas
       @recibos = Recibo.where(factura_id: @facturas)
@@ -37,26 +35,19 @@ class RecibosController < ApplicationController
     render "index"
   end
 
-  # GET /recibos/1
-  # GET /recibos/1.json
   def show
     @editar = false
   end
 
-  # GET /recibos/new
   def new
-    @recibo = Recibo.new
-
+    @recibo = @factura.recibos.build
     @editar = true
   end
 
-  # GET /recibos/1/edit
   def edit
     @editar = true
   end
 
-  # POST /recibos
-  # POST /recibos.json
   def create
     @editar = true
     @recibo = Recibo.new(recibo_params)
@@ -73,8 +64,6 @@ class RecibosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /recibos/1
-  # PATCH/PUT /recibos/1.json
   def update
     @editar = true
     respond_to do |format|
@@ -89,8 +78,6 @@ class RecibosController < ApplicationController
     end
   end
 
-  # DELETE /recibos/1
-  # DELETE /recibos/1.json
   def destroy
     @recibo.destroy
     respond_to do |format|
@@ -100,20 +87,24 @@ class RecibosController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_recibo
-      if params[:id]
-        @recibo = Recibo.find(params[:id])
-      end
+      @recibo = if @factura.present?
+        @factura.recibos
+      elsif @obra.present?
+        @obra.recibos
+      else
+        Recibo
+      end.find(params[:id])
+
+      # Y cargamos la factura por si se encontró por otro lado
+      @factura = @recibo.try :factura
     end
 
     def set_factura
       if params[:factura_id]
-        @factura = Factura.find(params[:factura_id])
-      end
-
-      if ( ! @factura.nil? && ! @recibo.nil? )
-        @recibo.factura = @factura
+        @factura = (@obra.present? ? @obra.facturas : Factura).find(params[:factura_id])
       end
     end
 

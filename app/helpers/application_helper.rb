@@ -50,7 +50,7 @@ module ApplicationHelper
   # filtrar por obra
   def con_obra?(url)
     # los /obra/new tienen una obra que todavía no existe seteada
-    if @obra and not @obra.new_record?
+    if @obra.try :persisted?
       obra_path(@obra) + url
     else
       url
@@ -61,9 +61,9 @@ module ApplicationHelper
   # correspondiente en otra obra)
   def link_to_obra(obra = nil)
     extra_params = {}
-    nombre = obra ? obra.nombre : 'Todas las Obras'
+    nombre = obra.try(:nombre) || 'Todas las Obras'
 
-    if not obra
+    if obra.nil?
       extra_params.merge!({obra_id: nil})
     elsif params[:controller] == 'obras'
       extra_params.merge!({id: obra.id, action: 'show'})
@@ -77,11 +77,15 @@ module ApplicationHelper
     # capoooo -- correccion: usa situacion solo cuando se vuelve a un
     # listado de facturas/recibos, desde una vista de ese controlador
     if params[:controller] == 'facturas' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
-      extra_params.merge!({action: @factura.situacion + 's', id: nil}) if ! @factura.new_record?
+      extra_params.merge!({
+        action: @factura.situacion + 's', id: nil}
+      ) if @factura.try(:new_record?)
     end
 
     if params[:controller] == 'recibos' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
-      extra_params.merge!({action: @recibo.situacion + 's', factura_id: nil, id: nil}) if ! @recibo.new_record?
+      extra_params.merge!({
+        action: @recibo.situacion + 's', factura_id: nil, id: nil}
+      ) if @recibo.try(:new_record?)
     end
 
     link_to nombre, url_for(params.merge(extra_params))
