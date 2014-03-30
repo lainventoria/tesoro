@@ -15,8 +15,8 @@
 
   <tbody>
     <% @retenciones.each do |retencion| %>
-      <tr class="ir-a" data-uri="<% con_obra? retencion_path(retencion) %>">
-        <td><%= link_to '', [retencion], class:"glyphicon glyphicon-eye-open" %></td>
+      <tr class="ir-a" data-uri="<%= con_obra? factura_retencion_path(retencion.factura, retencion) %>">
+        <td><%= link_to '', [retencion.factura, retencion], class:"glyphicon glyphicon-eye-open" %></td>
         <td><%= formatted_date(retencion.fecha_vencimiento) %></td>
         <td><%= formatted_number(retencion.monto) %></td>
         <td><%= retencion.factura.descripcion.first(40) %></td>
