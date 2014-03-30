@@ -1,6 +1,12 @@
 # encoding: utf-8
 class RetencionesController < ApplicationController
   before_action :set_retencion, only: [:show, :edit, :update, :destroy]
+<<<<<<< Updated upstream
+=======
+  before_action :set_factura, only: [:show, :edit, :update, :new]
+  before_action :set_obra
+
+>>>>>>> Stashed changes
 
   def index
     @retencions = Retencion.all
