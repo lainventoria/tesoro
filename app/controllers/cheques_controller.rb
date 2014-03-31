@@ -9,6 +9,13 @@ class ChequesController < ApplicationController
   end
 
   def show
+    @editar = false
+  end
+
+  # TODO borrar cuando ya exista interfase para crear cheques
+  def new
+    @cheque = Cheque.new
+    @editar = true
   end
 
   def propios
