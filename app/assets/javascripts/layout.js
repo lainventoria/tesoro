@@ -43,7 +43,8 @@ $(document).ready(function(){
     buttonText: 'Adjuntar',
     classInput: 'filestyle form-control',
     classButton: 'filestyle btn btn-primary',
-    classIcon: 'glyphicon glyphicon-paperclip'
+    classIcon: 'glyphicon glyphicon-paperclip',
+    input: false
   });
 
 });

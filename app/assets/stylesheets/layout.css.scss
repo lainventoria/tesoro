@@ -12,13 +12,14 @@ body {
  form {
    .filestyle {
      &[type='text'] {
-       width: 80%;
+       width: 0%;
        float: left;
      }
      &.btn {
        margin-left: 0;
-       width: 20%;
-       float: right;
+       margin-top: 6px;
+       width: 100%;
+       float: left;
      }
    }
  }
