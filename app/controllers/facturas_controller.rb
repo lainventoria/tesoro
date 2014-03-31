@@ -1,14 +1,12 @@
 # encoding: utf-8
 class FacturasController < ApplicationController
-  before_action :set_factura, only: [:show, :edit, :update, :destroy]
   before_action :set_obra
-  before_filter :set_tercero, only: [:create, :update]
+  before_action :set_factura, only: [:show, :edit, :update, :destroy]
+  before_action :set_tercero, only: [:create, :update]
 
   autocomplete :tercero, :nombre, :extra_data => [:cuit]
   autocomplete :tercero, :cuit, :extra_data => [:nombre]
 
-  # GET /facturas
-  # GET /facturas.json
   def index
     @facturas = @obra ? @obra.facturas : Factura.all
   end
@@ -26,26 +24,20 @@ class FacturasController < ApplicationController
     render "index"
   end
 
-  # GET /facturas/1
-  # GET /facturas/1.json
   def show
     @editar = false
   end
 
-  # GET /facturas/new
   def new
     @editar = true
     @factura = Factura.new
     @factura.tercero = Tercero.new
   end
 
-  # GET /facturas/1/edit
   def edit
     @editar = true
   end
 
-  # POST /facturas
-  # POST /facturas.json
   def create
     @factura = Factura.new(factura_params)
 
@@ -60,8 +52,6 @@ class FacturasController < ApplicationController
     end
   end
 
-  # PATCH/PUT /facturas/1
-  # PATCH/PUT /facturas/1.json
   def update
     respond_to do |format|
       if @factura.update(factura_params)
@@ -74,8 +64,6 @@ class FacturasController < ApplicationController
     end
   end
 
-  # DELETE /facturas/1
-  # DELETE /facturas/1.json
   def destroy
     volver_a_listado =  @factura.pago? ?  pagos_facturas_url : cobros_facturas_url
     @factura.destroy
@@ -86,9 +74,10 @@ class FacturasController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_factura
-      @factura = Factura.find(params[:id])
+      @factura = (@obra.present? ? @obra.facturas : Factura).find(params[:id])
     end
 
     def set_tercero
@@ -108,10 +97,12 @@ class FacturasController < ApplicationController
       end
     end
 
-
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def factura_params
-      params.require(:factura).permit(:tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva, :descripcion, :importe_total, :fecha, :fecha_pago, :obra_id, :importe_neto_moneda, :iva_moneda, :importe_total_moneda)
+      params.require(:factura).permit(
+        :tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva,
+        :descripcion, :importe_total, :fecha, :fecha_pago, :obra_id,
+        :importe_neto_moneda, :iva_moneda, :importe_total_moneda
+      )
     end
 end

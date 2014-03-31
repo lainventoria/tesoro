@@ -1,8 +1,8 @@
 # encoding: utf-8
 class CajasController < ApplicationController
+  before_action :set_obra
   before_action :set_caja, only: [:show, :edit, :update, :destroy]
   before_action :set_movimientos, only: [:show]
-  before_action :set_obra
 
   def index
     @cajas = @obra ? @obra.cajas.where(situacion: 'efectivo') : Caja.where(situacion: 'efectivo')
@@ -63,20 +63,23 @@ class CajasController < ApplicationController
   private
 
     def set_caja
-      @caja = Caja.find(params[:id])
+      @caja = (@obra.present? ? @obra.cajas : Caja).find(params[:id])
     end
 
     def set_movimientos
+      # FIXME @movimientos = @caja.movimientos. Hace falta?
       @movimientos = Movimiento.where(caja_id: @caja.id)
 
+      # FIXME WTF?
       if ( ! @caja.nil? && ! @movimientos.nil? )
         @caja.movimientos = @movimientos
       end
     end
-        
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def caja_params
-      params.require(:caja).permit(:obra_id, :situacion, :tipo, :banco, :numero)
+      params.require(:caja).permit(
+        :obra_id, :situacion, :tipo, :banco, :numero
+      )
     end
 end

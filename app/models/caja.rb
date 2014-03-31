@@ -2,10 +2,8 @@
 class Caja < ActiveRecord::Base
   belongs_to :obra
   has_many :movimientos
-  has_many :cheques_propios, ->{ where(situacion: 'propio') },
-    foreign_key: 'cuenta_id', class_name: 'Cheque'
-  has_many :cheques_de_terceros, ->{ where(situacion: 'terceros') },
-    foreign_key: 'chequera_id', class_name: 'Cheque'
+  has_many :cheques, foreign_key: 'chequera_id'
+  has_many :cheques_en_cuenta, foreign_key: 'cuenta_id', class_name: 'Cheque'
   has_many :retenciones
 
   validates_presence_of :obra_id, :tipo
@@ -18,6 +16,7 @@ class Caja < ActiveRecord::Base
   scope :cuentas, ->{ where(situacion: 'banco') }
   scope :chequeras, ->{ where(situacion: 'chequera') }
   scope :de_efectivo, ->{ where(situacion: 'efectivo') }
+
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
   # con los valores viejos
   normalize_attribute :tipo, with: [ :squish, :blank ] do |valor|
@@ -155,7 +154,7 @@ class Caja < ActiveRecord::Base
     # Siempre emitimos desde la chequera de la obra
     parametros.merge!(chequera: obra.chequera_propia)
     # y cuando corresponda sacaremos el monto de esta cuenta
-    cheques_propios.create parametros
+    cheques_en_cuenta.propios.create parametros
   end
 
   # TODO revisar necesidad. puede ser que complete el ciclo de movimientos pero
