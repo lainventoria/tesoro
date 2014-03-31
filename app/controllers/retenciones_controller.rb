@@ -14,13 +14,16 @@ class RetencionesController < ApplicationController
   end
 
   def show
+    @editar = false
   end
 
   def new
     @retencion = Retencion.new
+    @editar = true
   end
 
   def edit
+    @editar = true
   end
 
   def create
