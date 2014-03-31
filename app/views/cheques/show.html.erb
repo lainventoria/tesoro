@@ -20,7 +20,7 @@
         <span class="glyphicon glyphicon-list-alt"></span>
         Cheques de esta obra
       </a>
-      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= con_obra? edit_caja_cheque_path(@cheque.chequera, @cheque) %>">
+      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= edit_obra_caja_cheque_path(@cheque.chequera.obra, @cheque.chequera, @cheque) %>">
         <span class="glyphicon glyphicon-edit"></span>
         Editar Cheque
       </a>
