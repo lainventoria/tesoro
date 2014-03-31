@@ -18,7 +18,7 @@
       <div class="field form-group col-md-7">
         <% if @retencion.documento.present? %>
           <label>Comprobante de Retencion</label><br>
-          <%= link_to @retencion.documento_file_name.first(55), @retencion.documento.url, { class: 'form-control', enabled:'none' } %>
+          <%= link_to @retencion.documento_file_name.first(55), @retencion.documento.url, { class: 'form-control' } %>
         <% end %>
       </div>
       <div class="field form-group col-md-2">
