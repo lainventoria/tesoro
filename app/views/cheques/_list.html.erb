@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th></th>
+      <th>Emisión</th>
       <th>Vencimiento</th>
       <th>Monto</th>
       <th>Beneficiario</th>
@@ -12,8 +13,9 @@
 
   <tbody>
     <% @cheques.each do |cheque| %>
-      <tr class="ir-a" data-uri="<%= con_obra? cheque_path(cheque.id) %>">
-        <td><%= link_to '', cheque, class:"glyphicon glyphicon-eye-open" %></td>
+      <tr class="ir-a" data-uri="<%= con_obra? caja_cheque_path(cheque.chequera, cheque.id) %>">
+        <td><%= link_to '', [cheque.chequera.obra, cheque.chequera, cheque], class:"glyphicon glyphicon-eye-open" %></td>
+        <td><%= formatted_date(cheque.fecha_emision) %></td>
         <td><%= formatted_date(cheque.fecha_vencimiento) %></td>
         <td><%= formatted_number(cheque.monto) %></td>
         <td><%= cheque.beneficiario %></td>
