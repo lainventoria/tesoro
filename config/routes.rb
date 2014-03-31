@@ -3,8 +3,6 @@ Cp::Application.routes.draw do
 
   resources :obras do
 
-    resources :cajas
-
     resources :facturas do
     # Filtrar facturas por situacion
       collection do
@@ -27,17 +25,17 @@ Cp::Application.routes.draw do
       end
     end
 
-    resources :cheques, only: [ :index, :show ] do
-      collection do
-        get 'propios'
-        get 'terceros'
-      end
+    resources :cajas do
+      resources :cheques
     end
 
     resources :retenciones, only: [ :index, :show ]
   end
 
-  resources :cajas
+  resources :cajas do
+    # TODO borrar ':new' cuando ya exista interfase de carga
+    resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ] 
+  end
 
   resources :facturas, except: [ :index ] do
   # Filtrar facturas por situacion
@@ -70,12 +68,7 @@ Cp::Application.routes.draw do
   resources :terceros
 
   # TODO borrar ':new' cuando ya exista interfase de carga
-  resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ] do
-    collection do
-      get 'propios'
-      get 'terceros'
-    end
-  end
+  resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ]
 
   resources :retenciones, except: [ :new ]
 end

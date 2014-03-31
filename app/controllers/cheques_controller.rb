@@ -22,18 +22,6 @@ class ChequesController < ApplicationController
     @editar = true
   end
 
-  def propios
-    @cheques = (@caja ? @caja.cheques : Cheque).propios
-    @situacion = "propio"
-    render "index"
-  end
-
-  def terceros
-    @cheques = (@caja ? @caja.cheques : Cheque).de_terceros
-    @situacion = "terceros"
-    render "index"
-  end
-
   def create
     @cheque = Cheque.new(cheque_params)
 
