@@ -15,9 +15,15 @@
   <fieldset <%= editar_o_bloquear %> >
 
     <div class="row">
-      <div class="field form-group col-md-9">
-        <label>Comprobante de Retencion</label><br>
-        <%= f.file_field :documento, { class: 'filestyle', type: 'file' } %>
+      <div class="field form-group col-md-7">
+        <% if @retencion.documento.present? %>
+          <label>Comprobante de Retencion</label><br>
+          <%= link_to @retencion.documento_file_name.first(55), @retencion.documento.url, { class: 'form-control', enabled:'none' } %>
+        <% end %>
+      </div>
+      <div class="field form-group col-md-2">
+        <br>
+        <%= f.file_field :documento, { class: 'filestyle' } %>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_vencimiento %><br>
