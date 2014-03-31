@@ -74,18 +74,23 @@ module ApplicationHelper
       extra_params.merge!({obra_id: obra.id})
     end
 
-    # capoooo -- correccion: usa situacion solo cuando se vuelve a un
-    # listado de facturas/recibos, desde una vista de ese controlador
-    if params[:controller] == 'facturas' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
+    # usa situacion solo cuando se vuelve a un listado de facturas/recibos,
+    # desde una vista de ese controlador
+    # FIXME deshackerizar
+    if @factura.present? && params[:controller] == 'facturas' &&
+        (params[:action] != 'pagos' && params[:action] != 'cobros')
+
       extra_params.merge!({
         action: @factura.situacion + 's', id: nil}
-      ) unless @factura.try(:new_record?)
+      ) unless @factura.new_record?
     end
 
-    if params[:controller] == 'recibos' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
+    if @recibo.present? && params[:controller] == 'recibos' &&
+      (params[:action] != 'pagos' && params[:action] != 'cobros')
+
       extra_params.merge!({
         action: @recibo.situacion + 's', factura_id: nil, id: nil}
-      ) unless @recibo.try(:new_record?)
+      ) unless @recibo.new_record?
     end
 
     link_to nombre, url_for(params.merge(extra_params))
