@@ -10,7 +10,7 @@ class Factura < ActiveRecord::Base
   has_many :recibos, inverse_of: :factura, dependent: :restrict_with_error
 
   # Puede tener una retención de impuestos
-  has_one :retencion
+  has_one :retencion, dependent: :restrict_with_error
 
   # Las situaciones posibles en que se genera una factura
   SITUACIONES = %w(cobro pago)
