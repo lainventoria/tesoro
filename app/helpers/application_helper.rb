@@ -79,13 +79,13 @@ module ApplicationHelper
     if params[:controller] == 'facturas' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
       extra_params.merge!({
         action: @factura.situacion + 's', id: nil}
-      ) if @factura.try(:new_record?)
+      ) unless @factura.try(:new_record?)
     end
 
     if params[:controller] == 'recibos' && ( params[:action] != 'pagos' && params[:action] != 'cobros' )
       extra_params.merge!({
         action: @recibo.situacion + 's', factura_id: nil, id: nil}
-      ) if @recibo.try(:new_record?)
+      ) unless @recibo.try(:new_record?)
     end
 
     link_to nombre, url_for(params.merge(extra_params))
