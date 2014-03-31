@@ -30,6 +30,8 @@ Cp::Application.routes.draw do
     end
 
     resources :retenciones, only: [ :index, :show ]
+    # no se editan cheques aca, solo se listan
+    resources :cheques, only: [ :index ]
   end
 
   resources :cajas do
@@ -67,8 +69,8 @@ Cp::Application.routes.draw do
 
   resources :terceros
 
-  # TODO borrar ':new' cuando ya exista interfase de carga
-  resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ]
+  # no se editan cheques aca, solo se listan
+  resources :cheques, only: [ :index ]
 
   resources :retenciones, except: [ :new ]
 end
