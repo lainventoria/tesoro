@@ -65,7 +65,7 @@
 
     <%# campo necesario para crear/editar cheques %>
     <%= f.hidden_field :estado %>
-    <% @cheque.situacion = valor_situacion %>
+    <% actualiza_situacion %>
     <%= f.hidden_field :situacion %>
 
   </fieldset>

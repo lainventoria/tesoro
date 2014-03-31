@@ -24,7 +24,7 @@ class ChequesController < ApplicationController
 
   def propios
     @cheques = (@caja ? @caja.cheques : Cheque).propios
-    @situacion = "propios"
+    @situacion = "propio"
     render "index"
   end
 

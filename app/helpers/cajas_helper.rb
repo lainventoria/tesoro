@@ -27,7 +27,7 @@ module CajasHelper
   def caja_o_cuenta
     if ( @caja.efectivo? ) or ( params[:situacion] == 'efectivo' )
       'Caja'
-    elseif ( @caja.banco? ) or ( params[:situacion] == 'banco' )
+    elsif ( @caja.banco? ) or ( params[:situacion] == 'banco' )
       'Cuenta'
     else
       'Chequera'

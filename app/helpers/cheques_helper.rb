@@ -4,14 +4,14 @@ module ChequesHelper
   end
 
   def titulo_listado_cheques
-    @situacion == 'propios' ? "Listado de Cheques Propios" : "Listado de Cheques de Terceros"
+    @situacion == 'propio' ? "Listado de Cheques Propios" : "Listado de Cheques de Terceros"
   end
 
   def path_a_listado
     @cheque.propio? ? propios_cheques_path : terceros_cheques_path
   end
 
-  def valor_situacion
-    @cheque.new_record? ? params[:situacion] : @cheque.situacion
+  def actualiza_situacion
+    params[:situacion] ? @cheque.situacion = params[:situacion] : ''
   end
 end
