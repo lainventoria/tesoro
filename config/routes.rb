@@ -35,8 +35,8 @@ Cp::Application.routes.draw do
   end
 
   resources :cajas do
-    # TODO borrar ':new' cuando ya exista interfase de carga
-    resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ] 
+    # no se editan cheques aca, solo se listan
+    resources :cheques, only: [ :index ]
   end
 
   resources :facturas, except: [ :index ] do
