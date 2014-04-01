@@ -16,14 +16,11 @@
 
     <div class="row">
       <div class="field form-group col-md-7">
+        <label>Comprobante</label>
         <% if @retencion.documento.present? %>
-          <label>Comprobante de Retencion</label><br>
-          <%= link_to @retencion.documento_file_name.first(55), @retencion.documento.url, { class: 'form-control' } %>
+          <%= link_to @retencion.documento_file_name.first(45), @retencion.documento.url %>
         <% end %>
-      </div>
-      <div class="field form-group col-md-2">
-        <br>
-        <%= f.file_field :documento, { class: 'filestyle' } %>
+        <%= f.file_field :documento, class: 'filestyle' %>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_vencimiento %><br>
@@ -37,7 +34,7 @@
     <div class="row">
       <div class="field form-group col-md-6">
         <label>Tercero</label>
-        <span class="form-control" disabled><%= @factura.tercero.cuit %>: <%= @factura.tercero.nombre.first(40) %></span>
+        <span class="form-control" disabled><%= @retencion.tercero.cuit %>: <%= @retencion.tercero.nombre.first(40) %></span>
       </div>
       <div class="field form-group col-md-2 col-md-offset-1">
         <label>Moneda</label>

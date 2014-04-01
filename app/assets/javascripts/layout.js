@@ -44,7 +44,6 @@ $(document).ready(function(){
     classInput: 'filestyle form-control',
     classButton: 'filestyle btn btn-primary',
     classIcon: 'glyphicon glyphicon-paperclip',
-    input: false
   });
 
 });
