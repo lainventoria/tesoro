@@ -31,12 +31,12 @@ Cp::Application.routes.draw do
 
     resources :retenciones, only: [ :index, :show ]
     # no se editan cheques aca, solo se listan
-    resources :cheques, only: [ :index, :show ]
+    resources :cheques, only: [ :index, :show, :edit ]
   end
 
   resources :cajas do
     # no se editan cheques aca, solo se listan
-    resources :cheques, only: [ :index, :show ]
+    resources :cheques, only: [ :index, :show, :edit ]
   end
 
   resources :facturas, except: [ :index ] do
@@ -70,7 +70,8 @@ Cp::Application.routes.draw do
   resources :terceros
 
   # no se editan cheques aca, solo se listan
-  resources :cheques, only: [ :index, :show ]
+  # TODO remover edit cuando nos deshagamos de link_to_obra
+  resources :cheques, only: [ :index, :show, :edit ]
 
   resources :retenciones, except: [ :new ]
 end
