@@ -6,6 +6,24 @@ class RetencionesControllerTest < ActionController::TestCase
     @retencion = create :retencion, factura: @factura
   end
 
+  test "accede a la lista de retenciones globales" do
+    get :index
+    assert_response :success
+    assert_not_nil assigns(:retenciones)
+  end
+
+  test "accede a la lista de retenciones de la factura" do
+    get :index, factura_id: @factura
+    assert_response :success
+    assert_not_nil assigns(:retenciones)
+  end
+
+  test "accede a la lista de retenciones de la obra" do
+    get :index, obra_id: @factura.obra
+    assert_response :success
+    assert_not_nil assigns(:retenciones)
+  end
+
   test "muestra" do
     get :show, id: @retencion
     assert_response :success

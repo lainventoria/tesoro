@@ -3,15 +3,10 @@ class RetencionesController < ApplicationController
   # En orden de jerarquía
   before_action :set_obra
   before_action :set_factura, only: [:show, :edit, :update, :new]
-  before_action :set_facturas, only: [ :index ]
   before_action :set_retencion, only: [:show, :edit, :update, :destroy]
+  before_action :set_retenciones, only: [:index]
 
   def index
-    if @facturas
-      @retenciones = Retencion.where(factura_id: @facturas)
-    else
-      @retenciones = @factura ? @factura.retenciones : Retencion.all
-    end
   end
 
   def show
@@ -67,8 +62,14 @@ class RetencionesController < ApplicationController
       @retencion = Retencion.find(params[:id])
     end
 
-    def set_facturas
-      @facturas = @obra ? @obra.facturas : nil
+    def set_retenciones
+      @retenciones = if @factura.present?
+        @factura.retenciones
+      elsif @obra.present?
+        @obra.retenciones
+      else
+        Retencion.all
+      end
     end
 
     def retencion_params

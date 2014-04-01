@@ -9,7 +9,7 @@ class Factura < ActiveRecord::Base
   # Las facturas se pueden cancelar con muchos recibos
   has_many :recibos, inverse_of: :factura
 
-  # Puede tener una retención de impuestos
+  # Puede tener varias retenciones de varios tipos
   has_many :retenciones, inverse_of: :factura
 
   # Las situaciones posibles en que se genera una factura

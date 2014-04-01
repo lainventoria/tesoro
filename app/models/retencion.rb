@@ -8,6 +8,7 @@ class Retencion < ActiveRecord::Base
 
   # La factura sobre la que se hace la retención
   belongs_to :factura
+  has_one :obra, through: :factura
   has_many :recibos, through: :movimientos
 
   # Las retenciones se pagan desde una cuenta
