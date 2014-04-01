@@ -1,0 +1,20 @@
+
+---
+obras:
+  columns:
+  - id
+  - nombre
+  - created_at
+  - updated_at
+  - direccion
+  records: 
+  - - 1
+    - Obra 1 Test
+    - '2014-03-14 18:14:48.119548'
+    - '2014-03-14 18:14:48.119548'
+    - Roseti 113
+  - - 2
+    - Obra 2 Test
+    - '2014-03-14 18:15:00.428069'
+    - '2014-03-14 18:15:00.428069'
+    - Peralta 1526

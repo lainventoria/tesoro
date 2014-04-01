@@ -1,0 +1,57 @@
+
+---
+terceros:
+  columns:
+  - id
+  - nombre
+  - direccion
+  - telefono
+  - celular
+  - email
+  - iva
+  - cuit
+  - created_at
+  - updated_at
+  - relacion
+  - contacto
+  - notas
+  records: 
+  - - 1
+    - Don Quijote S.R.L.
+    - Quintita al costado del rio
+    - 11-4521-7896
+    - 15-4098-7265
+    - donquijote@correo.com
+    - 21.0
+    - 70-00004000-0
+    - '2014-03-14 18:17:47.651552'
+    - '2014-03-14 18:19:47.307153'
+    - ambos
+    - Jacinto
+    - Notas sobre don quijote y su gran aventura contra los molinos
+  - - 2
+    - Sancho Panza S.A.
+    - "Gonzalves 1500, 4to\r\nMunro"
+    - 11-4521-2100
+    - 15-4098-7000
+    - pedro@sanchopanza.com.ar
+    - 10.5
+    - 75-00000000-0
+    - '2014-03-14 18:19:33.971802'
+    - '2014-03-14 18:50:41.963692'
+    - proveedor
+    - Pedro
+    - Pedro fue el escudero y caballero de armas de un grande de las expediciones
+  - - 3
+    - Dulcinea Martinez
+    - ''
+    - ''
+    - ''
+    - dulcimar@hotmail.com
+    - 21.0
+    - 40-00007000-0
+    - '2014-03-14 18:52:47.289878'
+    - '2014-03-14 18:52:47.289878'
+    - cliente
+    - Dulcinea Martinez
+    - ''

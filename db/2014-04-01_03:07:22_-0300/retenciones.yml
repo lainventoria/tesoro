@@ -1,0 +1,57 @@
+
+---
+retenciones:
+  columns:
+  - id
+  - factura_id
+  - created_at
+  - updated_at
+  - monto_centavos
+  - monto_moneda
+  - documento_file_name
+  - documento_content_type
+  - documento_file_size
+  - documento_updated_at
+  - cuenta_id
+  - caja_afip_id
+  - fecha_vencimiento
+  records: 
+  - - 3
+    - 4
+    - '2014-03-30 22:25:56.700907'
+    - '2014-03-30 22:46:44.551896'
+    - 152550
+    - ARS
+    - TechCoopHOWTO.pdf
+    - application/pdf
+    - 1486686
+    - '2014-03-30 22:25:56.638162'
+    - 
+    - 
+    - '2014-03-20 03:00:00.000000'
+  - - 5
+    - 2
+    - '2014-03-30 22:30:27.221866'
+    - '2014-03-31 01:59:34.358418'
+    - 12083
+    - ARS
+    - CablevisionFibertel.pdf
+    - application/pdf
+    - 29288
+    - '2014-03-31 01:59:34.298385'
+    - 
+    - 
+    - '2014-03-12 03:00:00.000000'
+  - - 7
+    - 2
+    - '2014-03-31 22:44:33.013111'
+    - '2014-03-31 22:49:23.516803'
+    - 250000
+    - ARS
+    - CablevisionFibertel.pdf
+    - application/pdf
+    - 29288
+    - '2014-03-31 22:44:55.119909'
+    - 
+    - 
+    - '2014-03-15 03:00:00.000000'
