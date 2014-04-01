@@ -83,9 +83,7 @@ class RetencionesController < ApplicationController
 
     def retencion_params
       params.require(:retencion).permit(
-        :monto, :documento, :factura_id, :fecha_vencimiento,
-        :documento_file_name, :documento_content_type, :documento_file_size,
-        :documento_uploaded_at
+        :monto, :documento, :factura_id, :fecha_vencimiento
       )
     end
 end
