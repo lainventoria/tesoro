@@ -3,34 +3,21 @@ class RecibosController < ApplicationController
   before_action :set_obra
   before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
-  before_action :set_facturas, only: [ :index, :cobros, :pagos ]
+  before_action :set_recibos, only: [ :index, :cobros, :pagos ]
+
   before_action :set_causa, only: [ :update, :create ]
 
   def index
-    if @facturas
-      @recibos = Recibo.where(factura_id: @facturas)
-    else
-      @recibos = @factura ? @factura.recibos : Recibo.all
-    end
   end
 
   def cobros
-    if @facturas
-      @recibos = Recibo.where(factura_id: @facturas).where(situacion: 'cobro')
-    else
-      @recibos = @factura ? @factura.recibos.where(situacion: 'cobro') : Recibo.where(situacion: "cobro")
-    end
+    @recibos.where(situacion: 'cobro')
     @situacion = "Cobros"
     render "index"
   end
 
   def pagos
-    if @facturas
-      @recibos = Recibo.where(factura_id: @facturas).where(situacion: 'pago')
-    else
-      @recibos = @factura ? @factura.recibos.where(situacion: 'pago') : Recibo.where(situacion: "pago")
-    end
-
+    @recibos.where(situacion: 'pago')
     @situacion = "Pagos"
     render "index"
   end
@@ -102,8 +89,14 @@ class RecibosController < ApplicationController
       @factura = @recibo.try :factura
     end
 
-    def set_facturas
-      @facturas = @obra ? @obra.facturas : nil
+    def set_recibos
+      @recibos = if @factura.present?
+        @factura.recibos
+      elsif @obra.present?
+        @obra.recibos
+      else
+        Recibo.all
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
