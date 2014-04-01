@@ -4,7 +4,16 @@ class ChequesController < ApplicationController
   before_action :set_cheque, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @cheques = @caja ? @caja.cheques : Cheque.all
+    if params[:situacion]
+      @cheques = (@caja ? @caja.cheques : Cheque).where(situacion: params[:situacion])
+    else
+      @cheques = @caja ? @caja.cheques : Cheque.all
+    end
+
+    if params[:vencidos]
+      @cheques = @cheques.vencidos
+    end
+
   end
 
   def show

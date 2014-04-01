@@ -42,6 +42,7 @@
             <li><a href="<%= con_obra? cajas_path %>">Cajas y Cuentas</a></li>
             <li><a href="<%= con_obra? cheques_path(situacion: 'propio') %>">Cheques Propios</a></li>
             <li><a href="<%= con_obra? cheques_path(situacion: 'terceros') %>">Cheques Terceros</a></li>
+            <li><a href="<%= con_obra? cheques_path(vencidos: true) %>">Cheques Vencidos</a></li>
             <li><a href="<%= con_obra? retenciones_path %>">Retenciones</a></li>
             <li><a href="#">Transferencias</a></li>
             <li><a href="#">Cambios de Moneda</a></li>
