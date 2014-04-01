@@ -11,16 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328163726) do
+ActiveRecord::Schema.define(version: 20140331215122) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "tipo",                       null: false
     t.string   "banco"
     t.string   "numero"
     t.string   "situacion"
-    t.string   "tipo",       null: false
+    t.boolean  "archivada",  default: false
   end
 
   create_table "cheques", force: true do |t|
