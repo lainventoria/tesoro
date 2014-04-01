@@ -2,7 +2,6 @@ require 'test_helper'
 
 class ChequesControllerTest < ActionController::TestCase
   setup do
-    @caja = create :caja
     @cheque = create :cheque
   end
 
@@ -12,20 +11,20 @@ class ChequesControllerTest < ActionController::TestCase
   end
 
   test "mostrar" do
-    get :show, id: @cheque
+    get :show, obra_id: @cheque.chequera.obra, caja_id: @cheque.chequera, id: @cheque
 
     assert_response :success
   end
 
-  test "muestra a través de su obra" do
-    get :show, obra_id: @cheque.obra, id: @cheque
+  test "muestra a través de su caja" do
+    get :show, obra_id: @cheque.chequera.obra, caja_id: @cheque.chequera, id: @cheque
     assert_response :success
   end
 
   test "no muestra a través de otra obra" do
     # Rails devuelve un 404 por default con estos errores en producción
     assert_raise ActiveRecord::RecordNotFound do
-      get :show, obra_id: create(:obra), id: @cheque
+      get :show, obra_id: create(:obra), caja_id: create(:caja), id: @cheque
     end
   end
 
