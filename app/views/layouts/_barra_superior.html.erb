@@ -40,8 +40,8 @@
         <ul class="dropdown-menu">
             <li class="dropdown-header">Operacion</li>
             <li><a href="<%= con_obra? cajas_path %>">Cajas y Cuentas</a></li>
-            <li><a href="<%= con_obra? propios_cheques_path %>">Cheques Propios</a></li>
-            <li><a href="<%= con_obra? terceros_cheques_path %>">Cheques de Terceros</a></li>
+            <li><a href="<%= con_obra? cheques_path(situacion: 'propio') %>">Cheques Propios</a></li>
+            <li><a href="<%= con_obra? cheques_path(situacion: 'terceros') %>">Cheques Terceros</a></li>
             <li><a href="<%= con_obra? retenciones_path %>">Retenciones</a></li>
             <li><a href="#">Transferencias</a></li>
             <li><a href="#">Cambios de Moneda</a></li>
