@@ -23,11 +23,11 @@
         <td><%= cheque.beneficiario %></td>
         <td><%= cheque.chequera.tipo %></td>
         <td><%= cheque.banco %></td>
-        <% if cheque.situacion == 'terceros' %>
-        <td>[ depositar, pasar de manos ]</td>
-        <% elsif cheque.situacion == 'propio' %>
-        <td>[ pagar ]</td>
-        <% end %>
+        <td>
+          <% if cheque.terceros? and not cheque.depositado? %>
+          <%= render 'cheques/depositar', cheque: cheque %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

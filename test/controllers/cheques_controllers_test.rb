@@ -28,5 +28,13 @@ class ChequesControllerTest < ActionController::TestCase
     end
   end
 
+  test "deposita" do
+    patch :depositar, obra_id: @cheque.chequera.obra,
+          caja_id: @cheque.chequera, id: @cheque,
+          cheque: { cuenta_id: create(:caja) }
+
+    assert_response :success
+  end
+
 
 end

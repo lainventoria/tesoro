@@ -1,7 +1,7 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
   before_action :set_obra_y_caja
-  before_action :set_cheque, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar ]
 
   def index
     if params[:situacion]
@@ -12,10 +12,6 @@ class ChequesController < ApplicationController
 
     if params[:vencidos]
       @cheques = @cheques.vencidos
-    end
-
-    if params[:depositados]
-      @cheques = @cheques.depositados
     end
 
   end
@@ -66,6 +62,25 @@ class ChequesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to volver_a_listado }
       format.json { head :no_content }
+    end
+  end
+
+  def pagar
+  end
+
+  def pasamanos
+  end
+
+  def depositar
+    respond_to do |format|
+      if @cheque.depositar(Caja.find(params[:cheque][:cuenta_id]))
+        format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
+                      notice: 'Cheque depositado con éxito' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @cheque.errors, status: :unprocessable_entity }
+      end
     end
   end
 

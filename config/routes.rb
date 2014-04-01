@@ -26,7 +26,9 @@ Cp::Application.routes.draw do
     end
 
     resources :cajas do
-      resources :cheques
+      resources :cheques do
+        patch 'depositar', on: :member
+      end
     end
 
     resources :retenciones, only: [ :index, :show ]
