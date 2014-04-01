@@ -18,12 +18,12 @@ es:
           attributes:
             base:
               restrict_dependent_destroy:
-                many: "No se puede borrar esta obra porque tiene #{record.facturas} asociadas"
+                many: "No se puede borrar esta obra porque tiene %{record} asociadas"
         factura:
           attributes:
             base:
               restrict_dependent_destroy:
-                many: "No se puede borrar esta factura porque tiene #{record.recibos} asociados"
+                many: "No se puede borrar esta factura porque tiene %{record} asociados"
                 one: "No se puede borrar esta factura porque tiene una retención asociada"
         recibo:
           attributes:

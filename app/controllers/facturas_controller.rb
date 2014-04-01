@@ -73,8 +73,7 @@ class FacturasController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to edit_obra_factura_url(@factura.obra, @factura),
-          notice: 'No se puede eliminar la factura porque tiene recibos asociados' }
+        format.html { render action: :edit }
         format.json { render json: @factura.errors, status: :unprocessable_entity }
       end
     end
