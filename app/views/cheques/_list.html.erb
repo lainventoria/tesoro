@@ -13,7 +13,7 @@
 
   <tbody>
     <% @cheques.each do |cheque| %>
-      <tr class="ir-a" data-uri="<%= con_obra? caja_cheque_path(cheque.chequera, cheque.id) %>">
+      <tr class="ir-a" data-uri="<%= obra_caja_cheque_path(cheque.chequera.obra, cheque.chequera, cheque.id) %>">
         <td><%= link_to '', [cheque.chequera.obra, cheque.chequera, cheque], class:"glyphicon glyphicon-eye-open" %></td>
         <td><%= formatted_date(cheque.fecha_emision) %></td>
         <td><%= formatted_date(cheque.fecha_vencimiento) %></td>

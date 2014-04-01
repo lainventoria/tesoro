@@ -26,8 +26,8 @@ class ChequesController < ApplicationController
 
     respond_to do |format|
       if @cheque.save
-        format.html { redirect_to @cheque, notice: 'Cheque creado con éxito.' }
-        format.json { render action: 'show', status: :created, location: @cheque }
+        format.html { redirect_to [@cheque.chequera.obra, @cheque.chequera, @cheque], notice: 'Cheque creado con éxito.' }
+        format.json { render action: 'show', status: :created, location: [@cheque.chequera.obra, @cheque.chequera, @cheque] }
       else
         format.html { render action: 'new' }
         format.json { render json: @cheque.errors, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class ChequesController < ApplicationController
   def update
     respond_to do |format|
       if @cheque.update(cheque_params)
-        format.html { redirect_to @cheque, notice: 'Cheque actualizado con éxito.' }
+        format.html { redirect_to [@cheque.chequera.obra, @cheque.chequera, @cheque], notice: 'Cheque actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -48,7 +48,7 @@ class ChequesController < ApplicationController
   end
 
   def destroy
-    volver_a_listado =  @cheque.propio? ?  propios_cheques_url : terceros_cheques_url
+    volver_a_listado = obra_cajas_url @cheque.chequera.obra, @cheque.chequera
     @cheque.destroy
     respond_to do |format|
       format.html { redirect_to volver_a_listado }
