@@ -1,16 +1,12 @@
 # encoding: utf-8
 class RetencionesController < ApplicationController
-  before_action :set_retencion, only: [:show, :edit, :update, :destroy]
-  before_action :set_factura, only: [:show, :edit, :update, :new]
+  # En orden de jerarquía
   before_action :set_obra
-  before_action :set_facturas, only: [ :index ]
+  before_action :set_factura, only: [:show, :edit, :update, :new, :create]
+  before_action :set_retencion, only: [:show, :edit, :update, :destroy]
+  before_action :set_retenciones, only: [:index]
 
   def index
-    if @facturas
-      @retenciones = Retencion.where(factura_id: @facturas)
-    else
-      @retenciones = @factura ? @factura.retenciones : Retencion.all
-    end
   end
 
   def show
@@ -18,7 +14,7 @@ class RetencionesController < ApplicationController
   end
 
   def new
-    @retencion = Retencion.new
+    @retencion = @factura.retenciones.build
     @editar = true
   end
 
@@ -27,7 +23,7 @@ class RetencionesController < ApplicationController
   end
 
   def create
-    @retencion = Retencion.new(retencion_params)
+    @retencion = @factura.retenciones.build retencion_params
 
     respond_to do |format|
       if @retencion.save
@@ -61,27 +57,33 @@ class RetencionesController < ApplicationController
   end
 
   private
+
     def set_retencion
-      @retencion = Retencion.find(params[:id])
-    end
-
-    def set_factura
-      if params[:action] == 'new'
-        @factura = Factura.find(params[:factura_id])
+      @retencion = if @factura.present?
+        @factura.retenciones
+      elsif @obra.present?
+        @obra.retenciones
       else
-        @factura = Factura.find(@retencion.factura_id)
-      end
+        Retencion
+      end.find(params[:id])
 
-      @retencion.factura = @factura if ! @retencion.new_record?
+      # Y cargamos la factura por si se encontró por otro lado
+      @factura = @retencion.try :factura
     end
 
-    def set_facturas
-      @facturas = @obra ? @obra.facturas : nil
+    def set_retenciones
+      @retenciones = if @factura.present?
+        @factura.retenciones
+      elsif @obra.present?
+        @obra.retenciones
+      else
+        Retencion.all
+      end
     end
 
     def retencion_params
       params.require(:retencion).permit(
-        :monto, :documento, :factura_id, :fecha_vencimiento, :documento_file_name, :documento_content_type, :documento_file_size, :documento_uploaded_at
+        :monto, :documento, :factura_id, :fecha_vencimiento
       )
     end
 end

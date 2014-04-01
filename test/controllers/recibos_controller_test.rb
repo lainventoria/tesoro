@@ -3,14 +3,48 @@ require 'test_helper'
 class RecibosControllerTest < ActionController::TestCase
   setup do
     @factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
-    @recibo = create :recibo, factura: @factura
+  end
+
+  test "accede a la lista global de recibos de pago" do
+    create :recibo, situacion: 'pago'
+
+    get :pagos
+    assert_response :success
+    assert_not_nil assigns(:recibos)
+  end
+
+  test "accede a la lista global de recibos de cobro" do
+    create :recibo, situacion: 'cobro'
+
+    get :cobros
+    assert_response :success
+    assert_not_nil assigns(:recibos)
   end
 
   test "accede a la lista de recibos de la factura" do
+    create :recibo, factura: @factura
+
     get :index, factura_id: @factura
     assert_response :success
     assert_not_nil assigns(:recibos)
   end
+
+  test "accede a la lista de la obra de recibos de pago" do
+    recibo = create :recibo, situacion: 'pago'
+
+    get :pagos, obra_id: recibo.obra
+    assert_response :success
+    assert_not_nil assigns(:recibos)
+  end
+
+  test "accede a la lista de la obra de recibos de cobro" do
+    recibo = create :recibo, situacion: 'cobro'
+
+    get :cobros, obra_id: recibo.obra
+    assert_response :success
+    assert_not_nil assigns(:recibos)
+  end
+
 
   test "accede a crear" do
     get :new, factura_id: @factura
@@ -24,41 +58,46 @@ class RecibosControllerTest < ActionController::TestCase
         :recibo, importe: importe_permitido, factura_id: @factura)
     end
 
-    assert_redirected_to factura_recibo_path(@recibo.factura, assigns(:recibo))
+    assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
   end
 
   test "muestra" do
-    get :show, id: @recibo, factura_id: @factura
+    get :show, id: create(:recibo, factura: @factura), factura_id: @factura
     assert_response :success
   end
 
   test "muestra a través de su obra" do
-    get :show, obra_id: @recibo.obra, id: @recibo
+    recibo = create :recibo, factura: @factura
+    get :show, obra_id: recibo.obra, id: recibo
     assert_response :success
   end
 
   test "no muestra a través de otra obra" do
     # Rails devuelve un 404 por default con estos errores en producción
     assert_raise ActiveRecord::RecordNotFound do
-      get :show, obra_id: create(:obra), id: @recibo
+      get :show, obra_id: create(:obra), id: create(:recibo, factura: @factura)
     end
   end
 
   test "accede a editar" do
-    get :edit, id: @recibo, factura_id: @factura
+    get :edit, id: create(:recibo, factura: @factura), factura_id: @factura
     assert_response :success
   end
 
   test "actualiza" do
+    recibo = create :recibo, factura: @factura
+
     importe_permitido = @factura.saldo
-    patch :update, id: @recibo, factura_id: @factura, recibo: attributes_for(
+    patch :update, id: recibo, factura_id: @factura, recibo: attributes_for(
       :recibo, importe: importe_permitido, factura_id: @factura)
-    assert_redirected_to factura_recibo_path(@recibo.factura,assigns(:recibo))
+    assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
   end
 
   test "destruye" do
+    recibo = create :recibo, factura: @factura
+
     assert_difference('Recibo.count', -1) do
-      delete :destroy, id: @recibo, factura_id: @factura
+      delete :destroy, id: recibo, factura_id: @factura
     end
 
     assert_redirected_to factura_path
