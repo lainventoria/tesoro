@@ -87,5 +87,5 @@ Cp::Application.routes.draw do
   end
 
   # /retención
-  resources :retenciones, except: [ :new ]
+  resources :retenciones, only: [ :index, :show ]
 end
