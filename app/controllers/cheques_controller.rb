@@ -1,7 +1,6 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
-  before_action :set_obra
-  before_action :set_caja, only: [ :index, :propios, :terceros ]
+  before_action :set_obra_y_caja
   before_action :set_cheque, only: [ :show, :edit, :update, :destroy ]
 
   def index
@@ -67,11 +66,14 @@ class ChequesController < ApplicationController
       params.require(:cheque).permit(
         :situacion, :numero, :monto, :monto_centavos, :monto_moneda,
         :fecha_vencimiento, :fecha_emision, :beneficiario, :banco, :estado,
-        :chequera_id, :cuenta_id
+        :chequera_id, :cuenta_id, :obra_id
       )
     end
 
-    def set_caja
-      @caja = params[:caja_id].present? ? Caja.find(params[:caja_id]) : nil
+    def set_obra_y_caja
+      if params[:caja_id]
+        @caja = Caja.find(params[:caja_id])
+        @obra = @caja.obra
+      end
     end
 end
