@@ -19,6 +19,8 @@
         <label>Comprobante</label>
         <% if @retencion.documento.present? %>
           <%= link_to @retencion.documento_file_name.first(45), @retencion.documento.url %>
+        <% else %>
+          <br>
         <% end %>
         <%= f.file_field :documento, class: 'filestyle' %>
       </div>
