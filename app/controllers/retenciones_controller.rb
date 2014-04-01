@@ -2,7 +2,7 @@
 class RetencionesController < ApplicationController
   # En orden de jerarquía
   before_action :set_obra
-  before_action :set_factura, only: [:show, :edit, :update, :new]
+  before_action :set_factura, only: [:show, :edit, :update, :new, :create]
   before_action :set_retencion, only: [:show, :edit, :update, :destroy]
   before_action :set_retenciones, only: [:index]
 
@@ -14,7 +14,7 @@ class RetencionesController < ApplicationController
   end
 
   def new
-    @retencion = Retencion.new
+    @retencion = @factura.retenciones.build
     @editar = true
   end
 
@@ -23,7 +23,7 @@ class RetencionesController < ApplicationController
   end
 
   def create
-    @retencion = Retencion.new(retencion_params)
+    @retencion = @factura.retenciones.build retencion_params
 
     respond_to do |format|
       if @retencion.save
@@ -59,7 +59,16 @@ class RetencionesController < ApplicationController
   private
 
     def set_retencion
-      @retencion = Retencion.find(params[:id])
+      @retencion = if @factura.present?
+        @factura.retenciones
+      elsif @obra.present?
+        @obra.retenciones
+      else
+        Retencion
+      end.find(params[:id])
+
+      # Y cargamos la factura por si se encontró por otro lado
+      @factura = @retencion.try :factura
     end
 
     def set_retenciones
