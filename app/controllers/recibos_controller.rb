@@ -102,12 +102,6 @@ class RecibosController < ApplicationController
       @factura = @recibo.try :factura
     end
 
-    def set_factura
-      if params[:factura_id]
-        @factura = (@obra.present? ? @obra.facturas : Factura).find(params[:factura_id])
-      end
-    end
-
     def set_facturas
       @facturas = @obra ? @obra.facturas : nil
     end

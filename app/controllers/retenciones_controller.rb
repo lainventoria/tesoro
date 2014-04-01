@@ -1,9 +1,10 @@
 # encoding: utf-8
 class RetencionesController < ApplicationController
-  before_action :set_retencion, only: [:show, :edit, :update, :destroy]
-  before_action :set_factura, only: [:show, :edit, :update, :new]
+  # En orden de jerarquía
   before_action :set_obra
+  before_action :set_factura, only: [:show, :edit, :update, :new]
   before_action :set_facturas, only: [ :index ]
+  before_action :set_retencion, only: [:show, :edit, :update, :destroy]
 
   def index
     if @facturas
@@ -61,18 +62,9 @@ class RetencionesController < ApplicationController
   end
 
   private
+
     def set_retencion
       @retencion = Retencion.find(params[:id])
-    end
-
-    def set_factura
-      if params[:action] == 'new'
-        @factura = Factura.find(params[:factura_id])
-      else
-        @factura = Factura.find(@retencion.factura_id)
-      end
-
-      @retencion.factura = @factura if ! @retencion.new_record?
     end
 
     def set_facturas
@@ -81,7 +73,9 @@ class RetencionesController < ApplicationController
 
     def retencion_params
       params.require(:retencion).permit(
-        :monto, :documento, :factura_id, :fecha_vencimiento, :documento_file_name, :documento_content_type, :documento_file_size, :documento_uploaded_at
+        :monto, :documento, :factura_id, :fecha_vencimiento,
+        :documento_file_name, :documento_content_type, :documento_file_size,
+        :documento_uploaded_at
       )
     end
 end
