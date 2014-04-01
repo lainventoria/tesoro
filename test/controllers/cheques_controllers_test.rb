@@ -36,5 +36,12 @@ class ChequesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "cobra" do
+    patch :cobrar, obra_id: @cheque.chequera.obra,
+          caja_id: @cheque.chequera, id: @cheque
+
+    assert_response :success
+  end
+
 
 end

@@ -26,6 +26,8 @@
         <td>
           <% if cheque.terceros? and not cheque.depositado? %>
           <%= render 'cheques/depositar', cheque: cheque %>
+          <% elsif cheque.depositado? %>
+          <%= render 'cheques/cobrar', cheque: cheque %>
           <% end %>
         </td>
       </tr>

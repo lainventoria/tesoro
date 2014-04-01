@@ -27,7 +27,10 @@ Cp::Application.routes.draw do
 
     resources :cajas do
       resources :cheques do
-        patch 'depositar', on: :member
+        member do
+          patch 'depositar'
+          patch 'cobrar'
+        end
       end
     end
 
