@@ -14,6 +14,10 @@ class ChequesController < ApplicationController
       @cheques = @cheques.vencidos
     end
 
+    if params[:depositados]
+      @cheques = @cheques.depositados
+    end
+
   end
 
   def show
