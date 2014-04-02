@@ -7,10 +7,10 @@ class Factura < ActiveRecord::Base
   belongs_to :obra, inverse_of: :facturas
 
   # Las facturas se pueden cancelar con muchos recibos
-  has_many :recibos, inverse_of: :factura
+  has_many :recibos, inverse_of: :factura, dependent: :restrict_with_error
 
-  # Puede tener una retención de impuestos
-  has_many :retenciones, inverse_of: :factura
+  # Puede tener varias retenciones de varios tipos
+  has_many :retenciones, inverse_of: :factura, dependent: :restrict_with_error
 
   # Las situaciones posibles en que se genera una factura
   SITUACIONES = %w(cobro pago)
@@ -18,6 +18,8 @@ class Factura < ActiveRecord::Base
   validates_inclusion_of :situacion, in: SITUACIONES
   validates_numericality_of :importe_neto, greater_than_or_equal_to: 0
   validates_numericality_of :importe_total, greater_than_or_equal_to: 0
+  validates_presence_of :obra
+  validates_presence_of :tercero
 
   validate :validate_saldo
 

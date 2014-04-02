@@ -8,6 +8,8 @@ class Retencion < ActiveRecord::Base
 
   # La factura sobre la que se hace la retención
   belongs_to :factura
+  has_one :obra, through: :factura
+  has_one :tercero, through: :factura
   has_many :recibos, through: :movimientos
 
   # Las retenciones se pagan desde una cuenta
@@ -17,6 +19,7 @@ class Retencion < ActiveRecord::Base
   belongs_to :caja_afip, ->{ where(situacion: 'chequera') },
     class_name: 'Caja'
 
+  validates_presence_of :factura
   validate :factura_es_un_pago
 
   # Sólo PDFs
