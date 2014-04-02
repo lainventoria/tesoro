@@ -3,6 +3,8 @@
 # no nos interesa seguirle el rastro (e.g. efectivo).
 class PagoNoTrackeable
   include ActiveModel::Naming
+  include ActiveModel::Validations
+
   # Datos necesarios para generar los movimientos
   attr_accessor :monto, :caja, :caja_id
 
@@ -25,6 +27,11 @@ class PagoNoTrackeable
         "#{poliforma}_id" => id
       )
     end
+  end
+
+  def self.construir(params)
+    datos = params.extract! :monto, :caja_id
+    new datos
   end
 
   def initialize(opciones = {})

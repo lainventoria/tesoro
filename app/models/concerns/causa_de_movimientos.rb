@@ -9,8 +9,15 @@ module CausaDeMovimientos
     has_many :movimientos, as: :causa
   end
 
+  module ClassMethods
+    # Cada causa sabe cómo construirse en base a los parámetros de inicialización
+    def self.construir(params)
+      raise NotImplementedError, 'Cada causa debe definir `construir`'
+    end
+  end
+
   # Cada medio de pago tiene que implementar su propio proceso de pago
   def usar_para_pagar(recibo)
-    raise NotImplementedError, 'Cada medio de pago debe definir `usar_para_pagar`'
+    raise NotImplementedError, 'Cada causa debe definir `usar_para_pagar`'
   end
 end
