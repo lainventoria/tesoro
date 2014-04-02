@@ -5,7 +5,7 @@
 
   <div class="field form-group col-md-6" >
     <%= f.label :monto %>
-    <%= f.text_field :monto, class: 'form-control' %>
+    <%= f.text_field :monto, class: 'form-control', data: { role:'money', a_sep:'.', a_dec:',' } %>
   </div>
 
   <div class="field form-group col-md-6" >

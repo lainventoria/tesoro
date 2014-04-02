@@ -1,4 +1,4 @@
-<%= form_for([@factura, @recibo]) do |f| %>
+<%= form_for [@factura, @recibo] do |f| %>
   <% if @recibo.errors.any? %>
     <% @editar = true %>
     <div id="error_explanation" class="alert alert-danger">
@@ -17,13 +17,17 @@
     <div class="row">
       <div class="field form-group col-md-6">
         <label>Tercero</label>
-        <span class="form-control" disabled><%= @factura.tercero.cuit %>: <%= @factura.tercero.nombre.first(40) %></span>
+        <span class="form-control" disabled>
+          <%= @factura.tercero.cuit %>: <%= @factura.tercero.nombre.first(40) %>
+        </span>
       </div>
       <div class="field form-group col-md-3 col-md-offset-3">
         <%= f.label :fecha %><br>
         <div class="input-group date">
           <%= f.text_field :fecha, { class: "form-control", value:formatted_date(@recibo.fecha) } %>
-          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-th"></i>
+          </span>
         </div>
       </div>
     </div>
@@ -31,15 +35,17 @@
     <div class="row">
       <div class="field form-group col-md-6" >
         <label>Nro. Factura</label>
-        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %>: <%= @factura.descripcion.first(40) %></span>
+        <span class="form-control" disabled>
+          <%= "#{@factura.tipo.first(1)}-#{@factura.numero.first(10)}: #{@factura.descripcion.first(40)}" %>
+        </span>
       </div>
       <div class="field form-group col-md-2 col-md-offset-1">
         <label>Moneda</label>
-        <%= f.text_field :importe_moneda, { class: "form-control", disabled:"disabled" } %>
+        <%= f.text_field :importe_moneda, { class: "form-control", disabled: true } %>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :importe %><br>
-        <%= f.text_field :importe, { class: "form-control text-right", data: {role:'money', a_sep:'.', a_dec:',' } }  %>
+        <%= f.text_field :importe, class: "form-control text-right", data: { role:'money', a_sep:'.', a_dec:',' } %>
       </div>
     </div>
 
@@ -47,8 +53,8 @@
       <br><%# TODO margen con csssss!! %>
     </div>
 
+    <%# Hook para enganchar los nuevos movimientos %>
     <div class="row" id='nuevo-movimiento'>
-      <%# TODO Arrancar con retenciones si existe %>
     </div>
 
     <div class="row">
