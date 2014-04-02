@@ -39,3 +39,14 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar este tercero porque tiene facturas asociadas"
+  activemodel:
+    errors:
+      models:
+        efectivo:
+          attributes:
+            caja:
+              debe_ser_de_efectivo: 'La caja debe ser de efectivo'
+        transferencia:
+          attributes:
+            caja:
+              debe_ser_una_cuenta: 'La caja debe ser una cuenta de banco'

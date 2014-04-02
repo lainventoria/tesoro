@@ -36,6 +36,7 @@ class Caja < ActiveRecord::Base
   def banco?
     situacion == 'banco'
   end
+  alias_method :cuenta?, :banco?
 
   def efectivo?
     situacion == 'efectivo'

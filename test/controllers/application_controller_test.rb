@@ -51,4 +51,45 @@ class ApplicationControllerTest < ActionController::TestCase
 
     assert obra.verify
   end
+
+  test 'mantiene un array de causas conocidas' do
+    causas = @controlador.send(:causas_conocidas)
+    assert_instance_of Array, causas
+    %w{
+      cheque-propio cheque-de-terceros retencion efectivo transferencia
+    }.each do |causa|
+      assert causas.include? causa
+    end
+  end
+
+  test 'no carga clases de causas desconocidas' do
+    causas = Minitest::Mock.new
+    causas.expect :include?, false, [ String ]
+
+    @controlador.stub :causas_conocidas, causas do
+      @controlador.stub :params, { causa_tipo: 'causa-hax0r' } do
+        assert_nil @controlador.send(:modelo_de_causa)
+      end
+    end
+
+    assert causas.verify
+  end
+
+  test 'carga las clases de causas conocidas' do
+    @controlador.stub :params, { causa_tipo: 'efectivo' } do
+      assert_equal Efectivo, @controlador.send(:modelo_de_causa)
+    end
+  end
+
+  test 'cheque-propio es un Cheque' do
+    @controlador.stub :params, { causa_tipo: 'cheque-propio' } do
+      assert_equal Cheque, @controlador.send(:modelo_de_causa)
+    end
+  end
+
+  test 'cheque-de-terceros es un Cheque' do
+    @controlador.stub :params, { causa_tipo: 'cheque-de-terceros' } do
+      assert_equal Cheque, @controlador.send(:modelo_de_causa)
+    end
+  end
 end

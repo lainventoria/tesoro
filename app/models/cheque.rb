@@ -5,7 +5,7 @@
 # Solo cuando se depositan generan un movimiento (positivo o negativo)
 # en el recibo al que pertenecen
 class Cheque < ActiveRecord::Base
-  include MedioDePago
+  include CausaDeMovimientos
 
   # Los cheques tienen una cuenta sólo si son propios o han sido depositados
   belongs_to :cuenta, ->{ where(situacion: 'banco') },
@@ -55,6 +55,15 @@ class Cheque < ActiveRecord::Base
 
   scope :de_terceros, ->{ where(situacion: 'terceros') }
   scope :propios, ->{ where(situacion: 'propio') }
+
+  def self.construir(params)
+    id_tercero = params.extract! :cheque_id
+
+    # TODO scopear a obra y cosas así
+    if id_tercero.present?
+      find(id_tercero[:cheque_id])
+    end
+  end
 
   def vencido?
     fecha_vencimiento < Time.now
@@ -156,7 +165,6 @@ class Cheque < ActiveRecord::Base
 
       save
     end
-
   end
 
   # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento
@@ -171,13 +179,14 @@ class Cheque < ActiveRecord::Base
     Cheque.transaction do
       # TODO Qué estado ponerle a un cheque propio usado como pago?
       self.estado = 'pasamanos' if terceros?
-      movimiento = chequera.extraer(monto)
-      movimiento.causa = self
-      este_recibo.movimientos << movimiento
-      save
+      if movimiento = chequera.extraer(monto, true)
+        movimiento.causa = self
+        movimiento.recibo = este_recibo
+        movimiento
+      else
+        false
+      end
     end
-
-    self
   end
 
   # TODO pasar un concern
@@ -194,6 +203,10 @@ class Cheque < ActiveRecord::Base
     end
 
     self
+  end
+
+  def descripcion
+    "#{monto_moneda} #{monto} - #{beneficiario} (vence el #{I18n.l fecha_vencimiento.to_date})"
   end
 
   private

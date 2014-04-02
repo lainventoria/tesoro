@@ -3,8 +3,12 @@ require 'test_helper'
 
 class EfectivoTest < ActiveSupport::TestCase
   setup do
-    @efectivo =  Efectivo.new(caja: create(:caja,
+    @efectivo = Efectivo.new(caja: create(:caja,
       :con_fondos), monto: Money.new(100))
+  end
+
+  test 'es válido' do
+    assert @efectivo.valid?, @efectivo.errors.messages.inspect
   end
 
   test 'es un medio de pago' do
@@ -12,7 +16,11 @@ class EfectivoTest < ActiveSupport::TestCase
     assert_nothing_raised { @efectivo.usar_para_pagar build(:recibo) }
   end
 
-  test 'devuelve un movimiento completo' do
+  test 'sabe construirse' do
+    assert_nothing_raised { Efectivo.construir({ algo: 'bonito'}) }
+  end
+
+  test 'usar como pago devuelve un movimiento completo' do
     recibo = create(:recibo, importe: Money.new(1000), situacion: 'pago')
 
     resultado = @efectivo.usar_para_pagar recibo

@@ -1,16 +1,16 @@
-<h3>Pago en efectivo</h3>
+<h3>Transferencia bancaria</h3>
 
-<%= fields_for :causa, @causa do |f| %>
-  <%= hidden_field_tag 'causa_tipo', 'efectivo' %>
+<%= fields_for :causa do |f| %>
+  <%= hidden_field_tag 'causa_tipo', 'transferencia' %>
 
   <div class="field form-group col-md-6" >
     <%= f.label :monto %>
-    <%= f.text_field :monto, class: 'form-control' %>
+    <%= f.text_field :monto, class: 'form-control', data: { role:'money', a_sep:'.', a_dec:',' } %>
   </div>
 
   <div class="field form-group col-md-6" >
     <%= f.label :caja %>
-    <%= f.collection_select(:caja_id, @factura.obra.cajas.de_efectivo, :id, :tipo,
+    <%= f.collection_select(:caja_id, @factura.obra.cajas.cuentas, :id, :tipo,
       { prompt: "-Seleccione Caja-" }, { class: "form-control" } ) %>
   </div>
 

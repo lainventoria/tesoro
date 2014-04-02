@@ -43,19 +43,25 @@ class ChequeTest < ActiveSupport::TestCase
   end
 
   test 'pagar con un cheque extrae de la chequera' do
-    cheque = build :cheque, monto: Money.new(100)
+    cheque = create :cheque, monto: Money.new(100)
     recibo = create :recibo, situacion: 'pago', importe: Money.new(200)
 
-    assert cheque.usar_para_pagar(recibo).persisted?
-    assert_equal Money.new(-100), cheque.chequera.total
-    assert recibo.movimientos.collect(&:monto).include? Money.new(-100)
+    resultado = cheque.usar_para_pagar recibo
+
+    assert_instance_of Movimiento, resultado
+    assert_equal cheque.chequera, resultado.caja
+    assert_equal Money.new(-100), resultado.monto
+    assert_equal 'Cheque', resultado.causa_type
   end
 
   test 'pagar un cheque extrae de su cuenta y salda la chequera' do
     cuenta = create :cuenta, :con_fondos
     chequera = cuenta.obra.chequera_propia
     cheque = cuenta.emitir_cheque(attributes_for(:cheque, monto: Money.new(100)))
-    cheque.usar_para_pagar create(:recibo, importe: Money.new(100))
+    recibo = create :recibo, situacion: 'pago', importe: Money.new(200)
+    recibo.pagar_con cheque
+
+    assert_equal Money.new(-100), chequera.total
 
     assert cheque.pagar, cheque.errors.messages
 

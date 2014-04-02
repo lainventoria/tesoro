@@ -5,8 +5,6 @@ class RecibosController < ApplicationController
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
   before_action :set_recibos, only: [ :index, :cobros, :pagos ]
 
-  before_action :set_causa, only: [ :update, :create ]
-
   def index
   end
 
@@ -37,7 +35,8 @@ class RecibosController < ApplicationController
 
   def create
     @editar = true
-    @recibo = Recibo.new(recibo_params)
+    @recibo = @factura.recibos.build(recibo_params)
+    @causa = modelo_de_causa.try :construir, causa_params
 
     respond_to do |format|
       if @recibo.save && @recibo.pagar_con(@causa)
@@ -53,6 +52,8 @@ class RecibosController < ApplicationController
 
   def update
     @editar = true
+    @causa = modelo_de_causa.try :construir, causa_params
+
     respond_to do |format|
       if @recibo.update(recibo_params) && @recibo.pagar_con(@causa)
 
@@ -115,15 +116,6 @@ class RecibosController < ApplicationController
         render action: @recibo.persisted? ? 'edit' : 'new'
       else
         redirect_to [@recibo.factura, @recibo], notice: 'Recibo actualizado con éxito.'
-      end
-    end
-
-    def set_causa
-      @causa = case params[:causa_tipo]
-        when 'retencion'
-          @factura.retencion
-        else
-          causa.try :new, causa_params
       end
     end
 end

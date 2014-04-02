@@ -6,7 +6,6 @@ class Obra < ActiveRecord::Base
   has_many :recibos, through: :facturas
   has_many :retenciones, through: :facturas
 
-
   has_one :chequera_propia, ->{ where(tipo: 'Chequera propia').where(archivada: false) },
     class_name: 'Caja'
   has_one :chequera, ->{ where(tipo: 'Chequera') },
