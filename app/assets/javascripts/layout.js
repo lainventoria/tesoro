@@ -3,7 +3,7 @@ $(document).ready(function(){
   $('input[data-role=money]').autoNumeric('init');
 
   // Inicializar los datepicker
-  $('.input-group.date').datepicker({
+  $(':enabled .input-group.date').datepicker({
     format: "dd M yyyy",
     weekStart: 1,
     autoclose: true,
