@@ -4,7 +4,7 @@
 # contador, potencialmente cada factura tiene una retención asociada que sirve
 # como medio de pago de la misma
 class Retencion < ActiveRecord::Base
-  include MedioDePago
+  include CausaDeMovimientos
 
   # La factura sobre la que se hace la retención
   belongs_to :factura

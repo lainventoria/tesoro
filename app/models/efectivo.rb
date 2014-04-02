@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Efectivo < PagoNoTrackeable
-  include MedioDePago
+  include CausaDeMovimientos
 
   def usar_para_pagar(recibo)
     if movimiento = caja.extraer(monto)

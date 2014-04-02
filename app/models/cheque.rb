@@ -5,7 +5,7 @@
 # Solo cuando se depositan generan un movimiento (positivo o negativo)
 # en el recibo al que pertenecen
 class Cheque < ActiveRecord::Base
-  include MedioDePago
+  include CausaDeMovimientos
 
   # Los cheques tienen una cuenta sólo si son propios o han sido depositados
   belongs_to :cuenta, ->{ where(situacion: 'banco') },
