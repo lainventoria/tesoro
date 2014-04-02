@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <fieldset <%= editar_o_bloquear %> >
+  <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
 
@@ -28,14 +28,14 @@
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha %><br>
-        <div class="input-group date<%= editar_o_bloquear %>">
+        <div class="input-group date">
           <%= f.text_field :fecha, { class: "form-control", value:formatted_date(@factura.fecha) } %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_pago %><br>
-        <div class="input-group date<%= editar_o_bloquear %>">
+        <div class="input-group date">
           <%= f.text_field :fecha_pago, { class: "form-control", value:formatted_date(@factura.fecha_pago) } %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
@@ -69,7 +69,7 @@
 
     <div class="row">
       <div class="field form-group col-md-2 col-md-offset-2">
-        <%= render 'layouts/selector_moneda', moneda: moneda_factura %> 
+        <%= render 'layouts/selector_moneda', moneda: moneda_factura %>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :importe_neto %><br>

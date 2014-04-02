@@ -10,7 +10,7 @@
     </div>
   <% end %>
 
-  <fieldset <%= editar_o_bloquear %> >
+  <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
       <div class="field form-group col-md-3">
@@ -19,14 +19,14 @@
       </div>
       <div class="field form-group col-md-3 col-md-offset-3">
         <%= f.label :fecha_emision %><br>
-        <div class="input-group date<%= editar_o_bloquear %>">
+        <div class="input-group date">
           <%= f.text_field :fecha_emision, { class: "form-control", value:formatted_date(@cheque.fecha_emision) } %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_vencimiento %><br>
-        <div class="input-group date<%= editar_o_bloquear %>">
+        <div class="input-group date">
           <%= f.text_field :fecha_vencimiento, { class: "form-control", value:formatted_date(@cheque.fecha_vencimiento) } %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>

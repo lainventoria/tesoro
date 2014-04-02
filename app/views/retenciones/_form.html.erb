@@ -12,7 +12,7 @@
   <% end %>
 
   <%# (des)habilita la edicion del formulario dependiendo del valor de @editar %>
-  <fieldset <%= editar_o_bloquear %> >
+  <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
       <div class="field form-group col-md-7">
@@ -26,7 +26,7 @@
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_vencimiento %><br>
-        <div class="input-group date<%= editar_o_bloquear %>">
+        <div class="input-group date">
           <%= f.text_field :fecha_vencimiento, { class: "form-control", value:formatted_date(@retencion.fecha_vencimiento) } %>
           <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
         </div>
