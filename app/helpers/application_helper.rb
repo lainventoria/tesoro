@@ -80,6 +80,7 @@ module ApplicationHelper
       when 'cajas' then url_for(params.merge({ obra_id: obra.try(:id), action: 'index', id: nil }))
       when 'cheques' then url_for(params.merge({ obra_id: obra.try(:id), caja_id: nil, action: 'index', id: nil }))
       when 'retenciones' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: 'index', id: nil }))
+      when 'terceros' then url_for(params.merge({ obra_id: nil }))
       else url_for(params.merge({ obra_id: obra.try(:id) }))
     end
   end
