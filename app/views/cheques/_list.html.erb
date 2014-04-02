@@ -30,6 +30,8 @@
           <%= render 'cheques/depositar', cheque: cheque %>
           <% elsif cheque.depositado? %>
           <%= render 'cheques/cobrar', cheque: cheque %>
+          <% elsif cheque.propio? and cheque.chequera? %>
+          <%= render 'cheques/pagar', cheque: cheque %>
           <% end %>
         </td>
       </tr>

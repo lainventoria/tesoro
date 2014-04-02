@@ -30,6 +30,7 @@ Cp::Application.routes.draw do
         member do
           patch 'depositar'
           patch 'cobrar'
+          patch 'pagar'
         end
       end
     end
