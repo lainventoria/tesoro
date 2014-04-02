@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th></th>
+      <th>Situación</th>
       <th>Estado</th>
       <th>Emisión</th>
       <th>Vencimiento</th>
@@ -16,6 +17,7 @@
     <% @cheques.each do |cheque| %>
       <tr class="ir-a" data-uri="<%= obra_caja_cheque_path(cheque.chequera.obra, cheque.chequera, cheque.id) %>">
         <td><%= link_to '', [cheque.chequera.obra, cheque.chequera, cheque], class:"glyphicon glyphicon-eye-open" %></td>
+        <td><%= cheque.situacion %></td>
         <td><%= cheque.estado %></td>
         <td><%= formatted_date(cheque.fecha_emision) %></td>
         <td><%= formatted_date(cheque.fecha_vencimiento) %></td>
@@ -24,7 +26,7 @@
         <td><%= cheque.chequera.tipo %></td>
         <td><%= cheque.banco %></td>
         <td>
-          <% if cheque.terceros? and not cheque.depositado? %>
+          <% if cheque.terceros? and cheque.chequera? %>
           <%= render 'cheques/depositar', cheque: cheque %>
           <% elsif cheque.depositado? %>
           <%= render 'cheques/cobrar', cheque: cheque %>
