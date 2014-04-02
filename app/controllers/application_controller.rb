@@ -31,7 +31,12 @@ class ApplicationController < ActionController::Base
     # Devuelve la clase de la causa según el tipo
     def modelo_de_causa
       if causas_conocidas.include? params[:causa_tipo]
-        params[:causa_tipo].underscore.classify.constantize
+        case params[:causa_tipo]
+          when 'cheque-de-terceros', 'cheque-propio'
+            Cheque
+          else
+            params[:causa_tipo].underscore.classify.constantize
+        end
       else
         # TODO Null object?
         nil

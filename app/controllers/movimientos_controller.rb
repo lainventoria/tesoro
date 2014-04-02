@@ -17,6 +17,9 @@ class MovimientosController < ApplicationController
   private
 
     def partial_segun_causa
-      modelo_de_causa.name.underscore
+      # Volvemos a usar :causa_tipo acá porque tanto para cheque-propio como
+      # cheque-de-terceros el modelo es Cheque, y necesitamos partials
+      # diferentes
+      params[:causa_tipo].underscore
     end
 end

@@ -80,4 +80,16 @@ class ApplicationControllerTest < ActionController::TestCase
       assert_equal Efectivo, @controlador.send(:modelo_de_causa)
     end
   end
+
+  test 'cheque-propio es un Cheque' do
+    @controlador.stub :params, { causa_tipo: 'cheque-propio' } do
+      assert_equal Cheque, @controlador.send(:modelo_de_causa)
+    end
+  end
+
+  test 'cheque-de-terceros es un Cheque' do
+    @controlador.stub :params, { causa_tipo: 'cheque-de-terceros' } do
+      assert_equal Cheque, @controlador.send(:modelo_de_causa)
+    end
+  end
 end
