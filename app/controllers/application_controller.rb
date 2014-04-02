@@ -43,9 +43,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # TODO pedir permits según causa
     def causa_params
       if params[:causa].present?
-        params[:causa].permit(:monto, :caja_id)
+        params[:causa].permit(:monto, :caja_id, :cheque_id)
       else
         {}
       end

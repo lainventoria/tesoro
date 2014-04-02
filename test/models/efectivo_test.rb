@@ -20,7 +20,7 @@ class EfectivoTest < ActiveSupport::TestCase
     assert_nothing_raised { Efectivo.construir({ algo: 'bonito'}) }
   end
 
-  test 'devuelve un movimiento completo' do
+  test 'usar como pago devuelve un movimiento completo' do
     recibo = create(:recibo, importe: Money.new(1000), situacion: 'pago')
 
     resultado = @efectivo.usar_para_pagar recibo

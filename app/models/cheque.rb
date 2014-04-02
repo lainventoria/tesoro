@@ -56,6 +56,15 @@ class Cheque < ActiveRecord::Base
   scope :de_terceros, ->{ where(situacion: 'terceros') }
   scope :propios, ->{ where(situacion: 'propio') }
 
+  def self.construir(params)
+    id_tercero = params.extract! :cheque_id
+
+    # TODO scopear a obra y cosas así
+    if id_tercero.present?
+      find(id_tercero[:cheque_id])
+    end
+  end
+
   def vencido?
     fecha_vencimiento < Time.now
   end
@@ -171,13 +180,14 @@ class Cheque < ActiveRecord::Base
     Cheque.transaction do
       # TODO Qué estado ponerle a un cheque propio usado como pago?
       self.estado = 'pasamanos' if terceros?
-      movimiento = chequera.extraer(monto)
-      movimiento.causa = self
-      este_recibo.movimientos << movimiento
-      save
+      if movimiento = chequera.extraer(monto, true)
+        movimiento.causa = self
+        movimiento.recibo = este_recibo
+        movimiento
+      else
+        false
+      end
     end
-
-    self
   end
 
   # TODO pasar un concern
@@ -194,6 +204,10 @@ class Cheque < ActiveRecord::Base
     end
 
     self
+  end
+
+  def descripcion
+    "#{monto_moneda} #{monto} - #{beneficiario} (vence el #{I18n.l fecha_vencimiento.to_date})"
   end
 
   private

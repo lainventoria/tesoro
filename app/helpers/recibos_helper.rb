@@ -32,4 +32,8 @@ module RecibosHelper
       new_factura_movimiento_path(@recibo.factura, causa_tipo: causa.parameterize),
       data: { remote: true }, class: 'agregar-movimiento'
   end
+
+  def cheques_de_terceros
+    @factura.obra.cheques.de_terceros.order(:fecha_vencimiento)
+  end
 end
