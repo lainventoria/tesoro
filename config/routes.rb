@@ -67,7 +67,8 @@ Cp::Application.routes.draw do
     # /factura/recibo - Ver los recibos de cada factura
     resources :recibos, except: [ :index ]
 
-    resources :causas, only: [ :new ]
+    # /factura/movimiento
+    resources :movimientos, only: [ :new ]
 
     # /factura/retención - Ver las retenciones de cada factura
     resources :retenciones

@@ -1,8 +1,11 @@
 # encoding: utf-8
-class CausasController < ApplicationController
+# Este controlador sólo renderiza el partial adecuado para la carga de
+# movimientos
+class MovimientosController < ApplicationController
   before_action :set_factura
 
   def new
+    # FIXME varias retenciones
     @causa = if params[:causa_tipo] == 'retencion'
       @factura.retencion
     else
