@@ -11,14 +11,14 @@ Cp::Application.routes.draw do
       end
 
       # Ver los recibos de cada factura
-      resources :recibos
+      resources :recibos, except: [ :index ]
 
       # Ver las retenciones de cada factura
       resources :retenciones
     end
 
     # Permitir /recibos pero no crear recibos sin facturas asociadas
-    resources :recibos, except: [ :new ] do
+    resources :recibos, except: [ :new, :index ] do
       collection do
         get 'cobros'
         get 'pagos'
@@ -57,7 +57,7 @@ Cp::Application.routes.draw do
     get :autocomplete_tercero_cuit, :on => :collection
 
     # Ver los recibos de cada factura
-    resources :recibos
+    resources :recibos, except: [ :index ]
 
     resources :causas, only: [ :new ]
 
