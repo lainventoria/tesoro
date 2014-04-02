@@ -57,43 +57,23 @@ module ApplicationHelper
     end
   end
 
-  # genera un link a la url actual en otra obra (o al listado
-  # correspondiente en otra obra)
-  def link_to_obra(obra = nil)
-    extra_params = {}
-    nombre = obra.try(:nombre) || 'Todas las Obras'
-
-    if obra.nil?
-      extra_params.merge!({obra_id: nil})
-    elsif params[:controller] == 'obras'
-      extra_params.merge!({id: obra.id, action: 'show'})
-    elsif params[:action] == 'show'
-      # al dessetear el id se corrige el ?id=X flotante
-      extra_params.merge!({obra_id: obra.id, id: nil, action: 'index'})
-    else
-      extra_params.merge!({obra_id: obra.id})
+  def con_esta_obra(obra = nil)
+    case params[:controller]
+      when 'obras' then
+        if obra
+          url_for(params.merge({ action: 'show', id: obra.try(:id) }))
+        else
+          url_for(params.merge({ action: 'index', id: nil }))
+        end
+      when 'facturas' then
+        case params[:action]
+          when 'pagos' then url_for(params.merge({ obra_id: obra.try(:id) }))
+          when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id) }))
+          else url_for(params.merge({ obra_id: obra.try(:id), action: @factura.try(:situacion) +"s", id: nil }))
+        end
+      when 'cajas' then url_for(params.merge({ obra_id: obra.try(:id), id: nil }))
+      else url_for(params.merge({ obra_id: obra.try(:id) }))
     end
-
-    # usa situacion solo cuando se vuelve a un listado de facturas/recibos,
-    # desde una vista de ese controlador
-    # FIXME deshackerizar
-    if @factura.present? && params[:controller] == 'facturas' &&
-        (params[:action] != 'pagos' && params[:action] != 'cobros')
-
-      extra_params.merge!({
-        action: @factura.situacion + 's', id: nil}
-      ) unless @factura.new_record?
-    end
-
-    if @recibo.present? && params[:controller] == 'recibos' &&
-      (params[:action] != 'pagos' && params[:action] != 'cobros')
-
-      extra_params.merge!({
-        action: @recibo.situacion + 's', factura_id: nil, id: nil}
-      ) unless @recibo.new_record?
-    end
-
-    link_to nombre, url_for(params.merge(extra_params))
   end
 
   def alert_range(num)
