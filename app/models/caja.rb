@@ -4,7 +4,8 @@ class Caja < ActiveRecord::Base
   has_many :movimientos
   has_many :cheques, ->{ where.not(estado: ['cobrado','pagado']) }, foreign_key: 'chequera_id'
   has_many :cheques_en_cuenta, foreign_key: 'cuenta_id', class_name: 'Cheque'
-  has_many :retenciones
+  has_many :retenciones, foreign_key: 'chequera_id'
+  has_many :retenciones_a_pagar, foreign_key: 'cuenta_id', class_name: 'Retencion'
 
   validates_presence_of :obra_id, :tipo
   validates_uniqueness_of :tipo, scope: [:obra_id, :numero]
