@@ -58,7 +58,10 @@ class ChequeTest < ActiveSupport::TestCase
     cuenta = create :cuenta, :con_fondos
     chequera = cuenta.obra.chequera_propia
     cheque = cuenta.emitir_cheque(attributes_for(:cheque, monto: Money.new(100)))
-    cheque.usar_para_pagar create(:recibo, importe: Money.new(100))
+    recibo = create :recibo, situacion: 'pago', importe: Money.new(200)
+    recibo.pagar_con cheque
+
+    assert_equal Money.new(-100), chequera.total
 
     assert cheque.pagar, cheque.errors.messages
 
