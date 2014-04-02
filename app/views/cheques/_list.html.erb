@@ -2,6 +2,9 @@
   <thead>
     <tr>
       <th></th>
+      <th>Situación</th>
+      <th>Estado</th>
+      <th>Emisión</th>
       <th>Vencimiento</th>
       <th>Monto</th>
       <th>Beneficiario</th>
@@ -12,13 +15,25 @@
 
   <tbody>
     <% @cheques.each do |cheque| %>
-      <tr class="ir-a" data-uri="<%= con_obra? cheque_path(cheque.id) %>">
-        <td><%= link_to '', cheque, class:"glyphicon glyphicon-eye-open" %></td>
+      <tr class="ir-a" data-uri="<%= obra_caja_cheque_path(cheque.chequera.obra, cheque.chequera, cheque.id) %>">
+        <td><%= link_to '', [cheque.chequera.obra, cheque.chequera, cheque], class:"glyphicon glyphicon-eye-open" %></td>
+        <td><%= cheque.situacion %></td>
+        <td><%= cheque.estado %></td>
+        <td><%= formatted_date(cheque.fecha_emision) %></td>
         <td><%= formatted_date(cheque.fecha_vencimiento) %></td>
         <td><%= formatted_number(cheque.monto) %></td>
         <td><%= cheque.beneficiario %></td>
         <td><%= cheque.chequera.tipo %></td>
         <td><%= cheque.banco %></td>
+        <td>
+          <% if cheque.terceros? and cheque.chequera? %>
+          <%= render 'cheques/depositar', cheque: cheque %>
+          <% elsif cheque.depositado? %>
+          <%= render 'cheques/cobrar', cheque: cheque %>
+          <% elsif cheque.propio? and cheque.chequera? %>
+          <%= render 'cheques/pagar', cheque: cheque %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

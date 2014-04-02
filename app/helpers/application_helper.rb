@@ -57,43 +57,52 @@ module ApplicationHelper
     end
   end
 
-  # genera un link a la url actual en otra obra (o al listado
-  # correspondiente en otra obra)
-  def link_to_obra(obra = nil)
-    extra_params = {}
-    nombre = obra.try(:nombre) || 'Todas las Obras'
-
-    if obra.nil?
-      extra_params.merge!({obra_id: nil})
-    elsif params[:controller] == 'obras'
-      extra_params.merge!({id: obra.id, action: 'show'})
-    elsif params[:action] == 'show'
-      # al dessetear el id se corrige el ?id=X flotante
-      extra_params.merge!({obra_id: obra.id, id: nil, action: 'index'})
-    else
-      extra_params.merge!({obra_id: obra.id})
+  # generar saltos entre obras desde la url actual
+  # TODO cleverizar
+  def con_esta_obra(obra = nil)
+    # somos especificos con el controlador
+    case params[:controller]
+      when 'obras' then
+        if obra
+          # si la obra esta seteada, queremos verla
+          url_for(params.merge({ action: 'show', id: obra.try(:id) }))
+        else
+          # sino, queremos ver el indice
+          url_for(params.merge({ action: 'index', id: nil }))
+        end
+      when 'facturas' then
+        case params[:action]
+          # las facturas de cobros y pagos llevan al mismo listado en
+          # otra obra
+          when 'pagos' then url_for(params.merge({ obra_id: obra.try(:id) }))
+          when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id) }))
+          # pero el resto lleva al listado de cobros o pagos segun que
+          # factura estemos viendo
+          else url_for(params.merge({ obra_id: obra.try(:id), action: @factura.try(:situacion) +"s", id: nil }))
+        end
+      when 'recibos' then
+        case params[:action]
+          # los recibos de cobros y pagos llevan al mismo listado en
+          # otra obra
+          when 'pagos' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil }))
+          when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil }))
+          # para las otras acciones vamos al listado segun la situacion
+          # del recibo actual
+          else url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: @recibo.try(:situacion) +"s", id: nil }))
+        end
+      # para las cajas siempre queremos ir al indice de cajas segun obra
+      when 'cajas' then url_for(params.merge({ obra_id: obra.try(:id), action: 'index', id: nil }))
+      # para los cheques siempre queremos ir al indice de cheques segun
+      # obra, que es el minimo comun denominador entre obras (las cajas
+      # cambian!)
+      when 'cheques' then url_for(params.merge({ obra_id: obra.try(:id), caja_id: nil, action: 'index', id: nil }))
+      # las retenciones siempre llevan a su indice segun obra
+      when 'retenciones' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: 'index', id: nil }))
+      # los terceros no se filtran por obra
+      when 'terceros' then url_for(params.merge({ obra_id: nil }))
+      # para cualquier otra cosa, imitar con_obra?
+      else url_for(params.merge({ obra_id: obra.try(:id) }))
     end
-
-    # usa situacion solo cuando se vuelve a un listado de facturas/recibos,
-    # desde una vista de ese controlador
-    # FIXME deshackerizar
-    if @factura.present? && params[:controller] == 'facturas' &&
-        (params[:action] != 'pagos' && params[:action] != 'cobros')
-
-      extra_params.merge!({
-        action: @factura.situacion + 's', id: nil}
-      ) unless @factura.new_record?
-    end
-
-    if @recibo.present? && params[:controller] == 'recibos' &&
-      (params[:action] != 'pagos' && params[:action] != 'cobros')
-
-      extra_params.merge!({
-        action: @recibo.situacion + 's', factura_id: nil, id: nil}
-      ) unless @recibo.new_record?
-    end
-
-    link_to nombre, url_for(params.merge(extra_params))
   end
 
   def alert_range(num)

@@ -1,11 +1,24 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
   before_action :set_obra
-  before_action :set_caja, only: [ :index, :propios, :terceros ]
-  before_action :set_cheque, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_caja
+  before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar, :pagar, :cobrar ]
 
   def index
-    @cheques = @caja ? @caja.cheques : Cheque.all
+    if params[:situacion]
+      @cheques = (@caja ? @caja.cheques : Cheque).where(situacion: params[:situacion])
+    else
+      @cheques = @caja ? @caja.cheques : Cheque.all
+    end
+
+    if params[:vencidos]
+      @cheques = @cheques.vencidos
+    end
+
+    if params[:depositados]
+      @cheques = @cheques.depositados
+    end
+
   end
 
   def show
@@ -22,25 +35,13 @@ class ChequesController < ApplicationController
     @editar = true
   end
 
-  def propios
-    @cheques = (@caja ? @caja.cheques : Cheque).propios
-    @situacion = "propio"
-    render "index"
-  end
-
-  def terceros
-    @cheques = (@caja ? @caja.cheques : Cheque).de_terceros
-    @situacion = "terceros"
-    render "index"
-  end
-
   def create
     @cheque = Cheque.new(cheque_params)
 
     respond_to do |format|
       if @cheque.save
-        format.html { redirect_to @cheque, notice: 'Cheque creado con éxito.' }
-        format.json { render action: 'show', status: :created, location: @cheque }
+        format.html { redirect_to [@cheque.chequera.obra, @cheque.chequera, @cheque], notice: 'Cheque creado con éxito.' }
+        format.json { render action: 'show', status: :created, location: [@cheque.chequera.obra, @cheque.chequera, @cheque] }
       else
         format.html { render action: 'new' }
         format.json { render json: @cheque.errors, status: :unprocessable_entity }
@@ -51,7 +52,7 @@ class ChequesController < ApplicationController
   def update
     respond_to do |format|
       if @cheque.update(cheque_params)
-        format.html { redirect_to @cheque, notice: 'Cheque actualizado con éxito.' }
+        format.html { redirect_to [@cheque.chequera.obra, @cheque.chequera, @cheque], notice: 'Cheque actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -61,13 +62,55 @@ class ChequesController < ApplicationController
   end
 
   def destroy
-    volver_a_listado =  @cheque.propio? ?  propios_cheques_url : terceros_cheques_url
+    volver_a_listado = obra_cajas_url @cheque.chequera.obra, @cheque.chequera
     @cheque.destroy
     respond_to do |format|
       format.html { redirect_to volver_a_listado }
       format.json { head :no_content }
     end
   end
+
+  def pagar
+    @cheque = Cheque.find(params[:id])
+    respond_to do |format|
+      if @cheque.pagar
+        format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
+                      notice: 'Cheque pagado con éxito' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @cheque.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def depositar
+    respond_to do |format|
+      if @cheque.depositar(Caja.find(params[:cheque][:cuenta_id]))
+        format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
+                      notice: 'Cheque depositado con éxito' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @cheque.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def cobrar
+    @cheque = Cheque.find(params[:id])
+    respond_to do |format|
+      if @cheque.cobrar
+        format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
+                      notice: 'Cheque cobrado con éxito' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @cheque.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   private
 
@@ -79,11 +122,13 @@ class ChequesController < ApplicationController
       params.require(:cheque).permit(
         :situacion, :numero, :monto, :monto_centavos, :monto_moneda,
         :fecha_vencimiento, :fecha_emision, :beneficiario, :banco, :estado,
-        :chequera_id, :cuenta_id
+        :chequera_id, :cuenta_id, :obra_id
       )
     end
 
     def set_caja
-      @caja = params[:caja_id].present? ? Caja.find(params[:caja_id]) : nil
+      if params[:caja_id]
+        @caja = (@obra.present? ? @obra.cajas : Caja).find(params[:caja_id])
+      end
     end
 end

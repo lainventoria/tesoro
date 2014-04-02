@@ -16,34 +16,41 @@ Cp::Application.routes.draw do
       end
 
       # /obra/factura/recibo - Ver los recibos de cada factura para esta obra
-      resources :recibos
+      resources :recibos, except: [ :index ]
 
       # /obra/factura/retención - Ver las retenciones de cada factura para esta obra
       resources :retenciones
     end
 
     # /obra/recibo/* pero no crear recibos sin facturas asociadas
-    resources :recibos, except: [ :index, :new ] do
+    resources :recibos, except: [ :new, :index ] do
       collection do
         get 'cobros'
         get 'pagos'
       end
     end
 
-    # /obra/cheque
-    resources :cheques, only: [ :index, :show ] do
-      collection do
-        get 'propios'
-        get 'terceros'
+    # /obra/caja/cheque
+    resources :cajas do
+      resources :cheques do
+        member do
+          patch 'depositar'
+          patch 'cobrar'
+          patch 'pagar'
+        end
       end
     end
 
     # /obra/retención
     resources :retenciones, only: [ :index, :show ]
+    # no se editan cheques aca, solo se listan
+    resources :cheques, only: [ :index, :show, :edit ]
   end
 
-  # /caja
-  resources :cajas
+  resources :cajas do
+    # no se editan cheques aca, solo se listan
+    resources :cheques, only: [ :index, :show, :edit ]
+  end
 
   # /factura
   resources :facturas, except: [ :index ] do
@@ -58,7 +65,7 @@ Cp::Application.routes.draw do
     end
 
     # /factura/recibo - Ver los recibos de cada factura
-    resources :recibos
+    resources :recibos, except: [ :index ]
 
     resources :causas, only: [ :new ]
 
@@ -79,12 +86,7 @@ Cp::Application.routes.draw do
 
   # /cheque
   # TODO borrar ':new' cuando ya exista interfase de carga
-  resources :cheques, only: [ :index, :show, :new, :create, :update, :destroy, :edit ] do
-    collection do
-      get 'propios'
-      get 'terceros'
-    end
-  end
+  resources :cheques, only: [ :index, :show, :edit ]
 
   # /retención
   resources :retenciones, only: [ :index, :show ]

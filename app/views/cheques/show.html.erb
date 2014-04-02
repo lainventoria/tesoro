@@ -12,11 +12,15 @@
     </div>
 
     <div class="row">
-      <a type="button" class="btn btn-success col-md-3" href="<%= path_a_listado %>">
+      <a type="button" class="btn btn-success col-md-3" href="<%= obra_caja_cheques_path(@cheque.chequera.obra, @cheque.chequera)%>">
         <span class="glyphicon glyphicon-list-alt"></span>
-        Listar Cheques
+        Ver chequera
       </a>
-      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= con_obra? edit_cheque_path(@cheque) %>">
+      <a type="button" class="btn btn-success col-md-3" href="<%= obra_cheques_path(@cheque.chequera.obra)%>">
+        <span class="glyphicon glyphicon-list-alt"></span>
+        Cheques de esta obra
+      </a>
+      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= edit_obra_caja_cheque_path(@cheque.chequera.obra, @cheque.chequera, @cheque) %>">
         <span class="glyphicon glyphicon-edit"></span>
         Editar Cheque
       </a>

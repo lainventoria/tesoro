@@ -9,6 +9,8 @@ class Obra < ActiveRecord::Base
 
   has_one :chequera_propia, ->{ where(tipo: 'Chequera propia').where(archivada: false) },
     class_name: 'Caja'
+  has_one :chequera, ->{ where(tipo: 'Chequera') },
+    class_name: 'Caja'
   has_one :caja_afip, ->{ where(tipo: 'Caja AFIP') },
     class_name: 'Caja'
 

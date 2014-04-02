@@ -21,10 +21,14 @@ class RecibosControllerTest < ActionController::TestCase
     assert_not_nil assigns(:recibos)
   end
 
-  test "accede a la lista de recibos de la factura" do
-    create :recibo, factura: @factura
+  test "accede a la lista de recibos de pago" do
+    get :pagos, factura_id: @factura
+    assert_response :success
+    assert_not_nil assigns(:recibos)
+  end
 
-    get :index, factura_id: @factura
+  test "accede a la lista de recibos de cobro" do
+    get :cobros, factura_id: @factura
     assert_response :success
     assert_not_nil assigns(:recibos)
   end
