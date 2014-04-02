@@ -23,18 +23,19 @@ class ApplicationController < ActionController::Base
       params[:controller] == 'facturas' ? :id : :factura_id
     end
 
-    def causa_conocida
-      if %w{
-        cheque-propio cheque-de-terceros efectivo transferencia retencion
-      }.include? params[:causa_tipo]
-        params[:causa_tipo].underscore
-      else
-        nil
-      end
+    # No dejar que el usuario hax0r invente causas
+    def causas_conocidas
+      %w{ cheque-propio cheque-de-terceros efectivo transferencia retencion }
     end
 
-    def causa
-      causa_conocida.classify.constantize if causa_conocida.present?
+    # Devuelve la clase de la causa según el tipo
+    def modelo_de_causa
+      if causas_conocidas.include? params[:causa_tipo]
+        params[:causa_tipo].underscore.classify.constantize
+      else
+        # TODO Null object?
+        nil
+      end
     end
 
     def causa_params
