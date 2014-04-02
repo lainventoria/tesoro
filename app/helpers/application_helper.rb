@@ -57,30 +57,50 @@ module ApplicationHelper
     end
   end
 
+  # generar saltos entre obras desde la url actual
+  # TODO cleverizar
   def con_esta_obra(obra = nil)
+    # somos especificos con el controlador
     case params[:controller]
       when 'obras' then
         if obra
+          # si la obra esta seteada, queremos verla
           url_for(params.merge({ action: 'show', id: obra.try(:id) }))
         else
+          # sino, queremos ver el indice
           url_for(params.merge({ action: 'index', id: nil }))
         end
       when 'facturas' then
         case params[:action]
+          # las facturas de cobros y pagos llevan al mismo listado en
+          # otra obra
           when 'pagos' then url_for(params.merge({ obra_id: obra.try(:id) }))
           when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id) }))
+          # pero el resto lleva al listado de cobros o pagos segun que
+          # factura estemos viendo
           else url_for(params.merge({ obra_id: obra.try(:id), action: @factura.try(:situacion) +"s", id: nil }))
         end
       when 'recibos' then
         case params[:action]
+          # los recibos de cobros y pagos llevan al mismo listado en
+          # otra obra
           when 'pagos' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil }))
           when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil }))
+          # para las otras acciones vamos al listado segun la situacion
+          # del recibo actual
           else url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: @recibo.try(:situacion) +"s", id: nil }))
         end
+      # para las cajas siempre queremos ir al indice de cajas segun obra
       when 'cajas' then url_for(params.merge({ obra_id: obra.try(:id), action: 'index', id: nil }))
+      # para los cheques siempre queremos ir al indice de cheques segun
+      # obra, que es el minimo comun denominador entre obras (las cajas
+      # cambian!)
       when 'cheques' then url_for(params.merge({ obra_id: obra.try(:id), caja_id: nil, action: 'index', id: nil }))
+      # las retenciones siempre llevan a su indice segun obra
       when 'retenciones' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: 'index', id: nil }))
+      # los terceros no se filtran por obra
       when 'terceros' then url_for(params.merge({ obra_id: nil }))
+      # para cualquier otra cosa, imitar con_obra?
       else url_for(params.merge({ obra_id: obra.try(:id) }))
     end
   end
