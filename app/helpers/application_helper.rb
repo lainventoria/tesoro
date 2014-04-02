@@ -125,4 +125,13 @@ module ApplicationHelper
     html
   end
 
+  def etiqueta_de_situacion(situacion)
+    case situacion
+      when 'pago' then 'label-primary'
+      when 'cobro' then 'label-success'
+      when 'propio' then 'label-primary'
+      when 'terceros' then 'label-info'
+      else 'label-default'
+    end
+  end
 end
