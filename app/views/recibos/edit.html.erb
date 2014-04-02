@@ -39,8 +39,9 @@
     <div class="row">
       <br>
     </div>
+
     <div id='movimientos' class="row pull-right">
-      <%= render 'movimientos/boton_agregar_medios_de_pago', situacion: determina_situacion_recibo %>
+      <%= render "agregar_#{@recibo.situacion}" %>
     </div>
   </div>
 </div>
