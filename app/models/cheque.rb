@@ -157,7 +157,6 @@ class Cheque < ActiveRecord::Base
       save
     end
 
-    self
   end
 
   # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento

@@ -57,7 +57,7 @@ class ChequeTest < ActiveSupport::TestCase
     cheque = cuenta.emitir_cheque(attributes_for(:cheque, monto: Money.new(100)))
     cheque.usar_para_pagar create(:recibo, importe: Money.new(100))
 
-    assert cheque.pagar.persisted?, cheque.errors.messages
+    assert cheque.pagar, cheque.errors.messages
 
     assert cuenta.movimientos.collect(&:monto).include?(Money.new(-100))
 
