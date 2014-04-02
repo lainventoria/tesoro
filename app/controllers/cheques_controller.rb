@@ -1,7 +1,8 @@
 # encoding: utf-8
 class ChequesController < ApplicationController
-  before_action :set_obra_y_caja
-  before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar ]
+  before_action :set_obra
+  before_action :set_caja
+  before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar, :pagar, :cobrar ]
 
   def index
     if params[:situacion]
@@ -12,6 +13,10 @@ class ChequesController < ApplicationController
 
     if params[:vencidos]
       @cheques = @cheques.vencidos
+    end
+
+    if params[:depositados]
+      @cheques = @cheques.depositados
     end
 
   end
@@ -79,9 +84,6 @@ class ChequesController < ApplicationController
     end
   end
 
-  def pasamanos
-  end
-
   def depositar
     respond_to do |format|
       if @cheque.depositar(Caja.find(params[:cheque][:cuenta_id]))
@@ -124,10 +126,9 @@ class ChequesController < ApplicationController
       )
     end
 
-    def set_obra_y_caja
+    def set_caja
       if params[:caja_id]
-        @caja = Caja.find(params[:caja_id])
-        @obra = @caja.obra
+        @caja = (@obra.present? ? @obra.cajas : Caja).find(params[:caja_id])
       end
     end
 end
