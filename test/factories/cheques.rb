@@ -5,7 +5,7 @@ FactoryGirl.define do
     chequera
 
     beneficiario "pepe honguito"
-    monto { Money.new rand(10) }
+    monto { Money.new(1 + rand(10)) }
     fecha_emision { Time.now }
     fecha_vencimiento { Time.now + rand(360000) }
 
