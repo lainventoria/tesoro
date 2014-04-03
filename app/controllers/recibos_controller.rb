@@ -9,13 +9,13 @@ class RecibosController < ApplicationController
   end
 
   def cobros
-    @recibos.where(situacion: 'cobro')
+    @recibos = @recibos.where(situacion: 'cobro')
     @situacion = "Cobros"
     render "index"
   end
 
   def pagos
-    @recibos.where(situacion: 'pago')
+    @recibos = @recibos.where(situacion: 'pago')
     @situacion = "Pagos"
     render "index"
   end
@@ -108,7 +108,9 @@ class RecibosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recibo_params
-      params.require(:recibo).permit(:fecha, :situacion, :factura_id)
+      params.require(:recibo).permit(
+        :fecha, :situacion, :factura_id
+      )
     end
 
     def seguir_agregando_o_mostrar
