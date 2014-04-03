@@ -24,67 +24,32 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test "se cancela con recibos" do
-    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
-    3.times { create :recibo, factura: factura, importe: Money.new(1000*1.21) }
+    factura = create :factura, importe_neto: Money.new(2000), iva: Money.new(2000*0.21)
+    2.times do
+      recibo = create :recibo, factura: factura
+      recibo.pagar_con efectivo_por(Money.new(1000*1.21))
+    end
 
-    assert factura.cancelada?
-  end
-
-  test "el saldo tiene que ser igual en memoria que en la bd" do
-    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
-    3.times { create :recibo, factura: factura, importe: Money.new(1000*1.21) }
-
-    assert factura.valid?, factura.saldo
-    assert factura.cancelada?
-    assert factura.save
-    assert factura.reload
-    assert factura.cancelada?
-
+    assert factura.reload.cancelada?
   end
 
   test "desbloquear factura despues de cancelada" do
     factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
-    recibo = create :recibo, factura: factura, importe: Money.new(3000*1.21)
+    recibo = create :recibo, factura: factura
+    recibo.pagar_con efectivo_por(Money.new(3000*1.21))
 
-    assert factura.cancelada?
-    assert factura.save
+    assert factura.reload.cancelada?
 
     factura.importe_neto = Money.new(4000)
     factura.iva = Money.new(4000*0.105)
-
     assert factura.save
-    assert factura.reload
-    assert_not factura.cancelada?
 
-    recibo = create :recibo, factura: factura, importe: factura.saldo
+    assert_not factura.reload.cancelada?
 
+    recibo = create :recibo, factura: factura
+    recibo.pagar_con efectivo_por(factura.saldo)
     assert factura.save
-    assert factura.cancelada?
 
-  end
-
-  test "se puede pagar" do
-    factura = create :factura
-    monto = factura.importe_total
-
-    assert factura.recibos.empty?
-
-    recibo = factura.pagar monto
-
-    assert_equal 1, factura.recibos.count
-    assert_instance_of Recibo, recibo
-    assert_equal monto, recibo.importe
-  end
-
-  test "no se puede pagar de más" do
-    factura = create :factura
-    monto = 2 * factura.importe_total
-
-    assert factura.recibos.empty?
-
-    recibo = factura.pagar monto
-
-    assert_nil recibo
-    assert_equal 0, factura.recibos.count
+    assert factura.reload.cancelada?
   end
 end

@@ -21,7 +21,7 @@ class EfectivoTest < ActiveSupport::TestCase
   end
 
   test 'usar como pago devuelve un movimiento completo' do
-    recibo = create(:recibo, importe: Money.new(1000), situacion: 'pago')
+    recibo = create(:recibo, situacion: 'pago')
 
     resultado = @efectivo.usar_para_pagar recibo
 

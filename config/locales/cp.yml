@@ -25,11 +25,15 @@ es:
               restrict_dependent_destroy:
                 many: "No se puede borrar esta factura porque tiene %{record} asociados"
                 one: "No se puede borrar esta factura porque tiene una retención asociada"
+            recibos:
+              sobrepasan_el_importe_total: 'Sobrepasan el importe total'
         recibo:
           attributes:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar este recibo porque tiene movimientos asociados"
+            movimientos:
+              sobrepasan_el_saldo: 'Sobrepasan el saldo'
         caja:
           attributes:
             base:
