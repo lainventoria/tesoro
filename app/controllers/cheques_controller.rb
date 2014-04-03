@@ -3,12 +3,13 @@ class ChequesController < ApplicationController
   before_action :set_obra
   before_action :set_caja
   before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar, :pagar, :cobrar ]
+  before_action :set_order, only: [:propios, :terceros]
 
   def index
     if params[:situacion]
-      @cheques = (@caja ? @caja.cheques : Cheque).where(situacion: params[:situacion])
+      @cheques = (@caja ? @caja.cheques : Cheque).where(situacion: params[:situacion]).order(@order)
     else
-      @cheques = @caja ? @caja.cheques : Cheque.all
+      @cheques = (@caja ? @caja.cheques : Cheque.all).order(@order)
     end
 
     if params[:vencidos]

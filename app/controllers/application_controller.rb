@@ -18,6 +18,16 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # para cargar las columnaas por que ordenar
+    def set_order
+      sort = params[:sort].present? ? params[:sort] : 'id'
+      if sort == 'terceros_nombre'
+        sort = 'terceros.nombre'
+      end
+      ord = params[:order].present? ? params[:order].upcase() : 'ASC'
+      @order = sort + ' ' + ord
+    end
+
     # set_factura lo usa para determinar cómo cargar la factura
     def id_para_factura
       params[:controller] == 'facturas' ? :id : :factura_id

@@ -4,18 +4,19 @@ class RecibosController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
   before_action :set_recibos, only: [ :index, :cobros, :pagos ]
+  before_action :set_order, [:cobros, :pagos]
 
   def index
   end
 
   def cobros
-    @recibos.where(situacion: 'cobro')
+    @recibos.joins(:tercero).where(situacion: 'cobro').order(@order)
     @situacion = "Cobros"
     render "index"
   end
 
   def pagos
-    @recibos.where(situacion: 'pago')
+    @recibos.joins(:tercero).where(situacion: 'pago').order(@order)
     @situacion = "Pagos"
     render "index"
   end
