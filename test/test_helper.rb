@@ -15,4 +15,8 @@ class ActiveSupport::TestCase
     coso = FactoryGirl.send(metodo, tipo)
     assert coso.valid?, "#{metodo}: #{coso.errors.messages.inspect}"
   end
+
+  def efectivo_por(monto)
+    Efectivo.new caja: create(:caja, :con_fondos), monto: monto
+  end
 end

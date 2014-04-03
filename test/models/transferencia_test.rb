@@ -21,7 +21,7 @@ class TransferenciaTest < ActiveSupport::TestCase
   end
 
   test 'devuelve un movimiento completo' do
-    recibo = create(:recibo, importe: Money.new(1000), situacion: 'pago')
+    recibo = create(:recibo, situacion: 'pago')
 
     resultado = @transferencia.usar_para_pagar recibo
 
