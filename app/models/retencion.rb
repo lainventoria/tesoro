@@ -7,7 +7,10 @@ class Retencion < ActiveRecord::Base
   include CausaDeMovimientos
 
   SITUACIONES = %w(ganancias cargas_sociales)
-  # TODO estados (usada, pagada)
+  # TODO estados (usada, pagada, emitida)
+  # 'emitida' lo usaríamos cuando la retención ya se haya creado en el sistema,
+  # pero aun no se haya sumado a un recibo. Cuando se sume a un recibo,
+  # entonces las pasamos a 'usada'
 
   # La factura sobre la que se hace la retención
   belongs_to :factura
