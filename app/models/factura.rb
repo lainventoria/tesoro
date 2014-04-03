@@ -33,64 +33,51 @@ class Factura < ActiveRecord::Base
 
   # Chequea si la situación es pago
   def pago?
-    self.situacion == 'pago'
+    situacion == 'pago'
   end
 
   # Chequea si la situación es cobro
   def cobro?
-    self.situacion == 'cobro'
+    situacion == 'cobro'
   end
 
   # La factura está cancelada cuando el saldo es 0
   def cancelada?
-    self.saldo == Money.new(0)
+    saldo == Money.new(0)
   end
 
   # Si el saldo es menor al importe_total es porque se pagó de más
   # Con las validaciones de Recibo no debería hacer falta
+  # TODO ver dónde se usa
   def reintegro?
-    self.saldo < self.importe_total
+    saldo < importe_total
   end
 
   # Calcula el reintegro si se pagó de más
   # Con las validaciones de Recibo no debería hacer falta
+  # TODO ver dónde se usa
   def reintegro
-    self.saldo * -1 if reintegro?
+    saldo * -1 if reintegro?
   end
 
-  # calcula el saldo
-  #
-  # Cuánto se adeuda de esta factura en base a todos los recibos
-  # NOTA esto asume que los recibos se hacen en la misma moneda de la
+  # Calcula el saldo, o sea cuánto se adeuda de esta factura en base a todos
+  # los recibos. Esto asume que los recibos se hacen en la misma moneda de la
   # factura (y no que se está pagando una parte en una y otra en otra)
   #
-  # Antes de guardar un recibo se tiene que hacer la conversión a la
+  # Antes de guardar un recibo se tiene que hacer la validación a la
   # moneda de la factura
   def saldo
-    # Cuando se crea una Factura, el saldo es igual al importe_total
-    if self.new_record?
-      importe_total
-    else
-      importe_total - Money.new(recibos.sum(:importe_centavos), importe_total_moneda)
-    end
+    importe_total - recibos.collect(&:importe).sum.to_money(importe_total_moneda)
   end
 
   # El importe total o bruto es el neto con el IVA incluido
   def calcular_importe_total
-    self.importe_total = self.importe_neto + self.iva
+    self.importe_total = importe_neto + iva
   end
 
   # TODO esto en realidad tiene que calcular el saldo en base a los
   # recibos en memoria, no a los que ya están en la base de datos
   def validate_saldo
-    errors[:base] << "El total sobrepasa el saldo de la factura" if saldo < 0
-  end
-
-  # Devuelve nil si no pudo pagar por alguna razón
-  # FIXME Pasar a build
-  def pagar(importe)
-    nuevo = recibos.create(importe: importe)
-
-    nuevo.persisted? ? nuevo : nil
+    errors.add :recibos, :sobrepasan_el_importe_total if saldo.negative?
   end
 end

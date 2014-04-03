@@ -7,9 +7,9 @@ class ReciboPagarConTest < ActiveSupport::TestCase
   end
 
   test "se puede pagar con efectivo" do
-    recibo = @factura.pagar Money.new(100)
-    medio_de_pago = Efectivo.new monto: Money.new(100),
-      caja: create(:caja, :con_fondos, monto: Money.new(100))
+    recibo = create :recibo, factura: @factura
+    medio_de_pago = Efectivo.new monto: @factura.importe_total,
+      caja: create(:caja, :con_fondos, monto: @factura.importe_total)
 
     assert recibo.pagar_con(medio_de_pago)
   end
