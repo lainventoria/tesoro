@@ -63,7 +63,6 @@ group :development, :test do
   gem 'hirb'
   # Usar fábricas en vez de fixtures
   gem 'factory_girl_rails'
-  gem 'dummy_data'
   gem 'better_errors'
   gem 'binding_of_caller'
 end
