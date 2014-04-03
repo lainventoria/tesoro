@@ -35,6 +35,7 @@ es:
               medio_de_pago_invalido: "Medio de pago (%{causa}) inválido: %{mensaje}"
             movimientos:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'
+              no_son_en_la_misma_moneda: 'Todos los pagos deben realizarse en la misma moneda'
         caja:
           attributes:
             base:
