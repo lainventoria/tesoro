@@ -57,11 +57,11 @@ class Cheque < ActiveRecord::Base
   scope :propios, ->{ where(situacion: 'propio') }
 
   def self.construir(params)
-    id_tercero = params.extract! :cheque_id
+    id_de_terceros = params.extract! :cheque_id
 
     # TODO scopear a obra y cosas así
-    if id_tercero.present?
-      find(id_tercero[:cheque_id])
+    if id_de_terceros.present?
+      find(id_de_terceros[:cheque_id])
     end
   end
 
@@ -201,8 +201,6 @@ class Cheque < ActiveRecord::Base
     else
       errors.add(:situacion, :debe_ser_de_terceros)
     end
-
-    self
   end
 
   def descripcion

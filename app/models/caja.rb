@@ -4,7 +4,8 @@ class Caja < ActiveRecord::Base
   has_many :movimientos
   has_many :cheques, ->{ where.not(estado: ['cobrado','pagado']) }, foreign_key: 'chequera_id'
   has_many :cheques_en_cuenta, foreign_key: 'cuenta_id', class_name: 'Cheque'
-  has_many :retenciones
+  has_many :retenciones, foreign_key: 'chequera_id'
+  has_many :retenciones_a_pagar, foreign_key: 'cuenta_id', class_name: 'Retencion'
 
   validates_presence_of :obra_id, :tipo
   validates_uniqueness_of :tipo, scope: [:obra_id, :numero]
@@ -12,10 +13,6 @@ class Caja < ActiveRecord::Base
   # Las cajas son de efectivo, bancarias o chequeras
   SITUACIONES = %w(efectivo banco chequera)
   validates_inclusion_of :situacion, in: SITUACIONES
-
-  scope :cuentas, ->{ where(situacion: 'banco') }
-  scope :chequeras, ->{ where(situacion: 'chequera') }
-  scope :de_efectivo, ->{ where(situacion: 'efectivo') }
 
   # Garantiza que los nuevos tipos escritos parecido a los viejos se corrijan
   # con los valores viejos
@@ -31,6 +28,14 @@ class Caja < ActiveRecord::Base
         valor
       end
     end
+  end
+
+  scope :cuentas, ->{ where(situacion: 'banco') }
+  scope :chequeras, ->{ where(situacion: 'chequera') }
+  scope :de_efectivo, ->{ where(situacion: 'efectivo') }
+
+  def self.con_fondos_en(moneda)
+    joins(:movimientos).where('movimientos.monto_moneda = ?', moneda)
   end
 
   def banco?
@@ -92,14 +97,29 @@ class Caja < ActiveRecord::Base
     end || nil
   end
 
+  # Te doy 3 pesos por tus 100 dólares
+  def cambiar_a_ojo(cantidad, cantidad_aceptada)
+     Caja.transaction do
+      recibo = Recibo.interno_nuevo
+      # FIXME agregar causa los movimientos
+      recibo.movimientos << extraer(cantidad, true)
+      recibo.movimientos << depositar(cantidad_aceptada, true)
+      recibo
+    end || nil
+  end
+
   # Sólo si la caja tiene suficiente saldo o es una chequera, devolvemos el
   # movimiento realizado, caso contrario no devolvemos nada, opcionalmente una
   # excepción para frenar la transacción
   def extraer(cantidad, lanzar_excepcion = false)
-    if cantidad <= total(cantidad.currency.iso_code) || chequera?
+    if cantidad.positive? &&
+      (cantidad <= total(cantidad.currency.iso_code) || chequera?)
       depositar(cantidad * -1, false)
     else
       raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
+      invalido = movimientos.build monto: Money.new(0)
+      invalido.errors.add(:monto, :no_hay_fondos_suficientes)
+      invalido
     end
   end
 

@@ -24,6 +24,7 @@ class RetencionesController < ApplicationController
 
   def create
     @retencion = @factura.retenciones.build retencion_params
+    @retencion.chequera = @factura.obra.send "caja_#{@retencion.situacion}"
 
     respond_to do |format|
       if @retencion.save

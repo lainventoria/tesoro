@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
     # No dejar que el usuario hax0r invente causas
     def causas_conocidas
-      %w{ cheque-propio cheque-de-terceros efectivo transferencia retencion }
+      %w{ cheque-propio cheque-de-terceros efectivo transferencia retenciones }
     end
 
     # Devuelve la clase de la causa según el tipo
@@ -44,6 +44,8 @@ class ApplicationController < ActionController::Base
         case params[:causa_tipo]
           when 'cheque-de-terceros', 'cheque-propio'
             Cheque
+          when 'retenciones'
+            Retencion
           else
             params[:causa_tipo].underscore.classify.constantize
         end
@@ -56,7 +58,10 @@ class ApplicationController < ActionController::Base
     # TODO pedir permits según causa
     def causa_params
       if params[:causa].present?
-        params[:causa].permit(:monto, :caja_id, :cheque_id)
+        params[:causa].permit(
+          :monto, :monto_moneda, :caja_id, :cheque_id, :retencion_id,
+          :monto_aceptado, :monto_aceptado_moneda
+        )
       else
         {}
       end

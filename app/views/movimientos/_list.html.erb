@@ -1,6 +1,7 @@
 <%# este partial requiere los siguientes parametros
   movimientos: movimientos a renderizar
 %>
+<%# TODO todos estos pueden ir a helpers %>
 <% params[:controller] == 'cajas' ? lista_cajas = '' : lista_cajas = 'hidden' %>
 <% params[:controller] == 'recibos' ? lista_recibos = '' : lista_recibos = 'hidden' %>
 <% params[:action] == 'edit' ? boton_borrar = '' : boton_borrar = 'hidden' %>
@@ -18,15 +19,9 @@
     </tr>
   </thead>
   <tbody>
-    <% movimientos.each do |m| %>
-      <tr class="ir-a" data-uri="<%# TODO agregar path a movimento? %>">
-        <td class='<%= lista_cajas %>'><%= formatted_date(m.recibo.fecha) %></td>
-        <td><%= link_a_causa(m) %></td>
-        <td class='text-right <%= lista_recibos %>'><%= formatted_number(m.monto.abs) %></td>
-        <td class='text-right <%= lista_cajas %> <%= negativo_rojo(m.monto) %>'><%= m.monto_moneda == 'ARS' ? formatted_number(m.monto) : '' %></td>
-        <td class='text-right <%= lista_cajas %> <%= lista_efectivo %> <%= negativo_rojo(m.monto) %>'><%= m.monto_moneda == 'USD' ? formatted_number(m.monto) : '' %></td>
-        <td><a class="glyphicon glyphicon-remove-sign text-danger <%= boton_borrar %>" <%# TODO agregar metodo para borrar movimiento %> ></a></td>
-      </tr>
-    <% end %>
+    <%# TODO convertir a `render movimientos` cuando las variables sean helpers %>
+    <%= render partial: 'movimientos/movimiento', collection: movimientos,
+        locals: { lista_cajas: lista_cajas, lista_recibos: lista_recibos,
+                  lista_efectivo: lista_efectivo, boton_borrar: boton_borrar } %>
   </tbody>
 </table>

@@ -26,7 +26,7 @@ class CajaExtraccionesTest < ActiveSupport::TestCase
     create :movimiento, caja: @caja, monto: Money.new(1000)
 
     assert_no_difference '@caja.movimientos.count' do
-      assert_nil @caja.extraer(Money.new(1001))
+      assert @caja.extraer(Money.new(1001)).invalid?
     end
   end
 
@@ -52,7 +52,7 @@ class CajaExtraccionesTest < ActiveSupport::TestCase
     assert movimiento.update_attribute :recibo, Recibo.interno_nuevo
     assert_equal 2, @caja.movimientos.count
 
-    assert_nil @caja.extraer(Money.new(500))
+    assert @caja.extraer(Money.new(500)).invalid?
   end
 
   test 'hace una extracción respaldada con recibo interno' do

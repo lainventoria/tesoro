@@ -56,6 +56,8 @@ class CajasControllerTest < ActionController::TestCase
 
   test "destruye" do
     # vaciamiento :P
+    @caja.depositar! Money.new(1)
+    @caja.depositar! Money.new(1, 'USD')
     @caja.totales.each do |total|
       assert @caja.extraer!(total[1])
     end

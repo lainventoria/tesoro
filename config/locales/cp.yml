@@ -32,8 +32,10 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar este recibo porque tiene movimientos asociados"
+              medio_de_pago_invalido: "Medio de pago (%{causa}) inválido: %{mensaje}"
             movimientos:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'
+              no_son_en_la_misma_moneda: 'Todos los pagos deben realizarse en la misma moneda'
         caja:
           attributes:
             base:
@@ -43,6 +45,10 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar este tercero porque tiene facturas asociadas"
+        movimiento:
+          attributes:
+            monto:
+              no_hay_fondos_suficientes: "La caja no tiene fondos suficientes"
   activemodel:
     errors:
       models:

@@ -1,0 +1,24 @@
+<div class="field form-group col-md-2 text-right" >
+  <%= render partial: 'layouts/selector_moneda', locals: {
+      moneda: @factura.importe_neto_moneda, name: 'causa[monto_moneda]' } %>
+</div>
+
+<div class="field form-group col-md-2 text-right" >
+  <%= f.label :monto %>
+  <%= f.text_field :monto, class: 'form-control text-right',
+      data: { role:'money', a_sep:'.', a_dec:',' } %>
+</div>
+
+<div class="field form-group col-md-2 text-right" >
+  <%= f.label :monto_aceptado, 'Aceptado a' %>
+  <%= f.text_field :monto_aceptado, class: 'form-control text-right',
+      data: { role:'money', a_sep:'.', a_dec:',' } %>
+</div>
+
+<%= hidden_field_tag 'causa[monto_aceptado_moneda]', @factura.importe_neto_moneda %>
+
+<div class="field form-group col-md-2" >
+  <br>
+  <%= f.submit 'Agregar', name: 'agregar_causa',
+      class: 'btn btn-success form-control nivelar-boton' %>
+</div>

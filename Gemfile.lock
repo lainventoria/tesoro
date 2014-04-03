@@ -70,10 +70,6 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     debug_inspector (0.0.2)
-    dummy (0.9.6)
-    dummy_data (0.9.6)
-      dummy (>= 0.9.1)
-      rails (>= 3.0.0)
     erubis (2.7.0)
     execjs (2.0.2)
     factory_girl (4.4.0)
@@ -202,7 +198,6 @@ DEPENDENCIES
   bootstrap-filestyle-rails
   bootstrap-sass-rails
   coffee-rails (~> 4.0.0)
-  dummy_data
   factory_girl_rails
   hirb
   inflections (= 0.0.5)

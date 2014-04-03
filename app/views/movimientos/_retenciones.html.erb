@@ -1,0 +1,16 @@
+<h4>Retención de impuestos</h4>
+
+<%= fields_for :causa do |f| %>
+  <%= hidden_field_tag 'causa_tipo', 'retenciones' %>
+
+  <div class="field form-group col-md-10" >
+    <%= f.label :retenciones %>
+    <%= f.collection_select(:retencion_id, retenciones, :id, :descripcion,
+      { prompt: "-Aplique una retención-" }, { class: "form-control" } ) %>
+  </div>
+
+  <div class="field form-group col-md-2" >
+    <br>
+    <%= f.submit 'Agregar', name: 'agregar_causa', class: 'btn btn-success nivelar-boton form-control' %>
+  </div>
+<% end %>

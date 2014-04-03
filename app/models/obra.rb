@@ -6,11 +6,14 @@ class Obra < ActiveRecord::Base
   has_many :recibos, through: :facturas
   has_many :retenciones, through: :facturas
 
+  # TODO mejorar esta cosa
   has_one :chequera_propia, ->{ where(tipo: 'Chequera propia').where(archivada: false) },
     class_name: 'Caja'
   has_one :chequera, ->{ where(tipo: 'Chequera') },
     class_name: 'Caja'
-  has_one :caja_afip, ->{ where(tipo: 'Caja AFIP') },
+  has_one :caja_ganancias, ->{ where(tipo: 'Retenciones de Ganancias') },
+    class_name: 'Caja'
+  has_one :caja_cargas_sociales, ->{ where(tipo: 'Retenciones de Cargas Sociales') },
     class_name: 'Caja'
 
   after_create :crear_cajas
@@ -66,6 +69,7 @@ class Obra < ActiveRecord::Base
       cajas.create tipo: 'Caja de Ahorro', situacion: 'banco'
       cajas.create tipo: 'Chequera', situacion: 'chequera'
       cajas.create tipo: 'Chequera propia', situacion: 'chequera'
-      cajas.create tipo: 'Caja AFIP', situacion: 'chequera'
+      cajas.create tipo: 'Retenciones de Ganancias', situacion: 'chequera'
+      cajas.create tipo: 'Retenciones de Cargas Sociales', situacion: 'chequera'
     end
 end

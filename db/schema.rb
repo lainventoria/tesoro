@@ -99,18 +99,19 @@ ActiveRecord::Schema.define(version: 20140403014120) do
     t.integer  "factura_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "monto_centavos",         default: 0,     null: false
-    t.string   "monto_moneda",           default: "ARS", null: false
+    t.integer  "monto_centavos",         default: 0,           null: false
+    t.string   "monto_moneda",           default: "ARS",       null: false
     t.string   "documento_file_name"
     t.string   "documento_content_type"
     t.integer  "documento_file_size"
     t.datetime "documento_updated_at"
     t.integer  "cuenta_id"
-    t.integer  "caja_afip_id"
+    t.integer  "chequera_id"
     t.datetime "fecha_vencimiento"
+    t.string   "situacion",              default: "ganancias"
   end
 
-  add_index "retenciones", ["caja_afip_id"], name: "index_retenciones_on_caja_afip_id"
+  add_index "retenciones", ["chequera_id"], name: "index_retenciones_on_chequera_id"
   add_index "retenciones", ["cuenta_id"], name: "index_retenciones_on_cuenta_id"
   add_index "retenciones", ["factura_id"], name: "index_retenciones_on_factura_id"
 
