@@ -19,6 +19,7 @@ class ObraTest < ActiveSupport::TestCase
     assert_equal 1, obra.cajas.where(tipo: 'Chequera').count
     assert_equal 1, obra.cajas.where(tipo: 'Chequera propia').count
     assert_equal 1, obra.cajas.where(tipo: 'Retenciones de Ganancias').count
+    assert_equal 1, obra.cajas.where(tipo: 'Retenciones de Cargas Sociales').count
   end
 
   test 'chequear los saldos' do
