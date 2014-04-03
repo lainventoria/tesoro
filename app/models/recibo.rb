@@ -47,9 +47,16 @@ class Recibo < ActiveRecord::Base
       if pago = medio_de_pago.usar_para_pagar(self)
         # TODO no haría falta si cada usar para pagar lo hace? o mejor, no paso
         # el recibo y ya
-        movimientos.build caja: pago.caja, monto: pago.monto, causa: pago.causa
-        save
+        if pago.errors.empty?
+          movimientos.build caja: pago.caja, monto: pago.monto, causa: pago.causa
+          save
+        else
+          errors.add :base, :medio_de_pago_invalido,
+            causa: pago.causa_type,
+            mensaje: pago.errors.messages.values.flatten.to_sentence
+        end
       else
+        # TODO Creo que ya no se llega acá
         false
       end
     else
