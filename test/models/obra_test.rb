@@ -21,16 +21,4 @@ class ObraTest < ActiveSupport::TestCase
     assert_equal 1, obra.cajas.where(tipo: 'Retenciones de Ganancias').count
     assert_equal 1, obra.cajas.where(tipo: 'Retenciones de Cargas Sociales').count
   end
-
-  test 'chequear los saldos' do
-    obra = create :obra
-    tercero = create :tercero
-    5.times { obra.facturas.create(tercero: tercero, situacion: 'pago', importe_neto: Money.new(1000), iva: Money.new(210)) }
-    5.times { obra.facturas.create(tercero: tercero, situacion: 'cobro', importe_neto: Money.new(1000), iva: Money.new(210)) }
-
-    assert_equal Money.new((1000 + 210) * -5), obra.saldo_de_pago
-    assert_equal Money.new((1000 + 210) *  5), obra.saldo_de_cobro
-    assert_equal Money.new(0), obra.saldo_general
-  end
-
 end
