@@ -53,6 +53,12 @@
         <label>Nro. Factura</label>
         <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %>: <%= @factura.descripcion.first(40) %></span>
       </div>
+
+      <div class="field form-group col-md-offset-1 col-md-5">
+        <label>Tipo</label>
+        <%= f.select(:situacion, situaciones_para_select, { },
+            { required: true, class: "form-control" } ) %>
+      </div>
     </div>
 
     <%# campo necesario para crear un recibo nuevo %>
