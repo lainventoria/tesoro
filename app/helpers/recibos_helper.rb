@@ -40,4 +40,12 @@ module RecibosHelper
   def retenciones
     @factura.retenciones
   end
+
+  def cajas_de_efectivo
+    @factura.obra.cajas.de_efectivo.con_fondos_en(@factura.importe_total_moneda).uniq
+  end
+
+  def cuentas
+    @factura.obra.cajas.cuentas
+  end
 end
