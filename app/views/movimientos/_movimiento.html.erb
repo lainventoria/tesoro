@@ -1,8 +1,18 @@
-<div class="row">
-  <div class='col-xs-6 col-md-6'>
-    <%= humanized_money_with_symbol -1 * movimiento.monto %>
-  </div>
-  <div class='col-xs-6 col-md-6'>
-    <%= link_a_causa(movimiento) %>
-  </div>
-</div>
+<tr class="ir-a" data-uri="<%# TODO agregar path a movimento? %>">
+  <td class='<%= lista_cajas %>'>
+    <%= formatted_date(movimiento.recibo.fecha) %>
+  </td>
+  <td><%= link_a_causa(movimiento) %></td>
+  <td class='text-right <%= lista_recibos %>'>
+    <%= formatted_number(movimiento.monto.abs) %>
+  </td>
+  <td class='text-right <%= lista_cajas %> <%= negativo_rojo(movimiento.monto) %>'>
+    <%= movimiento.monto_moneda == 'ARS' ? formatted_number(movimiento.monto) : '' %>
+  </td>
+  <td class='text-right <%= lista_cajas %> <%= lista_efectivo %> <%= negativo_rojo(movimiento.monto) %>'>
+    <%= movimiento.monto_moneda == 'USD' ? formatted_number(movimiento.monto) : '' %>
+  </td>
+  <td>
+    <a class="glyphicon glyphicon-remove-sign text-danger <%= boton_borrar %>" <%# TODO agregar metodo para borrar movimiento %> ></a>
+  </td>
+</tr>
