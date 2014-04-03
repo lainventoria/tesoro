@@ -36,4 +36,8 @@ module RecibosHelper
   def cheques_de_terceros
     @factura.obra.cheques.de_terceros.order(:fecha_vencimiento)
   end
+
+  def retenciones
+    @factura.retenciones
+  end
 end
