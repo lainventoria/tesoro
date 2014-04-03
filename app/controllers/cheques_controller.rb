@@ -3,6 +3,7 @@ class ChequesController < ApplicationController
   before_action :set_obra
   before_action :set_caja, only: [ :index, :propios, :terceros ]
   before_action :set_cheque, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_order, only: [:propios, :terceros]
 
   def index
     @cheques = @caja ? @caja.cheques : Cheque.all
@@ -23,13 +24,13 @@ class ChequesController < ApplicationController
   end
 
   def propios
-    @cheques = (@caja ? @caja.cheques : Cheque).propios
+    @cheques = (@caja ? @caja.cheques : Cheque).propios.order(@order)
     @situacion = "propio"
     render "index"
   end
 
   def terceros
-    @cheques = (@caja ? @caja.cheques : Cheque).de_terceros
+    @cheques = (@caja ? @caja.cheques : Cheque).de_terceros.order(@order)
     @situacion = "terceros"
     render "index"
   end

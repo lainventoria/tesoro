@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <th></th>
-      <th>Vencimiento</th>
-      <th>Monto</th>
+      <th>Vencimiento <%= sort_links @cheque, :fecha_vencimiento %></th>
+      <th>Monto <%= sort_links @cheque, :monto_centavos %></th>
       <th>Beneficiario</th>
       <th>Chequera</th>
       <th>Banco</th>
