@@ -2,12 +2,14 @@ require 'test_helper'
 
 class RecibosControllerTest < ActionController::TestCase
   setup do
-    @factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    @factura_pago = create :factura, situacion: 'pago', importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    @factura_cobro = create :factura, situacion: 'cobro', importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    @factura = @factura_pago
   end
 
   test "accede a la lista global de recibos de pago" do
-    create :recibo, situacion: 'cobro'
-    create :recibo, situacion: 'pago'
+    create :recibo, situacion: 'cobro', factura: @factura_cobro
+    create :recibo, situacion: 'pago', factura: @factura_pago
     create :recibo, situacion: 'interno'
 
     assert Recibo.count == 3, [ Recibo.count.to_s + ' recibos en controlador']
@@ -19,8 +21,8 @@ class RecibosControllerTest < ActionController::TestCase
   end
 
   test "accede a la lista global de recibos de cobro" do
-    create :recibo, situacion: 'cobro'
-    create :recibo, situacion: 'pago'
+    create :recibo, situacion: 'cobro', factura: @factura_cobro
+    create :recibo, situacion: 'pago', factura: @factura_pago
     create :recibo, situacion: 'interno'
 
     assert Recibo.count == 3, [ Recibo.count.to_s + ' recibos en controlador']
