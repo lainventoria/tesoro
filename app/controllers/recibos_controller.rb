@@ -5,6 +5,7 @@ class RecibosController < ApplicationController
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
   before_action :set_facturas, only: [ :index, :cobros, :pagos ]
   before_action :set_causa, only: [ :update, :create ]
+  before_action :set_order, [:cobros, :pagos]
 
   def index
     if @facturas
@@ -16,9 +17,9 @@ class RecibosController < ApplicationController
 
   def cobros
     if @facturas
-      @recibos = Recibo.where(factura_id: @facturas).where(situacion: 'cobro')
+      @recibos = Recibo.joins(:tercero).where(factura_id: @facturas).where(situacion: 'cobro').order(@order)
     else
-      @recibos = @factura ? @factura.recibos.where(situacion: 'cobro') : Recibo.where(situacion: "cobro")
+      @recibos = @factura ? @factura.recibos.joins(:tercero).where(situacion: 'cobro').order(@order) : Recibo.joins(:tercero).where(situacion: "cobro").order(@order)
     end
     @situacion = "Cobros"
     render "index"
@@ -26,9 +27,9 @@ class RecibosController < ApplicationController
 
   def pagos
     if @facturas
-      @recibos = Recibo.where(factura_id: @facturas).where(situacion: 'pago')
+      @recibos = Recibo.joins(:tercero).where(factura_id: @facturas).where(situacion: 'pago').order(@order)
     else
-      @recibos = @factura ? @factura.recibos.where(situacion: 'pago') : Recibo.where(situacion: "pago")
+      @recibos = @factura ? @factura.recibos.joins(:tercero).where(situacion: 'pago').order(@order) : Recibo.joins(:tercero).where(situacion: "pago").order(@order)
     end
 
     @situacion = "Pagos"
