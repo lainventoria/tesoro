@@ -97,6 +97,17 @@ class Caja < ActiveRecord::Base
     end || nil
   end
 
+  # Te doy 3 pesos por tus 100 dólares
+  def cambiar_a_ojo(cantidad, cantidad_aceptada)
+     Caja.transaction do
+      recibo = Recibo.interno_nuevo
+      # FIXME agregar causa los movimientos
+      recibo.movimientos << extraer(cantidad, true)
+      recibo.movimientos << depositar(cantidad_aceptada, true)
+      recibo
+    end || nil
+  end
+
   # Sólo si la caja tiene suficiente saldo o es una chequera, devolvemos el
   # movimiento realizado, caso contrario no devolvemos nada, opcionalmente una
   # excepción para frenar la transacción

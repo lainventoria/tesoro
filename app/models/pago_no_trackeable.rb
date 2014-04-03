@@ -30,7 +30,8 @@ class PagoNoTrackeable
   end
 
   def self.construir(params)
-    datos = params.extract! :monto, :caja_id
+    datos = params.extract! :monto_moneda, :monto, :caja_id, :caja,
+      :monto_aceptado
     new datos
   end
 
@@ -41,11 +42,8 @@ class PagoNoTrackeable
       opciones[:caja]
     end
 
-    @monto = if opciones[:monto].class == Money
-      opciones[:monto]
-    else
-      opciones[:monto].try :to_money
-    end
+    # TODO quitar opciones de carga!
+    @monto = parsear_monto(opciones[:monto], opciones[:monto_moneda])
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación
@@ -79,4 +77,14 @@ class PagoNoTrackeable
   def self.column_names
     []
   end
+
+  private
+
+    def parsear_monto(monto, moneda = nil)
+      if monto.class == Money
+        monto
+      else
+        Monetize.parse monto.to_s + moneda.to_s
+      end
+    end
 end
