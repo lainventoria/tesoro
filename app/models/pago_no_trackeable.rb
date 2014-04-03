@@ -6,7 +6,7 @@ class PagoNoTrackeable
   include ActiveModel::Validations
 
   # Datos necesarios para generar los movimientos
-  attr_accessor :monto, :caja, :caja_id
+  attr_accessor :monto, :caja, :caja_id, :monto_aceptado
 
   # Crea una asociación falsa. Por ejemplo
   #
@@ -31,7 +31,7 @@ class PagoNoTrackeable
 
   def self.construir(params)
     datos = params.extract! :monto_moneda, :monto, :caja_id, :caja,
-      :monto_aceptado
+      :monto_aceptado, :monto_aceptado_moneda
     new datos
   end
 
@@ -43,7 +43,10 @@ class PagoNoTrackeable
     end
 
     # TODO quitar opciones de carga!
-    @monto = parsear_monto(opciones[:monto], opciones[:monto_moneda])
+    @monto = parsear_monto  opciones[:monto],
+                            opciones[:monto_moneda]
+    @monto_aceptado = parsear_monto opciones[:monto_aceptado],
+                                    opciones[:monto_aceptado_moneda]
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación
