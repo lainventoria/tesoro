@@ -19,7 +19,7 @@ class RecibosController < ApplicationController
     if @facturas
       @recibos = Recibo.joins(:tercero).where(factura_id: @facturas).where(situacion: 'cobro').order(@order)
     else
-      @recibos = @factura ? @factura.recibos.joins(:tercero).where(situacion: 'cobro').order(@order) : Recibo.joins(:tercero).where(situacion: "cobro").order(@order)
+      @recibos = (@factura ? @factura.recibos : Recibo).joins(:tercero).where(situacion: 'cobro').order(@order)
     end
     @situacion = "Cobros"
     render "index"
@@ -29,7 +29,7 @@ class RecibosController < ApplicationController
     if @facturas
       @recibos = Recibo.joins(:tercero).where(factura_id: @facturas).where(situacion: 'pago').order(@order)
     else
-      @recibos = @factura ? @factura.recibos.joins(:tercero).where(situacion: 'pago').order(@order) : Recibo.joins(:tercero).where(situacion: "pago").order(@order)
+      @recibos = (@factura ? @factura.recibos : Recibo).joins(:tercero).where(situacion: 'pago').order(@order)
     end
 
     @situacion = "Pagos"
