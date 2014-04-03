@@ -90,7 +90,7 @@ class ChequeTest < ActiveSupport::TestCase
 
   test 'cobrar un cheque depositado concreta el depósito' do
     cuenta = create :cuenta
-    cheque = create :cheque_de_terceros
+    cheque = create :cheque_de_terceros, monto: Money.new(100)
     assert cheque.depositar(cuenta).depositado?
 
     resultado = cheque.cobrar
