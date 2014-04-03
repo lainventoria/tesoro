@@ -3,6 +3,7 @@ class FacturasController < ApplicationController
   before_action :set_obra
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
   before_action :set_tercero, only: [:create, :update]
+  before_action :set_order, [:cobros, :pagos]
 
   autocomplete :tercero, :nombre, :extra_data => [:cuit]
   autocomplete :tercero, :cuit, :extra_data => [:nombre]
@@ -13,13 +14,13 @@ class FacturasController < ApplicationController
 
   # Solo mostrar facturas para cobrar reciclando la vista de lista
   def cobros
-    @facturas = @obra ? @obra.facturas.where(situacion: 'cobro') : Factura.where(situacion: "cobro")
+    @facturas = @obra ? @obra.facturas.joins(:tercero).where(situacion: 'cobro').order(@order) : Factura.joins(:tercero).where(situacion: "cobro").order(@order)
     @situacion = "cobro"
     render "index"
   end
 
   def pagos
-    @facturas = @obra ? @obra.facturas.where(situacion: 'pago') : Factura.where(situacion: "pago")
+    @facturas = @obra ? @obra.facturas.joins(:tercero).where(situacion: 'pago').order(@order) : Factura.joins(:tercero).where(situacion: "pago").order(@order)
     @situacion = "pago"
     render "index"
   end

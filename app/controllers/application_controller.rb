@@ -9,6 +9,15 @@ class ApplicationController < ActionController::Base
       @obra = params[:obra_id].present? ? Obra.find(params[:obra_id]) : nil
     end
 
+    def set_order
+      sort = params[:sort].present? ? params[:sort] : 'id'
+      if sort == 'terceros_nombre'
+        sort = 'terceros.nombre'
+      end
+      ord = params[:order].present? ? params[:order].upcase() : 'ASC'
+      @order = sort + ' ' + ord
+    end
+
     def causa_conocida
       if %w{
         cheque-propio cheque-de-terceros efectivo transferencia retencion

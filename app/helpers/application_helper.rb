@@ -105,4 +105,11 @@ module ApplicationHelper
       'danger'
     end
   end
+
+  def sort_links( modelo, campo )
+    html = link_to raw('<i class="glyphicon glyphicon-chevron-down"></i>'), url_for(modelo) + '?sort=' + campo.to_s 
+    html += link_to raw('<i class="glyphicon glyphicon-chevron-up"></i>'), url_for(modelo) + '?sort=' + campo.to_s + '&order=desc'
+    html
+  end
+
 end
