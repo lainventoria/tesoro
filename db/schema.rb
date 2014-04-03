@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331215122) do
+ActiveRecord::Schema.define(version: 20140403014120) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -87,12 +87,10 @@ ActiveRecord::Schema.define(version: 20140331215122) do
 
   create_table "recibos", force: true do |t|
     t.datetime "fecha"
-    t.integer  "importe_centavos", default: 0,      null: false
-    t.string   "importe_moneda",   default: "ARS",  null: false
     t.integer  "factura_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "situacion",        default: "pago"
+    t.string   "situacion",  default: "pago"
   end
 
   add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id"

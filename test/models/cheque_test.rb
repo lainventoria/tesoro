@@ -44,7 +44,7 @@ class ChequeTest < ActiveSupport::TestCase
 
   test 'pagar con un cheque extrae de la chequera' do
     cheque = create :cheque, monto: Money.new(100)
-    recibo = create :recibo, situacion: 'pago', importe: Money.new(200)
+    recibo = create :recibo, situacion: 'pago'
 
     resultado = cheque.usar_para_pagar recibo
 
@@ -58,7 +58,7 @@ class ChequeTest < ActiveSupport::TestCase
     cuenta = create :cuenta, :con_fondos
     chequera = cuenta.obra.chequera_propia
     cheque = cuenta.emitir_cheque(attributes_for(:cheque, monto: Money.new(100)))
-    recibo = create :recibo, situacion: 'pago', importe: Money.new(200)
+    recibo = create :recibo, situacion: 'pago'
     recibo.pagar_con cheque
 
     assert_equal Money.new(-100), chequera.total
