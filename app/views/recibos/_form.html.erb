@@ -44,7 +44,8 @@
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :importe %><br>
-        <%= f.text_field :importe, class: "form-control text-right", data: { role:'money', a_sep:'.', a_dec:',' } %>
+        <%= f.text_field :importe, class: "form-control text-right", disabled: true,
+            data: { role:'money', a_sep:'.', a_dec:',' } %>
       </div>
     </div>
 
