@@ -64,6 +64,7 @@ class Obra < ActiveRecord::Base
   end
 
   # Sumar los saldos de todas las facturas según situación
+  # TODO estos no son saldos, sino totales de importes
   def saldo_de(pago_o_cobro, moneda = 'ARS')
     total_facturas('importe_total', moneda, { situacion: pago_o_cobro })
   end
