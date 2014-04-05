@@ -63,10 +63,19 @@ class Obra < ActiveRecord::Base
     total_facturas('iva', 'ARS', params.merge({ situacion: 'cobro' }))
   end
 
+  def saldo_de_facturas(moneda = 'ARS', params = {})
+    saldo = Money.new(0, moneda)
+    facturas.where(params).find_each do |f|
+      saldo += f.saldo
+    end
+
+    saldo
+    
+  end
+
   # Sumar los saldos de todas las facturas según situación
-  # TODO estos no son saldos, sino totales de importes
   def saldo_de(pago_o_cobro, moneda = 'ARS')
-    total_facturas('importe_total', moneda, { situacion: pago_o_cobro })
+    saldo_de_facturas(moneda, { situacion: pago_o_cobro })
   end
 
   # los pagos son salidas
@@ -78,9 +87,8 @@ class Obra < ActiveRecord::Base
     saldo_de 'cobro', moneda
   end
 
-  # positivo + negativo es lo mismo que positivo - positivo :P
   def saldo_general(moneda = 'ARS')
-    saldo_de_cobro(moneda) + saldo_de_pago(moneda)
+    saldo_de_cobro(moneda) - saldo_de_pago(moneda)
   end
 
   # devuelve el total de todas las cajas para una moneda
