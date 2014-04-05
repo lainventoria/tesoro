@@ -116,7 +116,11 @@ class RecibosController < ApplicationController
 
     def seguir_agregando_o_mostrar
       if params[:agregar_causa]
-        render action: @recibo.persisted? ? 'edit' : 'new'
+        if @recibo.persisted?
+          redirect_to edit_factura_recibo_path(@recibo.factura, @recibo)
+        else
+          render action: 'new'
+        end
       else
         redirect_to [@recibo.factura, @recibo], notice: 'Recibo actualizado con éxito.'
       end
