@@ -13,6 +13,21 @@ body {
   margin-top: 5px;
 }
 
+.borde-abajo {
+  border-bottom-color: #EEE;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+}
+
+.borde-abajo-punteado {
+  border-bottom-color: #EEE;
+  border-bottom-width: 2px;
+  border-bottom-style: dashed;
+}
+.h4-alinear-h3 {
+  margin-top: 25px;
+}
+
 // estilo para selector de archivos bootstrap-filestyle
 form {
   .filestyle {
