@@ -6,12 +6,45 @@
 </div>
 
 <div class="row">
-  <div class="col-md-5">
-    <div class="row">
-      <%= render 'form' %>
+  <div class="col-md-6">
+    <div class="row col-md-12">
+      <div class="row borde-abajo">
+        <div class="h3 col-md-6">Situacion Economica</div>
+        <div class="h4 h4-alinear-h3 col-md-3 text-right text-bottom">en ARS</div>
+        <div class="h4 h4-alinear-h3 col-md-3 text-right">en USD</div>
+      </div>
+      <%# TODO cambiar el calculo del importe_neto/total de la factura a la suma de los saldos %>
+      <div class="row borde-abajo-punteado" title="Saldo general: suma de todos los saldos.">
+        <div class="h4 col-md-6">Total Facturas</div>
+        <div class="h4 text-right col-md-3 <%= negativo_rojo(@obra.saldo_general) %>">
+          <%= formatted_number @obra.saldo_general %>
+        </div>
+        <div class="h4 text-right col-md-3 <%= negativo_rojo(@obra.saldo_general('USD')) %>">
+          <%= formatted_number @obra.saldo_general('USD') %>
+        </div>
+      </div>
+      <div class="row" title="Saldo de Cobros: montos pendientes de cobro (ver Facturas de Cobro)">
+        <div class="h4 col-md-6">Facturas por Cobrar</div>
+        <div class="h4 text-right col-md-3">
+          <%= formatted_number(@obra.total_facturas('importe_total', 'ARS', { situacion: 'cobro' })) %>
+        </div>
+        <div class="h4 text-right col-md-3">
+          <%= formatted_number(@obra.total_facturas('importe_total', 'USD', { situacion: 'cobro' })) %>
+        </div>
+      </div>
+      <div class="row borde-abajo" title="Saldo de Pagos: montos pendientes de pago (ver Facturas de Pago)">
+        <div class="h4 col-md-6">Facturas por Pagar</div>
+        <div class="h4 text-right col-md-3">
+          <%= formatted_number(@obra.total_facturas('importe_total', 'ARS', { situacion: 'pago' })) %>
+        </div>
+        <div class="h4 text-right col-md-3">
+          <%= formatted_number(@obra.total_facturas('importe_total', 'USD', { situacion: 'pago' })) %>
+        </div>
+      </div>
     </div>
-
-    <div class="row">
+    <div class="row col-md-12">
+      <br>
+      <%= render 'form' %>
       <a type="button" class="btn btn-success col-md-3" href="<%= obras_path %>">
         <span class="glyphicon glyphicon-list-alt"></span>
         Listar Obras
@@ -23,42 +56,10 @@
     </div>
   </div>
 
-  <div class="row col-md-6 col-md-offset-1">
+  <div class="col-md-6">
+  <div class="row col-md-12">
     <div class="row borde-abajo">
-      <div class="h3 col-md-6">Balance Economico</div>
-      <div class="h4 h4-alinear-h3 col-md-3 text-right text-bottom">en ARS</div>
-      <div class="h4 h4-alinear-h3 col-md-3 text-right">en USD</div>
-    </div>
-    <div class="row borde-abajo-punteado" title="Saldo general: suma de todos los saldos.">
-      <div class="h4 col-md-6">Saldo General</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_general %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_general('USD') %>
-      </div>
-    </div>
-    <div class="row" title="Saldo de Pagos: montos pendientes de pago (ver Facturas de Pago)">
-      <div class="h4 col-md-6">Saldo de Pagos</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_de_pago %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_de_pago('USD') %>
-      </div>
-    </div>
-    <div class="row borde-abajo" title="Saldo de Cobros: montos pendientes de cobro (ver Facturas de Cobro)">
-      <div class="h4 col-md-6">Saldo de Cobros</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_de_cobro %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.saldo_de_cobro('USD') %>
-      </div>
-    </div>
-
-    <div class="row borde-abajo">
-      <div class="h3 col-md-6">Balance Financiero</div>
+      <div class="h3 col-md-6">Situacion Financiera</div>
       <div class="h4 h4-alinear-h3 col-md-3 text-right text-bottom">en ARS</div>
       <div class="h4 h4-alinear-h3 col-md-3 text-right">en USD</div>
     </div>
@@ -89,39 +90,33 @@
         <%= formatted_number @obra.total_general('USD', { situacion: 'banco' }) %>
       </div>
     </div>
-    <div class="row borde-abajo" title="Cheques 3ros: cheques de 3ros en cartera (ver Cheques Terceros)">
-      <div class="h4 col-md-6">Cheques 3ros</div>
+    <div class="row" title="Cheques 3ros: cheques de 3ros en cartera (ver Cheques Terceros)">
+      <div class="h4 col-md-6">Cheques de 3ros</div>
       <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.total_general('ARS', { situacion: 'chequera' }) %>
+        <%= formatted_number @obra.chequera.total %>
       </div>
       <div class="h4 text-right col-md-3">
-        <%= formatted_number @obra.total_general('USD', { situacion: 'chequera' }) %>
+      -- .
       </div>
     </div>
-
-      <h4>IVA
-        <span class="pull-right label label-<%= alert_range @obra.total_iva %>">
-          ARS <%= formatted_number(@obra.total_iva) %>
-        </span>
-      </h4>
-
-      <h4>Importe Neto de Pago
-        <span class="pull-right label label-<%= alert_range @obra.total_facturas('importe_neto', 'ARS', { situacion: 'pago' }) %>">
-          ARS <%= formatted_number(@obra.total_facturas('importe_neto', 'ARS', { situacion: 'pago' })) %>
-        </span>
-        <span class="pull-right label label-<%= alert_range @obra.total_facturas('importe_neto', 'USD', { situacion: 'pago' }) %>">
-          USD <%= formatted_number(@obra.total_facturas('importe_neto', 'USD', { situacion: 'pago' })) %>
-        </span>
-      </h4>
-
-      <h4>Importe Neto de Cobro
-        <span class="pull-right label label-<%= alert_range @obra.total_facturas('importe_neto', 'ARS', { situacion: 'cobro' }) %>">
-          ARS <%= formatted_number(@obra.total_facturas('importe_neto', 'ARS', { situacion: 'cobro' })) %>
-        </span>
-        <span class="pull-right label label-<%= alert_range @obra.total_facturas('importe_neto', 'USD', { situacion: 'cobro' }) %>">
-          USD <%= formatted_number(@obra.total_facturas('importe_neto', 'USD', { situacion: 'cobro' })) %>
-        </span>
-      </h4>
-
+    <div class="row" title="Cheques Propios: cheques propios emitidos (ver Cheques Propios)">
+      <div class="h4 col-md-6">Cheques Propios</div>
+      <div class="h4 text-right col-md-3">
+        <%= formatted_number @obra.chequera_propia.total %>
+      </div>
+      <div class="h4 text-right col-md-3">
+      -- .
+      </div>
     </div>
+    <div class="row borde-abajo" title="Retenciones: retenciones pendientes de pago (ver Retenciones)">
+      <div class="h4 col-md-6">Retenciones</div>
+      <div class="h4 text-right col-md-3">
+        <%= formatted_number @obra.total_general('ARS', "tipo LIKE 'Retenciones%' AND situacion = 'chequera'") %>
+      </div>
+      <div class="h4 text-right col-md-3">
+        -- .
+      </div>
+    </div>
+  </div>
+</div>
 </div>
