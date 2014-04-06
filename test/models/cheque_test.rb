@@ -119,4 +119,14 @@ class ChequeTest < ActiveSupport::TestCase
     assert cheque.save
     assert_equal 'Otro', cheque.banco
   end
+
+  test "borrar cheques borra sus movimientos" do
+    recibo = create :recibo
+    cheque = create :cheque, monto: Money.new(1000)
+    recibo.pagar_con cheque
+
+    assert recibo.movimientos.any?
+    assert cheque.destroy
+    assert recibo.reload.movimientos.count == 0
+  end
 end

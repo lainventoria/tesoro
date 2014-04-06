@@ -73,6 +73,11 @@ class Cheque < ActiveRecord::Base
     end
   end
 
+  # Es una causa de movimientos de la cuál nos interesa preservar información
+  def trackeable?
+    true
+  end
+
   def vencido?
     fecha_vencimiento < Time.now
   end

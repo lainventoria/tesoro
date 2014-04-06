@@ -50,6 +50,11 @@ class Retencion < ActiveRecord::Base
     end
   end
 
+  # Es una causa de movimientos de la cuál nos interesa preservar información
+  def trackeable?
+    true
+  end
+
   def ganancias?
     situacion == 'ganancias'
   end

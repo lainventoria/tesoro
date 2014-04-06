@@ -17,4 +17,12 @@ class Movimiento < ActiveRecord::Base
 
   # TODO exigir causa
   validates_presence_of :caja, :recibo, :monto
+
+  before_destroy :frenar_si_la_causa_es_trackeable
+
+  private
+
+    def frenar_si_la_causa_es_trackeable
+      !causa.trackeable?
+    end
 end
