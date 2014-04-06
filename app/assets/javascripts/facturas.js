@@ -8,14 +8,14 @@ $(document).ready(function(){
 
 
   // Cuando cambie el nombre del tercero cuando actualicemos el cuit
-  $('#factura_tercero_attributes_cuit').bind('railsAutocomplete.select', function(event, data){
+  $('#factura_tercero_attributes_cuit').on('railsAutocomplete.select', function(event, data){
     $('#factura_tercero_attributes_nombre').val(data.item.nombre);
     $('#factura_tercero_msg').show().find('span').text('Tercero seleccionado: ' + data.item.nombre + ' [' + data.item.value + ']');
     $('#factura_tercero_id').val(data.item.id);
   });
 
   // Cuando cambie el cuit del tercero cuando actualicemos el nombre
-  $('#factura_tercero_attributes_nombre').bind('railsAutocomplete.select', function(event, data){
+  $('#factura_tercero_attributes_nombre').on('railsAutocomplete.select', function(event, data){
     $('#factura_tercero_attributes_cuit').val(data.item.cuit);
     $('#factura_tercero_msg').show().find('span').text('Tercero seleccionado: ' + data.item.value + ' [' + data.item.cuit + ']');
     $('#factura_tercero_id').val(data.item.id);
