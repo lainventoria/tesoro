@@ -35,6 +35,15 @@ class Factura < ActiveRecord::Base
     pluck(:tipo).uniq.reject { |t|
       Cp::Application.config.tipos_validos.include? t
     }
+
+  def self.por_saldar(moneda = 'ARS')
+    where({ importe_total_moneda: moneda }).
+      reject { |f| f.saldo == Money.new(0, moneda) }
+  end
+
+  def self.saldadas(moneda = 'ARS')
+    where({ importe_total_moneda: moneda }).
+      reject { |f| f.saldo > Money.new(0, moneda) }
   end
 
   # Chequea si la situación es pago

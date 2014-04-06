@@ -9,8 +9,7 @@ class FacturasController < ApplicationController
   autocomplete :tercero, :cuit, :extra_data => [:nombre]
 
   def index
-    # TODO excluir las facturas con saldo 0
-    @facturas = @obra ? @obra.facturas : Factura.all
+    @facturas = @obra ? @obra.facturas.por_saldar : Factura.por_saldar
   end
 
   # Solo mostrar facturas para cobrar reciclando la vista de lista
