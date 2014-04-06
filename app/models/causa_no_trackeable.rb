@@ -30,6 +30,10 @@ class CausaNoTrackeable
     end
   end
 
+  # No definir ningún before_destroy para los no trackeables (no se destruyen!)
+  def self.before_destroy(params)
+  end
+
   def self.construir(params)
     datos = params.extract! :monto_moneda, :monto, :caja_id, :caja,
       :monto_aceptado, :monto_aceptado_moneda, :caja_destino_id
@@ -54,6 +58,10 @@ class CausaNoTrackeable
 
   def caja_destino_id
     caja_destino.try :id
+  end
+
+  def trackeable?
+    false
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación
@@ -90,6 +98,10 @@ class CausaNoTrackeable
 
   def self.column_names
     []
+  end
+
+  def self.find(id)
+    self.new
   end
 
   protected

@@ -122,8 +122,9 @@ class Caja < ActiveRecord::Base
   def extraer!(cantidad)
     Caja.transaction do
       recibo = Recibo.interno_nuevo
-      # FIXME agregar causa al movimiento
-      recibo.movimientos << extraer(cantidad, true)
+      salida = extraer(cantidad, true)
+      salida.causa = Operacion.new
+      recibo.movimientos << salida
       recibo
     end
   end
@@ -145,8 +146,9 @@ class Caja < ActiveRecord::Base
   def depositar!(cantidad)
     Caja.transaction do
       recibo = Recibo.interno_nuevo
-      # FIXME agregar causa al movimiento
-      recibo.movimientos << depositar(cantidad, true)
+      entrada = depositar(cantidad, true)
+      entrada.causa = Operacion.new
+      recibo.movimientos << entrada
       recibo
     end
   end

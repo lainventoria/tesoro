@@ -7,6 +7,8 @@ module CausaDeMovimientos
   included do
     # Cada medio de pago tiene movimientos, de los cuales es la causa
     has_many :movimientos, as: :causa
+
+    before_destroy :destruir_movimientos
   end
 
   module ClassMethods
@@ -24,5 +26,10 @@ module CausaDeMovimientos
   # Cada medio de cobro tiene que implementar su propio proceso de cobr
   def usar_para_cobrar(recibo)
     raise NotImplementedError, 'Cada causa debe definir `usar_para_cobrar`'
+  end
+
+  def destruir_movimientos
+    # delete saltea el callback que frena el destroy si la causa es trackeable
+    movimientos.each &:delete
   end
 end
