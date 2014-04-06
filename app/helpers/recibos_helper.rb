@@ -93,4 +93,23 @@ module RecibosHelper
         where(tipo_factura: Factura.tipos_invalidos)
     end
   end
+
+  def establecer_parametros_listado
+    case params[:controller]
+      when 'recibos'
+        lista_larga = ''
+        lista_causa = 'hidden'
+        muestra_importe = ''
+      when 'facturas'
+        lista_larga = 'hidden'
+        lista_causa = 'hidden'
+        muestra_importe = ''
+      # por eliminacion, esto es para las causas que listan recibos  
+      else
+        lista_larga = 'hidden'
+        lista_causa = ''
+        muestra_importe = 'hidden'
+    end
+    return [ lista_larga, lista_causa, muestra_importe ]
+  end
 end
