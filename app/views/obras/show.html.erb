@@ -1,55 +1,24 @@
-<div class="row">
-  <h2><%= @obra.nombre %></h2> 
-  <% if !notice.nil? %>
-    <div id="notice" class="alert alert-success"><%= notice %></div>
-  <% end %>
-</div>
+<h2><%= @obra.nombre %></h2> 
+<% if !notice.nil? %>
+  <div id="notice" class="alert alert-success"><%= notice %></div>
+<% end %>
 
 <div class="row">
   <div class="col-md-6">
-    <div class="row col-md-12">
-      <div class="row borde-abajo">
-        <div class="h3 col-md-6">Situacion Economica</div>
-        <div class="h4 h4-alinear-h3 col-md-3 text-right text-bottom">en ARS</div>
-        <div class="h4 h4-alinear-h3 col-md-3 text-right">en USD</div>
-      </div>
-      <%# TODO cambiar el calculo del importe_neto/total de la factura a la suma de los saldos %>
-      <div class="row borde-abajo-punteado" title="Saldo general: suma de todos los saldos.">
-        <div class="h4 col-md-6">Total Facturas</div>
-        <div class="h4 text-right col-md-3 <%= negativo_rojo(@obra.saldo_general) %>">
-          <%= formatted_number(@obra.saldo_general('ARS')) %>
-        </div>
-        <div class="h4 text-right col-md-3 <%= negativo_rojo(@obra.saldo_general('USD')) %>">
-          <%= formatted_number(@obra.saldo_general('USD')) %>
-        </div>
-      </div>
-      <div class="row ir-a" data-uri="<%= cobros_obra_facturas_path(@obra) %>" title="Saldo de Cobros: montos pendientes de cobro (ver Facturas de Cobro)">
-        <div class="h4 col-md-6">Facturas por Cobrar</div>
-        <div class="h4 text-right col-md-3">
-          <%= formatted_number(@obra.total_facturas('importe_total', 'ARS', { situacion: 'cobro' })) %>
-        </div>
-        <div class="h4 text-right col-md-3">
-          <%= formatted_number(@obra.total_facturas('importe_total', 'USD', { situacion: 'cobro' })) %>
-        </div>
-      </div>
-      <div class="row borde-abajo ir-a" data-uri="<%= pagos_obra_facturas_path(@obra) %>" title="Saldo de Pagos: montos pendientes de pago (ver Facturas de Pago)">
-        <div class="h4 col-md-6">Facturas por Pagar</div>
-        <div class="h4 text-right col-md-3">
-          <%= formatted_number(@obra.total_facturas('importe_total', 'ARS', { situacion: 'pago' })) %>
-        </div>
-        <div class="h4 text-right col-md-3">
-          <%= formatted_number(@obra.total_facturas('importe_total', 'USD', { situacion: 'pago' })) %>
-        </div>
-      </div>
-    </div>
+
+    <%= render 'situacion_economica' %>
+
     <div class="row col-md-12">
       <br>
       <%= render 'form' %>
-      <a type="button" class="btn btn-success col-md-3" href="<%= obras_path %>">
+
+      <br>
+
+      <a type="button" class="btn btn-success col-md-5" href="<%= obras_path %>">
         <span class="glyphicon glyphicon-list-alt"></span>
         Listar Obras
       </a>
-      <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= edit_obra_path(@obra) %>">
+      <a type="button" class="btn btn-warning col-md-5 col-md-offset-2" href="<%= edit_obra_path(@obra) %>">
         <span class="glyphicon glyphicon-edit"></span>
         Editar Obra
       </a>
@@ -57,66 +26,6 @@
   </div>
 
   <div class="col-md-6">
-  <div class="row col-md-12">
-    <div class="row borde-abajo">
-      <div class="h3 col-md-6">Situacion Financiera</div>
-      <div class="h4 h4-alinear-h3 col-md-3 text-right text-bottom">en ARS</div>
-      <div class="h4 h4-alinear-h3 col-md-3 text-right">en USD</div>
-    </div>
-    <div class="row borde-abajo-punteado" title="Liquidez Neta: dinero disponible no comprometido con pagos futuros">
-      <div class="h4 col-md-6">Liquidez Neta</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('ARS')) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('USD')) %>
-      </div>
-    </div>
-    <div class="row ir-a" data-uri="<%= obra_cajas_path(@obra) %>" title="Efectivo: montos disponibles en todas las cajas de la obra (ver Cajas y Cuentas)">
-      <div class="h4 col-md-6">Efectivo</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('ARS', { situacion: 'efectivo' })) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('USD', { situacion: 'efectivo' })) %>
-      </div>
-    </div>
-    <div class="row ir-a" data-uri="<%= obra_cajas_path(@obra) %>" title="Bancos: montos disponibles en todas las cuentas bancarias de la obra (ver Cajas y Cuentas)">
-      <div class="h4 col-md-6">Bancos</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('ARS', { situacion: 'banco' })) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('USD', { situacion: 'banco' })) %>
-      </div>
-    </div>
-    <div class="row ir-a" data-uri="<%= obra_cheques_path(@obra, situacion: 'terceros') %>" title="Cheques 3ros: cheques de 3ros en cartera (ver Cheques Terceros)">
-      <div class="h4 col-md-6">Cheques de 3ros</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.chequera.total) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-      -- .
-      </div>
-    </div>
-    <div class="row ir-a" data-uri="<%= obra_cheques_path(@obra, situacion: 'propios') %>" title="Cheques Propios: cheques propios emitidos (ver Cheques Propios)">
-      <div class="h4 col-md-6">Cheques Propios</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.chequera_propia.total) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-      -- .
-      </div>
-    </div>
-    <div class="row borde-abajo ir-a" data-uri="<%= obra_retenciones_path(@obra, situacion: 'terceros') %>" title="Retenciones: retenciones pendientes de pago (ver Retenciones)">
-      <div class="h4 col-md-6">Retenciones</div>
-      <div class="h4 text-right col-md-3">
-        <%= formatted_number(@obra.total_general('ARS', "tipo LIKE 'Retenciones%' AND situacion = 'chequera'")) %>
-      </div>
-      <div class="h4 text-right col-md-3">
-        -- .
-      </div>
-    </div>
+    <%= render 'situacion_financiera' %>
   </div>
-</div>
 </div>
