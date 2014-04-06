@@ -37,6 +37,14 @@ class Factura < ActiveRecord::Base
     }
   end
 
+  def self.por_saldar
+    where({}).reject { |f| f.saldo == Money.new(0) }
+  end
+
+  def self.saldadas
+    where({}).reject { |f| f.saldo > Money.new(0) }
+  end
+
   # Chequea si la situación es pago
   def pago?
     situacion == 'pago'
