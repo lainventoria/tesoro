@@ -35,6 +35,7 @@ class Factura < ActiveRecord::Base
     pluck(:tipo).uniq.reject { |t|
       Cp::Application.config.tipos_validos.include? t
     }
+  end
 
   def self.por_saldar
     where({}).reject { |f| f.saldo == Money.new(0) }
