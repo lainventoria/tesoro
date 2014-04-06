@@ -30,8 +30,6 @@ es:
         recibo:
           attributes:
             base:
-              restrict_dependent_destroy:
-                many: "No se puede borrar este recibo porque tiene movimientos asociados"
               medio_de_pago_invalido: "Medio de pago (%{causa}) inválido: %{mensaje}"
             movimientos:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'

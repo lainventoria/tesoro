@@ -61,4 +61,14 @@ class ReciboTest < ActiveSupport::TestCase
       assert_equal 0, recibo.importe
     end
   end
+
+  test "borrar recibos borra sus movimientos" do
+    caja = create :caja
+    assert (recibo = caja.depositar!(Money.new(10000, 'ARS')))
+    recibo_id = recibo.id
+
+    assert_not_equal 0, Movimiento.where(recibo_id: recibo_id).count
+    assert recibo.destroy
+    assert_equal 0, Movimiento.where(recibo_id: recibo_id).count
+  end
 end

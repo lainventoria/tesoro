@@ -6,7 +6,7 @@ class Recibo < ActiveRecord::Base
   has_one :tercero, through: :factura
 
   # Los recibos disparan movimientos
-  has_many :movimientos, inverse_of: :recibo, dependent: :restrict_with_error
+  has_many :movimientos, inverse_of: :recibo, dependent: :destroy
   # Por eso cada recibo tiene que estar asociado a una factura
   # a menos que sea un recibo interno (burocracia!)
   validates_presence_of :factura, unless: :interno?
