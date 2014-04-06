@@ -100,6 +100,10 @@ class CausaNoTrackeable
     []
   end
 
+  def self.find(id)
+    self.new
+  end
+
   protected
 
     def parsear_monto(monto, moneda = nil)

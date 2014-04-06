@@ -6,7 +6,7 @@ class Recibo < ActiveRecord::Base
   has_one :tercero, through: :factura
 
   # Los recibos disparan movimientos
-  has_many :movimientos, inverse_of: :recibo, dependent: :destroy
+  has_many :movimientos, inverse_of: :recibo
   # Por eso cada recibo tiene que estar asociado a una factura
   # a menos que sea un recibo interno (burocracia!)
   validates_presence_of :factura, unless: :interno?
@@ -14,6 +14,7 @@ class Recibo < ActiveRecord::Base
            :todos_los_montos_son_monotonos, unless: :interno?
 
   before_save :actualizar_situacion, unless: :interno?
+  before_destroy :borrar_movimientos_asociados
 
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago interno)
@@ -112,5 +113,14 @@ class Recibo < ActiveRecord::Base
     # Sólo contabilizamos los que tengan la misma moneda que el recibo
     def movimientos_en_moneda
       movimientos.select { |m| m.monto_moneda == importe_moneda }
+    end
+
+    # No funciona el dependent porque algunas causas no son modelos reales :|
+    def borrar_movimientos_asociados
+      if movimientos.collect(&:causa).any?(&:trackeable?)
+        false
+      else
+        movimientos.all?(&:destroy)
+      end
     end
 end

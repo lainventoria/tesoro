@@ -20,6 +20,10 @@ class Movimiento < ActiveRecord::Base
 
   before_destroy :frenar_si_la_causa_es_trackeable
 
+  def causa
+    causa_type.constantize.find causa_id
+  end
+
   private
 
     def frenar_si_la_causa_es_trackeable
