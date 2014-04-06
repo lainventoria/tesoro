@@ -36,14 +36,12 @@ class Factura < ActiveRecord::Base
       Cp::Application.config.tipos_validos.include? t
     }
 
-  def self.por_saldar(moneda = 'ARS')
-    where({ importe_total_moneda: moneda }).
-      reject { |f| f.saldo == Money.new(0, moneda) }
+  def self.por_saldar
+    where({}).reject { |f| f.saldo == Money.new(0) }
   end
 
-  def self.saldadas(moneda = 'ARS')
-    where({ importe_total_moneda: moneda }).
-      reject { |f| f.saldo > Money.new(0, moneda) }
+  def self.saldadas
+    where({}).reject { |f| f.saldo > Money.new(0) }
   end
 
   # Chequea si la situación es pago

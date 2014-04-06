@@ -14,13 +14,13 @@ class FacturasController < ApplicationController
 
   # Solo mostrar facturas para cobrar reciclando la vista de lista
   def cobros
-    @facturas = (@obra ? @obra.facturas : Factura).joins(:tercero).where(situacion: 'cobro').order(@order)
+    @facturas = (@obra ? @obra.facturas : Factura).joins(:tercero).where(situacion: 'cobro').order(@order).por_saldar
     @situacion = "cobro"
     render "index"
   end
 
   def pagos
-    @facturas = (@obra ? @obra.facturas : Factura).joins(:tercero).where(situacion: 'pago').order(@order)
+    @facturas = (@obra ? @obra.facturas : Factura).joins(:tercero).where(situacion: 'pago').order(@order).por_saldar
     @situacion = "pago"
     render "index"
   end
