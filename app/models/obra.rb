@@ -33,6 +33,8 @@ class Obra < ActiveRecord::Base
              pluck(:"#{campo_monto}_centavos", :"#{campo_monto}_moneda", :situacion).
              each do |monto|
 
+      # todo se suma, luego se decide si mostrar los pagos como
+      # negativos en la interfaz, etc.
       total += Money.new(monto[0], monto[1])
 
     end
@@ -48,12 +50,12 @@ class Obra < ActiveRecord::Base
 
   def saldo_de_facturas(moneda = 'ARS', params = {})
     saldo = Money.new(0, moneda)
-    facturas.where(params).find_each do |f|
+    # filtrar todas las de la moneda especificada si o si
+    facturas.where(params.merge({ importe_total_moneda: moneda })).find_each do |f|
       saldo += f.saldo
     end
 
     saldo
-    
   end
 
   # Sumar los saldos de todas las facturas según situación
