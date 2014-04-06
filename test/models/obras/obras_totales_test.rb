@@ -30,8 +30,8 @@ class ObrasTotalesTest < ActiveSupport::TestCase
                  @obra.total_facturas('iva', 'ARS')
   end
 
-  test "los saldos de pago son negativos" do
-    assert_equal Money.new((1000 + 210) * -5), @obra.saldo_de_pago
+  test "los saldos de pago no son negativos" do
+    assert_equal Money.new((1000 + 210) * 5), @obra.saldo_de_pago
   end
 
   test "los saldos de pago son positivos" do
