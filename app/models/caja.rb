@@ -1,5 +1,8 @@
 # encoding: utf-8
 class Caja < ActiveRecord::Base
+
+  default_scope { where(archivada: false) }
+
   belongs_to :obra, inverse_of: :cajas
   has_many :movimientos
   has_many :cheques, ->{ where.not(estado: ['cobrado','pagado']) }, foreign_key: 'chequera_id'
@@ -191,5 +194,14 @@ class Caja < ActiveRecord::Base
 
   def descripcion
     "#{efectivo? ? 'Caja' : banco} - #{tipo}"
+  end
+
+  # se fija si acepta facturas validas o no
+  def factura_valida?
+    Cp::Application.config.tipos_validos.include? tipo_factura
+  end
+
+  def factura_invalida?
+    not factura_valida?
   end
 end
