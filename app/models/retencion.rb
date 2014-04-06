@@ -20,22 +20,24 @@ class Retencion < ActiveRecord::Base
   # Las retenciones se pagan desde una cuenta
   belongs_to :cuenta, ->{ where(situacion: 'banco') },
     class_name: 'Caja'
-  # Técnicamente no es una chequera pero por ahora es lo mismo
+
+  # Todas las retenciones pertenecen a una especie de chequera, que es donde
+  # se contabilizan los pagos. Técnicamente no es una chequera pero por ahora
+  # es lo mismo
   belongs_to :chequera, ->{ where(situacion: 'chequera') },
     class_name: 'Caja'
 
   has_many :recibos, through: :movimientos
-  validates_inclusion_of :situacion, in: SITUACIONES
-  validates_presence_of :factura, :monto
-
-  # Todas las retenciones pertenecen a una especie de chequera, que es donde
-  # se contabilizan los pagos.
-  validates_presence_of :chequera
-  validate :factura_es_un_pago, :tipo_de_chequera, :tipo_de_cuenta
 
   # Sólo PDFs
   has_attached_file :documento
+
+  validates_inclusion_of :situacion, in: SITUACIONES
+  validates_presence_of :factura, :monto, :fecha_vencimiento, :chequera
+  validates_attachment_presence :documento
   validates_attachment_content_type :documento, content_type: /\Aapplication\/pdf\Z/
+
+  validate :factura_es_un_pago, :tipo_de_chequera, :tipo_de_cuenta
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
