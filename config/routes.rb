@@ -36,14 +36,14 @@ Cp::Application.routes.draw do
       member do
        get 'cambiar'
        get 'transferir'
+      end
 
-        # /obra/caja/cheque
-        resources :cheques do
-          member do
-            patch 'depositar'
-            patch 'cobrar'
-            patch 'pagar'
-          end
+    # /obra/caja/cheque
+      resources :cheques do
+        member do
+          patch 'depositar'
+          patch 'cobrar'
+          patch 'pagar'
         end
       end
     end
