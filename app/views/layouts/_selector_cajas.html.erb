@@ -1,9 +1,5 @@
-<%# cajas: una lista de cajas - opcional (por ahora)
+<%# cajas: una lista de cajas
     nombre: el nombre del select para unirlo a un params - opcional %>
-
-<%  unless cajas.present?
-      cajas = (@obra.present? ? @obra.cajas : Caja).where.not(situacion: 'chequera')
-    end %>
 
 <label>Caja / Cuenta</label>
 

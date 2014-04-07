@@ -17,7 +17,7 @@
       <%# TODO se puede transferir de cuentas a cajas de efectivo y viceversa, o
           se hace con depósitos y extracciones independientes? %>
       <%= render partial: 'layouts/selector_cajas', locals: {
-          cajas: @caja.obra.cajas.where.not(situacion: 'chequeras').where.not(id: @caja.id),
+          cajas: @caja.obra.cajas.where.not(situacion: 'chequera').where.not(id: @caja.id),
           nombre: 'operacion[caja_destino_id]' } %>
     </div>
 
