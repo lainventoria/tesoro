@@ -61,7 +61,7 @@ module RecibosHelper
     if @factura.pago?
       cajas.con_fondos_en(@factura.importe_total_moneda).uniq
     else
-      cajas.uniq
+      cajas
     end
   end
 
@@ -69,7 +69,7 @@ module RecibosHelper
     cuentas = @factura.obra.cajas.cuentas
 
     if @factura.pago?
-      cuentas.con_fondos_en(@factura.importe_total_moneda)
+      cuentas.con_fondos_en(@factura.importe_total_moneda).uniq
     else
       cuentas
     end
