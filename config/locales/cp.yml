@@ -35,7 +35,7 @@ es:
               medio_de_pago_invalido: "Medio de pago (%{causa}) inválido: %{mensaje}"
             movimientos:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'
-              no_son_en_la_misma_moneda: 'Todos los pagos deben realizarse en la misma moneda'
+              no_son_en_la_misma_moneda: 'Todos los %{situacion}s deben realizarse en la misma moneda'
               meiosis_de_facturas: "La caja tiene que ser compatible con el tipo de factura"
         caja:
           attributes:

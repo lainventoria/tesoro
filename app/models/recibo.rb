@@ -144,7 +144,7 @@ class Recibo < ActiveRecord::Base
 
     def todos_los_montos_son_monotonos
       if factura.present? && movimientos.any? { |m| m.monto_moneda != importe_moneda }
-        errors.add :movimientos, :no_son_en_la_misma_moneda
+        errors.add :movimientos, :no_son_en_la_misma_moneda, situacion: situacion
       end
     end
 
