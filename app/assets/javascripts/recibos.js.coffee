@@ -3,13 +3,13 @@ $(document)
   .on 'ajax:complete', '.agregar-movimiento', (xhr, cosas) ->
     $('#nuevo-movimiento').html(cosas.responseText)
 
-    $("#selector_moneda_pago").on "change", ->
-      if $("#selector_moneda_pago").val() is $("#selector_moneda").val()
+    $("#causa_monto_moneda").on "change", ->
+      if $("#causa_monto_moneda").val() is $("#selector_moneda").val()
         $("#movimiento_monto_aceptado *").hide()
       else
         $("#movimiento_monto_aceptado *").show()
 
-    $("#selector_moneda_pago").trigger("change")
+    $("#causa_monto_moneda").trigger("change")
 
     # TODO Por alguna razón no bindea a los nuevos objetos
     $('input[data-role=money]').autoNumeric('init')
