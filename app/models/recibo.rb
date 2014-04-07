@@ -23,6 +23,7 @@ class Recibo < ActiveRecord::Base
   # Todas las situaciones en que se generan recibos
   SITUACIONES = %w(cobro pago interno temporal)
   validates_inclusion_of :situacion, in: SITUACIONES
+  after_initialize :garantizar_importe_cache_moneda_compatible
 
   # Crear un recibo interno para una transacción específica
   # TODO pasar a build?
@@ -143,7 +144,7 @@ class Recibo < ActiveRecord::Base
 
     def todos_los_montos_son_monotonos
       if factura.present? && movimientos.any? { |m| m.monto_moneda != importe_moneda }
-        errors.add :movimientos, :no_son_en_la_misma_moneda
+        errors.add :movimientos, :no_son_en_la_misma_moneda, situacion: situacion
       end
     end
 
@@ -178,5 +179,11 @@ class Recibo < ActiveRecord::Base
 
     def actualizar_importe_cache
       self.importe_cache = importe
+    end
+
+    def garantizar_importe_cache_moneda_compatible
+      unless importe_cache.nonzero?
+        self.importe_cache = Money.new(0, importe_moneda)
+      end
     end
 end
