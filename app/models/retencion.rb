@@ -36,6 +36,7 @@ class Retencion < ActiveRecord::Base
   validates_presence_of :factura, :monto, :fecha_vencimiento, :chequera
   validates_attachment_presence :documento
   validates_attachment_content_type :documento, content_type: /\Aapplication\/pdf\Z/
+  validates_uniqueness_of :situacion, scope: :factura_id
 
   validate :factura_es_un_pago, :tipo_de_chequera, :tipo_de_cuenta
 

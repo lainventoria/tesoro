@@ -50,6 +50,9 @@ es:
           attributes:
             monto:
               no_hay_fondos_suficientes: "La caja no tiene fondos suficientes"
+    attributes:
+      retencion:
+        situacion: 'Tipo'
   activemodel:
     errors:
       models:
