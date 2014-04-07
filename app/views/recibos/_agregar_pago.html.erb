@@ -5,16 +5,30 @@
   </button>
   <ul class="dropdown-menu" role="menu">
     <% if @recibo.factura.tipo_valido? %>
+
       <li><%= link_a_nuevo_movimiento('Efectivo') %></li>
-      <li><%= link_a_nuevo_movimiento('Transferencia') %></li>
+
+      <% unless @factura.importe_total_moneda == 'USD' %>
+        <li><%= link_a_nuevo_movimiento('Transferencia') %></li>
+      <% end %>
+
       <li class="divider"></li>
+
       <li><%= link_a_nuevo_movimiento('Cheque propio') %></li>
-      <li><%= link_a_nuevo_movimiento('Cheque de terceros') %></li>
+
+      <% unless @factura.importe_total_moneda == 'USD' %>
+        <li><%= link_a_nuevo_movimiento('Cheque de terceros') %></li>
+      <% end %>
+
       <li class="divider"></li>
+
       <li><%= link_a_nuevo_movimiento('Retenciones') %></li>
+
     <% else %>
+
       <li><%= link_a_nuevo_movimiento('Efectivo') %></li>
       <li><%= link_a_nuevo_movimiento('Cheque de terceros') %></li>
+
     <% end %>
   </ul>
 </div>
