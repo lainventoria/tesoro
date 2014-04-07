@@ -6,6 +6,8 @@ es:
           attributes:
             factura:
               debe_ser_un_pago: "La factura asociada debe ser un pago"
+            estado:
+              invalid_transition: "Estado inválido"
         cheque:
           attributes:
             situacion:

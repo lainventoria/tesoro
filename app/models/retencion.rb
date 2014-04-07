@@ -41,6 +41,29 @@ class Retencion < ActiveRecord::Base
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
+  state_machine :estado, initial: :emitida do
+    event :pagar do
+      transition :emitida  => :pagada
+      transition :aplicada => :pagada, unless: :se_pago?
+    end
+
+    event :aplicar do
+      transition :emitida => :aplicada
+      transition :pagada  => :aplicada, unless: :fue_usada_como_pago?
+    end
+
+    event :cerrar do
+      transition :aplicada  => :cerrada, if: :se_pago?
+      transition :pagada    => :cerrada, if: :fue_usada_como_pago?
+    end
+
+    after_transition to: [:aplicada, :cerrada], do: :cerrar
+
+    state :pagada do
+      validates_presence_of :cuenta
+    end
+  end
+
   def self.construir(params)
     id_ret = params.extract! :retencion_id
 
@@ -65,7 +88,7 @@ class Retencion < ActiveRecord::Base
 
   # Las retenciones extraen de su cuenta y saldan la chequera cuando
   # se le paga a la AFIP
-  def pagar
+  def pagar!
     Cheque.transaction do
       recibo = Recibo.interno_nuevo
 
@@ -76,7 +99,7 @@ class Retencion < ActiveRecord::Base
 
       recibo.movimientos << salida << entrada
 
-      save
+      pagar
     end
   end
 
@@ -90,6 +113,7 @@ class Retencion < ActiveRecord::Base
       if movimiento = chequera.extraer(monto, true)
         movimiento.causa = self
         movimiento.recibo = este_recibo
+        aplicar
         movimiento
       else
         false
@@ -99,6 +123,14 @@ class Retencion < ActiveRecord::Base
 
   def descripcion
     "#{monto_moneda} #{monto} - #{situacion.humanize} (vence el #{I18n.l fecha_vencimiento.to_date})"
+  end
+
+  def fue_usada_como_pago?
+    recibos.where(situacion: 'pago').any?
+  end
+
+  def se_pago?
+    recibos.where(situacion: 'interno').any?
   end
 
   private
