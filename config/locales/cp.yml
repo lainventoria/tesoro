@@ -6,6 +6,8 @@ es:
           attributes:
             factura:
               debe_ser_un_pago: "La factura asociada debe ser un pago"
+            estado:
+              invalid_transition: "Estado inválido"
         cheque:
           attributes:
             situacion:
@@ -48,6 +50,9 @@ es:
           attributes:
             monto:
               no_hay_fondos_suficientes: "La caja no tiene fondos suficientes"
+    attributes:
+      retencion:
+        situacion: 'Tipo'
   activemodel:
     errors:
       models:
