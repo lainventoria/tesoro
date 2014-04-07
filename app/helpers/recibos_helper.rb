@@ -60,7 +60,11 @@ module RecibosHelper
       con_fondos_en(@factura.importe_total_moneda).uniq
   end
 
-  def cuentas
+  def cuentas_de_donde_transferir
+    @factura.obra.cajas.cuentas.con_fondos_en(@factura.importe_total_moneda)
+  end
+
+  def cuentas_de_donde_emitir
     @factura.obra.cajas.cuentas
   end
 end
