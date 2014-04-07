@@ -5,6 +5,9 @@
 
 <%= form_for @caja do |f| %>
   <%= f.error_messages %>
+  <% if @caja.errors.any? %>
+    <% @editar = true %>
+  <% end %>
 
   <fieldset <%= editar_o_bloquear %>>
 

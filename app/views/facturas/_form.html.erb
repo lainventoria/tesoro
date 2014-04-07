@@ -1,4 +1,7 @@
 <%= form_for([@obra, @factura]) do |f| %>
+  <% if @factura.errors.any? %>
+  <% @editar = true %>
+  <% end %>
   <%= f.error_messages %>
 
   <fieldset <%= editar_o_bloquear %>>
