@@ -58,7 +58,7 @@ class Retencion < ActiveRecord::Base
       transition :pagada    => :cerrada, if: :fue_usada_como_pago?
     end
 
-    after_transition to: [:aplicada, :cerrada], do: :cerrar
+    after_transition to: [:aplicada, :pagada], do: :cerrar
 
     state :pagada do
       validates_presence_of :cuenta
