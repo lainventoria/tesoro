@@ -63,6 +63,10 @@ class Caja < ActiveRecord::Base
     movimientos.pluck(:monto_moneda).uniq
   end
 
+  def banco_tipo_numero
+    self.banco + " - " + self.tipo + " - ..." + self.numero.last(4)
+  end
+
   # TODO ver si hace falta un caso especial con movimientos sin guardar
   def total(moneda = 'ARS')
     Money.new(movimientos.where(monto_moneda: moneda).sum(:monto_centavos), moneda)
