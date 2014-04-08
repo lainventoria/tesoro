@@ -70,9 +70,13 @@ form {
   }
 }
 
-// cambia color de barra de navegacion -- implementar en demo
-.navbar-default {
-  background-color: #FF9900;
-}
+// Colores para Demo @ cp.lainventoria.com.ar
+  // cambia color de barra de navegacion 
+  .navbar-default {
+    background-color: #FF9900;
+  }
 
-input.error { border-color:red; }
+  body {
+    background-color: #FFFFCC;
+  }
+
