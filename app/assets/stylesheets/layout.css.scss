@@ -68,7 +68,11 @@ form {
     margin: 0;
     font-weight: bold;
   }
-  
+}
+
+// cambia color de barra de navegacion -- implementar en demo
+.navbar-default {
+  background-color: #FF9900;
 }
 
 input.error { border-color:red; }
