@@ -4,8 +4,8 @@ recibos:
   columns:
   - id
   - fecha
-  - importe_centavos
-  - importe_moneda
+  - importe_cache_centavos
+  - importe_cache_moneda
   - factura_id
   - created_at
   - updated_at

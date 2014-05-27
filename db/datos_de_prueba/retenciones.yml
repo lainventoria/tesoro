@@ -13,7 +13,7 @@ retenciones:
   - documento_file_size
   - documento_updated_at
   - cuenta_id
-  - caja_afip_id
+  - chequera_id
   - fecha_vencimiento
   records: 
   - - 3
