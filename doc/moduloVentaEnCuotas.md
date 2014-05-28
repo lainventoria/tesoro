@@ -10,7 +10,7 @@ independiente del modulo central.
 No se si para esto es necesario comenzar este trabajo sobre un nuevo
 repositorio git, o si podemos continuar utilizando el mismo y luego agrupar
 commits en diferentes modulos. Aunque visto que continuaremos debugeando e
-introducioendo cambios al modulo core, la difrenciacion de los commits puede
+introduciendo cambios al modulo core, la diferenciación de los commits puede
 volverse engorrosa pasado un tiempo de los mismos.
 
 ## Unidades Funcionales y Contratos de Venta ##
