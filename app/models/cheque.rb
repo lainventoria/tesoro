@@ -40,7 +40,7 @@ class Cheque < ActiveRecord::Base
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
-  before_save :adoptar_banco_de_cuenta
+  before_validation :adoptar_banco_de_cuenta
 
   # Trae todos los cheques vencidos, si se le pasa una fecha trae los
   # vencidos a ese momento

@@ -22,6 +22,7 @@ class ChequeTest < ActiveSupport::TestCase
 
   test "algunos cheques se vencen" do
     create :cheque # no vencido
+
     cheque_vencido = create :cheque, fecha_vencimiento: Time.now - rand(36000)
 
     assert cheque_vencido.vencido?, cheque_vencido.errors.messages
@@ -106,9 +107,9 @@ class ChequeTest < ActiveSupport::TestCase
 
   test 'adopta el banco de su cuenta si es propio' do
     cuenta = create :cuenta, banco: 'Gringotts'
-    cheque = build :cheque, banco: nil, cuenta: cuenta
+    cheque = build :cheque, banco: nil, cuenta: cuenta, situacion: 'propio'
 
-    assert cheque.save
+    assert cheque.save, cheque.errors.messages
     assert_equal 'Gringotts', cheque.banco
   end
 
