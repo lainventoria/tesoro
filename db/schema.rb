@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20140603125346) do
     t.datetime "updated_at"
     t.date     "periodo"
     t.string   "denominacion"
-    t.decimal  "indice"
+    t.decimal  "valor"
   end
 
   create_table "movimientos", force: true do |t|

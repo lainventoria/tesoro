@@ -5,6 +5,6 @@ FactoryGirl.define do
     denominacion 'Costo de Construcción'
 
     # que el indice sea un float
-    indice { rand(2000) + rand(99) / 100.0 }
+    valor { rand(2000) + rand(99) / 100.0 }
   end
 end
