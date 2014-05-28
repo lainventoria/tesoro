@@ -7,4 +7,19 @@ class CuotaTest < ActiveSupport::TestCase
     end
   end
 
+  test "necesita monto_original" do
+    assert m = build(:cuota, monto_original_centavos: nil)
+    assert_not m.save
+  end
+
+  test "necesita vencimiento" do
+    assert m = build(:cuota, vencimiento: nil)
+    assert_not m.save
+  end
+
+  test "necesita descripcion" do
+    assert m = build(:cuota, descripcion: nil)
+    assert_not m.save
+  end
+
 end
