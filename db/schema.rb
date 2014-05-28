@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(version: 20140603125346) do
   add_index "facturas", ["obra_id"], name: "index_facturas_on_obra_id"
   add_index "facturas", ["tercero_id"], name: "index_facturas_on_tercero_id"
 
+  create_table "indices", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "periodo"
+    t.string   "denominacion"
+    t.decimal  "indice"
+  end
+
   create_table "movimientos", force: true do |t|
     t.integer  "caja_id"
     t.integer  "monto_centavos", default: 0,     null: false
