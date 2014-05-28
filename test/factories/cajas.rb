@@ -20,10 +20,12 @@ FactoryGirl.define do
 
     factory :chequera do
       situacion 'chequera'
+      banco 'kickstarter'
     end
 
     factory :cuenta do
       situacion 'banco'
+      banco 'kickstarter'
     end
   end
 end

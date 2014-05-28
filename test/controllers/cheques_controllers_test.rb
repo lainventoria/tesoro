@@ -44,8 +44,8 @@ class ChequesControllerTest < ActionController::TestCase
   end
 
   test "paga" do
-    assert @cheque.cuenta = create(:caja, situacion: 'banco'), @cheque.errors
-    assert @cheque.save, @cheque.errors
+    assert @cheque.cuenta = create(:cuenta), @cheque.errors
+    assert @cheque.save, @cheque.errors.messages
     assert @cheque.reload, @cheque.errors
     patch :pagar, obra_id: @cheque.chequera.obra,
           caja_id: @cheque.chequera, id: @cheque
