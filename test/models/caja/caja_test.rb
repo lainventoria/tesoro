@@ -15,6 +15,10 @@ class CajaTest < ActiveSupport::TestCase
     end
   end
 
+  test 'las cuentas deben tener banco' do
+    refute build(:cuenta, banco: nil).valid?
+  end
+
   test 'unifica los tipos prefiriendo el existente' do
     tipo_existente = 'Cajón sarasa'
     create(:caja, tipo: tipo_existente)

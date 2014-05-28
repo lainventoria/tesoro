@@ -12,6 +12,7 @@ class Caja < ActiveRecord::Base
 
   validates_presence_of :obra_id, :tipo
   validates_uniqueness_of :tipo, scope: [:obra_id, :numero]
+  validates_presence_of :banco, if: :cuenta?
 
   # Las cajas son de efectivo, bancarias o chequeras
   SITUACIONES = %w(efectivo banco chequera)
