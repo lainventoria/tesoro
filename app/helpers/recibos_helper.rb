@@ -23,7 +23,7 @@ module RecibosHelper
         movimiento.causa_type
       else
         # TODO sacar el if cuando todos los movimientos tengan causa
-        link_to(movimiento.causa_type, movimiento.causa) if movimiento.causa.present?
+        link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.caja, movimiento.causa]) if movimiento.causa.present?
     end
   end
 
