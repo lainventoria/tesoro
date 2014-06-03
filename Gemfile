@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.5'
 
 gem 'money-rails'
 gem 'attribute_normalizer' # normaliza con varios métodos la entrada de usuario
