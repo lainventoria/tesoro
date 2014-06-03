@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407045034) do
+ActiveRecord::Schema.define(version: 20140603125346) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20140407045034) do
 
   add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id"
   add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
+
+  create_table "cuotas", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "monto_original_centavos", default: 0,     null: false
+    t.string   "monto_original_moneda",   default: "ARS", null: false
+    t.date     "vencimiento",                             null: false
+    t.string   "descripcion",                             null: false
+  end
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"
