@@ -69,6 +69,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
+    database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     dynamic_form (1.1.4)
     erubis (2.7.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   bootstrap-filestyle-rails
   bootstrap-sass-rails
   coffee-rails (~> 4.0.0)
+  database_cleaner
   dynamic_form
   factory_girl_rails
   hirb
