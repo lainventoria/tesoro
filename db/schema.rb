@@ -44,6 +44,17 @@ ActiveRecord::Schema.define(version: 20140604023452) do
   add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id"
   add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
 
+  create_table "contratos_de_venta", force: true do |t|
+    t.integer  "monto_total_centavos", default: 0,     null: false
+    t.string   "monto_total_moneda",   default: "ARS", null: false
+    t.decimal  "indice_base",                          null: false
+    t.date     "fecha",                                null: false
+    t.integer  "indice_id",                            null: false
+    t.integer  "tercero_id",                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "cuotas", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,6 +62,7 @@ ActiveRecord::Schema.define(version: 20140604023452) do
     t.string   "monto_original_moneda",   default: "ARS", null: false
     t.date     "vencimiento",                             null: false
     t.string   "descripcion",                             null: false
+    t.integer  "contrato_de_venta_id"
   end
 
   create_table "facturas", force: true do |t|
