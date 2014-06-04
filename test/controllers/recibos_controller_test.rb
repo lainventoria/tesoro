@@ -74,7 +74,6 @@ class RecibosControllerTest < ActionController::TestCase
 
   test "crea" do
     importe_permitido = @factura.saldo
- #   causa = {chequera_id: "10", cuenta_id: "4", fecha_emision: Time.now, fecha_vencimiento: Time.now + rand(360000) , monto: Money.new(100), numero: "666", beneficiario: "test"}
 
     assert_difference('Recibo.count') do
       post :create, 
