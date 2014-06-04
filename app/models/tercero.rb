@@ -2,6 +2,7 @@
 class Tercero < ActiveRecord::Base
   # Cada tercero esta asociado a muchas facturas
   has_many :facturas, inverse_of: :tercero, dependent: :restrict_with_error
+  has_many :contratos_de_venta
 
   # Las relaciones posibles que se pueden tener con cada tercero
   RELACIONES = %w(cliente proveedor ambos)
