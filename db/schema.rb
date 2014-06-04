@@ -168,11 +168,4 @@ ActiveRecord::Schema.define(version: 20140604034341) do
     t.text     "notas"
   end
 
-  create_table "unidades_funcionales", force: true do |t|
-    t.integer "obra_id",                               null: false
-    t.integer "precio_venta_centavos", default: 0,     null: false
-    t.string  "precio_venta_moneda",   default: "ARS", null: false
-    t.string  "tipo",                                  null: false
-  end
-
 end
