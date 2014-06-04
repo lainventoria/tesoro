@@ -3,6 +3,7 @@ FactoryGirl.define do
   factory :contrato_de_venta do
     tercero
     indice
+    obra
 
     fecha { Time.now }
 
