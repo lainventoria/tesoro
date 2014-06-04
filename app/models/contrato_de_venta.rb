@@ -1,10 +1,10 @@
 # encoding: utf-8
 class ContratoDeVenta < ActiveRecord::Base
-  has_one  :indice
-  has_one  :tercero
-  has_many :cuotas
-
+  belongs_to  :indice
+  belongs_to  :tercero
   belongs_to :obra
+
+  has_many :cuotas
 
   validates_presence_of :indice_id, :tercero_id, :monto_total_centavos, :obra_id
 
