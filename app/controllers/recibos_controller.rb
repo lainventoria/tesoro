@@ -39,8 +39,17 @@ class RecibosController < ApplicationController
     @recibo = @factura.recibos.build(recibo_params)
     @causa = modelo_de_causa.try :construir, causa_params
 
+    # @TODO : Mover al modelo y cambiar la logica GH#139
+
+    ok = true
+    if @causa.nil?
+      @recibo.valid?
+      @recibo.errors.add( :movimientos, :debes_agregar_causa )
+      ok = false
+    end
+
     respond_to do |format|
-      if @recibo.save && @recibo.pagar_o_cobrar_con(@causa)
+      if ok && @recibo.save && @recibo.pagar_o_cobrar_con(@causa)
 
         format.html { seguir_agregando_o_mostrar }
         format.json { render action: 'show', status: :created, location: [@recibo.factura,@recibo] }
