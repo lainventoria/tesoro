@@ -37,6 +37,7 @@ es:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'
               no_son_en_la_misma_moneda: 'Todos los %{situacion}s deben realizarse en la misma moneda'
               meiosis_de_facturas: "La caja tiene que ser compatible con el tipo de factura"
+              debes_agregar_causa: "No se puede guardar un recibo sin una Causa"
         caja:
           attributes:
             base:
@@ -46,6 +47,8 @@ es:
             base:
               restrict_dependent_destroy:
                 many: "No se puede borrar este tercero porque tiene facturas asociadas"
+            cuit:
+              no_es_valido: 'no es válido'
         movimiento:
           attributes:
             monto:
