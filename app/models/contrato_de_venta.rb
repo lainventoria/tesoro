@@ -5,6 +5,7 @@ class ContratoDeVenta < ActiveRecord::Base
   belongs_to :obra
 
   has_many :cuotas
+  has_many :unidades_funcionales
 
   validates_presence_of :indice_id, :tercero_id, :monto_total_centavos, :obra_id
 

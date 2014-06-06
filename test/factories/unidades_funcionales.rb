@@ -4,6 +4,7 @@
 FactoryGirl.define do
   factory :unidad_funcional do
     obra
+    contrato_de_venta
 
     # un cocherito leré
     tipo 'Cochera'

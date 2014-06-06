@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604224123) do
+ActiveRecord::Schema.define(version: 20140606231020) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -174,6 +174,9 @@ ActiveRecord::Schema.define(version: 20140604224123) do
     t.integer "precio_venta_centavos", default: 0,     null: false
     t.string  "precio_venta_moneda",   default: "ARS", null: false
     t.string  "tipo",                                  null: false
+    t.integer "contrato_de_venta_id"
   end
+
+  add_index "unidades_funcionales", ["contrato_de_venta_id"], name: "index_unidades_funcionales_on_contrato_de_venta_id"
 
 end
