@@ -45,4 +45,8 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
     assert_equal total, cv.monto_total
   end
+
+  test "el tercero debe ser un cliente" do
+    assert build(:contrato_de_venta, tercero: create(:proveedor)).invalid?
+  end
 end

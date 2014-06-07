@@ -57,6 +57,8 @@ es:
           attributes:
             cuotas:
               total_igual_a_monto_total: "El monto total no coincide con el total de cuotas"
+            tercero:
+              debe_ser_cliente: "debe ser un cliente"
     attributes:
       retencion:
         situacion: 'Tipo'
