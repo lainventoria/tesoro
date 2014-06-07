@@ -53,6 +53,10 @@ es:
           attributes:
             monto:
               no_hay_fondos_suficientes: "La caja no tiene fondos suficientes"
+        contrato_de_venta:
+          attributes:
+            cuotas:
+              total_igual_a_monto_total: "El monto total no coincide con el total de cuotas"
     attributes:
       retencion:
         situacion: 'Tipo'

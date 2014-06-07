@@ -22,11 +22,14 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     # todo el after :build no calcula el monto_total
     cv.valid?
 
-    assert cv.hacer_pago_inicial(Money.new(900 * 100)), cv.inspect
-    assert cv.crear_cuotas(12), cv.inspect
+    # 10% del monto total
+    pi = cv.monto_total * 0.1
+
+    assert cv.hacer_pago_inicial(pi), cv.inspect
+    assert cv.crear_cuotas(12), [ cv.monto_total, pi, cv.total_de_cuotas, cv.cuotas.count ]
 
     assert_equal 13, cv.cuotas.count
-    assert_equal cv.monto_total, Money.new(cv.cuotas.pluck(:monto_original_centavos).sum)
+
   end
 
   test "el monto original es la suma de las unidades funcionales" do

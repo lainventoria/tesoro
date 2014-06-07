@@ -13,7 +13,7 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
 
-  before_validation :calcular_monto_total
+  before_validation :calcular_monto_total, :validar_total_de_cuotas
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
@@ -37,8 +37,8 @@ class ContratoDeVenta < ActiveRecord::Base
     monto_a_financiar = monto_total - cuotas.first.monto_original
     # esto va a sobrar de la división y se lo mandamos a la primera
     # cuota
-    resto = monto_a_financiar % cantidad
     monto_por_cuota = monto_a_financiar / cantidad
+    resto = monto_a_financiar - (monto_por_cuota * cantidad)
 
     # crear las cuotas mensuales
     Cuota.transaction do
@@ -50,10 +50,8 @@ class ContratoDeVenta < ActiveRecord::Base
       }
 
       # sumarle el resto a la primera cuota
-      if resto > 0
-        cuotas.second.monto_original += Money.new(resto)
-        cuotas.second.save
-      end
+      cuotas.second.monto_original += resto
+      cuotas.second.save
     end
 
   end
@@ -70,11 +68,26 @@ class ContratoDeVenta < ActiveRecord::Base
     calcular_monto_total
   end
 
+  def total_de_cuotas
+    Money.new(cuotas.pluck(:monto_original_centavos).sum)
+  end
+
+  def total_de_unidades_funcionales
+    Money.new(unidades_funcionales.pluck(:precio_venta_centavos).sum)
+  end
+
   private
 
     # El monto original es la suma de los valores de venta de las
     # unidades funcionales
     def calcular_monto_total
-      self.monto_total = Money.new(unidades_funcionales.pluck(:precio_venta_centavos).sum)
+      self.monto_total = total_de_unidades_funcionales
+    end
+
+    def validar_total_de_cuotas
+      # solo validar cuotas cuando las hay
+      if !cuotas.empty? && total_de_cuotas != monto_total
+        errors.add(:cuotas, :total_igual_a_monto_total)
+      end
     end
 end
