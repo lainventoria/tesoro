@@ -1,13 +1,19 @@
 # encoding: utf-8
+# Un Contrato de venta es un grupo de Unidades funcionales vendidas a un
+# Tercero
 class ContratoDeVenta < ActiveRecord::Base
-  belongs_to  :indice
-  belongs_to  :tercero
+  belongs_to :indice
+  belongs_to :tercero
   belongs_to :obra
 
   has_many :cuotas
-  has_many :unidades_funcionales
+  # no toma la inflexión en la asociación
+  has_many :unidades_funcionales, class_name: 'UnidadFuncional'
 
-  validates_presence_of :indice_id, :tercero_id, :monto_total_centavos, :obra_id
+  validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
+  validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
+
+  before_validation :calcular_monto_total
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
@@ -51,4 +57,24 @@ class ContratoDeVenta < ActiveRecord::Base
     end
 
   end
+
+  # por cada unidad funcional que se agrega se recalcula el monto
+  def agregar_unidad_funcional(unidad_funcional)
+    unidad_funcional.contrato_de_venta = self
+    self.unidades_funcionales << unidad_funcional
+    calcular_monto_total
+  end
+
+  def quitar_unidad_funcional(unidad_funcional)
+    self.unidades_funcionales.delete unidad_funcional
+    calcular_monto_total
+  end
+
+  private
+
+    # El monto original es la suma de los valores de venta de las
+    # unidades funcionales
+    def calcular_monto_total
+      self.monto_total = Money.new(unidades_funcionales.pluck(:precio_venta_centavos).sum)
+    end
 end
