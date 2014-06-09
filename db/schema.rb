@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604023452) do
+ActiveRecord::Schema.define(version: 20140606231020) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -44,6 +44,21 @@ ActiveRecord::Schema.define(version: 20140604023452) do
   add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id"
   add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
 
+  create_table "contratos_de_venta", force: true do |t|
+    t.integer  "monto_total_centavos", default: 0,     null: false
+    t.string   "monto_total_moneda",   default: "ARS", null: false
+    t.date     "fecha",                                null: false
+    t.integer  "indice_id",                            null: false
+    t.integer  "tercero_id",                           null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "obra_id"
+  end
+
+  add_index "contratos_de_venta", ["indice_id"], name: "index_contratos_de_venta_on_indice_id"
+  add_index "contratos_de_venta", ["obra_id"], name: "index_contratos_de_venta_on_obra_id"
+  add_index "contratos_de_venta", ["tercero_id"], name: "index_contratos_de_venta_on_tercero_id"
+
   create_table "cuotas", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,7 +66,10 @@ ActiveRecord::Schema.define(version: 20140604023452) do
     t.string   "monto_original_moneda",   default: "ARS", null: false
     t.date     "vencimiento",                             null: false
     t.string   "descripcion",                             null: false
+    t.integer  "contrato_de_venta_id"
   end
+
+  add_index "cuotas", ["contrato_de_venta_id"], name: "index_cuotas_on_contrato_de_venta_id"
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"
@@ -156,6 +174,9 @@ ActiveRecord::Schema.define(version: 20140604023452) do
     t.integer "precio_venta_centavos", default: 0,     null: false
     t.string  "precio_venta_moneda",   default: "ARS", null: false
     t.string  "tipo",                                  null: false
+    t.integer "contrato_de_venta_id"
   end
+
+  add_index "unidades_funcionales", ["contrato_de_venta_id"], name: "index_unidades_funcionales_on_contrato_de_venta_id"
 
 end
