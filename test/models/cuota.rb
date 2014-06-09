@@ -22,4 +22,19 @@ class CuotaTest < ActiveSupport::TestCase
     assert_not m.save
   end
 
+  test "el monto se actualiza en base al indice actual" do
+    assert indice = create(:indice, valor: 1100, periodo: '2014-05-01')
+    assert indice_siguiente = create(:indice, valor: 1200, periodo: '2014-06-01')
+
+    assert cv = create(:contrato_de_venta, indice: indice, fecha: '2014-05-01')
+    assert cv.valid?
+    assert cv.hacer_pago_inicial(cv.monto_total * 0.1)
+    assert cv.crear_cuotas(2)
+
+    assert cuota = cv.cuotas.where(vencimiento: '2014-06-01').first
+
+    assert_equal indice_siguiente, cuota.indice_actual
+    assert_equal cuota.monto_original * (indice_siguiente.valor / indice.valor), cuota.monto_actualizado
+  end
+
 end
