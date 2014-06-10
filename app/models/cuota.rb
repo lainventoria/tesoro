@@ -14,6 +14,12 @@ class Cuota < ActiveRecord::Base
     where.not(descripcion: "Pago inicial").where("vencimiento < ?", time)
   }
 
+  def vencida?(time = nil)
+    time = Time.now if not time
+
+    vencimiento < time
+  end
+
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
   def monto_actualizado

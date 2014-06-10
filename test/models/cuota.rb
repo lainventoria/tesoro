@@ -45,7 +45,8 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal 5, Cuota.vencidas('2014-05-01'.to_time + 5.months).count
   end
 
-  test "cuando las cuotas se vencen se genera una factura" do
+  test "algunas cuotas están vencidas" do
+    assert Cuota.vencidas.first.vencida?
   end
 
 end
