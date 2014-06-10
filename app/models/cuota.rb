@@ -7,6 +7,13 @@ class Cuota < ActiveRecord::Base
   validates_numericality_of :monto_original_centavos, greater_than: 0
   validates_presence_of :vencimiento, :descripcion
 
+  # mostrar todas las cuotas vencidas
+  # que no sean el pago inicial porque es como la cuota 0
+  scope :vencidas, lambda { |time = nil|
+    time = Time.now if not time
+    where.not(descripcion: "Pago inicial").where("vencimiento < ?", time)
+  }
+
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
   def monto_actualizado

@@ -37,4 +37,14 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal cuota.monto_original * (indice_siguiente.valor / indice.valor), cuota.monto_actualizado
   end
 
+  test "listar cuotas vencidas" do
+    assert cv = create(:contrato_de_venta)
+    assert cv.valid?
+    assert cv.hacer_pago_inicial(cv.monto_total * 0.1)
+    assert cv.crear_cuotas(12)
+
+    # todas las cuotas vencidas de acá a 5 meses
+    assert_equal 5, Cuota.vencidas(Time.now + 5.months).count
+  end
+
 end
