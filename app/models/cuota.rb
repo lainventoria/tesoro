@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Cuota < ActiveRecord::Base
   belongs_to :contrato_de_venta
+  belongs_to :factura
 
   monetize :monto_original_centavos, with_model_currency: :monto_original_moneda
 
