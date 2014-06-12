@@ -1,4 +1,5 @@
-<%= form_for [@unidad.obra, @unidad] do |f| %>
+<% obra = @unidad.new_record? ? @obra : @unidad.obra %>
+<%= form_for [obra, @unidad] do |f| %>
   <%= f.error_messages %>
   <% if @unidad.errors.any? %>
     <% @editar = true %>
@@ -11,7 +12,7 @@
       <div class="field form-group col-md-2">
         <%= f.label :obra_id %>
         <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, {
-            prompt: "-Seleccione Obra-", selected: @unidad.obra.id }, { class: "form-control" } ) %>
+            prompt: "-Seleccione Obra-", selected: obra.id }, { class: "form-control" } ) %>
       </div>
 
       <div class="field form-group col-md-2">
