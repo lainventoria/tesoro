@@ -16,7 +16,7 @@ class UnidadFuncional < ActiveRecord::Base
 
   protected
     def chequear_no_se_usa
-      unless contrato_de_venta.count() == 0 
+      if self.contrato_de_venta.present?
         errors.add_to_base "La unidad funcional no puede tener contratos de venta al momento de borrarse."
       end
     end
