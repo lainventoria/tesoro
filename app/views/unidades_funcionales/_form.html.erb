@@ -1,7 +1,7 @@
-<%= form_for [@obra, @unidad] do |f| %>
+<%= form_for [@unidad.obra, @unidad] do |f| %>
   <%= f.error_messages %>
   <% if @unidad.errors.any? %>
-    <% @unidad = true %>
+    <% @editar = true %>
   <% end %>
 
   <fieldset <%= editar_o_bloquear %>>
@@ -11,7 +11,7 @@
       <div class="field form-group col-md-2">
         <%= f.label :obra_id %>
         <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, {
-            prompt: "-Seleccione Obra-", selected: @obra }, { class: "form-control" } ) %>
+            prompt: "-Seleccione Obra-", selected: @unidad.obra.id }, { class: "form-control" } ) %>
       </div>
 
       <div class="field form-group col-md-2">
