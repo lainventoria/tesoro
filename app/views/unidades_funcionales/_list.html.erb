@@ -1,0 +1,25 @@
+
+<table class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Obra</th>
+      <th>Tipo</th>
+      <th class="text-right">Precio de Venta ARS</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% unidades.each do |unidad| %>
+      <tr class="ir-a" data-uri="<%= obra_unidad_funcional_path(unidad.obra, unidad) %>">
+        <td><%= link_to '', [ unidad.obra, unidad ] , class:"glyphicon glyphicon-eye-open" %></td>
+        <td><%= unidad.obra.nombre %></td>
+        <td><%= unidad.tipo %></td>
+        <td class="text-right"><%= formatted_number(unidad.precio_venta("ARS")) %> ARS</td>
+        <td class="text-center">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
