@@ -60,6 +60,9 @@ Rails.application.routes.draw do
     # /obra/cheque
     # no se editan cheques aca, solo se listan
     resources :cheques
+
+    # /obra/contrato_de_venta
+    resources :contratos_de_venta
   end
 
   # /caja
