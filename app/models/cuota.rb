@@ -25,23 +25,32 @@ class Cuota < ActiveRecord::Base
 
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
-  def monto_actualizado
-    monto_original * ( indice_actual.valor / contrato_de_venta.indice.valor )
+  def monto_actualizado(periodo = nil)
+    monto_original * ( indice_actual(periodo).valor / contrato_de_venta.indice.valor )
   end
 
   # obtiene el indice actual según el indice del contrato y el
-  # vencimiento
-  def indice_actual
-    # TODO esperando respuesta en #215 para afinar esto
-    Indice.where(periodo: vencimiento).where(denominacion: contrato_de_venta.indice.denominacion).first
+  # vencimiento o una fecha especificada
+  def indice_actual(periodo = nil)
+    periodo = vencimiento if periodo.nil?
+    Indice.where(periodo: periodo).where(denominacion: contrato_de_venta.indice.denominacion).first
   end
 
   # pagar la cuota genera una factura de cobro que el tercero adeuda
   def generar_factura
+    # si la cuota se paga antes de tiempo, el monto actualizado se
+    # calcula al indice del mes actual en lugar del indice del mes de
+    # vencimiento
+    unless vencida?
+      # los periodos comienzan con el mes
+      periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date
+      vencimiento = Time.now
+    end
+
     Factura.transaction do
       # FIXME faltan tipo y número
       self.factura = Factura.new(situacion: 'cobro',
-        importe_neto: monto_actualizado,
+        importe_neto: monto_actualizado(periodo),
         fecha: vencimiento,
         descripcion: descripcion,
         tercero: tercero,

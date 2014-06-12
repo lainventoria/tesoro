@@ -62,4 +62,32 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal c.obra, f.obra
   end
 
+  test "las cuotas que no están vencidas se pagan al indice actual" do
+    # la ultima cuota todavía no está vencida
+    c = @cv.cuotas.last
+    assert_not c.vencida?, c.vencimiento
+
+    # periodo actual
+    p = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date
+
+    # crear dos indices, el que corresponde y el de la fecha de
+    # vencimiento de la cuota
+    assert indice_posta = create(:indice, valor: 1200, periodo: p)
+    assert indice_mal = create(:indice, valor: 1300, periodo: c.vencimiento)
+
+    assert c.generar_factura, c.errors.messages.inspect
+
+    f = Factura.last
+
+    # la factura que se creó es la de la cuota...
+    assert_equal c.factura, f
+    # pero su fecha es la del periodo
+    assert_not_equal c.vencimiento, f.fecha
+
+    # y su valor es del monto_actualizado a ese periodo, no al del
+    # vencimiento
+    assert_equal c.monto_original * ( indice_posta.valor / @indice.valor ),
+      f.importe_neto
+  end
+
 end
