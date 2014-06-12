@@ -7,28 +7,23 @@ class UnidadesFuncionalesControllerTest < ActionController::TestCase
   end
 
   test "accede a la lista de unidades" do
-    get :index
+    get :index, obra_id: @unidad.obra
     assert_response :success
-    assert_not_nil assigns(:cajas)
+    assert_not_nil assigns(:unidades)
   end
 
   test "accede a crear" do
-    get :new
+    get :new, obra_id: @unidad.obra
     assert_response :success
   end
 
   test "crea" do
     obra = create :obra
     assert_difference('UnidadFuncional.count') do
-      post :create, unidad_funcional: attributes_for(:unidad_funcional, obra_id: obra)
+      post :create, obra_id: obra, unidad_funcional: attributes_for(:unidad_funcional, obra_id: obra)
     end
-
-    assert_redirected_to obra_unidad_funcional_path(assigns(:unidad_funcional))
-  end
-
-  test "muestra" do
-    get :show, id: @unidad
-    assert_response :success
+    unidad = assigns(:unidad)
+    assert_redirected_to obra_unidad_funcional_path(obra, unidad )
   end
 
   test "muestra a través de su obra" do
@@ -37,20 +32,20 @@ class UnidadesFuncionalesControllerTest < ActionController::TestCase
   end
 
   test "accede a editar" do
-    get :edit, id: @unidad
+    get :edit, id: @unidad, obra_id: @unidad.obra
     assert_response :success
   end
 
   test "actualiza" do
-    patch :update, id: @unidad, unidad_funcional: { tipo: 'Departamento' }
-    assert_redirected_to obra_unidad_funcional_path(unidad = assigns(:unidad_funcional))
-
+    patch :update, id: @unidad, obra_id: @unidad.obra, unidad_funcional: { tipo: 'Departamento' }
+    unidad = assigns(:unidad)
+    assert_redirected_to obra_unidad_funcional_path(unidad.obra,unidad)
     assert_equal 'Departamento', unidad.tipo
   end
 
   test "destruye" do
     assert_difference('UnidadFuncional.count', -1) do
-      delete :destroy, id: @unidad
+      delete :destroy, id: @unidad, obra_id: @unidad.obra
     end
 
     assert_redirected_to obra_unidades_funcionales_path(@unidad.obra)
