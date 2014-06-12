@@ -2,6 +2,8 @@
 class Cuota < ActiveRecord::Base
   belongs_to :contrato_de_venta
   belongs_to :factura
+  has_one :tercero, through: :contrato_de_venta
+  has_one :obra, through: :contrato_de_venta
 
   monetize :monto_original_centavos, with_model_currency: :monto_original_moneda
 
