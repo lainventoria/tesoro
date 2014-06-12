@@ -49,4 +49,17 @@ class CuotaTest < ActiveSupport::TestCase
     assert Cuota.vencidas.first.vencida?
   end
 
+  test "las cuotas generan facturas de cobro" do
+    c = @cv.cuotas.first
+    assert c.generar_factura, c.errors.messages.inspect
+
+    f = Factura.last
+
+    assert_equal c.factura, f
+    assert f.cobro?
+    assert_equal c.monto_actualizado, f.importe_neto
+    assert_equal c.tercero, f.tercero
+    assert_equal c.obra, f.obra
+  end
+
 end

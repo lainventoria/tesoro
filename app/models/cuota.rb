@@ -33,5 +33,21 @@ class Cuota < ActiveRecord::Base
     # TODO esperando respuesta en #215 para afinar esto
     Indice.where(periodo: vencimiento).where(denominacion: contrato_de_venta.indice.denominacion).first
   end
+
+  # pagar la cuota genera una factura de cobro que el tercero adeuda
+  def generar_factura
+    Factura.transaction do
+      # FIXME faltan tipo y número
+      self.factura = Factura.new(situacion: 'cobro',
+        importe_neto: monto_actualizado,
+        fecha: vencimiento,
+        descripcion: descripcion,
+        tercero: tercero,
+        obra: obra)
+
+      self.save
+
+    end
+  end
 end
 
