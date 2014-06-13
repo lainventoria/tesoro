@@ -116,7 +116,6 @@ class ContratoDeVenta < ActiveRecord::Base
 
 
 
-
   private
 
     # El monto original es la suma de los valores de venta de las
