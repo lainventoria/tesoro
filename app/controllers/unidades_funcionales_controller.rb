@@ -48,7 +48,6 @@ class UnidadesFuncionalesController < ApplicationController
     end
   end
 
-  # las cajas solo se archivan cuando no tienen saldo
   def destroy
     if @unidad.destroy
       respond_to do |format|
