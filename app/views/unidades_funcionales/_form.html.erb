@@ -8,12 +8,7 @@
   <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
-
-      <div class="field form-group col-md-2">
-        <%= f.label :obra_id %>
-        <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, {
-            prompt: "-Seleccione Obra-", selected: obra.id }, { class: "form-control" } ) %>
-      </div>
+      <%= f.hidden_field :obra_id, value: obra.id, class:"form-control" %>
 
       <div class="field form-group col-md-2">
         <%= f.label :precio_venta %>
