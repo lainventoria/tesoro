@@ -19,7 +19,7 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
 
   test "crea" do
     obra = create :obra
-    assert_difference('UnidadFuncional.count') do
+    assert_difference('ContratoDeVenta.count') do
       post :create, obra_id: obra, contrato_de_venta: attributes_for(:contrato_de_venta, obra_id: obra)
     end
     contrato = assigns(:contrato)
@@ -37,10 +37,14 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
   end
 
   test "actualiza" do
-    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: {}
-    unidad = assigns(:contrato)
+    monto_original = @contrato.monto_total
+    unidad = create :unidad_funcional
+
+    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: { unidad_id: [unidad] }
+
+    contrato = assigns(:contrato)
     assert_redirected_to obra_contrato_de_venta_path(contrato.obra,contrato)
-    assert_equal 'Departamento', contrato.tipo
+    assert  contrato.monto_total > monto_original
   end
 
   test "destruye" do
