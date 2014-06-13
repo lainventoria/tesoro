@@ -1,0 +1,12 @@
+<h2>Detalle de Indice</h2>
+
+<%= render 'form' %>
+
+<a type="button" class="btn btn-success col-md-2" href="<%= con_obra? indices_path %>">
+  <span class="glyphicon glyphicon-eye-open"></span>
+  Listar Indices
+</a>
+<a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= con_obra? edit_indice_path(@indice) %>">
+  <span class="glyphicon glyphicon-edit"></span>
+  Editar Indice
+</a>
