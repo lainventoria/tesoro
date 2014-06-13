@@ -1,10 +1,11 @@
 # encoding: utf-8
 class IndicesController < ApplicationController
   before_action :set_indice, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [ :index ]
 
   # GET /indices
   def index
-    @indices = Indice.all.order(periodo: :desc)
+    @indices = Indice.all.order(@order)
   end
 
   # GET /indice/1
