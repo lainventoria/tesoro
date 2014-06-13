@@ -1,64 +1,9 @@
-<h2><%= titulo_lista_facturas %>
-  <a type="button" class="btn btn-info col-md-2 pull-right" href="<%= url_for_saldadas %>">
-    <span class="glyphicon glyphicon-list-alt"></span>
-    <%= titulo_para_saldadas %>
-  </a>
+<h2>Contratos de Venta</h2>
 
-  <a type="button" class="btn btn-primary col-md-2 pull-right" href="<%= con_obra? new_factura_path(situacion: @situacion ) %>">
-    <span class="glyphicon glyphicon-plus"></span>
-    Nueva Factura
-  </a>
-</h2>
+<a type="button" class="btn btn-primary col-md-4 pull-right" href="<%= new_obra_contrato_de_venta_path(@obra) %>">
+  <span class="glyphicon glyphicon-plus"></span>
+  Nuevo Contrato
+</a>
 
-<table class="table table-hover table-condensed">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Fecha <%= sort_links :fecha %></th>
-      <th class="text-right">Moneda <%= sort_links :importe_total_moneda %></th>
-      <th class="text-right">Importe Total <%= sort_links :importe_total_centavos %></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @contratos.each do |contrato| %>
-      <tr>
-        <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver factura"></i>'), [factura] %></td>
-
-        <% @campos = [
-            factura.tipo.first(1),
-            factura.numero.first(10),
-            formatted_date(factura.fecha),
-            formatted_date(factura.fecha_pago),
-            factura.tercero.nombre.first(20),
-            factura.descripcion.first(40)
-          ]
-          @campos_numeros = [
-            factura.importe_neto_moneda,
-            formatted_number(factura.importe_total),
-            formatted_number(factura.saldo)
-          ] 
-        %>
-        <% @campos.each do |campo| %>
-          <td class="ir-a" data-uri="<%= con_obra? factura_path(factura.id) %>"><%= campo %></td>
-        <% end %>
-        <% @campos_numeros.each do |campo| %>
-          <td class="ir-a text-right" data-uri="<%= con_obra? factura_path(factura.id) %>"><%= campo %></td>
-        <% end %>
-        <td>
-          <% if @situacion == 'pago' %>
-            <span>
-              <%= link_to raw('<i class="glyphicon glyphicon-registration-mark" title="Nueva Retencion"></i>'), [:new, factura, :retencion] %>
-            </span>
-          <% end %>
-          <span class="pull-right">
-            <%= link_to raw('<i class="glyphicon glyphicon-plus-sign" title="Nuevo Recibo"></i>'), [:new, factura, :recibo] %>
-          </span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<%= render 'list', contratos: @contratos %>
 <br>
