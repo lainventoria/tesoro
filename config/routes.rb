@@ -108,6 +108,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :contratos_de_venta, only: [ :autocomplete_tercero_nombre, :autocomplete_tercero_cuit ] do
+    collection do
+      # Autocompletar Terceros
+      get :autocomplete_tercero_nombre
+      get :autocomplete_tercero_cuit
+    end
+  end
+
   # /tercero
   resources :terceros
 

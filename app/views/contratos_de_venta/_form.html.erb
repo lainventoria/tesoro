@@ -8,22 +8,10 @@
   <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
-
       <div class="field form-group col-md-4">
         <%= f.label :obra_id %><br>
         <%= f.collection_select(:obra_id, Obra.all, :id, :nombre, { prompt: "-Seleccione Obra-", selected: obra }, { class: "form-control" } ) %>
-      </div>
-      <div class="field form-group col-md-3">
-        <%= f.label :numero %><br>
-        <%= f.text_field :numero, class: "form-control" %>
-      </div>
-      <div class="field form-group col-md-3">
-        <%= f.label :fecha %><br>
-        <div class="input-group date">
-          <%= f.text_field :fecha, { class: "form-control", value:formatted_date(@contrato.fecha) } %>
-          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-        </div>
-      </div>
+      </div>    
     </div>
 
     <div class="row">
@@ -38,20 +26,9 @@
       </div>
     </div>
 
-    <div class="alert alert-info" id="factura_tercero_msg" style="display:none">
+    <div class="alert alert-info" id="contrato_tercero_msg" style="display:none">
       <span></span>
       <button id="contrato_tercero_clear" class="btn btn-sm btn-primary pull-right">Limpiar Selección</button>
-    </div>
-
-
-    <div class="row">
-      <div class="field form-group col-md-12">
-        <%= f.label :descripcion %><br>
-        <%= f.text_area :descripcion, class: "form-control" %>
-      </div>
-    </div>
-    <div class="row">
-      <br>
     </div>
 
   </fieldset>
