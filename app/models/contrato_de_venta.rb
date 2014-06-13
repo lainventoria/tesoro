@@ -94,6 +94,14 @@ class ContratoDeVenta < ActiveRecord::Base
       self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
     end
   end
+ 
+  # setear magicamente el tercero si no pasamos uno existente
+  def tercero_attributes=(attributes = {})
+    if tercero_id.nil?
+      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
+    end
+  end
+
 
 
   private
@@ -124,4 +132,5 @@ class ContratoDeVenta < ActiveRecord::Base
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
+   
 end
