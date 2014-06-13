@@ -25,6 +25,7 @@ class ContratoDeVenta < ActiveRecord::Base
   def moneda?
     monedas?.first
   end
+  accepts_nested_attributes_for :tercero
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
@@ -86,6 +87,14 @@ class ContratoDeVenta < ActiveRecord::Base
     Money.new(unidades_funcionales.collect(&:precio_venta_centavos).sum,
       moneda?)
   end
+ 
+  # setear magicamente el tercero si no pasamos uno existente
+  def tercero_attributes=(attributes = {})
+    if tercero_id.nil?
+      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
+    end
+  end
+
 
   private
 
