@@ -13,7 +13,8 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
 
-  before_validation :calcular_monto_total, :validar_cliente, :validar_total_de_cuotas
+  before_validation :calcular_monto_total, :validar_cliente,
+    :validar_total_de_cuotas, :validar_monedas
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
@@ -102,5 +103,11 @@ class ContratoDeVenta < ActiveRecord::Base
 
     def validar_cliente
       errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
+    end
+
+    def validar_monedas
+      if monedas?.count > 1
+        errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
+      end
     end
 end

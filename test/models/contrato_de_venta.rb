@@ -1,6 +1,5 @@
 # encoding: utf-8
 require 'test_helper'
-require 'pry'
 
 class ContratoDeVentaTest < ActiveSupport::TestCase
   test "es válido" do
@@ -56,10 +55,11 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
   test "resulta evidente que todas las monedas son creadas iguales" do
     cv = create(:contrato_de_venta)
     cv.valid?
-    cv.agregar_unidad_funcional(create(:unidad_funcional, precio_venta: Money.new(1000, 'ARS')))
-    cv.agregar_unidad_funcional(create(:unidad_funcional, precio_venta: Money.new(1000, 'USD')))
+    uf_ars = create(:unidad_funcional, precio_venta: Money.new(1000, 'ARS'))
+    uf_usd = create(:unidad_funcional, precio_venta: Money.new(1000, 'USD'))
 
-    binding.pry
+    cv.agregar_unidad_funcional(uf_ars)
+    cv.agregar_unidad_funcional(uf_usd)
 
     assert_not cv.valid?, cv.inspect
 
