@@ -87,6 +87,7 @@ module ApplicationHelper
       when 'retenciones' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: 'index', id: nil }))
       # los terceros no se filtran por obra
       when 'terceros' then url_for(params.merge({ obra_id: nil }))
+      when 'unidades_funcionales' then url_for(params)
       # para cualquier otra cosa, imitar con_obra?
       else url_for(params.merge({ obra_id: obra.try(:id) }))
     end

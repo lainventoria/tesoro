@@ -1,0 +1,16 @@
+<h2>Editar Unidad Funcional</h2>
+
+<%= render 'form'%>
+
+<a type="button" class="btn btn-danger col-md-2" href="<%= obra_unidad_funcional_path(@obra,@unidad) %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
+  <span class="glyphicon glyphicon-remove-circle"></span>
+  Borrar
+</a>
+<a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= obra_unidad_funcional_path(@obra,@unidad) %>">
+  <span class="glyphicon glyphicon-eye-open"></span>
+  Volver a la Unidad
+</a>
+<a type="button" class="btn btn-success col-md-2 col-md-offset-1" id="btnGuardar">
+  <span class="glyphicon glyphicon-ok"></span>
+  Guardar Cambios
+</a>

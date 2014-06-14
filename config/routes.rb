@@ -48,6 +48,9 @@ Cp::Application.routes.draw do
       end
     end
 
+    # /obra/unidad_funcional
+    resources :unidades_funcionales
+
     # /obra/retención
     resources :retenciones, only: [ :index, :show ]
     # /obra/cheque

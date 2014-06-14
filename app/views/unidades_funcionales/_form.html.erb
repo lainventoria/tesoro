@@ -1,0 +1,27 @@
+<% obra = @unidad.new_record? ? @obra : @unidad.obra %>
+<%= form_for [obra, @unidad] do |f| %>
+  <%= f.error_messages %>
+  <% if @unidad.errors.any? %>
+    <% @editar = true %>
+  <% end %>
+
+  <fieldset <%= editar_o_bloquear %>>
+
+    <div class="row">
+      <%= f.hidden_field :obra_id, value: obra.id, class:"form-control" %>
+
+      <div class="field form-group col-md-2">
+        <%= f.label :precio_venta %>
+        <%= f.text_field :precio_venta, class:"form-control" %>
+      </div>
+
+      <div class="field form-group col-md-2">
+        <%= f.label :tipo %>
+        <%= f.select :tipo, UnidadFuncional::TIPOS, { prompt: '-Elegir-' }, { class: 'form-control' } %>
+      </div>
+
+    </div>
+
+  </fieldset>
+
+<% end %>
