@@ -17,9 +17,8 @@
 
       <div class="field form-group col-md-2">
         <%= f.label :tipo %>
-        <%= f.text_field :tipo, class:"form-control" %>
+        <%= f.select :tipo, UnidadFuncional::TIPOS, { prompt: '-Elegir-' }, { class: 'form-control' } %>
       </div>
-
 
     </div>
 

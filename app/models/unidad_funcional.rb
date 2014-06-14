@@ -4,6 +4,12 @@ class UnidadFuncional < ActiveRecord::Base
   belongs_to :contrato_de_venta
   has_one :tercero, through: :contrato_de_venta
 
+  
+  # Los tipos que puede tener una unidad funcional
+  TIPOS = %w(Departamento Cochera Baulera)
+
+  # Validaciones
+  validates_inclusion_of :tipo, in: TIPOS
   validates_presence_of :tipo, :obra_id, :precio_venta
 
   before_destroy :chequear_no_se_usa
