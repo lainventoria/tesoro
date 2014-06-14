@@ -6,7 +6,7 @@ FactoryGirl.define do
     obra
 
     # un cocherito leré
-    tipo 'Cochera'
+    tipo UnidadFuncional::TIPOS.sample
     precio_venta { Money.new (10000000 + rand(1000)) }
   end
 end
