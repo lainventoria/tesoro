@@ -17,6 +17,14 @@ class ContratoDeVenta < ActiveRecord::Base
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
+  def monedas?
+    unidades_funcionales.pluck(:precio_venta_moneda).uniq
+  end
+
+  def moneda?
+    monedas?.first
+  end
+
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
     self.cuotas.create(attributes)
