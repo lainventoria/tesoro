@@ -1,5 +1,6 @@
 # encoding: utf-8
 require 'test_helper'
+require 'pry'
 
 class ContratoDeVentaTest < ActiveSupport::TestCase
   test "es válido" do
@@ -11,6 +12,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
   test "el contrato tiene un pago inicial" do
     cv = create(:contrato_de_venta)
+    cv.valid?
 
     assert cv.hacer_pago_inicial(Money.new(1000 * 100))
     assert_equal 'Pago inicial', cv.cuotas.first.descripcion
@@ -34,6 +36,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
   test "el monto original es la suma de las unidades funcionales" do
     cv = create(:contrato_de_venta)
+    cv.valid?
     # el factory siempre agrega una
     total = cv.unidades_funcionales.first.precio_venta
 
@@ -48,5 +51,17 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
   test "el tercero debe ser un cliente" do
     assert build(:contrato_de_venta, tercero: create(:proveedor)).invalid?
+  end
+
+  test "resulta evidente que todas las monedas son creadas iguales" do
+    cv = create(:contrato_de_venta)
+    cv.valid?
+    cv.agregar_unidad_funcional(create(:unidad_funcional, precio_venta: Money.new(1000, 'ARS')))
+    cv.agregar_unidad_funcional(create(:unidad_funcional, precio_venta: Money.new(1000, 'USD')))
+
+    binding.pry
+
+    assert_not cv.valid?, cv.inspect
+
   end
 end
