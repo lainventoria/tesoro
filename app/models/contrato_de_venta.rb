@@ -18,7 +18,7 @@ class ContratoDeVenta < ActiveRecord::Base
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
   def monedas?
-    unidades_funcionales.pluck(:precio_venta_moneda).uniq
+    unidades_funcionales.collect(&:precio_venta_moneda).uniq
   end
 
   def moneda?
@@ -77,11 +77,12 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_cuotas
-    Money.new(cuotas.pluck(:monto_original_centavos).sum)
+    Money.new(cuotas.collect(&:monto_original_centavos).sum)
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.pluck(:precio_venta_centavos).sum)
+    Money.new(unidades_funcionales.collect(&:precio_venta_centavos).sum,
+      moneda?)
   end
 
   private
