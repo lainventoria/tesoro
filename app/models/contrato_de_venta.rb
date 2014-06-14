@@ -73,12 +73,13 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def quitar_unidad_funcional(unidad_funcional)
+    unidad_funcional.contrato_de_venta = nil
     self.unidades_funcionales.delete unidad_funcional
     calcular_monto_total
   end
 
   def total_de_cuotas
-    Money.new(cuotas.collect(&:monto_original_centavos).sum)
+    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda?)
   end
 
   def total_de_unidades_funcionales
@@ -108,6 +109,10 @@ class ContratoDeVenta < ActiveRecord::Base
     def validar_monedas
       if monedas?.count > 1
         errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
+      end
+
+      if cuotas.collect(&:monto_original_moneda).uniq.count > 1
+        errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
 end
