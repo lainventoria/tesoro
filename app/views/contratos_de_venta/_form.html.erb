@@ -26,17 +26,37 @@
       <button id="contrato_de_venta_tercero_clear" class="btn btn-sm btn-primary pull-right">Limpiar Selección</button>
     </div>
 
+    <h3><%= f.label :unidades_funcionales %></h3>
     <div class="row">
-      <div class="field form-group col-md-9">
-        <%= f.label :unidad_funcional %><br>
-        <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales, :id, :nombre, { prompt: "-Seleccione Unidad-" }, { class: "form-control" } ) %>
+      <div class="field form-group col-md-6">
+        <div class="col-sm-9">
+        <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales, :id, :id, { prompt: "-Seleccione Unidad-" }, { class: "form-control" } ) %>
+        </div>
+        <div class="com-sm-3">
+          <a id="contrato_de_venta_unidad_funcional_agregar" class="btn btn-sm btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Agregar
+          </a>
+        </div>
       </div>
-      <div class="field form-group col-md-3">
-      <label> </label> <br>
-      <button id="contrato_de_venta_unidad_funcional_agregar" class="btn btn-sm btn-primary pull-right">
-        <span class="glyphicon glyphicon-plus"></span>
-        Agregar
-      </button>
+      <div class="field form-group col-md-6">
+      <table class="table table-hover table-condensed">
+        <thead>
+          <tr>
+            <th>Unidad</th>
+            <th colspan="2">Precio de venta</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="contrato_de_venta_unidades_funcionales_table">
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td colspan="3"><input type="text" class="form-control" data-role="money" readonly id="contrato_de_venta_total" /></td>
+          </tr>
+        </tfoot>
+      </table>
       </div>
     </div>
 
