@@ -7,8 +7,6 @@ FactoryGirl.define do
 
     fecha { Time.now }
 
-    monto_total { Money.new (10000000 + rand(1000)) }
-
     # los contratos de venta no tienen sentido sin unidades funcionales
     # asignadas
     # http://stackoverflow.com/questions/13851382/factorygirl-has-many-association-with-validation

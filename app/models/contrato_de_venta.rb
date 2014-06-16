@@ -13,9 +13,18 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
 
-  before_validation :calcular_monto_total, :validar_cliente, :validar_total_de_cuotas
+  before_validation :calcular_monto_total, :validar_cliente,
+    :validar_total_de_cuotas, :validar_monedas
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
+
+  def monedas?
+    unidades_funcionales.collect(&:precio_venta_moneda).uniq
+  end
+
+  def moneda?
+    monedas?.first
+  end
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
@@ -64,16 +73,18 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def quitar_unidad_funcional(unidad_funcional)
+    unidad_funcional.contrato_de_venta = nil
     self.unidades_funcionales.delete unidad_funcional
     calcular_monto_total
   end
 
   def total_de_cuotas
-    Money.new(cuotas.pluck(:monto_original_centavos).sum)
+    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda?)
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.pluck(:precio_venta_centavos).sum)
+    Money.new(unidades_funcionales.collect(&:precio_venta_centavos).sum,
+      moneda?)
   end
 
   private
@@ -93,5 +104,15 @@ class ContratoDeVenta < ActiveRecord::Base
 
     def validar_cliente
       errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
+    end
+
+    def validar_monedas
+      if monedas?.count > 1
+        errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
+      end
+
+      if cuotas.collect(&:monto_original_moneda).uniq.count > 1
+        errors.add(:cuotas, :debe_ser_la_misma_moneda)
+      end
     end
 end

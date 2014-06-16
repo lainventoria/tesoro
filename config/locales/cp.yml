@@ -59,6 +59,10 @@ es:
               total_igual_a_monto_total: "El monto total no coincide con el total de cuotas"
             tercero:
               debe_ser_cliente: "debe ser un cliente"
+            unidades_funcionales:
+              debe_ser_la_misma_moneda: "todas las unidades funcionales deben tener la misma moneda"
+            cuotas:
+              debe_ser_la_misma_moneda: "todas las cuotas deben tener la misma moneda"
     attributes:
       retencion:
         situacion: 'Tipo'
