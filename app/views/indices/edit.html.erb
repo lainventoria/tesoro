@@ -2,11 +2,11 @@
 
 <%= render 'form' %>
 
-<a type="button" class="btn btn-danger col-md-2" href="<%= con_obra? indice_path %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
+<a type="button" class="btn btn-danger col-md-2" href="<%= indice_path %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
   <span class="glyphicon glyphicon-remove-circle"></span>
   Borrar Indice
 </a>
-<a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= con_obra? indice_path(@indice) %>">
+<a type="button" class="btn btn-warning col-md-2 col-md-offset-1" href="<%= indice_path(@indice) %>">
   <span class="glyphicon glyphicon-eye-open"></span>
   Ver Indice
 </a>

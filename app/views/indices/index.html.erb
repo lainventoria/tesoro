@@ -1,6 +1,6 @@
 <h2>
   Listado de Indices
-  <a type="button" class="btn btn-primary col-md-2 pull-right" href="<%= con_obra? new_indice_path %>">
+  <a type="button" class="btn btn-primary col-md-2 pull-right" href="<%= new_indice_path %>">
     <span class="glyphicon glyphicon-plus"></span>
     Nuevo Indice
   </a>
@@ -18,7 +18,7 @@
 
   <tbody>
     <% @indices.each do |indice| %>
-      <tr class="ir-a" data-uri="<%= con_obra? indice_path(indice) %>">
+      <tr class="ir-a" data-uri="<%= indice_path(indice) %>">
         <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver Indice"></i>'), [indice] %></td>
         <td><%= indice.denominacion %></td>
         <td><%= indice.periodo %></td>
