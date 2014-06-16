@@ -17,7 +17,7 @@ class IndicesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create indice usando un cuit diferente" do
+  test "should create indice" do
     assert_difference('Indice.count') do
       post :create, indice: { denominacion: @indice.denominacion, periodo: @indice.periodo, valor: @indice.valor }
     end
