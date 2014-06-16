@@ -189,5 +189,28 @@ $(document).ready(function(){
     }
   });
 
+      $('input[data-role=money]').autoNumeric('init');
+      actualizar_total();
+
+    }, 'json');
+  }
+
+
+  var actualizar_total = function() {
+    var sum = 0;
+    $('.precio').each(function(){
+      sum += Number($(this).autoNumeric('get'));
+    });
+    $('#contrato_de_venta_total').autoNumeric('set',sum);
+  }
+
+  $('#contrato_de_venta_unidades_funcionales_table').on('keyup','.precio',actualizar_total);
+
+  // Agregar unidad seleccionada
+  $('#contrato_de_venta_unidad_funcional_agregar').on('click',function(e){
+    unidad_id = $('#contrato_de_venta_unidades_funcionales').val();
+    agregar_unidad(unidad_id);
+    $('#contrato_de_venta_unidades_funcionales option:selected').remove();
+  });
 
 });
