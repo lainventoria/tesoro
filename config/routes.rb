@@ -104,6 +104,9 @@ Cp::Application.routes.draw do
   # /tercero
   resources :terceros
 
+  # /indice
+  resources :indices
+
   # /cheque
   # TODO borrar ':new' cuando ya exista interfase de carga
   resources :cheques, only: [ :index ]

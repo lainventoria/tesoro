@@ -17,6 +17,7 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'schema_migration', 'schema_migrations'
 
+  inflect.irregular 'indice', 'indices'
   inflect.irregular 'cheque', 'cheques'
   inflect.irregular 'unidad_funcional', 'unidades_funcionales'
   inflect.irregular 'contrato_de_venta', 'contratos_de_venta'

@@ -1,0 +1,29 @@
+<%= form_for(@indice) do |f| %>
+  <% if @indice.errors.any? %>
+    <% @editar = true %>
+  <% end %>
+  <%= f.error_messages %>
+
+  <fieldset <%= editar_o_bloquear %> >
+    <div class="row">
+      <div class="field form-group col-md-6">
+        <%= f.label :denominacion %><br>
+        <%= f.text_field :denominacion, class: "form-control" %>
+      </div>
+      <div class="field form-group col-md-2">
+        <%= f.label :valor %><br>
+        <%= f.text_field :valor, class: "form-control" %>
+      </div>
+      <div class="field form-group col-md-2">
+        <%= f.label :periodo %><br>
+        <div class="input-group date">
+          <%= f.text_field :periodo, { class: "form-control" } %>
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-th"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+  <br>
+<% end %>
