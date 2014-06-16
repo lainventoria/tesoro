@@ -1,0 +1,20 @@
+<h2>Detalles de Unidad Funcional</h2> 
+
+<%= render 'form' %>
+
+<div class="row">
+  <div class="col-md-2">
+    <a type="button" class="btn btn-success col-md-12" href="<%= obra_unidades_funcionales_path(@obra) %>">
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Listar Unidades
+    </a>
+  </div>
+  <div class="col-md-2 col-md-offset-1" >
+    <a type="button" class="btn btn-warning col-md-12" href="<%= edit_obra_unidad_funcional_path(@obra, @unidad) %>">
+      <span class="glyphicon glyphicon-edit"></span>
+      Editar
+    </a>
+  </div>
+</div>
+
+<br>
