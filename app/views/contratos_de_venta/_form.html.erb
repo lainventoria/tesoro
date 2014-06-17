@@ -7,7 +7,7 @@
 
   <fieldset <%= editar_o_bloquear %>>
 
-    <input type="hidden" name="obra_id" value="<%= obra.id %>"
+    <input type="hidden" name="obra_id" value="<%= obra.id %>" />
 
     <div class="row">
       <div class="field form-group col-md-9">
@@ -27,20 +27,10 @@
       <button id="contrato_de_venta_tercero_clear" class="btn btn-sm btn-primary pull-right">Limpiar Selección</button>
     </div>
 
-    <h3><%= f.label :unidades_funcionales %></h3>
+    <h3>Unidades Funcionales</h3>
     <div class="row">
-      <div class="field form-group col-md-6">
-        <div class="col-sm-9">
-        <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales, :id, :id, { prompt: "-Seleccione Unidad-" }, { class: "form-control" } ) %>
-        </div>
-        <div class="com-sm-3">
-          <a id="contrato_de_venta_unidad_funcional_agregar" class="btn btn-sm btn-primary pull-right">
-            <span class="glyphicon glyphicon-plus"></span>
-            Agregar
-          </a>
-        </div>
-      </div>
-      <div class="field form-group col-md-6">
+
+      <div class="col-md-6">
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
@@ -59,8 +49,97 @@
         </tfoot>
       </table>
       </div>
+
+      <div class="field form-group col-md-6">
+        <div class="col-sm-9">
+        <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales_disponibles, :id, :id, { prompt: "-Seleccione Unidad-" }, { class: "form-control" } ) %>
+        </div>
+        <div class="com-sm-3">
+          <a id="contrato_de_venta_unidad_funcional_agregar" class="btn btn-sm btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Agregar
+          </a>
+        </div>
+      </div>
+
     </div>
 
+    <h3>Plan de Pagos</h3>
+
+    <div class="row">
+
+      <div class="col-md-6">
+
+          <div class="field form-group"> 
+            <label>Pago Inicial</label>
+            <input type="text" name="pago_inicial" class="form-control" data-role="money" id="contrato_de_venta_pago_inicial" />
+          </div>
+
+          <div class="field form-group"> 
+          <table class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="contrato_de_venta_cuotas_table">
+            </tbody>
+          </table>
+          </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <div class="row">
+          <h4 class="col-md-12">Generar Cuotas</h4>
+          <div class="field form-group col-sm-6">
+            <label>Cantidad de Cuotas</label><br>
+            <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
+          </div>
+          <div class="field form-group col-sm-6">
+            <label>Primera Cuota</label><br>
+            <div class="input-group date">
+              <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota" />
+              <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+          </div>
+          <div class="field form-group col-sm-6">
+            <label>Periodicidad</label><br>
+            <select id="contrato_de_venta_periodicidad_cuotas">
+              <option value="1">Mensual</option>
+              <option value="2">Bimensual</option>
+              <option value="3">Trimestral</option>
+            </select>
+          </div>
+          <div class="field form-group col-sm-6"><label> </label><br>
+            <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_generar_cuotas"><i class="glyphicon glyphicon-cog"></i> Generar Cuotas</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <h4 class="col-md-12">Agregar Cuota</h4>
+          <div class="field form-group col-sm-6">
+            <label>Fecha</label><br>
+            <div class="input-group date">
+              <input type="text" class="form-control" id="contrato_de_venta_fecha_cuota" />
+              <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+          </div>
+          <div class="field form-group col-sm-6">
+            <label>Monto</label><br>
+            <input type="text" class="form-control" data-role="money" id="contrato_de_venta_monto_cuota" />
+          </div>
+          <div class="field form-group col-sm-12">
+            <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_agregar_cuota"><i class="glyphicon glyphicon-plus"></i> Agregar</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
   </fieldset>
 
 <% end %>

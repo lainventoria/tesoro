@@ -27,6 +27,10 @@ class UnidadFuncional < ActiveRecord::Base
     Money.new(precio_venta_centavos, moneda)
   end
 
+  def disponible?
+    self.contrato_de_venta.nil?
+  end
+
   protected
     def chequear_no_se_usa
       if self.contrato_de_venta.present?

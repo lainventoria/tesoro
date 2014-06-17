@@ -48,6 +48,10 @@ class Obra < ActiveRecord::Base
     total
   end
 
+  def unidades_funcionales_disponibles
+    unidades_funcionales.select{ |uf| uf.disponible? }
+  end
+
   # calcular el total de iva
   def total_iva(params = { })
     total_facturas('iva', 'ARS', params.merge({ situacion: 'cobro' })) -
