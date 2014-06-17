@@ -72,8 +72,8 @@ $(document).ready(function(){
 
   // CUOTAS
 
-  var agregar_cuota = function(fecha, monto) {
-    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha) + '</td><td>' + monto + '</td>';
+  var agregar_cuota = function( fecha_ , monto_ ) {
+    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>' + monto_ + '</td>';
     html += '<td><a href="#" class="quitar-cuota"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
     $('#contrato_de_venta_cuotas_table').append(html);
   }
@@ -119,4 +119,10 @@ $(document).ready(function(){
     $t.closest('tr').remove();
   });
 
+  $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
+    e.preventDefault();
+    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
+    mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
+    agregar_cuota(fecha,mon);
+  });
 });
