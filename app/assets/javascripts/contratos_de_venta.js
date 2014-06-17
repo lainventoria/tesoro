@@ -213,4 +213,10 @@ $(document).ready(function(){
     $('#contrato_de_venta_unidades_funcionales option:selected').remove();
   });
 
+  $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
+    e.preventDefault();
+    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
+    mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
+    agregar_cuota(fecha,mon);
+  });
 });
