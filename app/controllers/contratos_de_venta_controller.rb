@@ -32,6 +32,9 @@ class ContratosDeVentaController < ApplicationController
     agregar_unidades
     agregar_cuotas
 
+    agregar_unidades
+    agregar_cuotas
+
     respond_to do |format|
       if @contrato.save
         format.html { redirect_to [@contrato.obra, @contrato], notice: 'Contrato creado con éxito.' }
