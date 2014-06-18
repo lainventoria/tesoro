@@ -32,6 +32,11 @@ class ContratoDeVenta < ActiveRecord::Base
     self.cuotas.create(attributes)
   end
 
+  # agrega una cuota con un monto específico
+  def agregar_cuota(attributes = {})
+    cuota = Cuota.new(attributes)
+    self.cuotas << cuota
+  end
   # crea un pago inicial con la fecha de vencimiento igual a la fecha
   # del contrato
   # TODO chequear que sea el único?

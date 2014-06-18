@@ -7,7 +7,7 @@
 
   <fieldset <%= editar_o_bloquear %>>
 
-    <input type="hidden" name="obra_id" value="<%= obra.id %>" />
+    <%= f.hidden_field :obra_id, value: obra.id %>
 
     <div class="row">
       <div class="field form-group col-md-9">

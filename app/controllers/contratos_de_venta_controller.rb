@@ -27,6 +27,9 @@ class ContratosDeVentaController < ApplicationController
   def create
     @contrato = ContratoDeVenta.new(contrato_de_venta_params)
 
+    agregar_unidades
+    agregar_cuotas
+
     respond_to do |format|
       if @contrato.save
         format.html { redirect_to [@contrato.obra, @contrato], notice: 'Contrato creado con éxito.' }
@@ -73,4 +76,22 @@ class ContratosDeVentaController < ApplicationController
         tercero_attributes: [ :nombre, :cuit ]
       )
     end
+
+    def agregar_unidades
+      params[:unidades_funcionales].each do |uf| 
+        unidad = UnidadFuncional.find(uf.first)
+        p = uf[1]['precio_venta'].sub(',','').sub('.','').to_i
+        unidad.precio_venta_final_centavos = p
+        unidad.precio_venta_final_moneda = unidad.precio_venta_moneda
+        @contrato.agregar_unidad_funcional(unidad)
+      end
+    end
+
+    def agregar_cuotas
+      f = params['fechas']
+      m = params['montos']
+      i = 1
+      f.zip(m).sort.map { |fecha,monto| @contrato.agregar_cuota(vencimiento: fecha, monto_original: monto, descripcion: "Cuota ##{i}") }
+    end
+
 end

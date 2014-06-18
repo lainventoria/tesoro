@@ -175,12 +175,14 @@ ActiveRecord::Schema.define(version: 20140715184455) do
   end
 
   create_table "unidades_funcionales", force: true do |t|
-    t.integer "obra_id",                               null: false
-    t.integer "precio_venta_centavos", default: 0,     null: false
-    t.string  "precio_venta_moneda",   default: "ARS", null: false
-    t.string  "tipo",                                  null: false
+    t.integer "obra_id",                                     null: false
+    t.integer "precio_venta_centavos",       default: 0,     null: false
+    t.string  "precio_venta_moneda",         default: "ARS", null: false
+    t.string  "tipo",                                        null: false
     t.integer "contrato_de_venta_id"
     t.text    "descripcion"
+    t.integer "precio_venta_final_centavos", default: 0,     null: false
+    t.string  "precio_venta_final_moneda",   default: "ARS", null: false
   end
 
   add_index "unidades_funcionales", ["contrato_de_venta_id"], name: "index_unidades_funcionales_on_contrato_de_venta_id"

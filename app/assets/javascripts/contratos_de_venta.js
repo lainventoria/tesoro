@@ -73,7 +73,9 @@ $(document).ready(function(){
   // CUOTAS
 
   var agregar_cuota = function( fecha_ , monto_ ) {
-    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>' + monto_ + '</td>';
+    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>' + monto_;
+    html += '<input type="hidden" name="fechas[]" value="' + fecha_.toString() + '" />';
+    html += '<input type="hidden" name="montos[]" value="' + monto_ + '" /></td>';
     html += '<td><a href="#" class="quitar-cuota"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
     $('#contrato_de_venta_cuotas_table').append(html);
   }
@@ -90,6 +92,7 @@ $(document).ready(function(){
     primera_cuota = new Date( $('#contrato_de_venta_fecha_primera_cuota').val() );
     periodicidad = $('#contrato_de_venta_periodicidad_cuotas').val();
 
+    // Recorro las cuotas generando cada una
     for ( i=1; i <= cantidad_de_cuotas; i++ ) {
       t_monto = monto_cuota;
       if ( i == 1 ) {
