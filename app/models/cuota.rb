@@ -32,7 +32,7 @@ class Cuota < ActiveRecord::Base
   # obtiene el indice actual según el indice del contrato y el
   # vencimiento o una fecha especificada
   def indice_actual(periodo = nil)
-    periodo = vencimiento if periodo.nil?
+    periodo = vencimiento - 1.month if periodo.nil?
     Indice.where(periodo: periodo).where(denominacion: contrato_de_venta.indice.denominacion).first
   end
 

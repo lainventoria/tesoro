@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CuotaTest < ActiveSupport::TestCase
   setup do
-    @indice = create(:indice, valor: 1100, periodo: '2014-05-01')
+    @indice = create(:indice, valor: 1100, periodo: '2014-04-01')
     @cv = create(:contrato_de_venta, indice: @indice, fecha: '2014-05-01')
 
     @cv.valid?
@@ -31,8 +31,8 @@ class CuotaTest < ActiveSupport::TestCase
     assert_not m.save
   end
 
-  test "el monto se actualiza en base al indice actual" do
-    assert indice_siguiente = create(:indice, valor: 1200, periodo: '2014-06-01')
+  test "el monto se actualiza en base al indice del mes anterior" do
+    assert indice_siguiente = create(:indice, valor: 1200, periodo: '2014-05-01')
 
     assert cuota = @cv.cuotas.where(vencimiento: '2014-06-01').first
 
