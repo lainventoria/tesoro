@@ -32,18 +32,18 @@ class Cuota < ActiveRecord::Base
   # obtiene el indice actual según el indice del contrato y el
   # vencimiento o una fecha especificada
   def indice_actual(periodo = nil)
-    periodo = vencimiento if periodo.nil?
+    periodo = vencimiento - 1.month if periodo.nil?
     Indice.where(periodo: periodo).where(denominacion: contrato_de_venta.indice.denominacion).first
   end
 
   # pagar la cuota genera una factura de cobro que el tercero adeuda
-  def generar_factura
+  def generar_factura(periodo = nil)
     # si la cuota se paga antes de tiempo, el monto actualizado se
     # calcula al indice del mes actual en lugar del indice del mes de
     # vencimiento
     unless vencida?
       # los periodos comienzan con el mes
-      periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date
+      periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month if periodo.nil?
       vencimiento = Time.now
     end
 
