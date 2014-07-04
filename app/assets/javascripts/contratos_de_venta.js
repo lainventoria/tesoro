@@ -213,10 +213,21 @@ $(document).ready(function(){
     $('#contrato_de_venta_unidades_funcionales option:selected').remove();
   });
 
+  // Agregar cuota click
   $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
     e.preventDefault();
     fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
+    mon = $('#contrato_de_venta_monto_cuota').val();
     agregar_cuota(fecha,mon);
   });
+
+  // No poder guardar si no cierran los totales
+  $('#new_contrato_de_venta').on('submit',function(e){
+    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+
 });
