@@ -25,8 +25,9 @@ class ContratosDeVentaController < ApplicationController
   end
 
   def create
-    @contrato = ContratoDeVenta.new(contrato_de_venta_params)
+    @contrato = ContratoDeVenta.new( contrato_de_venta_params )
 
+    agregar_indice
     agregar_unidades
     agregar_cuotas
 
@@ -91,7 +92,20 @@ class ContratosDeVentaController < ApplicationController
       f = params['fechas']
       m = params['montos']
       i = 1
-      f.zip(m).sort.map { |fecha,monto| @contrato.agregar_cuota(vencimiento: fecha, monto_original: monto, descripcion: "Cuota ##{i}") }
+      cuotas = f.zip(m).sort_by { |c| c[0].to_time }
+      primer = cuotas.shift
+      @contrato.hacer_pago_inicial(primer[0],primer[1])
+      cuotas.map { |fecha,monto| @contrato.agregar_cuota(vencimiento: fecha, monto_original: monto, descripcion: "Cuota ##{i}") }
     end
 
+    def agregar_indice
+      i = params['indice']
+      if i == 'anterior'
+        i = DateTime.now.months_ago(1)
+      else
+        i = DateTime.now
+      end
+      @contrato.indice_id = Indice.porFechaYDenominacion(i, 'Costo de construcción')
+    end
+ 
 end

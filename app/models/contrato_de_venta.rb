@@ -37,10 +37,11 @@ class ContratoDeVenta < ActiveRecord::Base
     cuota = Cuota.new(attributes)
     self.cuotas << cuota
   end
+
   # crea un pago inicial con la fecha de vencimiento igual a la fecha
   # del contrato
   # TODO chequear que sea el único?
-  def hacer_pago_inicial(monto)
+  def hacer_pago_inicial(fecha, monto)
     crear_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
   end
 
@@ -142,7 +143,6 @@ class ContratoDeVenta < ActiveRecord::Base
     def validar_cliente
       errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
     end
-<<<<<<< HEAD
 
     def validar_monedas
       if monedas?.count > 1
@@ -153,7 +153,5 @@ class ContratoDeVenta < ActiveRecord::Base
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
-=======
->>>>>>> mejorando autocomplete de tercero
    
 end
