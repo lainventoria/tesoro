@@ -32,7 +32,7 @@ $(document).ready(function(){
 
   // Agregar unidad x id
   var agregar_unidad = function(id) {
-    $obra = $('input[name=obra_id]');
+    $obra = $('#contrato_de_venta_obra_id');
     $.get('/obras/' + $obra.val() + '/unidades_funcionales/' + id +'.json', function(data) {
       html = '<tr><td>' + data.tipo + ' ' + data.id + '</td>'
       html += '<td>' + data.precio_venta_moneda + '</td>';
@@ -71,33 +71,42 @@ $(document).ready(function(){
 
 
   // CUOTAS
-
   var agregar_cuota = function( fecha_ , monto_ ) {
     html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>' + monto_;
     html += '<input type="hidden" name="fechas[]" value="' + fecha_.toString() + '" />';
-    html += '<input type="hidden" name="montos[]" value="' + monto_ + '" /></td>';
+    html += '<input type="hidden" name="montos[]" class="monto" value="' + monto_ + '" /></td>';
     html += '<td><a href="#" class="quitar-cuota"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
     $('#contrato_de_venta_cuotas_table').append(html);
+    actualizar_total_cuotas();
   }
+
+  var actualizar_total_cuotas = function() {
+    var sum = 0;
+    $('.monto').each(function(){
+      sum += Number($(this).val());
+    });
+      
+    $('#cuotas_total').autoNumeric('set',sum);
+
+    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
+      $('#cuotas_total').addClass('error');
+    } else {
+      $('#cuotas_total').removeClass('error');
+    }
+  }
+
 
   var generar_cuotas = function() {
     total = $('#contrato_de_venta_total').autoNumeric('get');
-    pago_inicial = $('#contrato_de_venta_pago_inicial').autoNumeric('get');
-    a_financiar = total - pago_inicial;
 
     cantidad_de_cuotas = $('#contrato_de_venta_cantidad_cuotas').val();
-    monto_cuota = Math.floor( a_financiar / cantidad_de_cuotas );
-    resto = a_financiar - (monto_cuota * cantidad_de_cuotas);
+    monto_cuota = $('#contrato_de_venta_monto_cuotas').val();
 
     primera_cuota = new Date( $('#contrato_de_venta_fecha_primera_cuota').val() );
     periodicidad = $('#contrato_de_venta_periodicidad_cuotas').val();
 
     // Recorro las cuotas generando cada una
     for ( i=1; i <= cantidad_de_cuotas; i++ ) {
-      t_monto = monto_cuota;
-      if ( i == 1 ) {
-        t_monto += resto;
-      }
       mes = primera_cuota.getMonth() + ( i - 1) * periodicidad;
       ano = primera_cuota.getFullYear();
       while ( mes > 12 ) {
@@ -106,26 +115,39 @@ $(document).ready(function(){
       }
       t_fecha = new Date(ano,mes,primera_cuota.getDate());
 
-      agregar_cuota(t_fecha,t_monto);
+      agregar_cuota(t_fecha,monto_cuota);
     }
   }
 
-
+  // Generar cuotas click
   $('#contrato_de_venta_generar_cuotas').on('click',function(e){
     e.preventDefault();
     $('#contrato_de_venta_cuotas_table').html('')
     generar_cuotas();
   });
  
+  // Quitar cuota click
   $('#contrato_de_venta_cuotas_table').on('click','.quitar-cuota',function(e){
     $t = $(e.target);
     $t.closest('tr').remove();
+    actualizar_total_cuotas();
   });
 
+  // Agregar cuota click
   $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
     e.preventDefault();
     fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
+    mon = $('#contrato_de_venta_monto_cuota').val();
     agregar_cuota(fecha,mon);
   });
+
+  // No poder guardar si no cierran los totales
+  $('#new_contrato_de_venta').on('submit',function(e){
+    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  });
+
+
 });

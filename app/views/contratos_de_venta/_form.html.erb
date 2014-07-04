@@ -10,12 +10,12 @@
     <%= f.hidden_field :obra_id, value: obra.id %>
 
     <div class="row">
-      <div class="field form-group col-md-9">
+      <div class="field form-group col-md-8">
         <%= f.hidden_field :tercero_id %>
         <%= f.label :tercero %><br>
         <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[nombre]]', @contrato.tercero.try(:nombre), autocomplete_tercero_nombre_contratos_de_venta_path, { class: "form-control" } %>
       </div>
-      <div class="field form-group col-md-3">
+      <div class="field form-group col-md-4">
         <%= f.label '', 'CUIT' %><br>
         <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[cuit]]', @contrato.tercero.try(:cuit), autocomplete_tercero_cuit_contratos_de_venta_path, { class: "form-control" } %>
       </div>
@@ -30,7 +30,7 @@
     <h3>Unidades Funcionales</h3>
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-8">
       <table class="table table-hover table-condensed">
         <thead>
           <tr>
@@ -50,11 +50,11 @@
       </table>
       </div>
 
-      <div class="field form-group col-md-6">
-        <div class="col-sm-9">
+      <div class="field form-group col-md-4">
+        <div class="row">
         <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales_disponibles, :id, :id, { prompt: "-Seleccione Unidad-" }, { class: "form-control" } ) %>
-        </div>
-        <div class="com-sm-3">
+        </div> <br/>
+        <div class="row">
           <a id="contrato_de_venta_unidad_funcional_agregar" class="btn btn-sm btn-primary pull-right">
             <span class="glyphicon glyphicon-plus"></span>
             Agregar
@@ -68,11 +68,14 @@
 
     <div class="row">
 
-      <div class="col-md-6">
+      <div class="col-md-8">
 
           <div class="field form-group"> 
-            <label>Pago Inicial</label>
-            <input type="text" name="pago_inicial" class="form-control" data-role="money" id="contrato_de_venta_pago_inicial" />
+            <label>Índice</label>
+            <select class="form-control" name="indice">
+              <option value="anterior">Anterior</option>
+              <option value="actual">Actual</option>
+            </select>
           </div>
 
           <div class="field form-group"> 
@@ -86,18 +89,28 @@
             </thead>
             <tbody id="contrato_de_venta_cuotas_table">
             </tbody>
+            <tfoot>
+              <tr>
+                <td>Total</td>
+                <td colspan="3"><input type="text" class="form-control" data-role="money" readonly id="cuotas_total" /></td>
+              </tr>
+            </tfoot>
           </table>
           </div>
 
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
 
         <div class="row">
           <h4 class="col-md-12">Generar Cuotas</h4>
           <div class="field form-group col-sm-6">
             <label>Cantidad de Cuotas</label><br>
             <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
+          </div>
+          <div class="field form-group col-sm-6">
+            <label>Monto de Cuotas</label><br>
+            <input type="text" class="form-control" id="contrato_de_venta_monto_cuotas" />
           </div>
           <div class="field form-group col-sm-6">
             <label>Primera Cuota</label><br>
