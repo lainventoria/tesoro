@@ -32,6 +32,7 @@ class ContratosDeVentaController < ApplicationController
     agregar_unidades
     agregar_cuotas
 
+    agregar_indice
     agregar_unidades
     agregar_cuotas
 
