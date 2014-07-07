@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pry'
 
 class CuotaTest < ActiveSupport::TestCase
   setup do
@@ -110,6 +111,14 @@ class CuotaTest < ActiveSupport::TestCase
     # como no se creó ningún índice más el utilizado es el indice
     # original
     assert_equal @indice.valor, c.indice.valor
+
+    factura_importe_original = c.factura.importe_neto
+    c.indice.valor = c.indice.valor * 1.2
+
+    binding.pry
+
+    assert c.indice.save
+    assert_not_equal factura_importe_original, c.factura.importe_neto
   end
 
 end
