@@ -32,9 +32,39 @@ class Cuota < ActiveRecord::Base
 
   # obtiene el indice actual según el indice del contrato y el
   # vencimiento o una fecha especificada
+  #
+  # si el indice no existe se crea uno temporal
+  #
+  # TODO reescribir de forma elegante y con menos consultas
   def indice_actual(periodo = nil)
+    # calcular el periodo si no lo especificamos
     periodo = vencimiento - 1.month if periodo.nil?
-    Indice.where(periodo: periodo).where(denominacion: contrato_de_venta.indice.denominacion).first
+
+    # obtener el indice para este periodo
+    indice = Indice.where(periodo: periodo).
+      where(denominacion: contrato_de_venta.indice.denominacion).
+      order(:periodo).
+      first
+
+    # si no existe ese indice
+    if indice.nil?
+      # obtener el último indice disponible
+      indice_anterior = Indice.where(denominacion: contrato_de_venta.indice.denominacion).
+        order(:periodo).last
+
+      # y crear un indice temporal con el valor del ultimo indice
+      # disponible
+      indice = Indice.new(temporal: true,
+        denominacion: contrato_de_venta.indice.denominacion,
+        periodo: periodo,
+        valor: indice_anterior.valor)
+    end
+
+    # actualizar el indice que estamos usando
+    self.indice = indice
+
+    # devolver siempre un indice
+    indice
   end
 
   # pagar la cuota genera una factura de cobro que el tercero adeuda
