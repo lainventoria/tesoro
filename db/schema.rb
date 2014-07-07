@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707162551) do
+ActiveRecord::Schema.define(version: 20140707163435) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -100,9 +100,10 @@ ActiveRecord::Schema.define(version: 20140707162551) do
   create_table "indices", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "periodo",      null: false
-    t.string   "denominacion", null: false
-    t.decimal  "valor",        null: false
+    t.date     "periodo",                      null: false
+    t.string   "denominacion",                 null: false
+    t.decimal  "valor",                        null: false
+    t.boolean  "temporal",     default: false
   end
 
   create_table "movimientos", force: true do |t|
