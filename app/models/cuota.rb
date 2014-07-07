@@ -2,6 +2,7 @@
 class Cuota < ActiveRecord::Base
   belongs_to :contrato_de_venta
   belongs_to :factura
+  belongs_to :indice
   has_one :tercero, through: :contrato_de_venta
   has_one :obra, through: :contrato_de_venta
 

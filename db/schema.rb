@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610235912) do
+ActiveRecord::Schema.define(version: 20140707162551) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -68,10 +68,12 @@ ActiveRecord::Schema.define(version: 20140610235912) do
     t.string   "descripcion",                             null: false
     t.integer  "contrato_de_venta_id"
     t.integer  "factura_id"
+    t.integer  "indice_id"
   end
 
   add_index "cuotas", ["contrato_de_venta_id"], name: "index_cuotas_on_contrato_de_venta_id"
   add_index "cuotas", ["factura_id"], name: "index_cuotas_on_factura_id"
+  add_index "cuotas", ["indice_id"], name: "index_cuotas_on_indice_id"
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"
