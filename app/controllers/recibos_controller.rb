@@ -4,7 +4,7 @@ class RecibosController < ApplicationController
   before_action :set_factura, only: [:show, :edit, :update, :destroy, :index, :create, :new]
   before_action :set_recibo, only: [:show, :edit, :update, :destroy]
   before_action :set_recibos, only: [ :index, :cobros, :pagos ]
-  before_action :set_order, [:cobros, :pagos]
+  before_action :set_order, only: [:cobros, :pagos]
 
   def index
   end

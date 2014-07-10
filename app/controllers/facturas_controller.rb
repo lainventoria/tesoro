@@ -3,7 +3,7 @@ class FacturasController < ApplicationController
   before_action :set_obra
   before_action :set_factura, only: [:show, :edit, :update, :destroy]
   before_action :set_tercero, only: [:create, :update]
-  before_action :set_order, [:cobros, :pagos]
+  before_action :set_order, only: [:cobros, :pagos]
 
   autocomplete :tercero, :nombre, :extra_data => [:cuit]
   autocomplete :tercero, :cuit, :extra_data => [:nombre]

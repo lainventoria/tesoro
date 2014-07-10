@@ -1,7 +1,7 @@
 # encoding: utf-8
 class TercerosController < ApplicationController
   before_action :set_tercero, only: [:show, :edit, :update, :destroy]
-  before_action :set_order, [:index]
+  before_action :set_order, only: [:index]
 
   # GET /terceros
   # GET /terceros.json
