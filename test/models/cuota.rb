@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 
 class CuotaTest < ActiveSupport::TestCase
   setup do
@@ -114,8 +113,6 @@ class CuotaTest < ActiveSupport::TestCase
 
     factura_importe_original = c.factura.importe_neto
     c.indice.valor = c.indice.valor * 1.2
-
-    binding.pry
 
     assert c.indice.save
     assert_not_equal factura_importe_original, c.factura.importe_neto
