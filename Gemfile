@@ -50,6 +50,10 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
+group :development do
+  gem 'spring'
+end
+
 group :development, :test do
   gem 'pry-rails'
   gem 'hirb'
