@@ -1,5 +1,4 @@
 # encoding: utf-8
-require 'pry'
 class Indice < ActiveRecord::Base
   has_many :cuotas
   validates_presence_of :periodo, :denominacion, :valor
@@ -17,14 +16,19 @@ class Indice < ActiveRecord::Base
 
     def ahora_es_definitivo
       self.temporal = false
+
+      # no dejar que temporal devuelva false
+      true
     end
 
+    # actualiza el monto de las facturas cuando se modifica el indice
     def actualizar_cuotas
-      binding.pry
       Factura.transaction do
         cuotas.each do |cuota|
-          cuota.factura.importe_neto = cuota.monto_actualizado
-          cuota.factura.save
+          if !cuota.factura.nil?
+            cuota.factura.importe_neto = cuota.monto_actualizado
+            cuota.factura.save
+          end
         end
       end
     end

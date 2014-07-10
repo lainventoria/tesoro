@@ -115,7 +115,8 @@ class CuotaTest < ActiveSupport::TestCase
     c.indice.valor = c.indice.valor * 1.2
 
     assert c.indice.save
-    assert_not_equal factura_importe_original, c.factura.importe_neto
+    assert_not_equal factura_importe_original, c.factura.reload.importe_neto
+    assert_not_equal factura_importe_original, c.factura.importe_total
   end
 
 end
