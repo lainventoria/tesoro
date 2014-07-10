@@ -52,6 +52,7 @@ class Cuota < ActiveRecord::Base
       self.factura = Factura.new(situacion: 'cobro',
         importe_neto: monto_actualizado(periodo),
         fecha: vencimiento,
+        vencimiento: vencimiento + 10.days,
         descripcion: descripcion,
         tercero: tercero,
         obra: obra)

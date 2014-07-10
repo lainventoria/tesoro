@@ -60,6 +60,7 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal c.monto_actualizado, f.importe_neto
     assert_equal c.tercero, f.tercero
     assert_equal c.obra, f.obra
+    assert_equal c.vencimiento + 10.days, f.vencimiento
   end
 
   test "las cuotas que no están vencidas se pagan al indice actual" do
