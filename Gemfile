@@ -1,27 +1,16 @@
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.5'
+gem 'rails', '4.1.4'
 
 gem 'money-rails'
-gem 'attribute_normalizer' # normaliza con varios métodos la entrada de usuario
+# normaliza con varios métodos la entrada de usuario
+gem 'attribute_normalizer'
 gem 'paperclip'
-gem 'state_machine'
+# fork con pull requests para rails 4.1 mergeados
+gem 'state_machine', github: 'lainventoria/state_machine'
+
 # permite importar y exportar datos en formato yml
 gem 'yaml_db', github: 'mauriciopasquier/yaml_db'
-
-# selector de fechas con calendario mensual
-gem 'bootstrap-datepicker-rails'
-# error messages
-gem 'dynamic_form'
-
-# autocomplete en formularios
-gem 'rails3-jquery-autocomplete'
-gem 'jquery-ui-rails'
-gem 'jquery-ui-themes'
-
-# selector de archivos bootstrapeado
-gem 'bootstrap-filestyle-rails'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -29,7 +18,7 @@ gem 'sqlite3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-# Assets
+# Assets/GUI
 gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass-rails'
 gem 'uglifier', '>= 1.3.0'
@@ -37,7 +26,16 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'turbolinks'
-
+# selector de fechas con calendario mensual
+gem 'bootstrap-datepicker-rails'
+# error messages
+gem 'dynamic_form'
+# autocomplete en formularios
+gem 'rails3-jquery-autocomplete'
+gem 'jquery-ui-rails'
+gem 'jquery-ui-themes'
+# selector de archivos bootstrapeado
+gem 'bootstrap-filestyle-rails'
 gem 'therubyracer'
 
 # I18n
