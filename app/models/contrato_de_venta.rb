@@ -41,8 +41,8 @@ class ContratoDeVenta < ActiveRecord::Base
   # crea un pago inicial con la fecha de vencimiento igual a la fecha
   # del contrato
   # TODO chequear que sea el único?
-  def hacer_pago_inicial(fecha, monto)
-    crear_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
+  def agregar_pago_inicial(fecha, monto)
+    agregar_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
   end
 
   # divide el monto total menos el pago inicial en partes iguales

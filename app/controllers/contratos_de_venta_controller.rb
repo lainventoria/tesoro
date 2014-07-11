@@ -26,6 +26,7 @@ class ContratosDeVentaController < ApplicationController
 
   def create
     @contrato = ContratoDeVenta.new( contrato_de_venta_params )
+    @contrato.fecha = DateTime.now
 
     agregar_indice
     agregar_unidades
@@ -94,7 +95,7 @@ class ContratosDeVentaController < ApplicationController
       i = 1
       cuotas = f.zip(m).sort_by { |c| c[0].to_time }
       primer = cuotas.shift
-      @contrato.hacer_pago_inicial(primer[0],primer[1])
+      @contrato.agregar_pago_inicial(primer[0],primer[1])
       cuotas.map { |fecha,monto| @contrato.agregar_cuota(vencimiento: fecha, monto_original: monto, descripcion: "Cuota ##{i}") }
     end
 
