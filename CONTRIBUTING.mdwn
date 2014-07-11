@@ -18,6 +18,8 @@
 * No uses CSS ni javascript inline, siempre en los archivos de `app/assets/`
   correspondientes a la vista (y no en los `applicacion.{js,css}`)
 
+* Las migraciones deben ser reversibles **siempre**
+
 ## Peer Review / Pull Request
 
 * Usamos git-flow
@@ -30,7 +32,8 @@
 
 * No mergees, hacé Pull Request y esperá la revisión
 
-* Los PR se hacen a partir de develop!!
+* Los PR se hacen a partir de develop!! En la rama `master` sólo debe haber
+  código de producción, y exactamente lo que está en producción
 
 * Antes de un PR, hace un rebase a partir de develop
 
@@ -38,5 +41,9 @@
         git pull origin develop
         git checkout feature/tu-rama
         git rebase develop
+
+  Si ya habías pusheado `feature/tu-rama`, no hagas `git pull` de eso, porque
+  crea un merge en `feature/tu-rama` duplicando los commits. En vez de eso
+  reemplazá los commits en el repo remoto con `git push -f feature/tu-rama`
 
 [TDD]: http://en.wikipedia.org/wiki/Test-driven_development
