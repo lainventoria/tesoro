@@ -18,6 +18,16 @@ class Cuota < ActiveRecord::Base
     where.not(descripcion: "Pago inicial").where("vencimiento < ?", time)
   }
 
+  # cuotas con facturas emitidas
+  scope :emitidas, lambda {
+    where.not(factura: nil)
+  }
+
+  # cuotas sin factura emitida
+  scope :pendientes, lambda {
+    where(factura: nil)
+  }
+
   def vencida?(time = nil)
     time = Time.now if not time
 
@@ -69,21 +79,22 @@ class Cuota < ActiveRecord::Base
 
   # pagar la cuota genera una factura de cobro que el tercero adeuda
   def generar_factura(periodo = nil)
+    vencimiento_actual = self.vencimiento
     # si la cuota se paga antes de tiempo, el monto actualizado se
     # calcula al indice del mes actual en lugar del indice del mes de
     # vencimiento
     unless vencida?
       # los periodos comienzan con el mes
       periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month if periodo.nil?
-      vencimiento = Time.now
+      vencimiento_actual = Time.now.to_date
     end
 
     Factura.transaction do
       # FIXME faltan tipo y número
       self.factura = Factura.new(situacion: 'cobro',
         importe_neto: monto_actualizado(periodo),
-        fecha: vencimiento,
-        vencimiento: vencimiento + 10.days,
+        fecha: vencimiento_actual,
+        fecha_pago: vencimiento_actual + 10.days,
         descripcion: descripcion,
         tercero: tercero,
         obra: obra)
