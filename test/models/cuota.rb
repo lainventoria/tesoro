@@ -103,4 +103,21 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto
   end
 
+  test "si el indice no existe se crea uno temporal" do
+    c = @cv.cuotas[2]
+
+    assert c.generar_factura, c.errors.messages.inspect
+    assert c.indice.temporal?
+    # como no se creó ningún índice más el utilizado es el indice
+    # original
+    assert_equal @indice.valor, c.indice.valor
+
+    factura_importe_original = c.factura.importe_neto
+    c.indice.valor = c.indice.valor * 1.2
+
+    assert c.indice.save
+    assert_not_equal factura_importe_original, c.factura.reload.importe_neto
+    assert_not_equal factura_importe_original, c.factura.importe_total
+  end
+
 end
