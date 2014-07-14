@@ -20,7 +20,7 @@ class UnidadFuncional < ActiveRecord::Base
   }
 
   scope :vendidas, lambda {
-    where('contrato_de_venta_id is not null')
+    where.not(contrato_de_venta: nil)
   }
 
   def precio_venta(moneda = 'ARS')
