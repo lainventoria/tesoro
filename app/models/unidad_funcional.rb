@@ -15,6 +15,14 @@ class UnidadFuncional < ActiveRecord::Base
 
   monetize :precio_venta_centavos, with_model_currency: :precio_venta_moneda
 
+  scope :disponibles, lambda {
+    where(contrato_de_venta: nil)
+  }
+
+  scope :vendidas, lambda {
+    where('contrato_de_venta_id is not null')
+  }
+
   def precio_venta(moneda = 'ARS')
     Money.new(precio_venta_centavos, moneda)
   end

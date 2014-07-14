@@ -20,4 +20,21 @@ class UnidadFuncionalTest < ActiveSupport::TestCase
     assert_equal cv.tercero, uf.tercero
   end
 
+  test "hay unidades estan disponibles" do
+    uf = create :unidad_funcional
+
+    assert_equal 1, UnidadFuncional.disponibles.count
+  end
+
+  test "cuando se venden dejan de estar disponibles" do
+    uf = create :unidad_funcional
+    cv = create :contrato_de_venta
+
+    assert cv.agregar_unidad_funcional(uf)
+    assert cv.save
+
+    assert_equal 0, UnidadFuncional.disponibles.count
+    assert_not_equal 0, UnidadFuncional.vendidas.count
+  end
+
 end
