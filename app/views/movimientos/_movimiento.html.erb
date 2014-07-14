@@ -6,10 +6,10 @@
   <td class='text-right <%= lista_recibos %>'>
     <%= formatted_number(movimiento.monto.abs) %>
   </td>
-  <td class='text-right <%= lista_cajas %> <%= negativo_rojo(movimiento.monto) %>'>
+  <td class='text-right <%= lista_cajas %>'>
     <%= movimiento.monto_moneda == 'ARS' ? formatted_number(movimiento.monto) : '' %>
   </td>
-  <td class='text-right <%= lista_cajas %> <%= lista_efectivo %> <%= negativo_rojo(movimiento.monto) %>'>
+  <td class='text-right <%= lista_cajas %> <%= lista_efectivo %>'>
     <%= movimiento.monto_moneda == 'USD' ? formatted_number(movimiento.monto) : '' %>
   </td>
   <td class="<%= boton_borrar %>">

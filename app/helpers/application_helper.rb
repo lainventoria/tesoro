@@ -22,7 +22,9 @@ module ApplicationHelper
   end
 
   def formatted_number(numero)
-    number_to_currency(numero, delimiter: ".", separator: ",", format: "%n &nbsp;".html_safe, negative_format: "( %n )" )
+    content_tag :span, class: negativo_rojo(numero) do
+      number_to_currency(numero.to_f, delimiter: ".", separator: ",", format: "%n &nbsp;".html_safe, negative_format: "( %n )" )
+    end
   end
 
   def negativo_rojo(monto)

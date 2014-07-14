@@ -6,10 +6,10 @@
   </div>
   <div class="row borde-abajo-punteado" title="Liquidez Neta: dinero disponible no comprometido con pagos futuros">
     <div class="h4 col-md-4"><strong>Liquidez Neta</strong></div>
-    <div class="h4 text-right col-md-4 <%= negativo_rojo(@obra.total_general('ARS')) %>"><strong>
+    <div class="h4 text-right col-md-4"><strong>
       <%= formatted_number(@obra.total_general('ARS')) %>
     </strong></div>
-    <div class="h4 text-right col-md-4 <%= negativo_rojo(@obra.total_general('USD')) %>""><strong>
+    <div class="h4 text-right col-md-4"><strong>
       <%= formatted_number(@obra.total_general('USD')) %>
     </strong></div>
   </div>

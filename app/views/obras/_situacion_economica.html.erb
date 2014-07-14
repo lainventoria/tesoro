@@ -6,10 +6,10 @@
   </div>
   <div class="row borde-abajo-punteado" title="Total Facturas: suma de todas las facturas.">
     <div class="h4 col-md-4"><strong>Total Facturas</strong></div>
-    <div class="h4 text-right col-md-4 <%= negativo_rojo(@obra.saldo_general) %>"><strong>
+    <div class="h4 text-right col-md-4"><strong>
       <%= formatted_number(@obra.saldo_general('ARS')) %>
     </strong></div>
-    <div class="h4 text-right col-md-4 <%= negativo_rojo(@obra.saldo_general('USD')) %>"><strong>
+    <div class="h4 text-right col-md-4"><strong>
       <%= formatted_number(@obra.saldo_general('USD')) %>
     </strong></div>
   </div>
