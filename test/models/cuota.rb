@@ -60,7 +60,7 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal c.monto_actualizado, f.importe_neto
     assert_equal c.tercero, f.tercero
     assert_equal c.obra, f.obra
-    assert_equal c.vencimiento + 10.days, f.vencimiento
+    assert_equal c.vencimiento + 10.days, f.fecha_pago.to_date
   end
 
   test "las cuotas que no están vencidas se pagan al indice actual" do
@@ -101,6 +101,18 @@ class CuotaTest < ActiveSupport::TestCase
 
     f = Factura.last
     assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto
+  end
+
+  test "hay cuotas pendientes" do
+    assert_equal 13, @cv.cuotas.pendientes.count
+  end
+
+  test "hay cuotas que ya estan emitidas" do
+    assert_difference('@cv.cuotas.pendientes.count', -1) do
+      @cv.cuotas.first.generar_factura
+    end
+
+    assert_equal 1, @cv.cuotas.emitidas.count
   end
 
 end
