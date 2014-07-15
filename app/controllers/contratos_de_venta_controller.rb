@@ -106,7 +106,11 @@ class ContratosDeVentaController < ApplicationController
       else
         i = DateTime.now
       end
-      @contrato.indice_id = Indice.porFechaYDenominacion(i, 'Costo de construcción')
+      @contrato.indice = Indice.porFechaYDenominacion(i, 'Costo de construcción')
+    end
+
+    def set_contrato
+      @contrato = ContratoDeVenta.find(params[:id])
     end
  
 end

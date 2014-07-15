@@ -14,8 +14,10 @@ class Indice < ActiveRecord::Base
   end
 
   def self.porFechaYDenominacion ( fecha, denominacion )
+    periodo = Date.new(fecha.year, fecha.month, 1)
+
     # obtener el indice para este periodo
-    indice = Indice.where(periodo: fecha).
+    indice = Indice.where(periodo: periodo).
       where(denominacion: denominacion).
       order(:periodo).
       first
@@ -30,7 +32,7 @@ class Indice < ActiveRecord::Base
       # disponible
       indice = Indice.new(temporal: true,
         denominacion: denominacion,
-        periodo: fecha,
+        periodo: periodo,
         valor: indice_anterior.valor)
     end
 
