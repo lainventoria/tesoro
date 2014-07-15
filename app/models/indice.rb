@@ -15,27 +15,24 @@ class Indice < ActiveRecord::Base
 
   def self.porFechaYDenominacion ( fecha, denominacion )
     # obtener el indice para este periodo
-    indice = Indice.where(periodo: periodo).
-      where(denominacion: contrato_de_venta.indice.denominacion).
+    indice = Indice.where(periodo: fecha).
+      where(denominacion: denominacion).
       order(:periodo).
       first
 
     # si no existe ese indice
     if indice.nil?
       # obtener el último indice disponible
-      indice_anterior = Indice.where(denominacion: contrato_de_venta.indice.denominacion).
+      indice_anterior = Indice.where(denominacion: denominacion).
         order(:periodo).last
 
       # y crear un indice temporal con el valor del ultimo indice
       # disponible
       indice = Indice.new(temporal: true,
-        denominacion: contrato_de_venta.indice.denominacion,
-        periodo: periodo,
+        denominacion: denominacion,
+        periodo: fecha,
         valor: indice_anterior.valor)
     end
-
-    # actualizar el indice que estamos usando
-    self.indice = indice
 
     # devolver siempre un indice
     indice

@@ -4,7 +4,7 @@ $(document).ready(function(){
 
   // Inicializar los datepicker
   $(':enabled .input-group.date').datepicker({
-    format: "dd M yyyy",
+    format: "dd/mm/yyyy",
     weekStart: 1,
     autoclose: true,
     language: "es",
