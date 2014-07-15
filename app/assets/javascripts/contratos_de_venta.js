@@ -99,7 +99,7 @@ $(document).ready(function(){
     total = $('#contrato_de_venta_total').autoNumeric('get');
 
     cantidad_de_cuotas = $('#contrato_de_venta_cantidad_cuotas').val();
-    monto_cuota = $('#contrato_de_venta_monto_cuotas').val();
+    monto_cuota = $('#contrato_de_venta_monto_cuotas').autoNumeric('get');
 
     primera_cuota = new Date( $('#contrato_de_venta_fecha_primera_cuota').val() );
     periodicidad = $('#contrato_de_venta_periodicidad_cuotas').val();
@@ -113,7 +113,6 @@ $(document).ready(function(){
         ano += 1;
       }
       t_fecha = new Date(ano,mes,primera_cuota.getDate());
-
       agregar_cuota(t_fecha,monto_cuota);
     }
   }
@@ -136,7 +135,7 @@ $(document).ready(function(){
   $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
     e.preventDefault();
     fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').val();
+    mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
     agregar_cuota(fecha,mon);
   });
 
@@ -147,126 +146,5 @@ $(document).ready(function(){
       e.stopPropagation();
     }
   });
-
-      $('input[data-role=money]').autoNumeric('init');
-      actualizar_total();
-
-    }, 'json');
-  }
-
-
-  var actualizar_total = function() {
-    var sum = 0;
-    $('.precio').each(function(){
-      sum += Number($(this).autoNumeric('get'));
-    });
-    $('#contrato_de_venta_total').autoNumeric('set',sum);
-  }
-
-  $('#contrato_de_venta_unidades_funcionales_table').on('keyup','.precio',actualizar_total);
-
-  // Agregar unidad seleccionada
-  $('#contrato_de_venta_unidad_funcional_agregar').on('click',function(e){
-    unidad_id = $('#contrato_de_venta_unidades_funcionales').val();
-    agregar_unidad(unidad_id);
-    $('#contrato_de_venta_unidades_funcionales option:selected').remove();
-  });
-
-  // Agregar cuota click
-  $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
-    e.preventDefault();
-    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').val();
-    agregar_cuota(fecha,mon);
-  });
-
-  // No poder guardar si no cierran los totales
-  $('#new_contrato_de_venta').on('submit',function(e){
-    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
-      $('input[data-role=money]').autoNumeric('init');
-      actualizar_total();
-
-    }, 'json');
-  }
-
-
-  var actualizar_total = function() {
-    var sum = 0;
-    $('.precio').each(function(){
-      sum += Number($(this).autoNumeric('get'));
-    });
-    $('#contrato_de_venta_total').autoNumeric('set',sum);
-  }
-
-  $('#contrato_de_venta_unidades_funcionales_table').on('keyup','.precio',actualizar_total);
-
-  // Agregar unidad seleccionada
-  $('#contrato_de_venta_unidad_funcional_agregar').on('click',function(e){
-    unidad_id = $('#contrato_de_venta_unidades_funcionales').val();
-    agregar_unidad(unidad_id);
-    $('#contrato_de_venta_unidades_funcionales option:selected').remove();
-  });
-
-  // Agregar cuota click
-  $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
-    e.preventDefault();
-    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').val();
-    agregar_cuota(fecha,mon);
-  });
-
-  // No poder guardar si no cierran los totales
-  $('#new_contrato_de_venta').on('submit',function(e){
-    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
-      $('input[data-role=money]').autoNumeric('init');
-      actualizar_total();
-
-    }, 'json');
-  }
-
-
-  var actualizar_total = function() {
-    var sum = 0;
-    $('.precio').each(function(){
-      sum += Number($(this).autoNumeric('get'));
-    });
-    $('#contrato_de_venta_total').autoNumeric('set',sum);
-  }
-
-  $('#contrato_de_venta_unidades_funcionales_table').on('keyup','.precio',actualizar_total);
-
-  // Agregar unidad seleccionada
-  $('#contrato_de_venta_unidad_funcional_agregar').on('click',function(e){
-    unidad_id = $('#contrato_de_venta_unidades_funcionales').val();
-    agregar_unidad(unidad_id);
-    $('#contrato_de_venta_unidades_funcionales option:selected').remove();
-  });
-
-  // Agregar cuota click
-  $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
-    e.preventDefault();
-    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
-    mon = $('#contrato_de_venta_monto_cuota').val();
-    agregar_cuota(fecha,mon);
-  });
-
-  // No poder guardar si no cierran los totales
-  $('#new_contrato_de_venta').on('submit',function(e){
-    if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
 
 });
