@@ -77,7 +77,12 @@ module ApplicationHelper
           when 'cobros' then url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil }))
           # para las otras acciones vamos al listado segun la situacion
           # del recibo actual
-          else url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: @recibo.try(:situacion) +"s", id: nil }))
+          else
+            if @recibo.interno?
+              url_for(params.merge({ obra_id: obra.try(:id), controller: 'cajas', action: 'index', id: nil }))
+            else
+              url_for(params.merge({ obra_id: obra.try(:id), factura_id: nil, action: @recibo.try(:situacion) +"s", id: nil }))
+            end
         end
       # para las cajas siempre queremos ir al indice de cajas segun obra
       when 'cajas' then url_for(params.merge({ obra_id: obra.try(:id), action: 'index', id: nil }))
