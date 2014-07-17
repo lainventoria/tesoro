@@ -20,9 +20,12 @@ module RecibosHelper
     case movimiento.causa_type
       # Las causas sin vista en el sistema no generan links
       when 'Efectivo', 'Transferencia', 'Operacion'
-        movimiento.causa_type
+        if params[:controller] == 'cajas'
+          link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.recibo])
+        else
+          link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.caja])
+        end
       else
-        # TODO sacar el if cuando todos los movimientos tengan causa
         link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.caja, movimiento.causa]) if movimiento.causa.present?
     end
   end
