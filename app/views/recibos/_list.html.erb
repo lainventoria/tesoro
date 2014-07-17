@@ -18,13 +18,15 @@
 
   <tbody>
     <% @recibos.each do |recibo| %>
-      <tr class="ir-a" data-uri="<%= con_obra? factura_recibo_path(recibo.factura, recibo) %>">
-        <td><%= link_to '', [recibo.factura, recibo], class:"glyphicon glyphicon-eye-open" %></td>
+      <tr class="ir-a" data-uri="<%= con_obra? recibo_path(recibo) %>">
+        <td><%= link_to '', [recibo], class:"glyphicon glyphicon-eye-open" %></td>
         <td class="<%= lista_causa %>"><%= recibo.situacion.capitalize %></td>
         <td><%= formatted_date(recibo.fecha) %></td>
-        <td class="<%= lista_larga %>"><%= recibo.factura.tercero.nombre.first(30) %></td>
-        <td class="<%= lista_larga %>"><%= recibo.factura.tipo.first(1) %>-<%= recibo.factura.numero.first(10) %>: <%= recibo.factura.descripcion.first(30) %></td>
-        <td class="<%= lista_larga %>"><%= formatted_date (recibo.factura.fecha) %></td>
+        <% if ! recibo.interno? %>
+          <td class="<%= lista_larga %>"><%= recibo.factura.tercero.nombre.first(30) %></td>
+          <td class="<%= lista_larga %>"><%= recibo.factura.tipo.first(1) %>-<%= recibo.factura.numero.first(10) %>: <%= recibo.factura.descripcion.first(30) %></td>
+        <% end %>
+        <td class="<%= lista_larga %>"><%= formatted_date (recibo.fecha) %></td>
         <td class="text-right <%= muestra_importe %>"><%= recibo.importe_moneda %></td>
         <td class="text-right <%= muestra_importe %>"><%= formatted_number(recibo.importe) %></td>
       </tr>
