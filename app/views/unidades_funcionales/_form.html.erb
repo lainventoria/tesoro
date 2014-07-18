@@ -20,6 +20,11 @@
         <%= f.select :tipo, UnidadFuncional::TIPOS, { prompt: '-Elegir-' }, { class: 'form-control' } %>
       </div>
 
+      <div class="field form-group col-md-2">
+        <%= f.label :descripcion %>
+        <%= f.text_field :descripcion, class:"form-control" %>
+      </div>
+
     </div>
 
   </fieldset>
