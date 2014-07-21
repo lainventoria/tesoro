@@ -55,15 +55,26 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    # TODO pedir permits según causa
+    # obtener los parametros requeridos para cada causa
     def causa_params
-      if params[:causa].present?
-        params[:causa].permit(
-          :monto, :monto_moneda, :caja_id, :cheque_id, :retencion_id,
-          :monto_aceptado, :monto_aceptado_moneda,
-          :cuenta_id, :chequera_id, :numero, :fecha_emision, :beneficiario,
-          :fecha_vencimiento, :situacion, :banco
-        )
+      if params[:causa].present? && params[:causa_tipo].present?
+        case params[:causa_tipo]
+          when 'cheque-de-terceros', 'cheque-propio'
+            # copiado de app/controllers/cheques_controller.rb#cheque_params
+            params[:causa].permit(:situacion, :numero, :monto,
+              :monto_centavos, :monto_moneda, :fecha_vencimiento,
+              :fecha_emision, :beneficiario, :banco, :estado, :chequera_id,
+              :cuenta_id, :obra_id)
+
+          when 'retenciones'
+            params[:causa].permit(:monto, :documento, :factura_id, :fecha_vencimiento, :situacion)
+
+          when 'transferencia', 'efectivo'
+            params[:causa].permit(:monto_moneda, :monto_aceptado_moneda, :monto_aceptado, :monto, :caja_id)
+
+          else
+            {}
+        end
       else
         {}
       end
