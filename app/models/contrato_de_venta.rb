@@ -97,42 +97,10 @@ class ContratoDeVenta < ActiveRecord::Base
   # setear magicamente el tercero si no pasamos uno existente
   def tercero_attributes=(attributes = {})
     if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
+      self.tercero = Tercero.where(attributes.merge({ relacion: 'cliente' })).first_or_create
     end
   end
  
-  # setear magicamente el tercero si no pasamos uno existente
-  def tercero_attributes=(attributes = {})
-    if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
-    end
-  end
- 
-  # setear magicamente el tercero si no pasamos uno existente
-  def tercero_attributes=(attributes = {})
-    if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
-    end
-  end
- 
-  # setear magicamente el tercero si no pasamos uno existente
-  def tercero_attributes=(attributes = {})
-    if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
-    end
-  end
- 
-  # setear magicamente el tercero si no pasamos uno existente
-  def tercero_attributes=(attributes = {})
-    if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
-    end
-  end
-
-
-
-
-
   private
 
     # El monto original es la suma de los valores de venta de las
