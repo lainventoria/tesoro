@@ -31,6 +31,12 @@ module ApplicationHelper
     monto < 0 ? 'text-danger' : ''
   end
 
+  # ver si la  obra esta persistida
+  # version sin url 
+  def hay_obra?
+    @obra.try :persisted?
+  end
+
   # decidir si vamos a incluir /obra/:obra_id en las urls o no, para
   # filtrar por obra
   def con_obra?(url)
