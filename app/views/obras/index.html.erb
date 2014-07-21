@@ -6,7 +6,7 @@
 </h2>
 
 <div class="row col-md-9">
-  <table class="table table-hover table-condensed">
+  <table class="h4 table table-hover table-condensed">
     <thead>
       <tr>
         <th></th>
@@ -24,12 +24,12 @@
           <td><%= obra.nombre %></td>
           <td><%= obra.direccion %></td>
           <td class="text-right" data-uri='<%= obra_path(obra.id) %>'>
-            <div class='<%= negativo_rojo(obra.saldo_general('ARS')) %>'><%= formatted_number obra.saldo_general('ARS') %> ARS</div>
-            <div class='<%= negativo_rojo(obra.saldo_general('USD')) %>'><%= formatted_number obra.saldo_general('USD') %> ARS</div>
+            <div><%= formatted_number obra.saldo_general('ARS') %> ARS</div>
+            <div><%= formatted_number obra.saldo_general('USD') %> ARS</div>
           </td>
           <td class="text-right" data-uri='<%= obra_path(obra.id) %>'>
-            <div class='<%= negativo_rojo(obra.total_general('ARS')) %>'><%= formatted_number obra.total_general('ARS') %> ARS</div>
-            <div class='<%= negativo_rojo(obra.total_general('USD')) %>'><%= formatted_number obra.total_general('USD') %> ARS</div>
+            <div><%= formatted_number obra.total_general('ARS') %> ARS</div>
+            <div><%= formatted_number obra.total_general('USD') %> ARS</div>
           </td>
         </tr>
       <% end %>

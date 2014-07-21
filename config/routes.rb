@@ -38,7 +38,7 @@ Rails.application.routes.draw do
        get 'transferir'
       end
 
-    # /obra/caja/cheque
+      # /obra/caja/cheque
       resources :cheques do
         member do
           patch 'depositar'
@@ -46,6 +46,10 @@ Rails.application.routes.draw do
           patch 'pagar'
         end
       end
+
+      # /obra/caja/retencion
+      resources :retenciones
+
     end
 
     # /obra/unidad_funcional

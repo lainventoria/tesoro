@@ -20,9 +20,12 @@ module RecibosHelper
     case movimiento.causa_type
       # Las causas sin vista en el sistema no generan links
       when 'Efectivo', 'Transferencia', 'Operacion'
-        movimiento.causa_type
+        if params[:controller] == 'cajas'
+          link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.recibo])
+        else
+          link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.caja])
+        end
       else
-        # TODO sacar el if cuando todos los movimientos tengan causa
         link_to(movimiento.causa_type, [movimiento.caja.obra, movimiento.caja, movimiento.causa]) if movimiento.causa.present?
     end
   end
@@ -89,5 +92,24 @@ module RecibosHelper
       @factura.obra.cajas.chequeras.
         where(tipo_factura: Factura.tipos_invalidos)
     end
+  end
+
+  def establecer_parametros_listado
+    case params[:controller]
+      when 'recibos'
+        lista_larga = ''
+        lista_causa = 'hidden'
+        muestra_importe = ''
+      when 'facturas'
+        lista_larga = 'hidden'
+        lista_causa = 'hidden'
+        muestra_importe = ''
+      # por eliminacion, esto es para las causas que listan recibos  
+      else
+        lista_larga = 'hidden'
+        lista_causa = ''
+        muestra_importe = 'hidden'
+    end
+    return [ lista_larga, lista_causa, muestra_importe ]
   end
 end

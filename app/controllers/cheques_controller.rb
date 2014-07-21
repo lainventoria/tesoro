@@ -2,25 +2,17 @@
 class ChequesController < ApplicationController
   before_action :set_obra
   before_action :set_caja
+  before_action :set_cheques, only: [ :index ]
   before_action :set_cheque, only: [ :show, :edit, :update, :destroy, :depositar, :pagar, :cobrar ]
-  before_action :set_order, only: [:index]
+  before_action :set_order, only: [ :index ]
   before_action :set_recibos, only: [ :show ]
 
   def index
-    if params[:situacion]
-      @cheques = (@caja ? @caja.cheques : Cheque).where(situacion: params[:situacion]).order(@order)
-    else
-      @cheques = (@caja ? @caja.cheques : Cheque.all).order(@order)
-    end
+    @cheques = @cheques.where(situacion: params[:situacion]) if params[:situacion]
+    @cheques = @cheques.vencidos if params[:vencidos]
+    @cheques = @cheques.depositados if params[:depositados]
 
-    if params[:vencidos]
-      @cheques = @cheques.vencidos
-    end
-
-    if params[:depositados]
-      @cheques = @cheques.depositados
-    end
-
+    @cheques = @cheques.order(@order)
   end
 
   def show
@@ -120,6 +112,16 @@ class ChequesController < ApplicationController
       @cheque = (@obra.present? ? @obra.cheques : Cheque).find(params[:id])
     end
 
+    def set_cheques
+      @cheques = if @caja.present?
+        @caja.cheques
+      elseif @obra.present?
+        @obra.cheques
+      else
+        Cheque.all
+      end
+    end
+
     def cheque_params
       params.require(:cheque).permit(
         :situacion, :numero, :monto, :monto_centavos, :monto_moneda,
@@ -135,6 +137,6 @@ class ChequesController < ApplicationController
     end
 
     def set_recibos
-      @recibos = @cheque.recibos
+      @recibos = @cheque.recibos.uniq
     end
 end
