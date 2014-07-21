@@ -106,7 +106,7 @@ class ContratosDeVentaController < ApplicationController
       else
         i = DateTime.now
       end
-      @contrato.indice = Indice.porFechaYDenominacion(i, 'Costo de construcción')
+      @contrato.indice = Indice.por_fecha_y_denominacion(i, 'Costo de construcción')
     end
 
     def set_contrato
