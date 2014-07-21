@@ -137,6 +137,6 @@ class ChequesController < ApplicationController
     end
 
     def set_recibos
-      @recibos = @cheque.recibos
+      @recibos = @cheque.recibos.uniq
     end
 end
