@@ -50,7 +50,7 @@ class Cuota < ActiveRecord::Base
     # calcular el periodo si no lo especificamos
     periodo = vencimiento - 1.month if periodo.nil?
 
-    Indice.por_fecha_y_denominacion(periodo, contrato_de_venta.indice.denominacion)
+    self.indice = Indice.por_fecha_y_denominacion(periodo, contrato_de_venta.indice.denominacion)
   end
 
   # pagar la cuota genera una factura de cobro que el tercero adeuda
