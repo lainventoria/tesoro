@@ -11,7 +11,7 @@ class Efectivo < CausaNoTrackeable
     # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
     # que cambiarla
     if monto_aceptado.try :nonzero?
-      caja.cambiar(monto, monto_aceptado)
+      caja.cambiar(monto, monto_aceptado, recibo.factura)
       self.monto = monto_aceptado
     end
 
@@ -32,7 +32,7 @@ class Efectivo < CausaNoTrackeable
     # El cambio es a la inversa que en pagos, porque necesitamos que quede
     # asentada la plata que nos dan en realidad
     if monto_aceptado.try :nonzero?
-      caja.cambiar(monto_aceptado, monto)
+      caja.cambiar(monto_aceptado, monto, recibo.factura)
       self.monto = monto_aceptado
     end
 

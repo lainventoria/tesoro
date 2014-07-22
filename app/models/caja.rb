@@ -86,9 +86,10 @@ class Caja < ActiveRecord::Base
   end
 
   # Te doy 3 pesos por tus 100 dólares
-  def cambiar(cantidad, cantidad_aceptada)
+  def cambiar(cantidad, cantidad_aceptada, factura = nil)
     Caja.transaction do
       recibo = Recibo.interno_nuevo
+      recibo.factura = factura
       salida = extraer(cantidad, true)
       entrada = depositar(cantidad_aceptada, true)
       salida.causa = entrada.causa = Operacion.new

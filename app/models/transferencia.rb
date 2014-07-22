@@ -11,7 +11,7 @@ class Transferencia < CausaNoTrackeable
     # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
     # que cambiarla
     if monto_aceptado.try :nonzero?
-      caja.cambiar(monto, monto_aceptado)
+      caja.cambiar(monto, monto_aceptado, recibo.factura)
       self.monto = monto_aceptado
     end
 
@@ -32,7 +32,7 @@ class Transferencia < CausaNoTrackeable
     # Si  cambiar, hacer el cambio interno y usar el nuevo valor de
     # monto
     if monto_aceptado.try :nonzero?
-      caja.cambiar(monto_aceptado, monto)
+      caja.cambiar(monto_aceptado, monto, recibo.factura)
       self.monto = monto_aceptado
     end
 
