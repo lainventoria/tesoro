@@ -90,7 +90,7 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect(&:precio_venta_centavos).sum,
+    Money.new(unidades_funcionales.collect(&:precio_venta_final_centavos).sum,
       moneda?)
   end
  
