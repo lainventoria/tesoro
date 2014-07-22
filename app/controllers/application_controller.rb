@@ -70,7 +70,8 @@ class ApplicationController < ActionController::Base
             params[:causa].permit(:monto, :documento, :factura_id, :fecha_vencimiento, :situacion)
 
           when 'transferencia', 'efectivo'
-            params[:causa].permit(:monto_moneda, :monto_aceptado_moneda, :monto_aceptado, :monto, :caja_id)
+            params[:causa].permit(:monto_moneda, :monto_aceptado_moneda, :monto_aceptado, :monto, :caja_id,
+              :caja, :caja_destino_id)
 
           else
             {}
