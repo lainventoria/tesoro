@@ -101,7 +101,7 @@ $(document).ready(function(){
     cantidad_de_cuotas = $('#contrato_de_venta_cantidad_cuotas').val();
     monto_cuota = $('#contrato_de_venta_monto_cuotas').autoNumeric('get');
 
-    primera_cuota = new Date( $('#contrato_de_venta_fecha_primera_cuota').val() );
+    primera_cuota = parseDate( $('#contrato_de_venta_fecha_primera_cuota').val() );
     periodicidad = $('#contrato_de_venta_periodicidad_cuotas').val();
 
     // Recorro las cuotas generando cada una
@@ -134,7 +134,7 @@ $(document).ready(function(){
   // Agregar cuota click
   $('#contrato_de_venta_agregar_cuota').on('click',function(e){ 
     e.preventDefault();
-    fecha = new Date( $('#contrato_de_venta_fecha_cuota').val() );
+    fecha = parseDate( $('#contrato_de_venta_fecha_cuota').val() );
     mon = $('#contrato_de_venta_monto_cuota').autoNumeric('get');
     agregar_cuota(fecha,mon);
   });
