@@ -66,7 +66,7 @@ class Caja < ActiveRecord::Base
   end
 
   def banco_tipo_numero
-    "#{banco}  - #{tipo} - ...#{numero.last(4)}"
+    "#{banco}  - #{tipo} - ...#{(numero || 'S/N').last(4)}"
   end
 
   # TODO ver si hace falta un caso especial con movimientos sin guardar

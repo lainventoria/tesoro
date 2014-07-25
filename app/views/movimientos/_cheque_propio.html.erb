@@ -6,7 +6,7 @@
 
     <div class="field form-group col-md-4" >
       <%= f.label :cuenta %>
-      <%= f.collection_select :cuenta_id, cuentas_de_donde_emitir, :id, :tipo,
+      <%= f.collection_select :cuenta_id, cuentas_de_donde_emitir, :id, :banco_tipo_numero,
           { prompt: "-Seleccione Cuenta-" }, { class: "form-control" } %>
     </div>
 
