@@ -41,8 +41,8 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.integer  "chequera_id"
   end
 
-  add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id"
-  add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id"
+  add_index "cheques", ["chequera_id"], name: "index_cheques_on_chequera_id", using: :btree
+  add_index "cheques", ["cuenta_id"], name: "index_cheques_on_cuenta_id", using: :btree
 
   create_table "contratos_de_venta", force: true do |t|
     t.integer  "monto_total_centavos", default: 0,     null: false
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.integer  "obra_id"
   end
 
-  add_index "contratos_de_venta", ["indice_id"], name: "index_contratos_de_venta_on_indice_id"
-  add_index "contratos_de_venta", ["obra_id"], name: "index_contratos_de_venta_on_obra_id"
-  add_index "contratos_de_venta", ["tercero_id"], name: "index_contratos_de_venta_on_tercero_id"
+  add_index "contratos_de_venta", ["indice_id"], name: "index_contratos_de_venta_on_indice_id", using: :btree
+  add_index "contratos_de_venta", ["obra_id"], name: "index_contratos_de_venta_on_obra_id", using: :btree
+  add_index "contratos_de_venta", ["tercero_id"], name: "index_contratos_de_venta_on_tercero_id", using: :btree
 
   create_table "cuotas", force: true do |t|
     t.datetime "created_at"
@@ -71,9 +71,9 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.integer  "indice_id"
   end
 
-  add_index "cuotas", ["contrato_de_venta_id"], name: "index_cuotas_on_contrato_de_venta_id"
-  add_index "cuotas", ["factura_id"], name: "index_cuotas_on_factura_id"
-  add_index "cuotas", ["indice_id"], name: "index_cuotas_on_indice_id"
+  add_index "cuotas", ["contrato_de_venta_id"], name: "index_cuotas_on_contrato_de_venta_id", using: :btree
+  add_index "cuotas", ["factura_id"], name: "index_cuotas_on_factura_id", using: :btree
+  add_index "cuotas", ["indice_id"], name: "index_cuotas_on_indice_id", using: :btree
 
   create_table "facturas", force: true do |t|
     t.string   "tipo"
@@ -94,16 +94,16 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.integer  "obra_id"
   end
 
-  add_index "facturas", ["obra_id"], name: "index_facturas_on_obra_id"
-  add_index "facturas", ["tercero_id"], name: "index_facturas_on_tercero_id"
+  add_index "facturas", ["obra_id"], name: "index_facturas_on_obra_id", using: :btree
+  add_index "facturas", ["tercero_id"], name: "index_facturas_on_tercero_id", using: :btree
 
   create_table "indices", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.date     "periodo",                      null: false
-    t.string   "denominacion",                 null: false
-    t.decimal  "valor",                        null: false
-    t.boolean  "temporal",     default: false
+    t.date     "periodo",                                               null: false
+    t.string   "denominacion",                                          null: false
+    t.decimal  "valor",        precision: 10, scale: 0,                 null: false
+    t.boolean  "temporal",                              default: false
   end
 
   create_table "movimientos", force: true do |t|
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.string   "causa_type"
   end
 
-  add_index "movimientos", ["causa_id", "causa_type"], name: "index_movimientos_on_causa_id_and_causa_type"
+  add_index "movimientos", ["causa_id", "causa_type"], name: "index_movimientos_on_causa_id_and_causa_type", using: :btree
 
   create_table "obras", force: true do |t|
     t.string   "nombre"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.string   "importe_cache_moneda",   default: "ARS",  null: false
   end
 
-  add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id"
+  add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id", using: :btree
 
   create_table "retenciones", force: true do |t|
     t.integer  "factura_id"
@@ -155,9 +155,9 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.string   "estado",                 default: "emitida",   null: false
   end
 
-  add_index "retenciones", ["chequera_id"], name: "index_retenciones_on_chequera_id"
-  add_index "retenciones", ["cuenta_id"], name: "index_retenciones_on_cuenta_id"
-  add_index "retenciones", ["factura_id"], name: "index_retenciones_on_factura_id"
+  add_index "retenciones", ["chequera_id"], name: "index_retenciones_on_chequera_id", using: :btree
+  add_index "retenciones", ["cuenta_id"], name: "index_retenciones_on_cuenta_id", using: :btree
+  add_index "retenciones", ["factura_id"], name: "index_retenciones_on_factura_id", using: :btree
 
   create_table "terceros", force: true do |t|
     t.string   "nombre"
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.text     "telefono"
     t.text     "celular"
     t.string   "email"
-    t.float    "iva"
+    t.float    "iva",        limit: 24
     t.string   "cuit"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -183,6 +183,6 @@ ActiveRecord::Schema.define(version: 20140715184455) do
     t.text    "descripcion"
   end
 
-  add_index "unidades_funcionales", ["contrato_de_venta_id"], name: "index_unidades_funcionales_on_contrato_de_venta_id"
+  add_index "unidades_funcionales", ["contrato_de_venta_id"], name: "index_unidades_funcionales_on_contrato_de_venta_id", using: :btree
 
 end
