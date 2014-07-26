@@ -76,9 +76,9 @@ class RecibosControllerTest < ActionController::TestCase
     importe_permitido = @factura.saldo
 
     assert_difference('Recibo.count') do
-      post :create, 
-        factura_id: @factura, 
-        recibo: attributes_for( :recibo, importe: importe_permitido, factura_id: @factura), 
+      post :create,
+        factura_id: @factura,
+        recibo: attributes_for( :recibo, importe: importe_permitido, factura_id: @factura),
         causa_tipo: 'cheque-de-terceros',
         causa: {cheque_id: create(:cheque)}
     end
@@ -92,8 +92,9 @@ class RecibosControllerTest < ActionController::TestCase
   end
 
   test "muestra a través de su obra" do
-    recibo = create :recibo, factura: @factura
-    get :show, obra_id: recibo.obra, id: recibo
+    recibo_interno = @factura.obra.cajas.first.depositar!(Money.new(1000))
+
+    get :show, obra_id: @factura.obra, id: recibo_interno
     assert_response :success
   end
 
