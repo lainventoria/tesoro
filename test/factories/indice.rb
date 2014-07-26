@@ -1,7 +1,7 @@
 # encoding: utf-8
 FactoryGirl.define do
   factory :indice do
-    periodo '2013-01-01'
+    periodo Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month
     denominacion 'Costo de construcción'
 
     # que el indice sea un float

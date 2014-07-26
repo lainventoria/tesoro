@@ -45,8 +45,8 @@ class ContratosDeVentaController < ApplicationController
 
   def update
     respond_to do |format|
-      if @contrato.update(factura_params)
-        format.html { redirect_to @contrato, notice: 'Contrato actualizado con éxito.' }
+      if @contrato.update(contrato_de_venta_params)
+        format.html { redirect_to [@contrato.obra, @contrato], notice: 'Contrato actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

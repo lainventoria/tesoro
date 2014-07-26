@@ -29,6 +29,7 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
       unidades_funcionales: [[unidad,{precio_venta:unidad.precio_venta}]],
       fechas: ['21/7/2014'],
       montos: [unidad.precio_venta],
+      indice: 'anterior',
       contrato_de_venta: attributes_for(:contrato_de_venta, obra_id: obra, tercero_id: tercero)
     end
     contrato = assigns(:contrato)
@@ -47,21 +48,21 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
 
   test "actualiza" do
     monto_original = @contrato.monto_total
-    unidad = create :unidad_funcional
-
-    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: { unidad_id: [unidad] }
+    tercero = create :tercero
+    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: { tercero_id: [tercero] }
 
     contrato = assigns(:contrato)
     assert_redirected_to obra_contrato_de_venta_path(contrato.obra,contrato)
-    assert  contrato.monto_total > monto_original
+    assert contrato.tercero = tercero
   end
 
   test "destruye" do
+    obra = @contrato.obra
     assert_difference('ContratoDeVenta.count', -1) do
       delete :destroy, id: @contrato, obra_id: @contrato.obra
     end
 
-    assert_redirected_to obra_contrato_de_venta_path(@contrato.obra)
+    assert_redirected_to obra_contratos_de_venta_path(obra)
   end
 end
 
