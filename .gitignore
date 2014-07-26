@@ -26,3 +26,4 @@ app/assets/stylesheets/scaffolds.css.scss
 # Notas personales del proyecto
 doc-local
 TODO
+.env

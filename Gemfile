@@ -59,6 +59,8 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  # Guardar variables de entorno en .env
+  gem 'dotenv-rails'
 end
 
 group :test do
