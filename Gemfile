@@ -11,9 +11,7 @@ gem 'state_machine', github: 'lainventoria/state_machine'
 
 # permite importar y exportar datos en formato yml
 gem 'yaml_db', github: 'mauriciopasquier/yaml_db'
-
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'mysql2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -61,10 +59,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'better_errors'
   gem 'binding_of_caller'
-end
-
-group :production do
-  gem 'mysql2'
 end
 
 group :test do
