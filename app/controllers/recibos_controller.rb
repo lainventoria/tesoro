@@ -52,7 +52,7 @@ class RecibosController < ApplicationController
       if ok && @recibo.save && @recibo.pagar_o_cobrar_con(@causa)
 
         format.html { seguir_agregando_o_mostrar }
-        format.json { render action: 'show', status: :created, location: [@recibo.factura,@recibo] }
+        format.json { render action: 'show', status: :created, location: [@recibo.factura, @recibo] }
       else
         format.html { render action: 'new' }
         format.json { render json: @recibo.errors, status: :unprocessable_entity }

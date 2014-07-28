@@ -104,4 +104,3 @@ class Cuota < ActiveRecord::Base
     end
   end
 end
-
