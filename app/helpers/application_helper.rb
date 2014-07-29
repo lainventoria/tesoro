@@ -31,6 +31,12 @@ module ApplicationHelper
     monto < 0 ? 'text-danger' : ''
   end
 
+  # ver si la  obra esta persistida
+  # version sin url 
+  def hay_obra?
+    @obra.try :persisted?
+  end
+
   # decidir si vamos a incluir /obra/:obra_id en las urls o no, para
   # filtrar por obra
   def con_obra?(url)
@@ -95,6 +101,7 @@ module ApplicationHelper
       # los terceros no se filtran por obra
       when 'terceros' then url_for(params.merge({ obra_id: nil }))
       when 'unidades_funcionales' then url_for(params)
+      when 'contratos_de_venta' then url_for(params)
       # para cualquier otra cosa, imitar con_obra?
       else url_for(params.merge({ obra_id: obra.try(:id) }))
     end

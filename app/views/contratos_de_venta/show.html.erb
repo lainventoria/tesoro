@@ -1,0 +1,18 @@
+<h2>Contrato</h2> 
+
+<div class="col-md-12">
+  <div class="row">
+    <%= render 'form' %>
+  </div>
+
+  <div class="row">
+  <a type="button" class="btn btn-success col-md-3" href="<%= obra_contratos_de_venta_path(@obra) %>">
+      <span class="glyphicon glyphicon-list-alt"></span>
+      Listar Contratos
+    </a>
+    <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= edit_obra_contrato_de_venta_path(@obra,@contrato) %>">
+      <span class="glyphicon glyphicon-edit"></span>
+      Editar Contrato
+    </a>
+  </div>
+</div>

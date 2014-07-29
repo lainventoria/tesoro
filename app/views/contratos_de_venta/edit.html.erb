@@ -1,0 +1,22 @@
+<h2>Editar Contrato de Venta</h2>
+
+<div class="col-md-8">
+  <div class="row">
+    <%= render 'form' %>
+  </div>
+
+  <div class="row">
+    <a type="button" class="btn btn-danger col-md-3" href="<%= obra_contrato_de_venta_path(@contrato.obra, @contrato) %>" data-confirm="Estas seguro?" data-method="delete" rel="nofollow">
+      <span class="glyphicon glyphicon-remove-circle"></span>
+      Borrar Contrato
+    </a>
+    <a type="button" class="btn btn-warning col-md-3 col-md-offset-1" href="<%= obra_contrato_de_venta_path(@contrato.obra, @contrato) %>">
+      <span class="glyphicon glyphicon-eye-open"></span>
+      Volver al Contrato
+    </a>
+    <a type="button" class="btn btn-success col-md-3 col-md-offset-2" id="btnGuardar">
+      <span class="glyphicon glyphicon-ok"></span>
+      Guardar Cambios
+    </a>
+  </div>
+</div>

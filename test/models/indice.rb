@@ -22,4 +22,12 @@ class IndiceTest < ActiveSupport::TestCase
     assert i = build(:indice, valor: nil)
     assert_not i.save
   end
+
+  test "mpj esta feliz" do
+    denominacion = DENOMINACIONES.sample
+    periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - rand(10).month 
+    assert i = build(:indice, denominacion: denominacion, periodo: periodo)
+    assert i2 = por_fecha_y_denominacion(periodo + rand(25).day, denominacion)
+    assert i2 == i
+  end
 end

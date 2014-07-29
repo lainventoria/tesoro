@@ -60,6 +60,9 @@ Rails.application.routes.draw do
     # /obra/cheque
     # no se editan cheques aca, solo se listan
     resources :cheques
+
+    # /obra/contrato_de_venta
+    resources :contratos_de_venta
   end
 
   # /caja
@@ -102,6 +105,14 @@ Rails.application.routes.draw do
     collection do
       get 'cobros'
       get 'pagos'
+    end
+  end
+
+  resources :contratos_de_venta, only: [ :autocomplete_tercero_nombre, :autocomplete_tercero_cuit ] do
+    collection do
+      # Autocompletar Terceros
+      get :autocomplete_tercero_nombre
+      get :autocomplete_tercero_cuit
     end
   end
 

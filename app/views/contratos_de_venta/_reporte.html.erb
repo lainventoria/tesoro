@@ -1,0 +1,13 @@
+<div class="row col-md-12 reporte">
+  <div class="row borde-abajo">
+    <h3 class="h3">Contratos de Venta
+    <a type="button" class="btn btn-primary pull-right" href="<%= new_obra_contrato_de_venta_path(@obra) %>">
+      <span class="glyphicon glyphicon-plus"></span>
+      Nuevo Contrato
+    </a>
+    </h3>
+
+  </div>
+</div>
+
+<%= render 'contratos_de_venta/list', contratos: @obra.contratos_de_venta %>

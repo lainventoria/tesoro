@@ -1,1 +1,1 @@
-json.extract! @caja, :id, :obra_id, :created_at, :updated_at
+json.extract! @unidad, :id, :obra_id, :tipo, :precio_venta_centavos, :precio_venta_moneda

@@ -4,12 +4,17 @@ $(document).ready(function(){
 
   // Inicializar los datepicker
   $(':enabled .input-group.date').datepicker({
-    format: "dd M yyyy",
+    format: "dd/mm/yyyy",
     weekStart: 1,
     autoclose: true,
     language: "es",
     forceParse: false
   });
+
+  parseDate = function ( input ) {
+    var parts = input.match(/(\d+)/g);
+    return new Date(parts[2], parts[1]-1, parts[0]); // months are 0-based
+  }
 
   // Submite formularios al hacer click en id = btnGuardar
   $('#btnGuardar').on('click', function() {

@@ -25,17 +25,24 @@ class ContratoDeVenta < ActiveRecord::Base
   def moneda?
     monedas?.first
   end
+  accepts_nested_attributes_for :tercero
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
     self.cuotas.create(attributes)
   end
 
+  # agrega una cuota con un monto específico
+  def agregar_cuota(attributes = {})
+    cuota = Cuota.new(attributes)
+    self.cuotas << cuota
+  end
+
   # crea un pago inicial con la fecha de vencimiento igual a la fecha
   # del contrato
   # TODO chequear que sea el único?
-  def hacer_pago_inicial(monto)
-    crear_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
+  def agregar_pago_inicial(fecha, monto)
+    agregar_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
   end
 
   # divide el monto total menos el pago inicial en partes iguales
@@ -83,10 +90,17 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect(&:precio_venta_centavos).sum,
+    Money.new(unidades_funcionales.collect(&:precio_venta_final_centavos).sum,
       moneda?)
   end
-
+ 
+  # setear magicamente el tercero si no pasamos uno existente
+  def tercero_attributes=(attributes = {})
+    if tercero_id.nil?
+      self.tercero = Tercero.where(attributes.merge({ relacion: 'cliente' })).first_or_create
+    end
+  end
+ 
   private
 
     # El monto original es la suma de los valores de venta de las
@@ -115,4 +129,5 @@ class ContratoDeVenta < ActiveRecord::Base
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
+   
 end
