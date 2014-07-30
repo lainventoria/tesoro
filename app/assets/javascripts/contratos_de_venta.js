@@ -2,7 +2,11 @@ $(document).ready(function(){
 
   // TERCERO
 
-  // Cuando cambie el nombre del tercero cuando actualicemos el cuit
+  if ( typeof($('#contrato_de_venta_tercero_id').val()) != 'undefined' && !$('#contrato_de_venta_tercero_attributes_nombre').closest('fieldset').is('[disabled]') ) {
+    $('#contrato_de_venta_tercero_msg').show().find('span').text('Tercero seleccionado: ' + $('#contrato_de_venta_tercero_attributes_nombre').val() + ' [' + $('#contrato_de_venta_tercero_attributes_cuit').val() + ']');
+  }
+
+  // Cambiar el nombre del tercero cuando actualicemos el cuit
   $('#contrato_de_venta_tercero_attributes_cuit').on('railsAutocomplete.select', function(event, data){
     $('#contrato_de_venta_tercero_attributes_nombre').val(data.item.nombre);
     $('#contrato_de_venta_tercero_msg').show().find('span').text('Tercero seleccionado: ' + data.item.nombre + ' [' + data.item.value + ']');
@@ -69,6 +73,8 @@ $(document).ready(function(){
     $('#contrato_de_venta_unidades_funcionales option:selected').remove();
   });
 
+  $('input[data-role=money]').autoNumeric('init');
+  actualizar_total();
 
   // CUOTAS
   var agregar_cuota = function( fecha_ , monto_ ) {
