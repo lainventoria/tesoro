@@ -44,7 +44,7 @@ class UnidadFuncional < ActiveRecord::Base
   end
 
   def para_mostrar
-    tipo + ' - ' + descripcion
+    self.tipo + ' - ' + self.descripcion
   end
 
   protected
