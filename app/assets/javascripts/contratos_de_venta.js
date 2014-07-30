@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   // TERCERO
 
-  if ( typeof($('#contrato_de_venta_tercero_id').val()) != 'undefined' && !$('#contrato_de_venta_tercero_attributes_nombre').closest('fieldset').is('[disabled]') ) {
+  if ( $('#contrato_de_venta_tercero_id').val() > 0  && !$('#contrato_de_venta_tercero_attributes_nombre').closest('fieldset').is('[disabled]') ) {
     $('#contrato_de_venta_tercero_msg').show().find('span').text('Tercero seleccionado: ' + $('#contrato_de_venta_tercero_attributes_nombre').val() + ' [' + $('#contrato_de_venta_tercero_attributes_cuit').val() + ']');
   }
 
