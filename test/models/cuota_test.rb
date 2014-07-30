@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'test_helper'
 
 class CuotaTest < ActiveSupport::TestCase
@@ -6,7 +7,7 @@ class CuotaTest < ActiveSupport::TestCase
     @cv = create(:contrato_de_venta, indice: @indice, fecha: '2014-05-01')
 
     @cv.valid?
-    @cv.hacer_pago_inicial(@cv.monto_total * 0.1)
+    @cv.agregar_pago_inicial(@cv.fecha, @cv.monto_total * 0.1)
     @cv.crear_cuotas(12)
   end
 

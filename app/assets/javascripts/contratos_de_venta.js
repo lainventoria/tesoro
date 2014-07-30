@@ -2,7 +2,11 @@ $(document).ready(function(){
 
   // TERCERO
 
-  // Cuando cambie el nombre del tercero cuando actualicemos el cuit
+  if ( $('#contrato_de_venta_tercero_id').val() > 0  && !$('#contrato_de_venta_tercero_attributes_nombre').closest('fieldset').is('[disabled]') ) {
+    $('#contrato_de_venta_tercero_msg').show().find('span').text('Tercero seleccionado: ' + $('#contrato_de_venta_tercero_attributes_nombre').val() + ' [' + $('#contrato_de_venta_tercero_attributes_cuit').val() + ']');
+  }
+
+  // Cambiar el nombre del tercero cuando actualicemos el cuit
   $('#contrato_de_venta_tercero_attributes_cuit').on('railsAutocomplete.select', function(event, data){
     $('#contrato_de_venta_tercero_attributes_nombre').val(data.item.nombre);
     $('#contrato_de_venta_tercero_msg').show().find('span').text('Tercero seleccionado: ' + data.item.nombre + ' [' + data.item.value + ']');
@@ -34,7 +38,7 @@ $(document).ready(function(){
   var agregar_unidad = function(id) {
     $obra = $('#contrato_de_venta_obra_id');
     $.get('/obras/' + $obra.val() + '/unidades_funcionales/' + id +'.json', function(data) {
-      html = '<tr><td>' + data.tipo + ' ' + data.id + '</td>'
+      html = '<tr><td>' + data.para_mostrar + '</td>'
       html += '<td>' + data.precio_venta_moneda + '</td>';
       html += '<td><input type="text" data-role="money" name="unidades_funcionales[' + data.id + '][precio_venta]" value="' + data.precio_venta_centavos / 100 + '" class="form-control precio" /></td>';
       html += '<td><a href="#" class="quitar-unidad"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
@@ -69,6 +73,8 @@ $(document).ready(function(){
     $('#contrato_de_venta_unidades_funcionales option:selected').remove();
   });
 
+  $('input[data-role=money]').autoNumeric('init');
+  actualizar_total();
 
   // CUOTAS
   var agregar_cuota = function( fecha_ , monto_ ) {

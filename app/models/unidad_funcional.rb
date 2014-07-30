@@ -14,6 +14,7 @@ class UnidadFuncional < ActiveRecord::Base
   before_destroy :chequear_no_se_usa
 
   monetize :precio_venta_centavos, with_model_currency: :precio_venta_moneda
+  monetize :precio_venta_final_centavos, with_model_currency: :precio_venta_final_moneda
 
   scope :disponibles, lambda {
     where(contrato_de_venta: nil)
@@ -23,12 +24,28 @@ class UnidadFuncional < ActiveRecord::Base
     where.not(contrato_de_venta: nil)
   }
 
+  scope :departamentos, lambda {
+    where(tipo: 'Departamento')
+  }
+
+  scope :cocheras, lambda {
+    where(tipo: 'Cochera')
+  }
+
+  scope :bauleras, lambda {
+    where(tipo: 'Baulera')
+  }
+
   def precio_venta(moneda = 'ARS')
     Money.new(precio_venta_centavos, moneda)
   end
 
   def disponible?
     self.contrato_de_venta.nil?
+  end
+
+  def para_mostrar
+    self.tipo + ' - ' + self.descripcion
   end
 
   protected
