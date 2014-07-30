@@ -9,21 +9,39 @@
     <div class="col-md-6">
       Departamentos
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.departamentos.disponibles.count %>
+    </div>
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.departamentos.count %>
+    </div>
+    <div class="col-md-2 text-center">
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       Cocheras
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.cocheras.disponibles.count %>
+    </div>
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.cocheras.count %>
+    </div>
+    <div class="col-md-2 text-center">
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       Bauleras
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.bauleras.disponibles.count %>
+    </div>
+    <div class="col-md-2 text-center">
+    <%= @obra.unidades_funcionales.bauleras.count %>
+    </div>
+    <div class="col-md-2 text-center">
     </div>
   </div>
   <br>

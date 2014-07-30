@@ -13,7 +13,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     cv = create(:contrato_de_venta)
     cv.valid?
 
-    assert cv.hacer_pago_inicial(Money.new(1000 * 100))
+    cv.agregar_pago_inicial(cv.fecha, Money.new(1000 * 100))
     assert_equal 'Pago inicial', cv.cuotas.first.descripcion
     assert_equal Money.new(1000 * 100), cv.cuotas.first.monto_original
   end
@@ -26,7 +26,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     # 10% del monto total
     pi = cv.monto_total * 0.1
 
-    assert cv.hacer_pago_inicial(pi), cv.inspect
+    assert cv.agregar_pago_inicial(cv.fecha, pi), cv.inspect
     assert cv.crear_cuotas(12), [ cv.monto_total, pi, cv.total_de_cuotas, cv.cuotas.count ]
 
     assert_equal 13, cv.cuotas.count
