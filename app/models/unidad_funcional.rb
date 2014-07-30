@@ -31,6 +31,10 @@ class UnidadFuncional < ActiveRecord::Base
     self.contrato_de_venta.nil?
   end
 
+  def para_mostrar
+    tipo + ' - ' + descripcion
+  end
+
   protected
     def chequear_no_se_usa
       if self.contrato_de_venta.present?
