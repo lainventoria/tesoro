@@ -14,6 +14,7 @@ class UnidadFuncional < ActiveRecord::Base
   before_destroy :chequear_no_se_usa
 
   monetize :precio_venta_centavos, with_model_currency: :precio_venta_moneda
+  monetize :precio_venta_final_centavos, with_model_currency: :precio_venta_final_moneda
 
   scope :disponibles, lambda {
     where(contrato_de_venta: nil)
