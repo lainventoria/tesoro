@@ -23,6 +23,18 @@ class UnidadFuncional < ActiveRecord::Base
     where.not(contrato_de_venta: nil)
   }
 
+  scope :departamentos, lambda {
+    where(tipo: 'Departamento')
+  }
+
+  scope :cocheras, lambda {
+    where(tipo: 'Cochera')
+  }
+
+  scope :bauleras, lambda {
+    where(tipo: 'Baulera')
+  }
+
   def precio_venta(moneda = 'ARS')
     Money.new(precio_venta_centavos, moneda)
   end
