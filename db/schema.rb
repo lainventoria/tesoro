@@ -135,9 +135,11 @@ ActiveRecord::Schema.define(version: 20140731022351) do
     t.string   "situacion",              default: "pago"
     t.integer  "importe_cache_centavos", default: 0,      null: false
     t.string   "importe_cache_moneda",   default: "ARS",  null: false
+    t.integer  "recibo_id"
   end
 
   add_index "recibos", ["factura_id"], name: "index_recibos_on_factura_id", using: :btree
+  add_index "recibos", ["recibo_id"], name: "index_recibos_on_recibo_id", using: :btree
 
   create_table "retenciones", force: true do |t|
     t.integer  "factura_id"
