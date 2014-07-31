@@ -4,7 +4,8 @@
   </td>
   <td><%= link_a_causa(movimiento) %></td>
   <td class='text-right <%= lista_recibos %>'>
-    <%= formatted_number(movimiento.monto.abs) + ' ' + movimiento.monto_moneda %>
+    <%= formatted_number(movimiento.monto.abs) %>
+    <%= movimiento.monto_moneda %>
   </td>
   <td class='text-right <%= lista_cajas %>'>
     <%= movimiento.monto_moneda == 'ARS' ? formatted_number(movimiento.monto) : '' %>
