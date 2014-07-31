@@ -28,6 +28,8 @@ class Indice < ActiveRecord::Base
       indice_anterior = Indice.where(denominacion: denominacion).
         order(:periodo).last
 
+      raise "Faltan los indices" if indice_anterior.nil?
+
       # y crear un indice temporal con el valor del ultimo indice
       # disponible
       indice = Indice.new(temporal: true,

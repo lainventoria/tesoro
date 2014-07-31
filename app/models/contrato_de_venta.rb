@@ -47,33 +47,6 @@ class ContratoDeVenta < ActiveRecord::Base
     agregar_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)
   end
 
-  # divide el monto total menos el pago inicial en partes iguales
-  def crear_cuotas(cantidad)
-    # antes hay que hacer un pago inicial
-    return false if cuotas.empty?
-
-    monto_a_financiar = monto_total - cuotas.first.monto_original
-    # esto va a sobrar de la división y se lo mandamos a la primera
-    # cuota
-    monto_por_cuota = monto_a_financiar / cantidad
-    resto = monto_a_financiar - (monto_por_cuota * cantidad)
-
-    # crear las cuotas mensuales
-    Cuota.transaction do
-      cantidad.times { |cuota|
-        cuota+=1
-        crear_cuota(monto_original: monto_por_cuota,
-          vencimiento: fecha + cuota.months,
-          descripcion: "Cuota ##{cuota}")
-      }
-
-      # sumarle el resto a la primera cuota
-      cuotas.second.monto_original += resto
-      cuotas.second.save
-    end
-
-  end
-
   # por cada unidad funcional que se agrega se recalcula el monto
   def agregar_unidad_funcional(unidad_funcional)
     unidad_funcional.contrato_de_venta = self
@@ -99,9 +72,16 @@ class ContratoDeVenta < ActiveRecord::Base
   # setear magicamente el tercero si no pasamos uno existente
   def tercero_attributes=(attributes = {})
     if tercero_id.nil?
-      self.tercero = Tercero.where(attributes.merge({ relacion: 'cliente' })).first_or_create
+      self.tercero = Tercero.find_or_create_by(cuit: attributes[:cuit]) do |tercero|
+        if tercero.persisted?
+          tercero.volverse_cliente
+        else
+          tercero.nombre = attributes.merge(relacion: 'cliente')
+        end
+      end
     end
   end
+
  
   private
 

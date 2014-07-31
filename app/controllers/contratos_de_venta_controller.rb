@@ -17,7 +17,7 @@ class ContratosDeVentaController < ApplicationController
   def new
     @editar = true
     @contrato = ContratoDeVenta.new
-    @contrato.tercero = Tercero.new
+    @contrato.build_tercero
   end
 
   def edit
