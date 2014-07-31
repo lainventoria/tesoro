@@ -4,6 +4,7 @@ FactoryGirl.define do
     tercero
     indice
     obra
+    relacion_indice 'anterior'
 
     fecha { Time.now }
 

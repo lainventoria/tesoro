@@ -13,8 +13,9 @@ class Indice < ActiveRecord::Base
     temporal
   end
 
-  def self.por_fecha_y_denominacion ( fecha, denominacion )
-    periodo = Date.new(fecha.year, fecha.month, 1)
+  def self.por_fecha_y_denominacion(fecha, denominacion)
+    
+    periodo = fecha.beginning_of_month()
 
     # obtener el indice para este periodo
     indice = Indice.where(periodo: periodo).

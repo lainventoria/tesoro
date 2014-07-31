@@ -8,7 +8,7 @@ class ContratoDeVenta < ActiveRecord::Base
 
   has_many :cuotas, dependent: :destroy
   # no toma la inflexión en la asociación
-  has_many :unidades_funcionales, class_name: 'UnidadFuncional'
+  has_many :unidades_funcionales, class_name: 'UnidadFuncional', dependent: :nullify
 
   validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
@@ -17,8 +17,6 @@ class ContratoDeVenta < ActiveRecord::Base
     :validar_total_de_cuotas, :validar_monedas
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
-
-  before_destroy :liberar_unidades
 
   def monedas?
     unidades_funcionales.collect(&:precio_venta_moneda).uniq
@@ -65,10 +63,21 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect(&:precio_venta_final_centavos).sum,
+    Money.new(unidades_funcionales.collect{|u| 
+        if u.precio_venta_final > 0 
+          u.precio_venta_final
+        else
+          u.precio_venta
+        end
+        }.sum,
       moneda?)
   end
- 
+
+  def periodo_para(fecha)
+    periodo = fecha.beginning_of_month()
+    periodo = periodo - 1.month if relacion_indice == 'anterior'
+  end
+
   # setear magicamente el tercero si no pasamos uno existente
   def tercero_attributes=(attributes = {})
     if tercero_id.nil?
@@ -82,7 +91,6 @@ class ContratoDeVenta < ActiveRecord::Base
     end
   end
 
- 
   private
 
     # El monto original es la suma de los valores de venta de las
@@ -109,13 +117,6 @@ class ContratoDeVenta < ActiveRecord::Base
 
       if cuotas.collect(&:monto_original_moneda).uniq.count > 1
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
-      end
-    end
-
-    def liberar_unidades
-      self.unidades_funcionales.each do |unidad|
-        unidad.contrato_de_venta = nil
-        self.unidades_funcionales.delete unidad
       end
     end
    

@@ -11,7 +11,6 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
   test "el contrato tiene un pago inicial" do
     cv = create(:contrato_de_venta)
-    cv.valid?
 
     cv.agregar_pago_inicial(cv.fecha, Money.new(1000 * 100))
     assert_equal 'Pago inicial', cv.cuotas.first.descripcion
@@ -20,22 +19,23 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
   test "el contrato tiene cuotas" do
     cv = create(:contrato_de_venta)
-    # todo el after :build no calcula el monto_total
-    cv.valid?
 
     # 10% del monto total
     pi = cv.monto_total * 0.1
 
-    assert cv.agregar_pago_inicial(cv.fecha, pi), cv.inspect
-    assert cv.crear_cuotas(12), [ cv.monto_total, pi, cv.total_de_cuotas, cv.cuotas.count ]
+    cv.agregar_pago_inicial(cv.fecha, pi)
+    cv.agregar_cuota(attributes_for(:cuota))
+    cv.agregar_cuota(attributes_for(:cuota))
+    cv.agregar_cuota(attributes_for(:cuota))
+    cv.agregar_cuota(attributes_for(:cuota))
 
-    assert_equal 13, cv.cuotas.count
+    assert_equal 5, cv.cuotas.count
 
   end
 
   test "el monto original es la suma de las unidades funcionales" do
     cv = create(:contrato_de_venta)
-    cv.valid?
+
     # el factory siempre agrega una
     total = cv.unidades_funcionales.first.precio_venta
 
@@ -45,7 +45,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
       cv.agregar_unidad_funcional(uf)
     }
 
-    assert_equal total, cv.monto_total
+    assert_equal total, cv.monto_total, [total, cv.monto_total, cv.total_de_unidades_funcionales, cv.total_de_cuotas, cv]
   end
 
   test "el tercero debe ser un cliente" do
