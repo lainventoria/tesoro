@@ -20,7 +20,7 @@
             contrato.tercero.nombre,
           ]
           @campos_numeros = [
-            formatted_number(contrato.monto_total)
+            formatted_number(contrato.monto_total, contrato.monto_total_moneda)
           ] 
         %>
         <% @campos.each do |campo| %>
