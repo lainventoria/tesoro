@@ -9,7 +9,7 @@ FactoryGirl.define do
     sequence(:cuit, '00000000') do |n|
       (0..9).collect do |verificador|
         "10-#{n}-#{verificador}"
-      end.select { |cuit| Tercero.validar_cuit(cuit) }.first || '20-31278322-4'
+      end.select { |cuit| Tercero.validar_cuit(cuit) }.first || generate(:cuit_default)
     end
 
     factory :proveedor do

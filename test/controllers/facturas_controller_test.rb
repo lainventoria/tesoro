@@ -39,10 +39,9 @@ class FacturasControllerTest < ActionController::TestCase
           fecha_pago: Time.now,
           importe_total: Money.new(1000), iva: Money.new(0),
           numero: '1', tipo: 'X',
-          tercero_attributes: { nombre: 'pepe honguito', cuit: '20-31278322-4' }
+          tercero_attributes: attributes_for(:tercero)
         }
       end
-
     end
 
     assert_redirected_to obra_factura_path(obra, assigns(:factura))
