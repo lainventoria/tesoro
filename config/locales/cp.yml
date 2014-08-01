@@ -81,3 +81,6 @@ es:
           attributes:
             caja:
               debe_ser_una_cuenta: 'La caja debe ser una cuenta de banco'
+  cajas:
+    error_en_deposito: 'Falló el depósito'
+    error_en_extraccion: 'Falló la extracción'

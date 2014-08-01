@@ -30,7 +30,7 @@ class CajaDepositosTest < ActiveSupport::TestCase
     no_movimientos = MiniTest::Mock.new.expect :build, false, [Hash]
 
     @caja.stub :movimientos, no_movimientos do
-      assert_raise ActiveRecord::Rollback do
+      assert_raise Caja::ErrorEnDeposito do
         @caja.depositar(Money.new(100), true)
       end
     end

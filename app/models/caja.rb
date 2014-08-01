@@ -1,5 +1,7 @@
 # encoding: utf-8
 class Caja < ActiveRecord::Base
+  class ErrorEnDeposito < ActiveRecord::ActiveRecordError; end;
+  class ErrorEnExtraccion < ActiveRecord::ActiveRecordError; end;
 
   default_scope { where(archivada: false) }
 
@@ -117,7 +119,7 @@ class Caja < ActiveRecord::Base
       (cantidad <= total(cantidad.currency.iso_code) || chequera?)
       depositar(cantidad * -1, false)
     else
-      raise ActiveRecord::Rollback, 'Falló la extracción' if lanzar_excepcion
+      raise ErrorEnExtraccion, I18n.t('cajas.error_en_extraccion') if lanzar_excepcion
       invalido = movimientos.build monto: Money.new(0)
       invalido.errors.add(:monto, :no_hay_fondos_suficientes)
       invalido
@@ -144,7 +146,7 @@ class Caja < ActiveRecord::Base
     if movimiento = movimientos.build(monto: cantidad)
       movimiento
     else
-      raise ActiveRecord::Rollback, 'Falló el depósito' if lanzar_excepcion
+      raise ErrorEnDeposito, I18n.t('cajas.error_en_deposito') if lanzar_excepcion
     end
   end
 

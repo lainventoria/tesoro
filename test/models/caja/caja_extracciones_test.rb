@@ -68,7 +68,7 @@ class CajaExtraccionesTest < ActiveSupport::TestCase
   end
 
   test 'extraer lanza excepciones opcionalmente' do
-    assert_raise ActiveRecord::Rollback do
+    assert_raise Caja::ErrorEnExtraccion do
       @caja.extraer(Money.new(100), true)
     end
   end
