@@ -10,7 +10,7 @@ class ContratoDeVenta < ActiveRecord::Base
   # no toma la inflexión en la asociación
   has_many :unidades_funcionales, class_name: 'UnidadFuncional', dependent: :nullify
 
-  validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales
+  validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales, :relacion_indice
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
 
   before_validation :calcular_monto_total, :validar_cliente,
@@ -29,7 +29,7 @@ class ContratoDeVenta < ActiveRecord::Base
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
-    self.cuotas.create(attributes)
+    cuotas.create(attributes)
   end
 
   # agrega una cuota con un monto específico
@@ -84,8 +84,10 @@ class ContratoDeVenta < ActiveRecord::Base
       self.tercero = Tercero.find_or_create_by(cuit: attributes[:cuit]) do |tercero|
         if tercero.persisted?
           tercero.volverse_cliente
+          self.tercero_id = tercero
         else
-          tercero.nombre = attributes.merge(relacion: 'cliente')
+          tercero.nombre = attributes[:nombre]
+          tercero.relacion = 'cliente'
         end
       end
     end
