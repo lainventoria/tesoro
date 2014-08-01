@@ -28,7 +28,7 @@ class ContratosDeVentaController < ApplicationController
     @contrato = ContratoDeVenta.new( contrato_de_venta_params )
     @contrato.fecha = DateTime.now
 
-    @contrato.indice = Indice.por_fecha_y_denominacion(@contrato.periodo_para(Date.today), 'Costo de construcción')
+    @contrato.indice = @contrato.indice_para(Date.today)
     agregar_unidades
     agregar_cuotas
 

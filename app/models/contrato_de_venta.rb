@@ -78,6 +78,10 @@ class ContratoDeVenta < ActiveRecord::Base
     periodo = periodo - 1.months if relacion_indice == 'anterior'
   end
 
+  def indice_para(fecha)
+    Indice.por_fecha_y_denominacion(periodo_para(fecha), 'Costo de construcción')
+  end
+
   # setear magicamente el tercero si no pasamos uno existente
   def tercero_attributes=(attributes = {})
     if tercero_id.nil?

@@ -9,7 +9,7 @@ class CuotaTest < ActiveSupport::TestCase
     indice_viejo = create(:indice, periodo: (Date.today - 10.months).beginning_of_month, denominacion: 'Costo de construcción')
     indice_viejo.save
 
-    @indice = Indice.por_fecha_y_denominacion(@cv.periodo_para(Date.today - 2.months), 'Costo de construcción')
+    @indice = @cv.indice_para(Date.today - 2.months)
     @cv.indice = @indice
 
     @cv.agregar_pago_inicial(@cv.fecha, @cv.monto_total * 0.2)
