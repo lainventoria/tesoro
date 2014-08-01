@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20140731022351) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "obra_id"
-    t.string   "relacion_indice"
+    t.string   "relacion_indice",                      null: false
   end
 
   add_index "contratos_de_venta", ["indice_id"], name: "index_contratos_de_venta_on_indice_id", using: :btree
