@@ -31,10 +31,12 @@ class CajaMovimientosTest < ActiveSupport::TestCase
     create :movimiento, caja: @caja, monto: Money.new(100, 'EUR')
 
     assert_no_difference 'Movimiento.count' do
-      @recibo_interno = @caja.cambiar(Money.new(200, 'EUR'), Money.new(300))
+      assert_raise Caja::ErrorEnExtraccion do
+        @ningun_recibo_interno = @caja.cambiar(Money.new(200, 'EUR'), Money.new(300))
+      end
     end
 
-    assert_nil @recibo_interno
+    assert_nil @ningun_recibo_interno
   end
 
   test 'transferir dineros de una caja a otra' do
