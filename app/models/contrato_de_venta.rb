@@ -75,7 +75,7 @@ class ContratoDeVenta < ActiveRecord::Base
 
   def periodo_para(fecha)
     periodo = fecha.beginning_of_month()
-    periodo = periodo - 1.month if relacion_indice == 'anterior'
+    periodo = periodo - 1.months if relacion_indice == 'anterior'
   end
 
   # setear magicamente el tercero si no pasamos uno existente

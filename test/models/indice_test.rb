@@ -26,8 +26,8 @@ class IndiceTest < ActiveSupport::TestCase
   test "mpj esta feliz, los indices vienen como deben" do
     denominacion = Indice::DENOMINACIONES.sample
     periodo = (Date.today - rand(10).months).beginning_of_month
-    assert i = build(:indice, denominacion: denominacion, periodo: periodo)
-    assert i2 = Indice::por_fecha_y_denominacion(periodo + rand(25).day, denominacion)
-    assert i2 == i
+    assert i = create(:indice, denominacion: denominacion, periodo: periodo), [periodo, denominacion]
+    assert i2 = Indice::por_fecha_y_denominacion(periodo + rand(25).day, denominacion), [periodo,denominacion,i]
+    assert i2 == i, [periodo,denominacion,i,i2]
   end
 end

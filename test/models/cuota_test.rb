@@ -55,7 +55,7 @@ class CuotaTest < ActiveSupport::TestCase
 
   test "listar cuotas vencidas" do
     # todas las cuotas vencidas de acá a 5 meses
-    assert_equal 3, Cuota.vencidas.count, Cuota.vencidas.inspect
+    assert_equal 3, @cv.cuotas.vencidas.count, Cuota.vencidas.inspect
   end
 
   test "algunas cuotas están vencidas" do
@@ -109,18 +109,18 @@ class CuotaTest < ActiveSupport::TestCase
     assert_not c.vencida?, c.vencimiento
 
     p = (Date.today + 5.months).beginning_of_month
-    assert indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción")
+    assert indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción"), p
     assert c.generar_factura(p), c.errors.messages.inspect
 
-    f = c.factura
-    assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto
+    assert f = c.factura, c.inspect
+    assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto, [f.inspect, c.inspect]
   end
 
   test "si el indice no existe se crea uno temporal" do
     c = @cv.cuotas[2]
 
     assert c.generar_factura, c.errors.messages.inspect
-    assert c.indice.temporal?
+    assert c.indice.temporal?, [c.inspect, c.indice.inspect]
     # como no se creó ningún índice más el utilizado es el indice
     # original
     assert_equal @indice.valor, c.indice.valor
