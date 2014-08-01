@@ -22,13 +22,15 @@ module ApplicationHelper
   end
 
   # formatear un valor absoluto con separador de miles y mostrar en rojo
-  # si es negativo
-  #
-  # TODO si son todos Money por qué no se acepta eso y se muestra la
-  # moneda opcionalmente?
-  def formatted_number(numero)
+  # si es negativo, opcionalmente mostrando la moneda
+  def formatted_number(numero, moneda = nil)
     content_tag :span, class: negativo_rojo(numero) do
-      number_to_currency(numero.to_f, delimiter: ".", separator: ",", format: "%n &nbsp;".html_safe, negative_format: "( %n )" )
+      number_to_currency(numero.to_f,
+        delimiter: ".",
+        separator: ",",
+        format: "%n %u&nbsp;".html_safe,
+        unit: (moneda || ''),
+        negative_format: "( %n ) %u" )
     end
   end
 
