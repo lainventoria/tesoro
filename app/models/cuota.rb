@@ -72,6 +72,7 @@ class Cuota < ActiveRecord::Base
         descripcion: descripcion,
         tercero: tercero,
         obra: obra)
+      self.save
       self.factura
     end
   end

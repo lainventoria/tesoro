@@ -54,8 +54,7 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "listar cuotas vencidas" do
-    # todas las cuotas vencidas de acá a 5 meses
-    assert_equal 3, @cv.cuotas.vencidas.count, Cuota.vencidas.inspect
+    assert_equal 2, @cv.cuotas.vencidas.count, @cv.cuotas.vencidas.inspect
   end
 
   test "algunas cuotas están vencidas" do
@@ -82,7 +81,7 @@ class CuotaTest < ActiveSupport::TestCase
     assert_not c.vencida?, c.vencimiento
 
     # el periodo actual suele ser el indice del mes anterior
-    p = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month
+    p = (Date.today - 1.months).beginning_of_month
 
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
@@ -111,7 +110,6 @@ class CuotaTest < ActiveSupport::TestCase
     p = (Date.today + 5.months).beginning_of_month
     assert indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción"), p
     assert c.generar_factura(p), c.errors.messages.inspect
-
     assert f = c.factura, c.inspect
     assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto, [f.inspect, c.inspect]
   end
@@ -126,9 +124,13 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal @indice.valor, c.indice.valor
 
     factura_importe_original = c.factura.importe_neto
-    c.indice.valor = c.indice.valor * 1.2
 
+    c.indice.valor = c.indice.valor * 1.2
     assert c.indice.save
+
+    assert c.factura.delete
+    assert c.generar_factura
+
     assert_not_equal factura_importe_original, c.factura.reload.importe_neto
     assert_not_equal factura_importe_original, c.factura.importe_total
   end
