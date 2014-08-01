@@ -63,13 +63,13 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect{|u| 
+    Money.new(unidades_funcionales.collect do |u| 
         if u.precio_venta_final > 0 
           u.precio_venta_final
         else
           u.precio_venta
         end
-        }.sum,
+      end.sum,
       moneda?)
   end
 
