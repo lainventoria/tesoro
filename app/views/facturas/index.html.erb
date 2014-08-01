@@ -30,7 +30,7 @@
   <tbody>
     <% @facturas.each do |factura| %>
       <tr>
-        <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver factura"></i>'), [factura] %></td>
+        <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver factura"></i>'), [@obra, factura] %></td>
 
         <% @campos = [
             factura.tipo.first(1),
