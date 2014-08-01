@@ -17,7 +17,7 @@ class ContratosDeVentaController < ApplicationController
   def new
     @editar = true
     @contrato = ContratoDeVenta.new
-    @contrato.tercero = Tercero.new
+    @contrato.build_tercero
   end
 
   def edit
@@ -28,7 +28,7 @@ class ContratosDeVentaController < ApplicationController
     @contrato = ContratoDeVenta.new( contrato_de_venta_params )
     @contrato.fecha = DateTime.now
 
-    agregar_indice
+    @contrato.indice = @contrato.indice_para(Date.today)
     agregar_unidades
     agregar_cuotas
 
@@ -74,7 +74,7 @@ class ContratosDeVentaController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_de_venta_params
       params.require(:contrato_de_venta).permit(
-        :tercero_id, :obra_id,
+        :tercero_id, :obra_id, :relacion_indice,
         tercero_attributes: [ :nombre, :cuit ]
       )
     end
@@ -99,15 +99,6 @@ class ContratosDeVentaController < ApplicationController
       cuotas.map { |fecha,monto| @contrato.agregar_cuota(vencimiento: fecha, monto_original: monto, descripcion: "Cuota ##{i}") }
     end
 
-    def agregar_indice
-      i = params['indice']
-      if i == 'anterior'
-        i = DateTime.now.months_ago(1)
-      else
-        i = DateTime.now
-      end
-      @contrato.indice = Indice.por_fecha_y_denominacion(i, 'Costo de construcción')
-    end
 
     def set_contrato
       @contrato = ContratoDeVenta.find(params[:id])

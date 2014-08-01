@@ -83,10 +83,7 @@ end %>
           <div class="field form-group"> 
             <label>Índice</label>
 <% if @contrato.new_record? %>
-            <select class="form-control" name="indice">
-              <option value="anterior">Anterior</option>
-              <option value="actual">Actual</option>
-            </select>
+<%= f.select(:relacion_indice, ['anterior','actual'], { class: "form-control" } ) %>
 <% else %>
   <%= @contrato.indice.periodo %>
 <% end %>

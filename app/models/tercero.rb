@@ -48,6 +48,13 @@ class Tercero < ActiveRecord::Base
     Tercero.validar_cuit(cuit)
   end
 
+  def volverse_cliente
+    if proveedor?
+      self.relacion = 'ambos'
+    end
+    relacion
+  end
+
   private
 
     def el_cuit_es_valido

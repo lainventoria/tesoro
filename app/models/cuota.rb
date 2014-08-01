@@ -45,10 +45,9 @@ class Cuota < ActiveRecord::Base
   #
   # si el indice no existe se crea uno temporal
   #
-  # TODO reescribir de forma elegante y con menos consultas
   def indice_actual(periodo = nil)
     # calcular el periodo si no lo especificamos
-    periodo = vencimiento - 1.month if periodo.nil?
+    periodo = contrato_de_venta.periodo_para(vencimiento) if periodo.nil?
 
     self.indice = Indice.por_fecha_y_denominacion(periodo, contrato_de_venta.indice.denominacion)
   end
@@ -60,9 +59,8 @@ class Cuota < ActiveRecord::Base
     # calcula al indice del mes actual en lugar del indice del mes de
     # vencimiento
     unless vencida?
-      # los periodos comienzan con el mes
-      periodo = Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month if periodo.nil?
-      vencimiento_actual = Time.now.to_date
+      periodo = contrato_de_venta.periodo_para(Date.today)
+      vencimiento_actual = Date.today
     end
 
     Factura.transaction do
@@ -74,9 +72,8 @@ class Cuota < ActiveRecord::Base
         descripcion: descripcion,
         tercero: tercero,
         obra: obra)
-
       self.save
-
+      self.factura
     end
   end
 end

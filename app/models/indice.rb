@@ -13,8 +13,9 @@ class Indice < ActiveRecord::Base
     temporal
   end
 
-  def self.por_fecha_y_denominacion ( fecha, denominacion )
-    periodo = Date.new(fecha.year, fecha.month, 1)
+  def self.por_fecha_y_denominacion(fecha, denominacion)
+    
+    periodo = fecha.beginning_of_month()
 
     # obtener el indice para este periodo
     indice = Indice.where(periodo: periodo).
@@ -27,6 +28,8 @@ class Indice < ActiveRecord::Base
       # obtener el último indice disponible
       indice_anterior = Indice.where(denominacion: denominacion).
         order(:periodo).last
+
+      raise "Faltan los indices" if indice_anterior.nil?
 
       # y crear un indice temporal con el valor del ultimo indice
       # disponible
