@@ -16,6 +16,8 @@ class ContratoDeVenta < ActiveRecord::Base
   before_validation :calcular_monto_total, :validar_cliente,
     :validar_total_de_cuotas, :validar_monedas
 
+  accepts_nested_attributes_for :tercero
+
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
   def monedas?
@@ -25,7 +27,6 @@ class ContratoDeVenta < ActiveRecord::Base
   def moneda?
     monedas?.first
   end
-  accepts_nested_attributes_for :tercero
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})

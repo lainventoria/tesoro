@@ -22,6 +22,17 @@ class Obra < ActiveRecord::Base
 
   validates_presence_of :nombre, :direccion
 
+  # Genera las facturas para todas las cuotas vencidas
+  def generar_facturas_para_cuotas_vencidas
+    Obra.transaction do
+      contratos_de_venta.each do |contrato|
+        contrato.cuotas.vencidas.each do |cuota|
+          cuota.generar_factura
+        end
+      end
+    end
+  end
+
   # Abstracción para traer totales de facturas, se le pasa el atributo
   # que lleva el monto (importe_total, iva, importe_neto) como string,
   # la moneda y parámetros extra para filtrar.
