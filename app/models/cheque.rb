@@ -157,6 +157,7 @@ class Cheque < ActiveRecord::Base
 
       salida = cuenta.extraer(monto, true)
       salida.causa = self
+
       entrada = chequera.depositar(monto, true)
       entrada.causa = self
 

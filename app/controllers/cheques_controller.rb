@@ -67,12 +67,19 @@ class ChequesController < ApplicationController
   def pagar
     @cheque = Cheque.find(params[:id])
     respond_to do |format|
-      if @cheque.pagar
+    
+      begin
+        @cheque.pagar
+      rescue Caja::ErrorEnExtraccion => excepcion
+        @cheque.errors.add(:cuenta, I18n.t('cajas.fondos_insuficientes'))
+      end
+
+      if @cheque.errors.empty?
         format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
                       notice: 'Cheque pagado con éxito' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'show' }
         format.json { render json: @cheque.errors, status: :unprocessable_entity }
       end
     end
