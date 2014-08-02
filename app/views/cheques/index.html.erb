@@ -2,13 +2,15 @@
   <%# TODO poner un selector de fecha aca %>
 </h2>
 <div class="pull-right h4">
-<% if @cheques.first.propio? %>
-  <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'propio', estado: :chequera) %>">chequera</a>
+  <a class="label label-success" href="<%= con_obra? cheques_path(situacion: @situacion) %>">todos</a>
+  <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: @situacion, estado: :chequera) %>">chequera</a>
+<% if @situacion == 'propio' %>
   <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'propio', estado: :pagado) %>">pagado</a>
-<% else %>
-  <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'terceros', estado: :chequera) %>">chequera</a>
+<% end %>
+
+<% if @situacion == 'terceros' %>
   <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'terceros', estado: :pasamanos) %>">pasamanos</a>
-  <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'terceros', estado: :depositado_cobrado) %>">depositados/cobrados</a>
+  <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'terceros', estado: [:depositado, :cobrado]) %>">depositados/cobrados</a>
   <a class="label label-primary" href="<%= con_obra? cheques_path(situacion: 'terceros', estado: :rechazado) %>">rechazados</a>
 <% end %>
 </div>
