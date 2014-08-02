@@ -8,7 +8,9 @@ class ChequesController < ApplicationController
   before_action :set_recibos, only: [ :show ]
 
   def index
+    @situacion = params[:situacion]
     @cheques = @cheques.where(situacion: params[:situacion]) if params[:situacion]
+    @cheques = @cheques.where(estado: params[:estado]) if params[:estado]
     @cheques = @cheques.vencidos if params[:vencidos]
     @cheques = @cheques.depositados if params[:depositados]
 
