@@ -36,10 +36,6 @@ class UnidadFuncional < ActiveRecord::Base
     where(tipo: 'Baulera')
   }
 
-  def precio_venta(moneda = 'ARS')
-    Money.new(precio_venta_centavos, moneda)
-  end
-
   def disponible?
     self.contrato_de_venta.nil?
   end

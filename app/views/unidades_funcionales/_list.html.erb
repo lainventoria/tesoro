@@ -16,7 +16,7 @@
         <td><%= link_to '', [ unidad.obra, unidad ] , class:"glyphicon glyphicon-eye-open" %></td>
         <td><%= unidad.obra.nombre %></td>
         <td><%= unidad.tipo %></td>
-        <td class="text-right"><%= formatted_number(unidad.precio_venta("ARS")) %> ARS</td>
+        <td class="text-right"><%= formatted_number(unidad.precio_venta, unidad.precio_venta_moneda) %></td>
         <td class="text-center">
         </td>
       </tr>
