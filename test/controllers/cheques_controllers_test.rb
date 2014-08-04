@@ -59,6 +59,6 @@ class ChequesControllerTest < ActionController::TestCase
     patch :pagar, obra_id: @cheque.chequera.obra,
           caja_id: @cheque.chequera, id: @cheque
 
-    assert_response :unprocessable_entity
+    assert assigns(:cheque).errors.count > 0
   end
 end
