@@ -84,4 +84,4 @@ es:
   cajas:
     error_en_deposito: 'Falló el depósito'
     error_en_extraccion: 'Falló la extracción'
-    fondos_insuficientes: 'La caja no dispone de fondos suficientes para dicha operación.'
+    fondos_insuficientes: 'No dispone de fondos suficientes'

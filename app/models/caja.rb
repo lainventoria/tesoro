@@ -119,7 +119,7 @@ class Caja < ActiveRecord::Base
       (cantidad <= total(cantidad.currency.iso_code) || chequera?)
       depositar(cantidad * -1, false)
     else
-      raise ErrorEnExtraccion, I18n.t('cajas.error_en_extraccion') if lanzar_excepcion
+      raise ErrorEnExtraccion, I18n.t('cajas.fondos_insuficientes') if lanzar_excepcion
       invalido = movimientos.build monto: Money.new(0)
       invalido.errors.add(:monto, :no_hay_fondos_suficientes)
       invalido

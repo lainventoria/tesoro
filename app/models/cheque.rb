@@ -166,8 +166,8 @@ class Cheque < ActiveRecord::Base
         save
       end
     rescue Caja::ErrorEnExtraccion => excepcion
-      self.errors.add(:cuenta, I18n.t('cajas.fondos_insuficientes'))
-      nil
+      self.errors.add(:cuenta, excepcion.message)
+      false
     end
   end
 
