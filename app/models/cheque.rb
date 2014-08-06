@@ -79,10 +79,6 @@ class Cheque < ActiveRecord::Base
     true
   end
 
-  def causa_type 
-    :cheque
-  end
-
   def vencido?
     fecha_vencimiento < Time.now
   end
