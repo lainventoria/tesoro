@@ -37,6 +37,7 @@ class Cheque < ActiveRecord::Base
   # del cheque
   validates_presence_of :chequera
   validate :tipo_de_chequera, :tipo_de_cuenta
+  validates_numericality_of :monto_centavos, greater_than: 0
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
@@ -76,6 +77,10 @@ class Cheque < ActiveRecord::Base
   # Es una causa de movimientos de la cuál nos interesa preservar información
   def trackeable?
     true
+  end
+
+  def causa_type 
+    :cheque
   end
 
   def vencido?
@@ -180,19 +185,20 @@ class Cheque < ActiveRecord::Base
     # y se asocian a recibos de pago
     return nil unless este_recibo.pago?
 
-    Cheque.transaction do
-      # TODO Qué estado ponerle a un cheque propio usado como pago?
-      self.estado = 'pasamanos' if terceros?
-      if movimiento = chequera.extraer(monto, true)
+    if valid? 
+      Cheque.transaction do
+        # TODO Qué estado ponerle a un cheque propio usado como pago?
+        self.estado = 'pasamanos' if terceros?
+        movimiento = chequera.extraer(monto, true)
         # si no salvamos aca, al movimiento le va a llegar como causa un
         # cheque no existe y falla todo
         save
         movimiento.causa = self
         movimiento.recibo = este_recibo
         movimiento
-      else
-        false
       end
+    else
+      self
     end
   end
 
