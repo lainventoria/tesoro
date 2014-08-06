@@ -7,13 +7,13 @@
     <div class="field form-group col-md-4" >
       <%= f.label :cuenta %>
       <%= f.collection_select :cuenta_id, cuentas_de_donde_emitir, :id, :banco_tipo_numero,
-          { prompt: '-Seleccione Cuenta-' }, { class: 'form-control' } %>
+          { prompt: '-Seleccione Cuenta-' }, { class: 'form-control', required: true } %>
     </div>
 
     <div class="field form-group col-md-3">
       <%= f.label :fecha_emision %><br>
       <div class="input-group date">
-        <%= f.text_field :fecha_emision, class: 'form-control' %>
+        <%= f.text_field :fecha_emision, class: 'form-control', required: true %>
         <span class="input-group-addon">
           <i class="glyphicon glyphicon-th"></i>
         </span>
@@ -23,7 +23,7 @@
     <div class="field form-group col-md-3">
       <%= f.label :fecha_vencimiento %><br>
       <div class="input-group date">
-        <%= f.text_field :fecha_vencimiento, class: 'form-control' %>
+        <%= f.text_field :fecha_vencimiento, class: 'form-control', required: true %>
         <span class="input-group-addon">
           <i class="glyphicon glyphicon-th"></i>
         </span>
@@ -33,7 +33,7 @@
     <div class="field form-group col-md-2" >
       <%= f.label :monto %>
       <%= f.text_field :monto, class: 'form-control text-right',
-          data: { role:'money', a_sep:'.', a_dec:',' } %>
+          data: { role:'money', a_sep:'.', a_dec:',' }, required: true %>
     </div>
 
     <div class="field form-group col-md-4">
