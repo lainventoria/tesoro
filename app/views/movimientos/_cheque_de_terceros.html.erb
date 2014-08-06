@@ -8,7 +8,7 @@
     <div class="field form-group col-md-10" >
       <%= f.label :cheque %>
       <%= f.collection_select(:cheque_id, cheques_de_terceros, :id, :descripcion,
-        { prompt: '-Seleccione un cheque-' }, { class: 'form-control' } ) %>
+        { prompt: "-Seleccione un cheque-" }, { class: "form-control", required: true } ) %>
     </div>
 
   <% else %>
