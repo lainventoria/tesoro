@@ -64,25 +64,31 @@ class CausaNoTrackeable
     false
   end
 
+  def causa_type
+    :causa_no_trackeable
+  end
+
   # Puedo ofrecer pesos (monto), o dólares (monto) aceptados como pesos
   # (monto_aceptado), intercambiando las monedas directamente
   def usar_para_pagar(recibo)
-    # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
-    # que cambiarla
-    if monto_aceptado.try :nonzero?
-      # Cambiamos la moneda y asociamos el recibo al recibo interno
-      caja.cambiar(monto, monto_aceptado).update(recibo: recibo)
-      self.monto = monto_aceptado
-    end
+    begin
+      # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
+      # que cambiarla
+      if monto_aceptado.try :nonzero?
+        # Cambiamos la moneda y asociamos el recibo al recibo interno
+        caja.cambiar(monto, monto_aceptado).update(recibo: recibo)
+        self.monto = monto_aceptado
+      end
 
-    # Extraigo de la caja ya sea el pago correcto, o el pago aceptado que
-    # generó el cambio
-    if movimiento = caja.extraer(monto)
+      # Extraigo de la caja ya sea el pago correcto, o el pago aceptado que
+      # generó el cambio
+      movimiento = caja.extraer(monto)
       movimiento.causa = self
       movimiento.recibo = recibo
       movimiento
-    else
-      false
+    rescue Caja::ErrorEnExtraccion => excepcion
+      errors.add(:cuenta, excepcion.message)
+      self
     end
   end
 
