@@ -69,12 +69,13 @@ class ChequesController < ApplicationController
   def pagar
     @cheque = Cheque.find(params[:id])
     respond_to do |format|
+
       if @cheque.pagar
-        format.html { redirect_to [@cheque.chequera.obra,@cheque.chequera,@cheque],
+        format.html { redirect_to obra_cheques_path(@cheque.chequera.obra, situacion: 'propio'),
                       notice: 'Cheque pagado con éxito' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'show' }
         format.json { render json: @cheque.errors, status: :unprocessable_entity }
       end
     end

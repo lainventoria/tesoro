@@ -151,18 +151,23 @@ class Cheque < ActiveRecord::Base
     # pagar
     return nil if terceros?
 
-    Cheque.transaction do
-      self.estado = 'pagado'
-      recibo = Recibo.interno_nuevo
+    begin
+      Cheque.transaction do
+        self.estado = 'pagado'
+        recibo = Recibo.interno_nuevo
+        salida = cuenta.extraer(monto, true)
+        salida.causa = self
 
-      salida = cuenta.extraer(monto, true)
-      salida.causa = self
-      entrada = chequera.depositar(monto, true)
-      entrada.causa = self
+        entrada = chequera.depositar(monto, true)
+        entrada.causa = self
 
-      recibo.movimientos << salida << entrada
+        recibo.movimientos << salida << entrada
 
-      save
+        save
+      end
+    rescue Caja::ErrorEnExtraccion => excepcion
+      self.errors.add(:cuenta, excepcion.message)
+      false
     end
   end
 

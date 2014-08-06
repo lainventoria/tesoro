@@ -50,6 +50,15 @@ class ChequesControllerTest < ActionController::TestCase
     patch :pagar, obra_id: @cheque.chequera.obra,
           caja_id: @cheque.chequera, id: @cheque
 
-    assert_response :success
+    assert_redirected_to obra_cheques_path(@cheque.chequera.obra, situacion: 'propio')
+  end
+
+  test "paga sin fondos y que falle" do
+    @cheque.cuenta = create(:cuenta, :con_fondos, monto: @cheque.monto / 2)
+    assert @cheque.save, @cheque.errors.messages
+    patch :pagar, obra_id: @cheque.chequera.obra,
+          caja_id: @cheque.chequera, id: @cheque
+
+    assert assigns(:cheque).errors.count > 0
   end
 end
