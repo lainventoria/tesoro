@@ -67,20 +67,20 @@ class CausaNoTrackeable
   # Puedo ofrecer pesos (monto), o dólares (monto) aceptados como pesos
   # (monto_aceptado), intercambiando las monedas directamente
   def usar_para_pagar(recibo)
-      # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
-      # que cambiarla
-      if monto_aceptado.try :nonzero?
-        # Cambiamos la moneda y asociamos el recibo al recibo interno
-        caja.cambiar(monto, monto_aceptado).update(recibo: recibo)
-        self.monto = monto_aceptado
-      end
+    # Si ofrezco una moneda a cambio de la correspondiente a la factura, tengo
+    # que cambiarla
+    if monto_aceptado.try :nonzero?
+      # Cambiamos la moneda y asociamos el recibo al recibo interno
+      caja.cambiar(monto, monto_aceptado).update(recibo: recibo)
+      self.monto = monto_aceptado
+    end
 
-      # Extraigo de la caja ya sea el pago correcto, o el pago aceptado que
-      # generó el cambio
-      movimiento = caja.extraer(monto)
-      movimiento.causa = self
-      movimiento.recibo = recibo
-      movimiento
+    # Extraigo de la caja ya sea el pago correcto, o el pago aceptado que
+    # generó el cambio
+    movimiento = caja.extraer(monto)
+    movimiento.causa = self
+    movimiento.recibo = recibo
+    movimiento
   end
 
   # Puedo aceptar pesos (monto), o dólares (monto) aceptados como pesos
