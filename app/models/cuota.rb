@@ -46,7 +46,7 @@ class Cuota < ActiveRecord::Base
   end
 
   # obtiene el indice actual según el indice del contrato y el
-  # vencimiento o una fecha especificada
+  # vencimiento o una fecha especificada y luego cachea.
   #
   # si el indice no existe se crea uno temporal
   #
@@ -54,6 +54,7 @@ class Cuota < ActiveRecord::Base
     # calcular el periodo si no lo especificamos
     periodo = contrato_de_venta.periodo_para(vencimiento) if periodo.nil?
 
+    # devuelve el mejor indice del momento y se queda con ese
     self.indice = Indice.por_fecha_y_denominacion(periodo, contrato_de_venta.indice.denominacion) if indice.nil?
 
     indice

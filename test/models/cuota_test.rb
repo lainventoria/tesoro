@@ -134,13 +134,14 @@ class CuotaTest < ActiveSupport::TestCase
 
     factura_importe_original = c.factura.importe_neto
 
-    c.indice.valor = c.indice.valor * 1.2
+    # al cambiar el valor del indice, se dispara la actualizacion de
+    # montos de facturas por Indice.after_update
+    c.indice.valor = c.indice.valor * 2
     assert c.indice.save
+    assert_not c.indice.temporal?
+    assert c.factura.reload
 
-    assert c.factura.delete
-    assert c.generar_factura
-
-    assert_not_equal factura_importe_original, c.factura.reload.importe_neto
+    assert_not_equal factura_importe_original, c.factura.importe_neto
     assert_not_equal factura_importe_original, c.factura.importe_total
   end
 
