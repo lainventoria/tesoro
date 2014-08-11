@@ -18,8 +18,10 @@ class CuotaTest < ActiveSupport::TestCase
 
     @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.months}))
     @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.days}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today + 1.months}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today + 2.months}))
+    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 1.months}))
+    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 2.months}))
+    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 3.months}))
+    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 4.months}))
 
     @cv.save
   end
@@ -76,8 +78,7 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "las cuotas que no están vencidas se pagan al indice actual" do
-    # la ultima cuota todavía no está vencida
-    c = @cv.cuotas.last
+    c = @cv.cuotas.sin_vencer.pendientes.sample
     assert_not c.vencida?, c.vencimiento
 
     # el periodo actual suele ser el indice del mes anterior
@@ -104,18 +105,25 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "a veces queremos especificar el indice de la factura" do
-    c = @cv.cuotas.last
-    assert_not c.vencida?, c.vencimiento
+    c = @cv.cuotas.vencidas.sample
+    # si la cuota no está vencida, Cuota.generar_factura siempre le va a
+    # enchufar el mejor indice y no el que queremos
+    assert c.vencida?, c.vencimiento
 
+    # creamos un indice cualquiera en cualquier fecha
     p = (Date.today + 5.months).beginning_of_month
     assert indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción"), p
+    # le decimos a la cuota que genere una factura en base a ese indice
     assert c.generar_factura(p), c.errors.messages.inspect
+    # Cuota.indice_actual(p) debería devolver el indice que creamos a
+    # propósito
+    assert_equal indice_cualquiera, c.indice
     assert f = c.factura, c.inspect
     assert_equal c.monto_original * ( indice_cualquiera.valor / @indice.valor), f.importe_neto, [f.inspect, c.inspect]
   end
 
   test "si el indice no existe se crea uno temporal" do
-    c = @cv.cuotas[2]
+    c = @cv.cuotas.pendientes.sample
 
     assert c.generar_factura, c.errors.messages.inspect
     assert c.indice.temporal?, [c.inspect, c.indice.inspect]
