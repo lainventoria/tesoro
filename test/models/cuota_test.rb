@@ -136,7 +136,9 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "hay cuotas pendientes" do
-    assert_equal 2, @cv.cuotas.pendientes.count
+    # se crearon las cuotas pero no se generaron facturas para ninguna
+    # por lo que todas están pendientes
+    assert_equal @cv.cuotas.count, @cv.cuotas.pendientes.count
   end
 
   test "hay cuotas que ya estan emitidas" do
