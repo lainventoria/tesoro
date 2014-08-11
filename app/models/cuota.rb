@@ -18,6 +18,11 @@ class Cuota < ActiveRecord::Base
     where.not(descripcion: "Pago inicial").where("vencimiento < ?", time)
   }
 
+  scope :sin_vencer, lambda { |time = nil|
+    time = Time.now if not time
+    where.not(descripcion: "Pago inicial").where("vencimiento > ?", time)
+  }
+
   # cuotas con facturas emitidas
   scope :emitidas, lambda {
     where.not(factura: nil)
