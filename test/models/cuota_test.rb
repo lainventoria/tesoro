@@ -48,7 +48,7 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "el monto se actualiza en base al indice del mes anterior" do
-    assert cuota = @cv.cuotas.sample
+    assert cuota = @cv.cuotas.sin_vencer.sample
     assert indice_siguiente = create(:indice, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
 
     assert_equal indice_siguiente, cuota.indice_actual
@@ -123,9 +123,10 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test "si el indice no existe se crea uno temporal" do
-    c = @cv.cuotas.pendientes.sample
+    c = @cv.cuotas.vencidas.pendientes.last
 
-    assert c.generar_factura, c.errors.messages.inspect
+    assert c.generar_factura(c.vencimiento), c.errors.messages.inspect
+
     assert c.indice.temporal?, [c.inspect, c.indice.inspect]
     # como no se creó ningún índice más el utilizado es el indice
     # original
