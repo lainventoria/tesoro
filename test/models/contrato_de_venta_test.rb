@@ -61,6 +61,6 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     cv.agregar_unidad_funcional(uf_ars)
     cv.agregar_unidad_funcional(uf_usd)
 
-    assert_not cv.valid?, cv.inspect
+    refute cv.valid?, cv.inspect
   end
 end

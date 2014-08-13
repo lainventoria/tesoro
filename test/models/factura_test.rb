@@ -13,14 +13,14 @@ class FacturaTest < ActiveSupport::TestCase
     @cobro = create :factura, situacion: 'cobro'
 
     assert @pago.pago?
-    assert_not @cobro.pago?
+    refute @cobro.pago?
   end
 
   test 'es un cobro?' do
     @pago = create :factura, situacion: 'pago'
     @cobro = create :factura, situacion: 'cobro'
 
-    assert_not @pago.cobro?
+    refute @pago.cobro?
     assert @cobro.cobro?
   end
 
@@ -33,7 +33,7 @@ class FacturaTest < ActiveSupport::TestCase
 
     assert factura.reload.cancelada?
     # testbombing!
-    assert_not Factura.por_saldar.include? factura
+    refute Factura.por_saldar.include? factura
     assert Factura.saldadas.include? factura
   end
 
@@ -48,7 +48,7 @@ class FacturaTest < ActiveSupport::TestCase
     factura.iva = Money.new(4000*0.105)
     assert factura.save
 
-    assert_not factura.reload.cancelada?
+    refute factura.reload.cancelada?
 
     recibo = create :recibo, factura: factura
     recibo.pagar_con efectivo_por(factura.saldo)

@@ -33,23 +33,23 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test 'necesita monto_original' do
-    assert m = build(:cuota, monto_original_centavos: nil)
-    assert_not m.save
+    m = build(:cuota, monto_original_centavos: nil)
+    refute m.save
   end
 
   test 'necesita vencimiento' do
-    assert m = build(:cuota, vencimiento: nil)
-    assert_not m.save
+    m = build(:cuota, vencimiento: nil)
+    refute m.save
   end
 
   test 'necesita descripcion' do
-    assert m = build(:cuota, descripcion: nil)
-    assert_not m.save
+    m = build(:cuota, descripcion: nil)
+    refute m.save
   end
 
   test 'el monto se actualiza en base al indice del mes anterior' do
-    assert cuota = @cv.cuotas.sin_vencer.sample
-    assert indice_siguiente = create(:indice, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
+    cuota = @cv.cuotas.sin_vencer.sample
+    indice_siguiente = create(:indice, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
 
     assert_equal indice_siguiente, cuota.indice_actual
     assert_equal cuota.monto_original * (indice_siguiente.valor / @indice.valor), cuota.monto_actualizado
@@ -65,7 +65,7 @@ class CuotaTest < ActiveSupport::TestCase
 
   test 'las cuotas generan facturas de cobro' do
     c = @cv.cuotas.first
-    assert c.generar_factura, c.errors.messages.inspect
+    c.generar_factura
 
     f = Factura.last
 
@@ -79,18 +79,17 @@ class CuotaTest < ActiveSupport::TestCase
 
   test 'las cuotas que no están vencidas se pagan al indice actual' do
     c = @cv.cuotas.sin_vencer.pendientes.sample
-    assert_not c.vencida?, c.vencimiento
+    refute c.vencida?, c.vencimiento
 
     # el periodo actual suele ser el indice del mes anterior
     p = (Date.today - 1.months).beginning_of_month
 
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
-    assert indice_posta = @cv.indice_para(p)
-    assert indice_mal = create(:indice, valor: 1300, periodo: c.vencimiento)
+    indice_posta = @cv.indice_para(p)
+    indice_mal = create(:indice, valor: 1300, periodo: c.vencimiento)
 
-    assert c.generar_factura, c.errors.messages.inspect
-
+    c.generar_factura
     f = Factura.last
 
     # la factura que se creó es la de la cuota...
@@ -112,7 +111,7 @@ class CuotaTest < ActiveSupport::TestCase
 
     # creamos un indice cualquiera en cualquier fecha
     p = (Date.today + 5.months).beginning_of_month
-    assert indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: 'Costo de construcción'), p
+    indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción")
     # le decimos a la cuota que genere una factura en base a ese indice
     assert c.generar_factura(p), c.errors.messages.inspect
     # Cuota.indice_actual(p) debería devolver el indice que creamos a
@@ -137,7 +136,7 @@ class CuotaTest < ActiveSupport::TestCase
     # montos de facturas por Indice.after_update
     c.indice.valor = c.indice.valor * 2
     assert c.indice.save
-    assert_not c.indice.temporal?
+    refute c.indice.temporal?
     assert c.factura.reload
 
     assert_not_equal factura_importe_original, c.factura.importe_neto
