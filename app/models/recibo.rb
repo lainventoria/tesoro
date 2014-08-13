@@ -75,6 +75,7 @@ class Recibo < ActiveRecord::Base
 
     rescue ActiveRecord::ActiveRecordError => excepcion
       self.errors.add(:base, excepcion.message)
+      false
   end
 
   def pagar_con(medio_de_pago)
