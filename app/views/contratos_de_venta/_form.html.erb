@@ -50,7 +50,7 @@
           <% unless @contrato.new_record? %>
             <% @contrato.unidades_funcionales.each do |unidad| %>
               <tr>
-                <td><%= unidad.para_mostrar %></td>
+                <td><%= link_to unidad.para_mostrar, [@obra, unidad] %></td>
                 <td><%= unidad.precio_venta_final_moneda %></td>
                 <td>
                   <input type="text" data-role="money"
