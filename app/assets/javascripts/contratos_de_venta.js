@@ -39,7 +39,16 @@ $(document).ready(function(){
     $obra = $('#contrato_de_venta_obra_id');
     $.get('/obras/' + $obra.val() + '/unidades_funcionales/' + id +'.json', function(data) {
       html = '<tr><td>' + data.para_mostrar + '</td>'
-      html += '<td>' + data.precio_venta_moneda + '</td>';
+      html += '<td>';
+      html += '<select name="unidades_funcionales[' + data.id + '][precio_venta_moneda]">';
+      $.each([ 'ARS', 'USD' ], function(_, moneda) {
+        html += '<option';
+        if (moneda == data.precio_venta_moneda) {
+          html += ' selected="selected"';
+        }
+        html += '>' + moneda + '</option>';
+      });
+      html += '</select></td>';
       html += '<td><input type="text" data-role="money" name="unidades_funcionales[' + data.id + '][precio_venta]" value="' + data.precio_venta_centavos / 100 + '" class="form-control precio" /></td>';
       html += '<td><a href="#" class="quitar-unidad"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
       $('#contrato_de_venta_unidades_funcionales_table').append(html);

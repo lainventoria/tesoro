@@ -117,7 +117,7 @@ class ContratoDeVenta < ActiveRecord::Base
     end
 
     def validar_monedas
-      if monedas?.count > 1
+      if unidades_funcionales.collect(&:precio_venta_final_moneda).uniq.count > 1
         errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
       end
 
@@ -125,5 +125,5 @@ class ContratoDeVenta < ActiveRecord::Base
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
-   
+
 end
