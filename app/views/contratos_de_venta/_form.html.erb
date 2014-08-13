@@ -51,11 +51,11 @@
             <% @contrato.unidades_funcionales.each do |unidad| %>
               <tr>
                 <td><%= unidad.para_mostrar %></td>
-                <td><%= unidad.precio_venta_moneda %></td>
+                <td><%= unidad.precio_venta_final_moneda %></td>
                 <td>
                   <input type="text" data-role="money"
                     name="unidades_funcionales[<%= unidad.id %>][precio_venta]"
-                    readonly="readonly" value="<%= (unidad.precio_venta_centavos/100) %>"
+                    readonly="readonly" value="<%= (unidad.precio_venta_final_centavos/100) %>"
                     class="form-control precio" />
                 </td>
                 <td></td>
