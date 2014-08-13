@@ -1,4 +1,5 @@
 set :branch, :develop
+set :rails_env, :production
 set :deploy_user, 'gestionar'
 set :deploy_host, 'gestionar.lainventoria.com.ar'
 set :deploy_to, "/srv/http/#{fetch(:deploy_host)}"
