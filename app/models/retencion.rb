@@ -161,12 +161,14 @@ class Retencion < ActiveRecord::Base
     def contabilizar_deuda
       Retencion.transaction do
         temporal = Recibo.temporal_nuevo
-        if movimiento = chequera.extraer(monto, true)
-          movimiento.causa = self
-          temporal.movimientos << movimiento
-          temporal.save
-        end
+        movimiento = chequera.extraer(monto, true)
+        movimiento.causa = self
+        temporal.movimientos << movimiento
+        temporal.save
       end
+
+      rescue ActiveRecord::ActiveRecordError => excepcion
+        self.errors.add(:base, excepcion.message)
     end
 
     def borrar_recibo_temporal
