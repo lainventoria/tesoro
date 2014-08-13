@@ -13,8 +13,8 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales, :relacion_indice
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
 
-  before_validation :calcular_monto_total, :validar_cliente,
-    :validar_total_de_cuotas, :validar_monedas
+  before_validation :validar_monedas, :calcular_monto_total,
+    :validar_cliente, :validar_total_de_cuotas
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
@@ -63,11 +63,11 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect do |u| 
-        if u.precio_venta_final > 0 
-          u.precio_venta_final
+    Money.new(unidades_funcionales.collect do |u|
+        if u.precio_venta_final_centavos > 0
+          u.precio_venta_final_centavos
         else
-          u.precio_venta
+          u.precio_venta_centavos
         end
       end.sum,
       moneda?)
