@@ -93,13 +93,10 @@ class CausaNoTrackeable
       self.monto = monto_aceptado
     end
 
-    if movimiento = caja.depositar(monto)
-      movimiento.causa = self
-      movimiento.recibo = recibo
-      movimiento
-    else
-      false
-    end
+    movimiento = caja.depositar(monto)
+    movimiento.causa = self
+    movimiento.recibo = recibo
+    movimiento
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación

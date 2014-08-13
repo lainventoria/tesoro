@@ -84,3 +84,5 @@ es:
   cajas:
     error_en_deposito: 'Falló el depósito'
     error_en_extraccion: 'Monto incorrecto o fondos insuficientes de dicha moneda'
+  cheques:
+    error_en_usar_para_pagar: 'No se puede usar ese cheque para pagar'

@@ -72,6 +72,9 @@ class Recibo < ActiveRecord::Base
     elsif cobro?
       cobrar_con algo
     end
+
+    rescue ActiveRecord::ActiveRecordError => excepcion
+      self.errors.add(:base, excepcion.message)
   end
 
   def pagar_con(medio_de_pago)
@@ -80,7 +83,7 @@ class Recibo < ActiveRecord::Base
       # TODO no haría falta si cada usar para pagar lo hace? o mejor, no paso
       # el recibo y ya
       if pago.errors.empty?
-        movimientos.build caja: pago.caja, monto: pago.monto, causa: pago.causa
+        movimientos << pago
         save
       else
         errors.add :base, :medio_de_pago_invalido,

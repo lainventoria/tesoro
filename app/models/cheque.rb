@@ -7,6 +7,8 @@
 class Cheque < ActiveRecord::Base
   include CausaDeMovimientos
 
+  class ErrorEnUsarParaPagar < ActiveRecord::ActiveRecordError; end;
+
   # Los cheques tienen una cuenta sólo si son propios o han sido depositados
   belongs_to :cuenta, ->{ where(situacion: 'banco') },
     class_name: 'Caja'
@@ -165,16 +167,18 @@ class Cheque < ActiveRecord::Base
 
       save
     end
+
+    rescue ActiveRecord::ActiveRecordError => excepcion
+      self.errors.add(:base, excepcion.message)
   end
 
   # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento
   # de extracción de su caja, y asociamos el recibo de pago al movimiento.
   def usar_para_pagar(este_recibo)
-    # TODO cambiar estos checks por errores
     # tienen que estar en la chequera
-    return nil unless chequera?
+    raise ErrorEnUsarParaPagar, I18n.t('cheques.error_en_usar_para_pagar') unless chequera?
     # y se asocian a recibos de pago
-    return nil unless este_recibo.pago?
+    raise ErrorEnUsarParaPagar, I18n.t('cheques.error_en_usar_para_pagar') unless este_recibo.pago?
 
     Cheque.transaction do
       # TODO Qué estado ponerle a un cheque propio usado como pago?
