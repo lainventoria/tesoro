@@ -10,17 +10,17 @@ class IndiceTest < ActiveSupport::TestCase
 
   test "necesita un periodo" do
     assert i = build(:indice, periodo: nil)
-    assert_not i.save
+    refute i.save
   end
 
   test "necesita una denominacion" do
     assert i = build(:indice, denominacion: nil)
-    assert_not i.save
+    refute i.save
   end
 
   test "necesita un valor" do
     assert i = build(:indice, valor: nil)
-    assert_not i.save
+    refute i.save
   end
 
   test "mpj esta feliz, los indices vienen como deben" do

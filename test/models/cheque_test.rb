@@ -18,7 +18,7 @@ class ChequeTest < ActiveSupport::TestCase
   test "el cheque no está vencido" do
     cheque = create :cheque
 
-    assert_not cheque.vencido?, "#{Time.now} > #{cheque.fecha_vencimiento}"
+    refute cheque.vencido?, "#{Time.now} > #{cheque.fecha_vencimiento}"
   end
 
   test "algunos cheques se vencen" do
@@ -36,12 +36,12 @@ class ChequeTest < ActiveSupport::TestCase
     cheque = create :cheque, situacion: 'propio', estado: 'chequera'
     cuenta = create :cuenta
 
-    assert_not cheque.depositar(cuenta)
+    refute cheque.depositar(cuenta)
   end
 
   test "los cheques de terceros no se pagan si estan en chequera" do
     cheque = create :cheque_de_terceros, estado: 'chequera'
-    assert_not cheque.pagar, cheque.errors.messages
+    refute cheque.pagar, cheque.errors.messages
   end
 
   test 'pagar con un cheque extrae de la chequera' do
