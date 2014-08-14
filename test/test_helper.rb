@@ -52,4 +52,9 @@ class Capybara::Rails::TestCase
     # Volver al driver default si lo cambiamos a selenium temporalmente
     Capybara.use_default_driver
   end
+
+  # Para los tests de integración que dependen de estos datos
+  def cargar_seeds
+    load Rails.root.join('db/seeds.rb')
+  end
 end
