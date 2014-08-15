@@ -32,7 +32,7 @@ class Factura < ActiveRecord::Base
   # una modificación
   before_validation :calcular_importe_total
 
-  normalize_attribute :tipo, with: [ :strip, :blank, { truncate: { length: 1 }, :upcase ]
+  normalize_attribute :tipo, with: [ :strip, :blank, { truncate: { length: 1 } }, :upcase ]
 
   def self.tipos_invalidos
     pluck(:tipo).uniq.reject { |t|
