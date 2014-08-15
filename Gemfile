@@ -66,4 +66,7 @@ end
 group :test do
   # Para limpiar la base de datos después de cada test
   gem 'database_cleaner'
+  # Para los tests de integración
+  gem 'selenium-webdriver'
+  gem 'minitest-rails-capybara'
 end

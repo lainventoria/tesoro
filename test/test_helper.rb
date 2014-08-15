@@ -4,6 +4,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/mock'
 require 'database_cleaner'
+require 'minitest/rails'
+require 'minitest/rails/capybara'
 
 # Borrar todas las tablas de la DB
 DatabaseCleaner.clean_with :truncation
@@ -32,5 +34,27 @@ class ActiveSupport::TestCase
 
   def efectivo_por(monto)
     Efectivo.new caja: create(:caja, :con_fondos), monto: monto
+  end
+end
+
+# Tests de integración
+class Capybara::Rails::TestCase
+  include ApplicationHelper
+
+  # No podemos usar transacciones con selenium
+  DatabaseCleaner.strategy = :truncation
+  self.use_transactional_fixtures = false
+
+  teardown do
+    DatabaseCleaner.clean
+    # Reiniciar el estado del navegador
+    Capybara.reset_sessions!
+    # Volver al driver default si lo cambiamos a selenium temporalmente
+    Capybara.use_default_driver
+  end
+
+  # Para los tests de integración que dependen de estos datos
+  def cargar_seeds
+    load Rails.root.join('db/seeds.rb')
   end
 end
