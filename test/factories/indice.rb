@@ -1,8 +1,8 @@
 # encoding: utf-8
 FactoryGirl.define do
   factory :indice do
-    periodo Time.now.change(sec: 0, min: 0, hour: 0, day: 1).to_date - 1.month
-    denominacion 'Costo de construcción'
+    periodo { Date.today - (rand(12) + 1).month }
+    denominacion { Indice::DENOMINACIONES.sample }
 
     # que el indice sea un float
     valor { rand(2000) + rand(99) / 100.0 }

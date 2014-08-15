@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819164840) do
+ActiveRecord::Schema.define(version: 20140815172240) do
 
   create_table "cajas", force: true do |t|
     t.integer  "obra_id"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20140819164840) do
     t.decimal  "valor",        precision: 10, scale: 0,                 null: false
     t.boolean  "temporal",                              default: false
   end
+
+  add_index "indices", ["periodo", "denominacion"], name: "index_indices_on_periodo_and_denominacion", unique: true, using: :btree
 
   create_table "movimientos", force: true do |t|
     t.integer  "caja_id"

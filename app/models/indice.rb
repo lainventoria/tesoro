@@ -1,8 +1,12 @@
 # encoding: utf-8
 class Indice < ActiveRecord::Base
+  DENOMINACIONES = ['Costo de construcción', 'Materiales', 'Mano de obra']
+
   has_many :cuotas
   validates_presence_of :periodo, :denominacion, :valor
-  DENOMINACIONES = ['Costo de construcción', 'Materiales', 'Mano de obra']
+  validates_inclusion_of :denominacion, in: DENOMINACIONES
+  validates_uniqueness_of :denominacion, scope: :periodo
+  validates_numericality_of :valor
 
   # cuando se actualiza un índice a su valor definitivo deja de ser
   # temporal
@@ -14,7 +18,6 @@ class Indice < ActiveRecord::Base
   end
 
   def self.por_fecha_y_denominacion(fecha, denominacion)
-    
     periodo = fecha.beginning_of_month()
 
     # obtener el indice para este periodo
