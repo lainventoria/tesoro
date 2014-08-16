@@ -17,8 +17,7 @@ class Recibo < ActiveRecord::Base
   validates_presence_of :factura, unless: :interno_o_temporal?
   validate :importe_no_supera_el_saldo, :meiosis_de_facturas,
            :todos_los_montos_son_monotonos, :siempre_es_hoy,
-           :tiene_causa
-           unless: :interno_o_temporal?
+           :tiene_causa, unless: :interno_o_temporal?
 
   before_save :actualizar_situacion, unless: :interno_o_temporal?
   before_save :actualizar_importe_cache
