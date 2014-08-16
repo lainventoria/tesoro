@@ -166,10 +166,6 @@ class Recibo < ActiveRecord::Base
       end
     end
 
-    def tiene_causa?
-      ! (movimientos.last.nil? || movimientos.last.causa.nil?)
-    end
-
     # recibo.importe devuelve la suma existente en la db (al ser llamado durante
     # las validaciones), que ya está restando del saldo, asique seleccionamos
     # sólo los movimientos nuevos
