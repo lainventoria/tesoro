@@ -17,7 +17,7 @@ class Recibo < ActiveRecord::Base
   validates_presence_of :factura, unless: :interno_o_temporal?
   validate :importe_no_supera_el_saldo, :meiosis_de_facturas,
            :todos_los_montos_son_monotonos, :siempre_es_hoy,
-           :tiene_causa, unless: :interno_o_temporal?
+           unless: :interno_o_temporal?
 
   before_save :actualizar_situacion, unless: :interno_o_temporal?
   before_save :actualizar_importe_cache
@@ -92,6 +92,9 @@ class Recibo < ActiveRecord::Base
                     mensaje: parse_errors(pago.errors)
         false
       end
+    else
+      errors.add :movimientos, :debes_agregar_causa
+      false
     end
   end
 
@@ -163,8 +166,8 @@ class Recibo < ActiveRecord::Base
       end
     end
 
-    def tiene_causa
-      errors.add :movimientos, :debes_agregar_causa if movimientos.last.nil? || movimientos.last.causa.nil?
+    def tiene_causa?
+      ! (movimientos.last.nil? || movimientos.last.causa.nil?)
     end
 
     # recibo.importe devuelve la suma existente en la db (al ser llamado durante
