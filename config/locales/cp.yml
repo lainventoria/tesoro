@@ -86,3 +86,5 @@ es:
     error_en_extraccion: 'Monto incorrecto o fondos insuficientes de dicha moneda'
   cheques:
     error_en_usar_para_pagar: 'No se puede usar ese cheque para pagar'
+  retencion:
+    no_existe: 'La retención no existe'

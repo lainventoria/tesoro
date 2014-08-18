@@ -119,7 +119,8 @@ class Retencion < ActiveRecord::Base
         aplicar and borrar_recibo_temporal
         movimiento
       else
-        false
+        movimiento = movimientos.build
+        movimiento.errors.add :base, I18n.t('retencion.no_existe')
       end
     end
   end
