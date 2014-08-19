@@ -18,8 +18,8 @@
         <td><%= unidad.tipo %></td>
         <td class="text-right"><%= formatted_number(unidad.precio_venta, unidad.precio_venta_moneda) %></td>
         <td class="text-center">
-          <% if ! unidad.contrato_de_venta.nil? %>
-          <%= link_to 'vendido', [@obra, unidad.contrato_de_venta], class: 'label label-success' %>
+          <% if unidad.contrato_de_venta.present? %>
+            <%= link_to 'vendida', [@obra, unidad.contrato_de_venta], class: 'label label-success' %>
           <% end %>
         </td>
       </tr>
