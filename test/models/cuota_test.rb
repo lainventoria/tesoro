@@ -6,7 +6,7 @@ class CuotaTest < ActiveSupport::TestCase
   setup do
     @cv = create(:contrato_de_venta, fecha: Date.today - 2.months)
 
-    indice_viejo = create(:indice, periodo: (Date.today - 10.months).beginning_of_month, denominacion: 'Costo de construcción')
+    indice_viejo = create(:indice_cuota, periodo: (Date.today - 10.months).beginning_of_month)
     indice_viejo.save
 
     @indice = @cv.indice_para(Date.today - 2.months)
@@ -49,7 +49,7 @@ class CuotaTest < ActiveSupport::TestCase
 
   test 'el monto se actualiza en base al indice del mes anterior' do
     cuota = @cv.cuotas.sin_vencer.sample
-    indice_siguiente = create(:indice, valor: 1200, denominacion: 'Costo de construcción', periodo: @cv.periodo_para(cuota.vencimiento))
+    indice_siguiente = create(:indice_cuota, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
 
     assert_equal indice_siguiente, cuota.indice_actual
     assert_equal cuota.monto_original * (indice_siguiente.valor / @indice.valor), cuota.monto_actualizado
@@ -88,7 +88,7 @@ class CuotaTest < ActiveSupport::TestCase
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
     indice_posta = @cv.indice_para(p)
-    indice_mal = create(:indice, valor: 1300, periodo: c.vencimiento)
+    indice_mal = create(:indice_cuota, valor: 1300, periodo: c.vencimiento)
 
     c.generar_factura
     f = Factura.last
@@ -112,7 +112,7 @@ class CuotaTest < ActiveSupport::TestCase
 
     # creamos un indice cualquiera en cualquier fecha
     p = (Date.today + 5.months).beginning_of_month
-    indice_cualquiera = create(:indice, valor: 1300, periodo: p, denominacion: "Costo de construcción")
+    indice_cualquiera = create(:indice_cuota, valor: 1300, periodo: p)
     # le decimos a la cuota que genere una factura en base a ese indice
     assert c.generar_factura(p), c.errors.messages.inspect
     # Cuota.indice_actual(p) debería devolver el indice que creamos a

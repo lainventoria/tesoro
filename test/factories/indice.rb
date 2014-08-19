@@ -6,5 +6,9 @@ FactoryGirl.define do
 
     # que el indice sea un float
     valor { rand(2000) + rand(99) / 100.0 }
+
+    factory :indice_cuota do
+      denominacion "Costo de construcción"
+    end
   end
 end
