@@ -49,7 +49,7 @@ class CuotaTest < ActiveSupport::TestCase
 
   test 'el monto se actualiza en base al indice del mes anterior' do
     cuota = @cv.cuotas.sin_vencer.sample
-    indice_siguiente = create(:indice, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
+    indice_siguiente = create(:indice, valor: 1200, denominacion: 'Costo de construcción', periodo: @cv.periodo_para(cuota.vencimiento))
 
     assert_equal indice_siguiente, cuota.indice_actual
     assert_equal cuota.monto_original * (indice_siguiente.valor / @indice.valor), cuota.monto_actualizado
