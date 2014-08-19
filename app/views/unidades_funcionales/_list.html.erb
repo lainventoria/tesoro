@@ -5,7 +5,7 @@
       <th></th>
       <th>Obra</th>
       <th>Tipo</th>
-      <th class="text-right">Precio de Venta ARS</th>
+      <th class="text-right">Precio de Venta</th>
       <th></th>
     </tr>
   </thead>
@@ -18,6 +18,9 @@
         <td><%= unidad.tipo %></td>
         <td class="text-right"><%= formatted_number(unidad.precio_venta, unidad.precio_venta_moneda) %></td>
         <td class="text-center">
+          <% if unidad.contrato_de_venta.present? %>
+            <%= link_to 'vendida', [@obra, unidad.contrato_de_venta], class: 'label label-success' %>
+          <% end %>
         </td>
       </tr>
     <% end %>

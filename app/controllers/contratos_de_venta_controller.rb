@@ -91,7 +91,7 @@ class ContratosDeVentaController < ApplicationController
         unidad = UnidadFuncional.find(uf.first)
         p = uf[1]['precio_venta'].sub(',','').sub('.','').to_i
         unidad.precio_venta_final_centavos = p
-        unidad.precio_venta_final_moneda = unidad.precio_venta_moneda
+        unidad.precio_venta_final_moneda = uf[1]['precio_venta_moneda'];
         @contrato.agregar_unidad_funcional(unidad)
       end
     end
