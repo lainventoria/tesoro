@@ -7,14 +7,18 @@
   <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
-      <div class="field form-group col-md-3">
+      <div class="field form-group col-md-4">
+        <%= f.label :cuenta %>
+        <%= f.collection_select :cuenta_id, @cheque.chequera.obra.cajas.cuentas, :id, :banco_tipo_numero,
+            { prompt: '-Seleccione Cuenta-' }, { class: 'form-control', required: true } %>
+
         <label>Chequera</label>
-        <%= f.collection_select(:chequera_id, @cheque.chequera.obra.cajas.where(situacion: 'chequera'),
+        <%= f.collection_select(:chequera_id, @cheque.chequera.obra.cajas.chequeras,
             :id, :tipo, { prompt: '-Seleccione Chequera-', selected: @cheque.chequera_id },
             { class: 'form-control' } ) %>
       </div>
 
-      <div class="field form-group col-md-3 col-md-offset-3">
+      <div class="field form-group col-md-3 col-md-offset-2">
         <%= f.label :fecha_emision %><br>
         <div class="input-group date">
           <%= f.text_field :fecha_emision, class: 'form-control',
