@@ -82,8 +82,9 @@ class CuotaTest < ActiveSupport::TestCase
     c = @cv.cuotas.sin_vencer.pendientes.sample
     refute c.vencida?, c.vencimiento
 
-    # el periodo actual suele ser el indice del mes anterior
-    p = (Date.today - 1.months).beginning_of_month
+    # el contrato se crea con indice al mes anterior, por lo que se
+    # calcula solo al obtener el indice
+    p = Date.today
 
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
