@@ -1,5 +1,6 @@
-<h2>Editar Cheque</h2>
-
+<h2>Editar Cheque
+    <span class="label <%= etiqueta_de_estado @cheque.estado %>"><%= @cheque.estado %></span>
+</h2>
 <div class="col-md-8">
   <div class="row">
     <%= render 'form' %>
