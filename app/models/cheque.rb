@@ -170,6 +170,7 @@ class Cheque < ActiveRecord::Base
 
     rescue ActiveRecord::ActiveRecordError => excepcion
       self.errors.add(:base, excepcion.message)
+      false
   end
 
   # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento
