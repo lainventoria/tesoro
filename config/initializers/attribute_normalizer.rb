@@ -13,4 +13,8 @@ AttributeNormalizer.configure do |config|
   config.normalizers[:upcase] = lambda do |value, options|
     value.is_a?(String) ? value.upcase : value
   end
+
+  config.normalizers[:truncate] = lambda do |value, options|
+    value.is_a?(String) ? value[0, options[:length]] : value
+  end
 end

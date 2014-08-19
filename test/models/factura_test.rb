@@ -56,4 +56,12 @@ class FacturaTest < ActiveSupport::TestCase
 
     assert factura.reload.cancelada?
   end
+
+  test 'los tipos son upcase y de una sola letra' do
+    f = build :factura
+
+    f.tipo = '   ab  _ '
+
+    assert_equal 'A', f.tipo
+  end
 end
