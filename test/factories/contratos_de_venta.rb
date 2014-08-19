@@ -5,6 +5,7 @@ FactoryGirl.define do
     indice
     obra
     relacion_indice 'anterior'
+    tipo_factura 'A'
 
     fecha { Time.now }
 

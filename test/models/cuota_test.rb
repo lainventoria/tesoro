@@ -74,6 +74,7 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal c.monto_actualizado, f.importe_neto
     assert_equal c.tercero, f.tercero
     assert_equal c.obra, f.obra
+    assert_equal c.contrato_de_venta.tipo_factura, f.tipo
     assert_equal c.vencimiento + 10.days, f.fecha_pago.to_date
   end
 
