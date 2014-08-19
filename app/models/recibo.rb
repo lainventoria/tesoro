@@ -72,27 +72,29 @@ class Recibo < ActiveRecord::Base
     elsif cobro?
       cobrar_con algo
     end
+
+    rescue ActiveRecord::ActiveRecordError => excepcion
+      self.errors.add(:base, excepcion.message)
+      false
   end
 
   def pagar_con(medio_de_pago)
     if medio_de_pago.present?
-      if pago = medio_de_pago.usar_para_pagar(self)
-        # TODO no haría falta si cada usar para pagar lo hace? o mejor, no paso
-        # el recibo y ya
-        if pago.errors.empty?
-          movimientos.build caja: pago.caja, monto: pago.monto, causa: pago.causa
-          save
-        else
-          errors.add :base, :medio_de_pago_invalido,
-            causa: pago.causa_type,
-            mensaje: pago.errors.messages.values.flatten.to_sentence
-        end
+      pago = medio_de_pago.usar_para_pagar(self)
+      # TODO no haría falta si cada usar para pagar lo hace? o mejor, no paso
+      # el recibo y ya
+      if pago.errors.empty?
+        movimientos << pago
+        save
       else
-        # TODO Creo que ya no se llega acá
+        errors.add :base, :medio_de_pago_invalido,
+                    causa: pago.causa_type,
+                    mensaje: parse_errors(pago.errors)
         false
       end
     else
-      true # noop, como un save sin cambios
+      errors.add :movimientos, :debes_agregar_causa
+      false
     end
   end
 
@@ -105,7 +107,7 @@ class Recibo < ActiveRecord::Base
         else
           errors.add :base, :medio_de_cobro_invalido,
             causa: cobro.causa_type,
-            mensaje: cobro.errors.messages.values.flatten.to_sentence
+            mensaje: parse_errors(cobro.errors)
         end
       else
         # TODO Creo que ya no se llega acá
@@ -114,6 +116,17 @@ class Recibo < ActiveRecord::Base
     else
       true # noop, como un save sin cambios
     end
+  end
+
+  # TODO moverlo a algun lado mejor
+  def parse_errors(errs) 
+    i = false
+    errs.messages.stringify_keys.flatten.flatten.collect_concat do |a|
+      i = !i
+      a = a + ':' if i
+      a = a + ',' if !i
+      ' ' + a
+    end.join
   end
 
   # Calcula el importe del recibo en base a los movimientos existentes. Si el

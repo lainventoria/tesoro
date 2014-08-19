@@ -77,13 +77,10 @@ class CausaNoTrackeable
 
     # Extraigo de la caja ya sea el pago correcto, o el pago aceptado que
     # generó el cambio
-    if movimiento = caja.extraer(monto)
-      movimiento.causa = self
-      movimiento.recibo = recibo
-      movimiento
-    else
-      false
-    end
+    movimiento = caja.extraer(monto)
+    movimiento.causa = self
+    movimiento.recibo = recibo
+    movimiento
   end
 
   # Puedo aceptar pesos (monto), o dólares (monto) aceptados como pesos
@@ -96,13 +93,10 @@ class CausaNoTrackeable
       self.monto = monto_aceptado
     end
 
-    if movimiento = caja.depositar(monto)
-      movimiento.causa = self
-      movimiento.recibo = recibo
-      movimiento
-    else
-      false
-    end
+    movimiento = caja.depositar(monto)
+    movimiento.causa = self
+    movimiento.recibo = recibo
+    movimiento
   end
 
   # Los siguientes métodos son necesarios para que rails genere la asociación

@@ -114,9 +114,9 @@ class RecibosControllerTest < ActionController::TestCase
     recibo = create :recibo, factura: @factura
 
     importe_permitido = @factura.saldo
-    patch :update, id: recibo, factura_id: @factura, recibo: attributes_for(
+    assert patch :update, id: recibo, factura_id: @factura, recibo: attributes_for(
       :recibo, importe: importe_permitido, factura_id: @factura)
-    assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
+    assert_response :success
   end
 
   test 'destruye' do

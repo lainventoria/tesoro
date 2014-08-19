@@ -9,7 +9,7 @@
 <div id='movimiento_monto' class="field form-group col-md-2 text-right" >
   <%= f.label :monto %>
   <%= f.text_field :monto, class: 'form-control text-right',
-      data: { role:'money', a_sep:'.', a_dec:',' } %>
+      data: { role:'money', a_sep:'.', a_dec:',' }, required: true %>
 </div>
 
 <div id='movimiento_monto_aceptado' class="field form-group col-md-2 text-right" >

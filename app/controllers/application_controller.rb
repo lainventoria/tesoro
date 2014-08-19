@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
               :cuenta_id, :obra_id, :cheque_id)
 
           when 'retenciones'
-            params[:causa].permit(:monto, :documento, :factura_id, :fecha_vencimiento, :situacion)
+            params[:causa].permit(:retencion_id, :monto, :documento, :factura_id, :fecha_vencimiento, :situacion)
 
           when 'transferencia', 'efectivo'
             params[:causa].permit(:monto_moneda, :monto_aceptado_moneda, :monto_aceptado, :monto, :caja_id,

@@ -7,6 +7,8 @@
 class Cheque < ActiveRecord::Base
   include CausaDeMovimientos
 
+  class ErrorEnUsarParaPagar < ActiveRecord::ActiveRecordError; end;
+
   # Los cheques tienen una cuenta sólo si son propios o han sido depositados
   belongs_to :cuenta, ->{ where(situacion: 'banco') },
     class_name: 'Caja'
@@ -37,6 +39,7 @@ class Cheque < ActiveRecord::Base
   # del cheque
   validates_presence_of :chequera
   validate :tipo_de_chequera, :tipo_de_cuenta
+  validates_numericality_of :monto_centavos, greater_than: 0
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
@@ -151,48 +154,42 @@ class Cheque < ActiveRecord::Base
     # pagar
     return nil if terceros?
 
-    begin
-      Cheque.transaction do
-        self.estado = 'pagado'
-        recibo = Recibo.interno_nuevo
-        salida = cuenta.extraer(monto, true)
-        salida.causa = self
+    Cheque.transaction do
+      self.estado = 'pagado'
+      recibo = Recibo.interno_nuevo
+      salida = cuenta.extraer(monto, true)
+      salida.causa = self
 
-        entrada = chequera.depositar(monto, true)
-        entrada.causa = self
+      entrada = chequera.depositar(monto, true)
+      entrada.causa = self
 
-        recibo.movimientos << salida << entrada
+      recibo.movimientos << salida << entrada
 
-        save
-      end
-    rescue Caja::ErrorEnExtraccion => excepcion
-      self.errors.add(:cuenta, excepcion.message)
-      false
+      save
     end
+
+    rescue ActiveRecord::ActiveRecordError => excepcion
+      self.errors.add(:base, excepcion.message)
   end
 
   # Usar este cheque como medio de pago. Lo asociamos como causa del movimiento
   # de extracción de su caja, y asociamos el recibo de pago al movimiento.
   def usar_para_pagar(este_recibo)
-    # TODO cambiar estos checks por errores
     # tienen que estar en la chequera
-    return nil unless chequera?
+    raise ErrorEnUsarParaPagar, I18n.t('cheques.error_en_usar_para_pagar') unless chequera?
     # y se asocian a recibos de pago
-    return nil unless este_recibo.pago?
+    raise ErrorEnUsarParaPagar, I18n.t('cheques.error_en_usar_para_pagar') unless este_recibo.pago?
 
     Cheque.transaction do
       # TODO Qué estado ponerle a un cheque propio usado como pago?
       self.estado = 'pasamanos' if terceros?
-      if movimiento = chequera.extraer(monto, true)
-        # si no salvamos aca, al movimiento le va a llegar como causa un
-        # cheque no existe y falla todo
-        save
-        movimiento.causa = self
-        movimiento.recibo = este_recibo
-        movimiento
-      else
-        false
-      end
+      movimiento = chequera.extraer(monto, true)
+      # si no salvamos aca, al movimiento le va a llegar como causa un
+      # cheque no existe y falla todo
+      save
+      movimiento.causa = self
+      movimiento.recibo = este_recibo
+      movimiento
     end
   end
 
