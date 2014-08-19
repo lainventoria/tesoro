@@ -58,7 +58,7 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test 'los tipos son upcase y de una sola letra' do
-    f = create :factura
+    f = build :factura
 
     f.tipo = '   ab  _ '
 
