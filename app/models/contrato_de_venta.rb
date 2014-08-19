@@ -25,8 +25,10 @@ class ContratoDeVenta < ActiveRecord::Base
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
-  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
-  # booleans
+  normalize_attribute :tipo_factura, with: [ :strip, :blank, { truncate: { length: 1 } }, :upcase ]
+
+  # TODO refactorizar. Los métodos que terminan en ? son para que
+  # devuelvan booleans
   def monedas?
     unidades_funcionales.collect(&:precio_venta_moneda).uniq
   end
