@@ -92,7 +92,7 @@ class Recibo < ActiveRecord::Base
                     mensaje: parse_errors(pago.errors)
         false
       end
-    elsif movimientos.present? && movimientos.count > 0
+    elsif movimientos.any?
       true # Si hay movimiento ta t0do bien viteh
     else
       errors.add :movimientos, :debes_agregar_causa
