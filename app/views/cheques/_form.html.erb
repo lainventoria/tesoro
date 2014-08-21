@@ -7,14 +7,23 @@
   <fieldset <%= editar_o_bloquear %>>
 
     <div class="row">
-      <div class="field form-group col-md-3">
+      <div class="field form-group col-md-4">
+        <%# Solo se puede modificar la cuenta cuando el cheque fue emitido o depositado, no cuando ya se cobró o pagó%>
+        <%= f.label :cuenta %>
+        <% if (@cheque.propio? && @cheque.chequera?) || (@cheque.terceros? && @cheque.depositado?) %>
+          <%= f.collection_select :cuenta_id, @cheque.chequera.obra.cajas.cuentas, :id, :banco_tipo_numero,
+              { prompt: '-Seleccione Cuenta-' }, { class: 'form-control', required: true } %>
+        <% elsif @cheque.cuenta.present? %>
+          <p><%= @cheque.cuenta.banco_tipo_numero %></p>
+        <% else %>
+          <p>No está asociado a ninguna cuenta.</p>
+        <% end %>
+
         <label>Chequera</label>
-        <%= f.collection_select(:chequera_id, @cheque.chequera.obra.cajas.where(situacion: 'chequera'),
-            :id, :tipo, { prompt: '-Seleccione Chequera-', selected: @cheque.chequera_id },
-            { class: 'form-control' } ) %>
+        <p><%= @cheque.chequera.banco_tipo_numero %></p>
       </div>
 
-      <div class="field form-group col-md-3 col-md-offset-3">
+      <div class="field form-group col-md-3 col-md-offset-2">
         <%= f.label :fecha_emision %><br>
         <div class="input-group date">
           <%= f.text_field :fecha_emision, class: 'form-control',

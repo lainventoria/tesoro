@@ -1,4 +1,4 @@
-<h2>Detalles de <%= caja_o_cuenta %></h2> 
+<h2>Detalles de <%= caja_o_cuenta %></h2>
 
 <%= render 'form', opciones_formulario_caja %>
 
@@ -30,7 +30,12 @@
   </div>
 </div>
 
-<div class="row col-md-6">
-  <h4>Listado de Movimientos</h4>
-  <%= render 'movimientos/list', movimientos: @caja.movimientos %> 
-</div>
+<% if @caja.chequera? %>
+  <h4>Listado de Cheques</h4>
+  <%= render 'cheques/list' %>
+<% else %>
+  <div class="row col-md-6">
+    <h4>Listado de Movimientos</h4>
+    <%= render 'movimientos/list', movimientos: @caja.movimientos %>
+  </div>
+<% end %>
