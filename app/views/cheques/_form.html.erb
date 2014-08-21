@@ -8,8 +8,10 @@
 
     <div class="row">
       <div class="field form-group col-md-4">
-        <%= f.label :cuenta %>
-        <p><%= @cheque.cuenta.banco_tipo_numero %></p>
+        <% if @cheque.propio? %>
+          <%= f.label :cuenta %>
+          <p><%= @cheque.cuenta.banco_tipo_numero %></p>
+        <% end %>
 
         <label>Chequera</label>
         <%= f.collection_select(:chequera_id, @cheque.chequera.obra.cajas.chequeras,
