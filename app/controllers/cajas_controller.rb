@@ -2,6 +2,7 @@
 class CajasController < ApplicationController
   before_action :set_obra
   before_action :set_caja, except: [ :index, :new, :create ]
+  before_action :set_order, only: [ :show ]
 
   def index
     @cajas =     (@obra ? @obra.cajas : Caja).de_efectivo
@@ -11,6 +12,12 @@ class CajasController < ApplicationController
 
   def show
     @editar = false
+
+    if @caja.chequera?
+      @cheques = @caja.cheques
+      # TODO filtrar usando la barrita de filtro del listado de cheques
+      @cheques = @cheques.order(@order)
+    end
   end
 
   def new
