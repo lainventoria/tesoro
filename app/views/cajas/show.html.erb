@@ -33,9 +33,9 @@
 <% if @caja.chequera? %>
   <h4>Listado de Cheques</h4>
   <%= render 'cheques/list' %>
+<% else %>
+  <div class="row col-md-6">
+    <h4>Listado de Movimientos</h4>
+    <%= render 'movimientos/list', movimientos: @caja.movimientos %>
+  </div>
 <% end %>
-
-<div class="row col-md-6">
-  <h4>Listado de Movimientos</h4>
-  <%= render 'movimientos/list', movimientos: @caja.movimientos %>
-</div>
