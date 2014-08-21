@@ -9,8 +9,7 @@
     <div class="row">
       <div class="field form-group col-md-4">
         <%= f.label :cuenta %>
-        <%= f.collection_select :cuenta_id, @cheque.chequera.obra.cajas.cuentas, :id, :banco_tipo_numero,
-            { prompt: '-Seleccione Cuenta-' }, { class: 'form-control', required: true } %>
+        <p><%= @cheque.cuenta.banco_tipo_numero %></p>
 
         <label>Chequera</label>
         <%= f.collection_select(:chequera_id, @cheque.chequera.obra.cajas.chequeras,
