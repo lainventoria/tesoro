@@ -107,19 +107,19 @@
       <h5>Generar Cuotas</h5>
 
       <div class="row">
-        <div class="field form-group">
-          <label>Cantidad de Cuotas</label>
+        <div class="field form-group col-md-2">
+          <label>Cantidad</label>
           <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
         </div>
 
-        <div class="field form-group">
-          <label>Monto de Cuotas</label>
+        <div class="field form-group col-md-2">
+          <label>Monto</label>
           <input type="text" class="form-control" data-role="money"
                 id="contrato_de_venta_monto_cuotas" />
         </div>
 
-        <div class="field form-group">
-          <label>Primera Cuota</label>
+        <div class="field form-group col-md-2">
+          <label>A partir de</label>
           <div class="input-group date">
             <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota"
                   name="primera_cuota" />
@@ -127,44 +127,46 @@
           </div>
         </div>
 
-        <div class="field form-group">
+        <div class="field form-group col-md-2">
           <label>Periodicidad</label>
-          <select id="contrato_de_venta_periodicidad_cuotas">
+          <select id="contrato_de_venta_periodicidad_cuotas" class="form-control">
             <option value="1">Mensual</option>
             <option value="2">Bimensual</option>
             <option value="3">Trimestral</option>
           </select>
         </div>
-      </div>
 
-      <div class="field form-group">
-        <label></label>
-        <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_generar_cuotas">
-          <i class="glyphicon glyphicon-cog"></i> Generar Cuotas
-        </a>
+        <div class="field form-group col-md-2">
+          <label></label>
+          <a href="#" class="btn btn-primary" id="contrato_de_venta_generar_cuotas">
+            <i class="glyphicon glyphicon-cog"></i> Generar Cuotas
+          </a>
+        </div>
       </div>
 
 
       <h4>Agregar Cuota</h4>
 
-      <div class="field form-group">
-        <label>Fecha</label>
-        <div class="input-group date">
-          <input type="text" class="form-control" id="contrato_de_venta_fecha_cuota"
-                 name="fecha_cuota" />
-          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      <div class="row">
+        <div class="field form-group col-md-4">
+          <label>Fecha</label>
+          <div class="input-group date">
+            <input type="text" class="form-control" id="contrato_de_venta_fecha_cuota"
+                  name="fecha_cuota" />
+            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+          </div>
         </div>
-      </div>
 
-      <div class="field form-group">
-        <label>Monto</label>
-        <input type="text" class="form-control" data-role="money" id="contrato_de_venta_monto_cuota" />
-      </div>
+        <div class="field form-group col-md-4">
+          <label>Monto</label>
+          <input type="text" class="form-control" data-role="money" id="contrato_de_venta_monto_cuota" />
+        </div>
 
-      <div class="field form-group">
-        <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_agregar_cuota">
-          <i class="glyphicon glyphicon-plus"></i> Agregar
-        </a>
+        <div class="field form-group col-md-4">
+          <a href="#" class="btn btn-primary" id="contrato_de_venta_agregar_cuota">
+            <i class="glyphicon glyphicon-plus"></i> Agregar
+          </a>
+        </div>
       </div>
     <% end %>
 
