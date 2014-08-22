@@ -11,20 +11,19 @@
 
     <%= f.hidden_field :obra_id, value: obra.id %>
 
-    <div class="row">
-      <div class="field form-group col-md-8">
-        <%= f.hidden_field :tercero_id %>
-        <%= f.label :tercero %><br>
-        <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[nombre]]',
-              @contrato.tercero.try(:nombre),
-              autocomplete_tercero_nombre_contratos_de_venta_path, { class: 'form-control' } %>
-      </div>
-      <div class="field form-group col-md-4">
-        <%= f.label '', 'CUIT' %><br>
-        <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[cuit]]',
-              @contrato.tercero.try(:cuit),
-              autocomplete_tercero_cuit_contratos_de_venta_path, { class: 'form-control' } %>
-      </div>
+    <div class="field form-group">
+      <%= f.hidden_field :tercero_id %>
+      <%= f.label :tercero %>
+      <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[nombre]]',
+            @contrato.tercero.try(:nombre),
+            autocomplete_tercero_nombre_contratos_de_venta_path, { class: 'form-control' } %>
+    </div>
+
+    <div class="field form-group">
+      <%= f.label '', 'CUIT' %>
+      <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[cuit]]',
+            @contrato.tercero.try(:cuit),
+            autocomplete_tercero_cuit_contratos_de_venta_path, { class: 'form-control' } %>
     </div>
 
     <div class="alert alert-info" id="contrato_de_venta_tercero_msg" style="display:none">
@@ -35,187 +34,170 @@
     </div>
 
     <h3>Unidades Funcionales</h3>
-    <div class="row">
-      <div class="col-md-8">
-      <table class="table table-hover table-condensed">
-        <thead>
-          <tr>
-            <th>Unidad</th>
-            <th colspan="2">Precio de venta</th>
-            <th></th>
-          </tr>
-        </thead>
+    <% if @contrato.new_record? %>
+      <div class="field form-group">
+        <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales.disponibles, :id, :para_mostrar, { prompt: '-Seleccione Unidad-' }, { class: 'form-control' } ) %>
 
-        <tbody id="contrato_de_venta_unidades_funcionales_table">
-          <% unless @contrato.new_record? %>
-            <% @contrato.unidades_funcionales.each do |unidad| %>
-              <tr>
-                <td><%= link_to unidad.para_mostrar, [@obra, unidad] %></td>
-                <td><%= unidad.precio_venta_final_moneda %></td>
-                <td>
-                  <input type="text" data-role="money"
-                    name="unidades_funcionales[<%= unidad.id %>][precio_venta]"
-                    readonly="readonly" value="<%= (unidad.precio_venta_final_centavos/100) %>"
-                    class="form-control precio" />
-                </td>
-                <td></td>
-              </tr>
-            <% end %>
-          <% end %>
-        </tbody>
-
-        <tfoot>
-          <tr>
-            <td><strong>Total</strong></td>
-            <td colspan="2">
-              <input type="text" class="form-control" data-role="money"
-                readonly id="contrato_de_venta_total" />
-            </td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
+        <a id="contrato_de_venta_unidad_funcional_agregar"
+           class="btn btn-sm btn-primary pull-right">
+          <span class="glyphicon glyphicon-plus"></span> Agregar
+        </a>
       </div>
+    <% end %>
 
-      <% if @contrato.new_record? %>
-        <div class="field form-group col-md-4">
-          <div class="row">
-            <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales.disponibles, :id, :para_mostrar, { prompt: '-Seleccione Unidad-' }, { class: 'form-control' } ) %>
-          </div>
+    <table class="table table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Unidad</th>
+          <th colspan="2">Precio de venta</th>
+          <th></th>
+        </tr>
+      </thead>
 
-          <br/>
+      <tbody id="contrato_de_venta_unidades_funcionales_table">
+        <% unless @contrato.new_record? %>
+          <% @contrato.unidades_funcionales.each do |unidad| %>
+            <tr>
+              <td><%= link_to unidad.para_mostrar, [@obra, unidad] %></td>
+              <td><%= unidad.precio_venta_final_moneda %></td>
+              <td>
+                <input type="text" data-role="money"
+                  name="unidades_funcionales[<%= unidad.id %>][precio_venta]"
+                  readonly="readonly" value="<%= (unidad.precio_venta_final_centavos/100) %>"
+                  class="form-control precio" />
+              </td>
+              <td></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
 
-          <div class="row">
-            <a id="contrato_de_venta_unidad_funcional_agregar"
-              class="btn btn-sm btn-primary pull-right">
-              <span class="glyphicon glyphicon-plus"></span>
-              Agregar
-            </a>
-          </div>
-        </div>
-      <% end %>
-    </div>
+      <tfoot>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td colspan="2">
+            <input type="text" class="form-control" data-role="money"
+              readonly id="contrato_de_venta_total" />
+          </td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
 
     <h3>Plan de Pagos</h3>
 
-    <div class="row">
-
-      <div class="col-md-8">
-
-          <div class="field form-group">
-            <label>Índice</label>
-
-            <% if @contrato.new_record? %>
-              <%= f.select(:relacion_indice, ContratoDeVenta::RELACIONES_INDICE, { class: 'form-control' } ) %>
-            <% else %>
-              <%= @contrato.indice.periodo %>
-            <% end %>
-          </div>
-
-          <div class="field form-group">
-            <label>Tipo de Factura</label>
-
-            <%= f.text_field :tipo_factura %>
-          </div>
-
-          <div class="field form-group">
-            <table class="table table-hover table-condensed">
-              <thead>
-                <tr>
-                  <th>Fecha</th>
-                  <th>Monto</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-              <tbody id="contrato_de_venta_cuotas_table">
-                <% unless @contrato.new_record? %>
-                  <% @contrato.cuotas.each do |cuota| %>
-                    <tr>
-                      <td><%= cuota.vencimiento %></td>
-                      <td><%= cuota.monto_original %></td>
-                      <td></td>
-                    </tr>
-                  <% end %>
-                <% end %>
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <td>Total</td>
-                  <td colspan="3">
-                    <%# FIXME la lógica no va en las vistas %>
-                    <input type="text" class="form-control"
-                      value="<%= (@contrato.cuotas.collect(&:monto_original_centavos).sum() / 100) %>"
-                      data-role="money" readonly id="cuotas_total" />
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-      </div>
+    <div class="field form-group">
+      <label>Índice</label>
 
       <% if @contrato.new_record? %>
-        <div class="col-md-4">
-
-          <div class="row">
-            <h4 class="col-md-12">Generar Cuotas</h4>
-            <div class="field form-group col-sm-6">
-              <label>Cantidad de Cuotas</label><br>
-              <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
-            </div>
-            <div class="field form-group col-sm-6">
-              <label>Monto de Cuotas</label><br>
-              <input type="text" class="form-control" data-role="money"
-                id="contrato_de_venta_monto_cuotas" />
-            </div>
-            <div class="field form-group col-sm-6">
-              <label>Primera Cuota</label><br>
-              <div class="input-group date">
-                <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota"
-                  name="primera_cuota" />
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-              </div>
-            </div>
-            <div class="field form-group col-sm-6">
-              <label>Periodicidad</label><br>
-              <select id="contrato_de_venta_periodicidad_cuotas">
-                <option value="1">Mensual</option>
-                <option value="2">Bimensual</option>
-                <option value="3">Trimestral</option>
-              </select>
-            </div>
-            <div class="field form-group col-sm-6"><label> </label><br>
-              <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_generar_cuotas">
-                <i class="glyphicon glyphicon-cog"></i> Generar Cuotas
-              </a>
-            </div>
-          </div>
-
-          <div class="row">
-            <h4 class="col-md-12">Agregar Cuota</h4>
-            <div class="field form-group col-sm-6">
-              <label>Fecha</label><br>
-              <div class="input-group date">
-                <input type="text" class="form-control" id="contrato_de_venta_fecha_cuota"
-                  name="fecha_cuota" />
-                <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-              </div>
-            </div>
-            <div class="field form-group col-sm-6">
-              <label>Monto</label><br>
-              <input type="text" class="form-control" data-role="money" id="contrato_de_venta_monto_cuota" />
-            </div>
-            <div class="field form-group col-sm-12">
-              <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_agregar_cuota">
-                <i class="glyphicon glyphicon-plus"></i> Agregar
-              </a>
-            </div>
-          </div>
-
-        </div>
+        <%= f.select(:relacion_indice, ContratoDeVenta::RELACIONES_INDICE, { class: 'form-control' } ) %>
+      <% else %>
+        <p><%= @contrato.indice.periodo %></p>
       <% end %>
-
     </div>
+
+    <div class="field form-group">
+      <%= f.label :tipo_factura %>
+      <%= f.text_field :tipo_factura, class: 'form-control' %>
+    </div>
+
+    <h4>Cuotas</h4>
+
+    <table class="table table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Monto</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody id="contrato_de_venta_cuotas_table">
+        <% unless @contrato.new_record? %>
+          <% @contrato.cuotas.each do |cuota| %>
+            <tr>
+              <td><%= cuota.vencimiento %></td>
+              <td><%= cuota.monto_original %></td>
+              <td></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <td>Total</td>
+          <td colspan="3">
+            <%# FIXME la lógica no va en las vistas %>
+            <input type="text" class="form-control"
+              value="<%= (@contrato.cuotas.collect(&:monto_original_centavos).sum() / 100) %>"
+              data-role="money" readonly id="cuotas_total" />
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <% if @contrato.new_record? %>
+      <h4>Generar Cuotas</h4>
+
+      <div class="field form-group">
+        <label>Cantidad de Cuotas</label>
+        <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
+      </div>
+
+      <div class="field form-group">
+        <label>Monto de Cuotas</label>
+        <input type="text" class="form-control" data-role="money"
+               id="contrato_de_venta_monto_cuotas" />
+      </div>
+
+      <div class="field form-group">
+        <label>Primera Cuota</label>
+        <div class="input-group date">
+          <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota"
+                 name="primera_cuota" />
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+      </div>
+
+      <div class="field form-group">
+        <label>Periodicidad</label>
+        <select id="contrato_de_venta_periodicidad_cuotas">
+          <option value="1">Mensual</option>
+          <option value="2">Bimensual</option>
+          <option value="3">Trimestral</option>
+        </select>
+      </div>
+
+      <div class="field form-group">
+        <label></label>
+        <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_generar_cuotas">
+          <i class="glyphicon glyphicon-cog"></i> Generar Cuotas
+        </a>
+      </div>
+
+
+      <h4>Agregar Cuota</h4>
+
+      <div class="field form-group">
+        <label>Fecha</label>
+        <div class="input-group date">
+          <input type="text" class="form-control" id="contrato_de_venta_fecha_cuota"
+                 name="fecha_cuota" />
+          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+        </div>
+      </div>
+
+      <div class="field form-group">
+        <label>Monto</label>
+        <input type="text" class="form-control" data-role="money" id="contrato_de_venta_monto_cuota" />
+      </div>
+
+      <div class="field form-group">
+        <a href="#" class="btn btn-primary pull-right" id="contrato_de_venta_agregar_cuota">
+          <i class="glyphicon glyphicon-plus"></i> Agregar
+        </a>
+      </div>
+      <% end %>
   </fieldset>
 <% end %>
