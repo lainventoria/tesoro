@@ -106,33 +106,35 @@
     <% if @contrato.new_record? %>
       <h5>Generar Cuotas</h5>
 
-      <div class="field form-group">
-        <label>Cantidad de Cuotas</label>
-        <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
-      </div>
-
-      <div class="field form-group">
-        <label>Monto de Cuotas</label>
-        <input type="text" class="form-control" data-role="money"
-               id="contrato_de_venta_monto_cuotas" />
-      </div>
-
-      <div class="field form-group">
-        <label>Primera Cuota</label>
-        <div class="input-group date">
-          <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota"
-                 name="primera_cuota" />
-          <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      <div class="row">
+        <div class="field form-group">
+          <label>Cantidad de Cuotas</label>
+          <input type="text" class="form-control" id="contrato_de_venta_cantidad_cuotas" />
         </div>
-      </div>
 
-      <div class="field form-group">
-        <label>Periodicidad</label>
-        <select id="contrato_de_venta_periodicidad_cuotas">
-          <option value="1">Mensual</option>
-          <option value="2">Bimensual</option>
-          <option value="3">Trimestral</option>
-        </select>
+        <div class="field form-group">
+          <label>Monto de Cuotas</label>
+          <input type="text" class="form-control" data-role="money"
+                id="contrato_de_venta_monto_cuotas" />
+        </div>
+
+        <div class="field form-group">
+          <label>Primera Cuota</label>
+          <div class="input-group date">
+            <input type="text" class="form-control" id="contrato_de_venta_fecha_primera_cuota"
+                  name="primera_cuota" />
+            <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+          </div>
+        </div>
+
+        <div class="field form-group">
+          <label>Periodicidad</label>
+          <select id="contrato_de_venta_periodicidad_cuotas">
+            <option value="1">Mensual</option>
+            <option value="2">Bimensual</option>
+            <option value="3">Trimestral</option>
+          </select>
+        </div>
       </div>
 
       <div class="field form-group">
