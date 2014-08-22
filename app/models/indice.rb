@@ -40,6 +40,7 @@ class Indice < ActiveRecord::Base
         denominacion: denominacion,
         periodo: periodo,
         valor: indice_anterior.valor)
+      indice.save
     end
 
     # devolver siempre un indice

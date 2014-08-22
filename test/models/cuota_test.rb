@@ -82,13 +82,9 @@ class CuotaTest < ActiveSupport::TestCase
     c = @cv.cuotas.sin_vencer.pendientes.sample
     refute c.vencida?, c.vencimiento
 
-    # el contrato se crea con indice al mes anterior, por lo que se
-    # calcula solo al obtener el indice
-    p = Date.today
-
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
-    indice_posta = @cv.indice_para(p)
+    indice_posta = @cv.indice_para(@cv.fecha)
     indice_mal = create(:indice_cuota, valor: 1300, periodo: c.vencimiento)
 
     c.generar_factura
@@ -102,7 +98,7 @@ class CuotaTest < ActiveSupport::TestCase
     # y su valor es del monto_actualizado a ese periodo, no al del
     # vencimiento
     assert_equal c.monto_original * ( indice_posta.valor / @indice.valor ),
-      f.importe_neto
+      f.importe_neto, [f, c.indice_actual(Date.today), @indice, indice_posta]
   end
 
   test 'a veces queremos especificar el indice de la factura' do
