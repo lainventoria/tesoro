@@ -20,7 +20,7 @@ class Cuota < ActiveRecord::Base
 
   scope :sin_vencer, lambda { |time = nil|
     time = Time.now if not time
-    where("vencimiento > ?", time)
+    where('vencimiento > ?', time)
   }
 
   # cuotas con facturas emitidas

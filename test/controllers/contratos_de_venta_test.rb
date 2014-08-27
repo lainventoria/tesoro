@@ -24,16 +24,21 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
     unidad = create :unidad_funcional
     cuota = create :cuota
     tercero = create :tercero
+
     assert_difference('ContratoDeVenta.count') do
-      post :create, obra_id: obra, 
-      unidades_funcionales: [[unidad,{precio_venta:unidad.precio_venta}]],
-      fechas: ['21/7/2014'],
-      montos: [unidad.precio_venta],
-      indice: 'anterior',
-      contrato_de_venta: attributes_for(:contrato_de_venta, obra_id: obra, tercero_id: tercero)
+      post :create, obra_id: obra, fechas: ['21/7/2014'], indice: 'anterior',
+        montos: [unidad.precio_venta],
+        contrato_de_venta: attributes_for(
+          :contrato_de_venta, obra_id: obra, tercero_id: tercero),
+        unidades_funcionales: [
+          [unidad, {
+            precio_venta: unidad.precio_venta,
+            precio_venta_moneda: unidad.precio_venta_moneda }]
+        ]
     end
-    contrato = assigns(:contrato)
-    assert_redirected_to obra_contrato_de_venta_path(obra, contrato )
+
+    assert_not_nil assigns(:contrato)
+    assert_redirected_to obra_contrato_de_venta_path(obra, assigns(:contrato))
   end
 
   test 'muestra a través de su obra' do
@@ -65,4 +70,3 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
     assert_redirected_to obra_contratos_de_venta_path(obra)
   end
 end
-
