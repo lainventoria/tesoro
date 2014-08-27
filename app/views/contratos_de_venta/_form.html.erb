@@ -39,13 +39,14 @@
         <%= f.collection_select(:unidades_funcionales, @obra.unidades_funcionales.disponibles, :id, :para_mostrar, { prompt: '-Seleccione Unidad-' }, { class: 'form-control' } ) %>
 
         <a id="contrato_de_venta_unidad_funcional_agregar"
+           href="#"
            class="btn btn-sm btn-primary pull-right">
           <span class="glyphicon glyphicon-plus"></span> Agregar
         </a>
       </div>
     <% end %>
 
-    <table class="table table-hover table-condensed">
+    <table id="lista_unidades_funcionales" class="table table-hover table-condensed">
       <thead>
         <tr>
           <th>Unidad</th>
