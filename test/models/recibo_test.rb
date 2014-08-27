@@ -18,7 +18,7 @@ class ReciboTest < ActiveSupport::TestCase
 
   test 'El recibo es inválido si se pasa del valor de la factura' do
     factura = create :factura, importe_neto: Money.new(1000)
-    recibo = create :recibo, factura: factura
+    recibo = factura.recibos.build attributes_for(:recibo)
     recibo.pagar_con efectivo_por Money.new(1800)
 
     assert recibo.invalid?, [recibo.inspect, recibo.factura.inspect]
