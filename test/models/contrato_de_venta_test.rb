@@ -45,7 +45,7 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
       cv.agregar_unidad_funcional(uf)
     end
 
-    assert_equal total, cv.monto_total, [total, cv.monto_total, cv.total_de_unidades_funcionales, cv.total_de_cuotas, cv]
+    assert_equal total, cv.monto_total
   end
 
   test 'el tercero debe ser un cliente' do
@@ -58,5 +58,19 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
 
     cv.agregar_unidad_funcional(uf_usd)
     refute cv.valid?, cv.inspect
+  end
+
+  test '#periodo_para da el mes actual para el indice actual' do
+    fecha = DateTime.now
+
+    assert_equal fecha.beginning_of_month,
+      build(:contrato_de_venta, relacion_indice: 'actual').periodo_para(fecha)
+  end
+
+  test '#periodo_para da el mes anterior para el indice anterior' do
+    fecha = DateTime.now
+
+    assert_equal fecha.last_month.beginning_of_month,
+      build(:contrato_de_venta, relacion_indice: 'anterior').periodo_para(fecha)
   end
 end

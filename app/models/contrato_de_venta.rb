@@ -85,7 +85,7 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def periodo_para(fecha)
-    fecha.beginning_of_month - 1.months if relacion_indice == 'anterior'
+    (relacion_indice == 'anterior' ? fecha.last_month : fecha).beginning_of_month
   end
 
   def indice_para(fecha)
