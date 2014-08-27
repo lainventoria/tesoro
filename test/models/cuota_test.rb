@@ -84,7 +84,7 @@ class CuotaTest < ActiveSupport::TestCase
 
     # crear dos indices, el que corresponde y el de la fecha de
     # vencimiento de la cuota
-    indice_posta = @cv.indice_para(@cv.fecha)
+    indice_posta = @cv.indice_para(Date.today)
     indice_mal = create(:indice_cuota, valor: 1300, periodo: c.vencimiento)
 
     c.generar_factura
