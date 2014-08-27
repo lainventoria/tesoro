@@ -46,25 +46,4 @@
   crea un merge en `feature/tu-rama` duplicando los commits. En vez de eso
   reemplazá los commits en el repo remoto con `git push -f feature/tu-rama`
 
-
-## Resolví un bug pero me olvidé de usar "closes #bug" para cerrarlo en github
-
-O querés explicar mejor un commit, o simplemente viajar al pasado y
-matar un mosquito a ver qué onda.
-
-Si querés cambiar el último mensaje de commit, usá
-
-        git commit --amend
-
-Si querés cambiar un commit viejo desde una rama de feature:
-
-        # se generan un montón de *.patch hasta el común con develop
-        git format-patch develop
-        # modificá el parche correspondiente...
-        # perder todos los cambios hasta develop
-        git reset --hard develop
-        # reaplicar los cambios con mensajes nuevos
-        git am *.patch
-
-
 [TDD]: http://en.wikipedia.org/wiki/Test-driven_development
