@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Factura < ActiveRecord::Base
-  include ApplicationHelper
+  # Las situaciones posibles en que se genera una factura
+  SITUACIONES = %w(cobro pago)
 
   # Las facturas pertenecen a un tercero
   belongs_to :tercero, inverse_of: :facturas
@@ -12,8 +13,6 @@ class Factura < ActiveRecord::Base
   # Puede tener varias retenciones de varios tipos
   has_many :retenciones, inverse_of: :factura, dependent: :restrict_with_error
 
-  # Las situaciones posibles en que se genera una factura
-  SITUACIONES = %w(cobro pago)
   # Sólo aceptamos esas :3
   validates_inclusion_of :situacion, in: SITUACIONES
   validates_numericality_of :importe_neto, greater_than_or_equal_to: 0
@@ -113,5 +112,4 @@ class Factura < ActiveRecord::Base
       self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
     end
   end
-
 end
