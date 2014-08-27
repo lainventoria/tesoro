@@ -22,10 +22,14 @@ class ContratoDeVenta < ActiveRecord::Base
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
+  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
+  # booleans
   def monedas?
     unidades_funcionales.collect(&:precio_venta_moneda).uniq
   end
 
+  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
+  # booleans
   def moneda?
     monedas?.first
   end
@@ -66,19 +70,19 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect do |u|
-        if u.precio_venta_final_centavos > 0
-          u.precio_venta_final_centavos
-        else
-          u.precio_venta_centavos
-        end
-      end.sum,
-      moneda?)
+    monto = unidades_funcionales.collect do |u|
+      if u.precio_venta_final_centavos > 0
+        u.precio_venta_final_centavos
+      else
+        u.precio_venta_centavos
+      end
+    end.sum
+
+    Money.new monto, moneda?
   end
 
   def periodo_para(fecha)
-    periodo = fecha.beginning_of_month()
-    periodo = periodo - 1.months if relacion_indice == 'anterior'
+    fecha.beginning_of_month - 1.months if relacion_indice == 'anterior'
   end
 
   def indice_para(fecha)
@@ -116,7 +120,7 @@ class ContratoDeVenta < ActiveRecord::Base
     end
 
     def tercero_es_cliente
-      errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
+      errors.add(:tercero, :debe_ser_cliente) unless tercero.cliente?
     end
 
     def unidades_funcionales_en_la_misma_moneda

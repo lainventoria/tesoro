@@ -4,7 +4,7 @@ require 'test_helper'
 class ContratoDeVentaTest < ActiveSupport::TestCase
   test 'es válido' do
     # FIXME build_stubbed falla con la creación de unidades_funcionales
-    [ :build, :create ].each do |metodo|
+    [:build, :create].each do |metodo|
       assert_valid_factory metodo, :contrato_de_venta
     end
   end

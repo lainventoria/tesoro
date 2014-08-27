@@ -21,14 +21,15 @@ class ReciboTest < ActiveSupport::TestCase
     recibo = create :recibo, factura: factura
     recibo.pagar_con efectivo_por Money.new(1800)
 
-    assert recibo.invalid?, [ recibo.inspect, recibo.factura.inspect ]
+    assert recibo.invalid?, [recibo.inspect, recibo.factura.inspect]
     refute recibo.save, recibo.errors.messages
   end
 
   test 'La factura ya fue cancelada' do
-    factura = create :factura, importe_neto: Money.new(1000), iva: Money.new(1000*0.21)
+    factura = create :factura, importe_neto: Money.new(1000),
+      iva: Money.new(1000 * 0.21)
     aceptado = create :recibo, factura: factura
-    aceptado.pagar_con efectivo_por(Money.new(1000*1.21))
+    aceptado.pagar_con efectivo_por(Money.new(1000 * 1.21))
 
     assert factura.reload.cancelada?
 
