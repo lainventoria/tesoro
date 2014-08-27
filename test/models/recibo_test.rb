@@ -31,11 +31,12 @@ class ReciboTest < ActiveSupport::TestCase
     aceptado.pagar_con efectivo_por(Money.new(1000*1.21))
 
     assert factura.reload.cancelada?
-    rechazado = create :recibo, factura: factura
+
+    rechazado = factura.recibos.build attributes_for(:recibo)
     rechazado.pagar_con efectivo_por(Money.new(800))
 
     assert aceptado.valid?, aceptado.errors.messages
-    assert rechazado.invalid?, rechazado.errors.messages
+    refute rechazado.valid?
   end
 
   test 'es un pago?' do
