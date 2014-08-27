@@ -2,6 +2,8 @@
 # Un Contrato de venta es un grupo de Unidades funcionales vendidas a un
 # Tercero
 class ContratoDeVenta < ActiveRecord::Base
+  RELACIONES_INDICE = %w{anterior actual}
+
   belongs_to :indice
   belongs_to :tercero
   belongs_to :obra
@@ -13,6 +15,7 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_presence_of :indice_id, :tercero_id, :obra_id,
     :unidades_funcionales, :relacion_indice
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
+  validates_inclusion_of :relacion_indice, in: RELACIONES_INDICE
   validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
     :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total
 
