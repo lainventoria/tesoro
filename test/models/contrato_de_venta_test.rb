@@ -52,15 +52,11 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     assert build(:contrato_de_venta, tercero: create(:proveedor)).invalid?
   end
 
-  test 'resulta evidente que todas las monedas son creadas iguales' do
+  test 'las unidades de venta se venden en la misma moneda' do
     cv = create(:contrato_de_venta)
-    cv.valid?
-    uf_ars = create(:unidad_funcional, precio_venta: Money.new(1000, 'ARS'))
-    uf_usd = create(:unidad_funcional, precio_venta: Money.new(1000, 'USD'))
+    uf_usd = create(:unidad_funcional, precio_venta_final: Money.new(1000, 'USD'))
 
-    cv.agregar_unidad_funcional(uf_ars)
     cv.agregar_unidad_funcional(uf_usd)
-
     refute cv.valid?, cv.inspect
   end
 end

@@ -10,11 +10,15 @@ class ContratoDeVenta < ActiveRecord::Base
   # no toma la inflexión en la asociación
   has_many :unidades_funcionales, class_name: 'UnidadFuncional', dependent: :nullify
 
-  validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales, :relacion_indice
+  validates_presence_of :indice_id, :tercero_id, :obra_id,
+    :unidades_funcionales, :relacion_indice
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
+  validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
+    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total
 
-  before_validation :validar_monedas, :calcular_monto_total,
-    :validar_cliente, :validar_total_de_cuotas
+  before_validation :calcular_monto_total
+
+  accepts_nested_attributes_for :tercero
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
@@ -25,7 +29,6 @@ class ContratoDeVenta < ActiveRecord::Base
   def moneda?
     monedas?.first
   end
-  accepts_nested_attributes_for :tercero
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
@@ -105,25 +108,26 @@ class ContratoDeVenta < ActiveRecord::Base
       self.monto_total = total_de_unidades_funcionales
     end
 
-    def validar_total_de_cuotas
+    def total_de_cuotas_es_igual_al_monto_total
       # solo validar cuotas cuando las hay
       if !cuotas.empty? && total_de_cuotas != monto_total
         errors.add(:cuotas, :total_igual_a_monto_total)
       end
     end
 
-    def validar_cliente
+    def tercero_es_cliente
       errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
     end
 
-    def validar_monedas
+    def unidades_funcionales_en_la_misma_moneda
       if unidades_funcionales.collect(&:precio_venta_final_moneda).uniq.count > 1
         errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
       end
+    end
 
+    def cuotas_en_la_misma_moneda
       if cuotas.collect(&:monto_original_moneda).uniq.count > 1
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
-
 end
