@@ -31,13 +31,12 @@
 
     <div class="row">
       <div class="field form-group col-md-6">
-        <%= f.hidden_field :tercero_id %>
-        <%= f.label :tercero %><br>
-        <%= autocomplete_field_tag 'factura[tercero_attributes[nombre]]', @factura.tercero.try(:nombre), autocomplete_tercero_nombre_facturas_path, { class: 'form-control' } %>
+        <%= render partial: 'terceros/nombre',
+              locals: { f: f, autocomplete_path: autocomplete_tercero_nombre_facturas_path } %>
       </div>
       <div class="field form-group col-md-3">
-        <%= f.label '', 'CUIT' %><br>
-        <%= autocomplete_field_tag 'factura[tercero_attributes[cuit]]', @factura.tercero.try(:cuit), autocomplete_tercero_cuit_facturas_path, { class: 'form-control' } %>
+        <%= render partial: 'terceros/cuit',
+              locals: { f: f, autocomplete_path: autocomplete_tercero_cuit_facturas_path } %>
       </div>
       <div class="field form-group col-md-3">
         <%= f.label :fecha_pago %><br>

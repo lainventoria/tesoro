@@ -1,0 +1,6 @@
+<%= f.hidden_field :tercero_id %>
+
+<%= f.fields_for :tercero do |ft| %>
+  <%= ft.label :nombre, 'Tercero' %>
+  <%= ft.autocomplete_field :nombre, autocomplete_path, class: 'form-control' %>
+<% end %>

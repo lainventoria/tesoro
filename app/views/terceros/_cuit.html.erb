@@ -1,0 +1,4 @@
+<%= f.fields_for :tercero do |ft| %>
+  <%= ft.label :cuit, 'CUIT' %>
+  <%= ft.autocomplete_field :cuit, autocomplete_path, class: 'form-control' %>
+<% end %>

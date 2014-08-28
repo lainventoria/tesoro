@@ -12,18 +12,13 @@
     <%= f.hidden_field :obra_id, value: obra.id %>
 
     <div class="field form-group">
-      <%= f.hidden_field :tercero_id %>
-      <%= f.label :tercero %>
-      <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[nombre]]',
-            @contrato.tercero.try(:nombre),
-            autocomplete_tercero_nombre_contratos_de_venta_path, { class: 'form-control' } %>
+      <%= render partial: 'terceros/nombre',
+            locals: { f: f, autocomplete_path: autocomplete_tercero_nombre_contratos_de_venta_path } %>
     </div>
 
     <div class="field form-group">
-      <%= f.label '', 'CUIT' %>
-      <%= autocomplete_field_tag 'contrato_de_venta[tercero_attributes[cuit]]',
-            @contrato.tercero.try(:cuit),
-            autocomplete_tercero_cuit_contratos_de_venta_path, { class: 'form-control' } %>
+      <%= render partial: 'terceros/cuit',
+            locals: { f: f, autocomplete_path: autocomplete_tercero_cuit_contratos_de_venta_path } %>
     </div>
 
     <div class="alert alert-info" id="contrato_de_venta_tercero_msg" style="display:none">
