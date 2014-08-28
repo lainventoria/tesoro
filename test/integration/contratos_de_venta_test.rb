@@ -4,7 +4,6 @@ require './test/test_helper'
 feature 'Contratos de Venta' do
   background do
     @obra = create :obra
-    @tercero = create :tercero
   end
 
   scenario 'Cargar un nuevo contrato' do
@@ -13,20 +12,6 @@ feature 'Contratos de Venta' do
     page.must_have_content 'Nuevo Contrato de Venta'
     page.must_have_content 'Agregar'
     page.must_have_content 'Generar Cuotas'
-  end
-
-  scenario 'Buscar un tercero', js: true do
-    visit new_obra_contrato_de_venta_path(@obra)
-
-    within 'form' do
-      fill_in('contrato_de_venta_tercero_attributes_nombre', with: @tercero.nombre)
-    end
-
-    find('li.ui-menu-item').click
-
-    within 'form' do
-      page.must_have_content @tercero.cuit
-    end
   end
 
   scenario 'Agregar una unidad funcional', js: true do
