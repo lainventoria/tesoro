@@ -28,7 +28,6 @@ feature "Contratos de Venta" do
     within 'form' do
       page.must_have_content @tercero.cuit
     end
-
   end
 
   scenario 'Agregar una unidad funcional', js: true do
@@ -70,5 +69,4 @@ feature "Contratos de Venta" do
       first('#contrato_de_venta_total').value.must_equal '30,000.00'
     end
   end
-
 end
