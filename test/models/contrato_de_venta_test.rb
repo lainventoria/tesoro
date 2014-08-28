@@ -73,4 +73,11 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     assert_equal fecha.last_month.beginning_of_month,
       build(:contrato_de_venta, relacion_indice: 'anterior').periodo_para(fecha)
   end
+
+  test 'normaliza el tipo de la factura' do
+    cv = build :contrato_de_venta
+
+    cv.tipo_factura = '     abc___'
+    assert_equal 'A', cv.tipo_factura
+  end
 end

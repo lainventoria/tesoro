@@ -72,12 +72,13 @@ class Cuota < ActiveRecord::Base
     end
 
     Factura.transaction do
-      # FIXME faltan tipo y número
+      # FIXME falta el número
       self.factura = Factura.new(situacion: 'cobro',
         importe_neto: monto_actualizado(periodo),
         fecha: vencimiento_actual,
         fecha_pago: vencimiento_actual + 10.days,
         descripcion: descripcion,
+        tipo: contrato_de_venta.tipo_factura,
         tercero: tercero,
         obra: obra)
       self.save
