@@ -1,7 +1,7 @@
 # encoding: utf-8
 require './test/test_helper'
 
-feature "Contratos de Venta" do
+feature 'Contratos de Venta' do
   background do
     @obra = create :obra
     @tercero = create :tercero
@@ -10,9 +10,9 @@ feature "Contratos de Venta" do
   scenario 'Cargar un nuevo contrato' do
     visit new_obra_contrato_de_venta_path(@obra)
 
-    page.must_have_content "Nuevo Contrato de Venta"
-    page.must_have_content "Agregar"
-    page.must_have_content "Generar Cuotas"
+    page.must_have_content 'Nuevo Contrato de Venta'
+    page.must_have_content 'Agregar'
+    page.must_have_content 'Generar Cuotas'
   end
 
   scenario 'Buscar un tercero', js: true do
@@ -22,8 +22,7 @@ feature "Contratos de Venta" do
       fill_in('contrato_de_venta_tercero_attributes_nombre', with: @tercero.nombre)
     end
 
-    page.must_have_selector('li.ui-menu-item')
-    first('li.ui-menu-item').click
+    find('li.ui-menu-item').click
 
     within 'form' do
       page.must_have_content @tercero.cuit
