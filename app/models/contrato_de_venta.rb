@@ -2,6 +2,8 @@
 # Un Contrato de venta es un grupo de Unidades funcionales vendidas a un
 # Tercero
 class ContratoDeVenta < ActiveRecord::Base
+  RELACIONES_INDICE = %w{anterior actual}
+
   belongs_to :indice
   belongs_to :tercero
   belongs_to :obra
@@ -10,22 +12,30 @@ class ContratoDeVenta < ActiveRecord::Base
   # no toma la inflexión en la asociación
   has_many :unidades_funcionales, class_name: 'UnidadFuncional', dependent: :nullify
 
-  validates_presence_of :indice_id, :tercero_id, :obra_id, :unidades_funcionales, :relacion_indice
+  validates_presence_of :indice_id, :tercero_id, :obra_id,
+    :unidades_funcionales, :relacion_indice
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
+  validates_inclusion_of :relacion_indice, in: RELACIONES_INDICE
+  validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
+    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total
 
-  before_validation :validar_monedas, :calcular_monto_total,
-    :validar_cliente, :validar_total_de_cuotas
+  before_validation :calcular_monto_total
+
+  accepts_nested_attributes_for :tercero
 
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
+  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
+  # booleans
   def monedas?
     unidades_funcionales.collect(&:precio_venta_moneda).uniq
   end
 
+  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
+  # booleans
   def moneda?
     monedas?.first
   end
-  accepts_nested_attributes_for :tercero
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
@@ -63,19 +73,19 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_unidades_funcionales
-    Money.new(unidades_funcionales.collect do |u|
-        if u.precio_venta_final_centavos > 0
-          u.precio_venta_final_centavos
-        else
-          u.precio_venta_centavos
-        end
-      end.sum,
-      moneda?)
+    monto = unidades_funcionales.collect do |u|
+      if u.precio_venta_final_centavos > 0
+        u.precio_venta_final_centavos
+      else
+        u.precio_venta_centavos
+      end
+    end.sum
+
+    Money.new monto, moneda?
   end
 
   def periodo_para(fecha)
-    periodo = fecha.beginning_of_month()
-    periodo = periodo - 1.months if relacion_indice == 'anterior'
+    (relacion_indice == 'anterior' ? fecha.last_month : fecha).beginning_of_month
   end
 
   def indice_para(fecha)
@@ -105,25 +115,26 @@ class ContratoDeVenta < ActiveRecord::Base
       self.monto_total = total_de_unidades_funcionales
     end
 
-    def validar_total_de_cuotas
+    def total_de_cuotas_es_igual_al_monto_total
       # solo validar cuotas cuando las hay
       if !cuotas.empty? && total_de_cuotas != monto_total
         errors.add(:cuotas, :total_igual_a_monto_total)
       end
     end
 
-    def validar_cliente
-      errors.add(:tercero, :debe_ser_cliente) if !tercero.cliente?
+    def tercero_es_cliente
+      errors.add(:tercero, :debe_ser_cliente) unless tercero.cliente?
     end
 
-    def validar_monedas
+    def unidades_funcionales_en_la_misma_moneda
       if unidades_funcionales.collect(&:precio_venta_final_moneda).uniq.count > 1
         errors.add(:unidades_funcionales, :debe_ser_la_misma_moneda)
       end
+    end
 
+    def cuotas_en_la_misma_moneda
       if cuotas.collect(&:monto_original_moneda).uniq.count > 1
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
       end
     end
-
 end

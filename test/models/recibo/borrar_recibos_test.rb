@@ -8,7 +8,7 @@ class BorrarRecibosTest < ActiveSupport::TestCase
   end
 
   test 'borra sus movimientos' do
-    assert_difference ->{ Movimiento.count }, -1 do
+    assert_difference -> { Movimiento.count }, -1 do
       assert @recibo.destroy
     end
   end
@@ -17,15 +17,16 @@ class BorrarRecibosTest < ActiveSupport::TestCase
     retencion = create :retencion, monto: Money.new(1000)
     @recibo.pagar_con retencion
 
-    assert_no_difference ->{ Movimiento.count } do
+    assert_no_difference -> { Movimiento.count } do
       refute @recibo.destroy
     end
   end
 
   test 'borra sus comprobantes y sus movimientos' do
-    # Recibir $1000 como pago por $100 USD
+    # Recibir $100 USD como pago por $1000 ARS
     @recibo.pagar_con build(:efectivo,
-      monto: Money.new(1000), monto_aceptado: Money.new(100, 'USD'))
+      monto: Money.new(100, 'USD'), monto_aceptado: Money.new(1000),
+      caja: create(:caja, :con_fondos, monto: Money.new(100, 'USD')))
     comprobante = @recibo.comprobantes.first
 
     # Espero que esto cambie pronto
@@ -33,8 +34,8 @@ class BorrarRecibosTest < ActiveSupport::TestCase
     assert comprobante.interno?
     assert comprobante.movimientos.count == 2
 
-    assert_difference ->{ Movimiento.count }, -3 do
-      assert_difference ->{ Recibo.count }, -2 do
+    assert_difference -> { Movimiento.count }, -4 do
+      assert_difference -> { Recibo.count }, -2 do
         assert @recibo.destroy
       end
     end

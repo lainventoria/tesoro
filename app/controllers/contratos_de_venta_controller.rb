@@ -25,7 +25,7 @@ class ContratosDeVentaController < ApplicationController
   end
 
   def create
-    @contrato = ContratoDeVenta.new( contrato_de_venta_params )
+    @contrato = ContratoDeVenta.new(contrato_de_venta_params)
     @contrato.fecha = DateTime.now
 
     @contrato.indice = @contrato.indice_para(Date.today)
@@ -91,15 +91,15 @@ class ContratosDeVentaController < ApplicationController
         unidad = UnidadFuncional.find(uf.first)
         p = uf[1]['precio_venta'].sub(',','').sub('.','').to_i
         unidad.precio_venta_final_centavos = p
-        unidad.precio_venta_final_moneda = uf[1]['precio_venta_moneda'];
+        unidad.precio_venta_final_moneda = uf[1]['precio_venta_moneda']
         @contrato.agregar_unidad_funcional(unidad)
       end
     end
 
     # TODO refactorizar
     def agregar_cuotas
-      f = params['fechas']
-      m = params['montos']
+      f = params[:fechas]
+      m = params[:montos]
       i = 1
       cuotas = f.zip(m).sort_by { |c| c[0].to_time }
       primer = cuotas.shift

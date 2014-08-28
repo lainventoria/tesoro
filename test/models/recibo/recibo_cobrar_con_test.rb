@@ -12,7 +12,7 @@ class ReciboCobrarConTest < ActiveSupport::TestCase
     medio_de_cobro = build :efectivo, monto: @factura.importe_total,
       caja: caja
 
-    assert_no_difference ->{ @recibo.reload.comprobantes.count } do
+    assert_no_difference -> { @recibo.reload.comprobantes.count } do
       assert @recibo.cobrar_con(medio_de_cobro)
     end
     assert @factura.reload.cancelada?
@@ -26,7 +26,7 @@ class ReciboCobrarConTest < ActiveSupport::TestCase
       monto_aceptado: @factura.importe_total,
       caja: caja
 
-    assert_difference ->{ @recibo.reload.comprobantes.count } do
+    assert_difference -> { @recibo.reload.comprobantes.count } do
       assert @recibo.cobrar_con(medio_de_cobro)
     end
     assert @factura.reload.cancelada?
@@ -38,7 +38,7 @@ class ReciboCobrarConTest < ActiveSupport::TestCase
     medio_de_cobro = build :transferencia, monto: @factura.importe_total,
       caja: cuenta
 
-    assert_no_difference ->{ @recibo.reload.comprobantes.count } do
+    assert_no_difference -> { @recibo.reload.comprobantes.count } do
       assert @recibo.cobrar_con(medio_de_cobro)
     end
     assert @factura.reload.cancelada?
@@ -52,7 +52,7 @@ class ReciboCobrarConTest < ActiveSupport::TestCase
       monto_aceptado: @factura.importe_total,
       caja: cuenta
 
-    assert_difference ->{ @recibo.reload.comprobantes.count } do
+    assert_difference -> { @recibo.reload.comprobantes.count } do
       assert @recibo.cobrar_con(medio_de_cobro)
     end
     assert @factura.reload.cancelada?

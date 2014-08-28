@@ -4,7 +4,7 @@ require 'test_helper'
 class ContratoDeVentaTest < ActiveSupport::TestCase
   test 'es válido' do
     # FIXME build_stubbed falla con la creación de unidades_funcionales
-    [ :build, :create ].each do |metodo|
+    [:build, :create].each do |metodo|
       assert_valid_factory metodo, :contrato_de_venta
     end
   end
@@ -45,22 +45,32 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
       cv.agregar_unidad_funcional(uf)
     end
 
-    assert_equal total, cv.monto_total, [total, cv.monto_total, cv.total_de_unidades_funcionales, cv.total_de_cuotas, cv]
+    assert_equal total, cv.monto_total
   end
 
   test 'el tercero debe ser un cliente' do
     assert build(:contrato_de_venta, tercero: create(:proveedor)).invalid?
   end
 
-  test 'resulta evidente que todas las monedas son creadas iguales' do
+  test 'las unidades de venta se venden en la misma moneda' do
     cv = create(:contrato_de_venta)
-    cv.valid?
-    uf_ars = create(:unidad_funcional, precio_venta: Money.new(1000, 'ARS'))
-    uf_usd = create(:unidad_funcional, precio_venta: Money.new(1000, 'USD'))
+    uf_usd = create(:unidad_funcional, precio_venta_final: Money.new(1000, 'USD'))
 
-    cv.agregar_unidad_funcional(uf_ars)
     cv.agregar_unidad_funcional(uf_usd)
-
     refute cv.valid?, cv.inspect
+  end
+
+  test '#periodo_para da el mes actual para el indice actual' do
+    fecha = DateTime.now
+
+    assert_equal fecha.beginning_of_month,
+      build(:contrato_de_venta, relacion_indice: 'actual').periodo_para(fecha)
+  end
+
+  test '#periodo_para da el mes anterior para el indice anterior' do
+    fecha = DateTime.now
+
+    assert_equal fecha.last_month.beginning_of_month,
+      build(:contrato_de_venta, relacion_indice: 'anterior').periodo_para(fecha)
   end
 end
