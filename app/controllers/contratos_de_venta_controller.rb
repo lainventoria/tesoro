@@ -3,9 +3,6 @@ class ContratosDeVentaController < ApplicationController
   before_action :set_obra
   before_action :set_contrato, only: [:show, :edit, :update, :destroy]
 
-  autocomplete :tercero, :nombre, :extra_data => [:cuit]
-  autocomplete :tercero, :cuit, :extra_data => [:nombre]
-
   def index
     @contratos = @obra.contratos_de_venta
   end

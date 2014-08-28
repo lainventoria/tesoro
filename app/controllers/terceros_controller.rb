@@ -3,31 +3,26 @@ class TercerosController < ApplicationController
   before_action :set_tercero, only: [:show, :edit, :update, :destroy]
   before_action :set_order, only: [:index]
 
-  # GET /terceros
-  # GET /terceros.json
+  autocomplete :tercero, :nombre, extra_data: [:cuit]
+  autocomplete :tercero, :cuit, extra_data: [:nombre]
+
   def index
     @terceros = Tercero.all.order(@order)
   end
 
-  # GET /terceros/1
-  # GET /terceros/1.json
   def show
     @editar=false
   end
 
-  # GET /terceros/new
   def new
     @tercero = Tercero.new
     @editar = true
   end
 
-  # GET /terceros/1/edit
   def edit
     @editar=true
   end
 
-  # POST /terceros
-  # POST /terceros.json
   def create
     @tercero = Tercero.new(tercero_params)
 
@@ -42,8 +37,6 @@ class TercerosController < ApplicationController
     end
   end
 
-  # PATCH/PUT /terceros/1
-  # PATCH/PUT /terceros/1.json
   def update
     respond_to do |format|
       if @tercero.update(tercero_params)
@@ -56,8 +49,6 @@ class TercerosController < ApplicationController
     end
   end
 
-  # DELETE /terceros/1
-  # DELETE /terceros/1.json
   def destroy
     if @tercero.destroy
       respond_to do |format|
@@ -73,12 +64,11 @@ class TercerosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_tercero
       @tercero = Tercero.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def tercero_params
       params.require(:tercero).permit(
         :nombre, :direccion, :telefono, :celular, :email, :iva, :relacion,

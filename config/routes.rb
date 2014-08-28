@@ -84,10 +84,6 @@ Rails.application.routes.draw do
       # Filtrar facturas por situacion
       get 'cobros'
       get 'pagos'
-
-      # Autocompletar Terceros
-      get :autocomplete_tercero_nombre
-      get :autocomplete_tercero_cuit
     end
 
     # /factura/recibo - Ver los recibos de cada factura
@@ -108,16 +104,14 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contratos_de_venta, only: [ :autocomplete_tercero_nombre, :autocomplete_tercero_cuit ] do
+  # /tercero
+  resources :terceros do
     collection do
-      # Autocompletar Terceros
-      get :autocomplete_tercero_nombre
-      get :autocomplete_tercero_cuit
+      # Autocompletar
+      get 'autocompletar_nombre' => 'terceros#autocomplete_tercero_nombre'
+      get 'autocompletar_cuit' => 'terceros#autocomplete_tercero_cuit'
     end
   end
-
-  # /tercero
-  resources :terceros
 
   # /indice
   resources :indices

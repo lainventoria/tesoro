@@ -5,9 +5,6 @@ class FacturasController < ApplicationController
   before_action :set_tercero, only: [:create, :update]
   before_action :set_order, only: [:cobros, :pagos]
 
-  autocomplete :tercero, :nombre, :extra_data => [:cuit]
-  autocomplete :tercero, :cuit, :extra_data => [:nombre]
-
   def index
     @facturas = @obra ? @obra.facturas : Factura.all
     @facturas = params[:saldadas].present? ? @facturas.saldadas : @facturas.por_saldar

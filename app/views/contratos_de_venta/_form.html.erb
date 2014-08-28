@@ -12,13 +12,11 @@
     <%= f.hidden_field :obra_id, value: obra.id %>
 
     <div class="field form-group">
-      <%= render partial: 'terceros/nombre',
-            locals: { f: f, autocomplete_path: autocomplete_tercero_nombre_contratos_de_venta_path } %>
+      <%= render partial: 'terceros/nombre', locals: { f: f } %>
     </div>
 
     <div class="field form-group">
-      <%= render partial: 'terceros/cuit',
-            locals: { f: f, autocomplete_path: autocomplete_tercero_cuit_contratos_de_venta_path } %>
+      <%= render partial: 'terceros/cuit', locals: { f: f } %>
     </div>
 
     <div class="alert alert-info" id="contrato_de_venta_tercero_msg" style="display:none">
