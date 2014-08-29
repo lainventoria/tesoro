@@ -11,7 +11,7 @@ class TercerosController < ApplicationController
   end
 
   def show
-    @editar=false
+    @editar = false
   end
 
   def new
@@ -20,7 +20,7 @@ class TercerosController < ApplicationController
   end
 
   def edit
-    @editar=true
+    @editar = true
   end
 
   def create
