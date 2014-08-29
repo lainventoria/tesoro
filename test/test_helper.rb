@@ -58,3 +58,8 @@ class Capybara::Rails::TestCase
     load Rails.root.join('db/seeds.rb')
   end
 end
+
+# Registrando el driver podemos pasar opciones como el profile a usar
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new app, browser: :firefox, profile: ENV['PROFILE']
+end
