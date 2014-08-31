@@ -15,12 +15,12 @@ class CuotaConContratoTest < ActiveSupport::TestCase
 
     @cv.agregar_pago_inicial(@cv.fecha, @cv.monto_total * 0.2)
 
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.months}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.days}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 1.months}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 2.months}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 3.months}))
-    @cv.agregar_cuota(attributes_for(:cuota).merge({monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 4.months}))
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.months)
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.2, vencimiento: Date.today - 1.days)
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 1.months)
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 2.months)
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 3.months)
+    @cv.agregar_cuota attributes_for(:cuota, monto_original: @cv.monto_total * 0.1, vencimiento: Date.today + 4.months)
 
     @cv.save!
   end
