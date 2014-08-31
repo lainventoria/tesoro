@@ -2,12 +2,11 @@
 require 'test_helper'
 
 class CuotaConContratoTest < ActiveSupport::TestCase
-
   setup do
     # FIXME este setup es monstruoso, hasta hacía asserts??
     @cv = create(:contrato_de_venta, fecha: Date.today - 2.months)
 
-    indice_viejo = create(:indice_cuota, periodo: (Date.today - 10.months).beginning_of_month)
+    indice_viejo = create(:indice, :para_cuotas, periodo: (Date.today - 10.months).beginning_of_month)
     indice_viejo.save!
 
     @indice = @cv.indice_para(Date.today - 2.months)
@@ -27,7 +26,7 @@ class CuotaConContratoTest < ActiveSupport::TestCase
 
   test 'el monto se actualiza en base al indice del mes anterior' do
     cuota = @cv.cuotas.sin_vencer.sample
-    indice_siguiente = create(:indice_cuota, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
+    indice_siguiente = create(:indice, :para_cuotas, valor: 1200, periodo: @cv.periodo_para(cuota.vencimiento))
 
     assert_equal indice_siguiente, cuota.indice_actual
     assert_equal cuota.monto_original * (indice_siguiente.valor / @indice.valor), cuota.monto_actualizado
@@ -43,9 +42,7 @@ class CuotaConContratoTest < ActiveSupport::TestCase
 
   test 'las cuotas generan facturas de cobro' do
     c = @cv.cuotas.first
-    c.generar_factura
-
-    f = Factura.last
+    f = c.generar_factura
 
     assert_equal c.factura, f
     assert f.cobro?
@@ -85,9 +82,10 @@ class CuotaConContratoTest < ActiveSupport::TestCase
 
     # creamos un indice cualquiera en cualquier fecha
     p = (Date.today + 5.months).beginning_of_month
-    indice_cualquiera = create(:indice_cuota, valor: 1300, periodo: p)
+    indice_cualquiera = create(:indice, :para_cuotas, valor: 1300, periodo: p)
+
     # le decimos a la cuota que genere una factura en base a ese indice
-    assert c.generar_factura(p), c.errors.messages.inspect
+    assert_instance_of Factura, c.generar_factura(p), c.errors.messages.inspect
     # Cuota.indice_actual(p) debería devolver el indice que creamos a
     # propósito
     assert_equal indice_cualquiera, c.indice

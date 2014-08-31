@@ -3,7 +3,7 @@ require 'test_helper'
 
 class IndicesControllerTest < ActionController::TestCase
   setup do
-    @indice = create :indice
+    @indice = create :indice, denominacion: 'Costo de construcción'
   end
 
   test 'should get index' do
@@ -19,7 +19,9 @@ class IndicesControllerTest < ActionController::TestCase
 
   test 'should create indice' do
     assert_difference('Indice.count') do
-      post :create, indice: { denominacion: @indice.denominacion, periodo: @indice.periodo, valor: @indice.valor }
+      post :create, indice: {
+        denominacion: 'Materiales', periodo: @indice.periodo, valor: @indice.valor
+      }
     end
 
     assert_redirected_to indice_path(assigns(:indice))
@@ -36,7 +38,9 @@ class IndicesControllerTest < ActionController::TestCase
   end
 
   test 'should update indice' do
-    patch :update, id: @indice, indice: { denominacion: @indice.denominacion, periodo: @indice.periodo, valor: @indice.valor }
+    patch :update, id: @indice, indice: {
+      denominacion: @indice.denominacion, periodo: @indice.periodo, valor: @indice.valor
+    }
     assert_redirected_to indice_path(assigns(:indice))
   end
 
@@ -47,5 +51,4 @@ class IndicesControllerTest < ActionController::TestCase
 
     assert_redirected_to indices_path
   end
-
 end
