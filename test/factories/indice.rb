@@ -8,7 +8,7 @@ FactoryGirl.define do
     valor { rand(2000) + rand(99) / 100.0 }
 
     factory :indice_cuota do
-      denominacion "Costo de construcción"
+      denominacion 'Costo de construcción'
     end
   end
 end

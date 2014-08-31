@@ -40,7 +40,7 @@ class Indice < ActiveRecord::Base
         denominacion: denominacion,
         periodo: periodo,
         valor: indice_anterior.valor)
-      indice.save
+      indice.save!
     end
 
     # devolver siempre un indice
@@ -60,9 +60,9 @@ class Indice < ActiveRecord::Base
     def actualizar_cuotas
       Factura.transaction do
         cuotas.each do |cuota|
-          if !cuota.factura.nil?
+          if cuota.factura.present?
             cuota.factura.importe_neto = cuota.monto_actualizado
-            cuota.factura.save
+            cuota.factura.save!
           end
         end
       end
