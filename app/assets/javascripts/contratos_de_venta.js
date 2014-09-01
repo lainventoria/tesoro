@@ -49,7 +49,7 @@ $(document).ready(function(){
         html += '>' + moneda + '</option>';
       });
       html += '</select></td>';
-      html += '<td><input type="text" data-role="money" name="unidades_funcionales[' + data.id + '][precio_venta]" value="' + data.precio_venta_centavos / 100 + '" class="form-control precio" /></td>';
+      html += '<td><input type="text" id="unidad_funcional_' + data.id + '" data-role="money" name="unidades_funcionales[' + data.id + '][precio_venta]" value="' + data.precio_venta_centavos / 100 + '" class="form-control precio" /></td>';
       html += '<td><a href="#" class="quitar-unidad"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
       $('#contrato_de_venta_unidades_funcionales_table').append(html);
 
@@ -77,6 +77,8 @@ $(document).ready(function(){
 
   // Agregar unidad seleccionada
   $('#contrato_de_venta_unidad_funcional_agregar').on('click',function(e){
+    e.preventDefault();
+    e.stopPropagation();
     unidad_id = $('#contrato_de_venta_unidades_funcionales').val();
     agregar_unidad(unidad_id);
     $('#contrato_de_venta_unidades_funcionales option:selected').remove();

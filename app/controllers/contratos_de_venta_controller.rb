@@ -3,9 +3,6 @@ class ContratosDeVentaController < ApplicationController
   before_action :set_obra
   before_action :set_contrato, only: [:show, :edit, :update, :destroy]
 
-  autocomplete :tercero, :nombre, :extra_data => [:cuit]
-  autocomplete :tercero, :cuit, :extra_data => [:nombre]
-
   def index
     @contratos = @obra.contratos_de_venta
   end
@@ -81,7 +78,9 @@ class ContratosDeVentaController < ApplicationController
     def contrato_de_venta_params
       params.require(:contrato_de_venta).permit(
         :tercero_id, :obra_id, :relacion_indice, :tipo_factura,
-        tercero_attributes: [ :nombre, :cuit ]
+        tercero_attributes: [
+          :nombre, :cuit
+        ]
       )
     end
 
@@ -89,7 +88,7 @@ class ContratosDeVentaController < ApplicationController
     def agregar_unidades
       params[:unidades_funcionales].each do |uf|
         unidad = UnidadFuncional.find(uf.first)
-        p = uf[1]['precio_venta'].sub(',','').sub('.','').to_i
+        p = uf[1]['precio_venta'].sub(',', '').sub('.', '').to_i
         unidad.precio_venta_final_centavos = p
         unidad.precio_venta_final_moneda = uf[1]['precio_venta_moneda']
         @contrato.agregar_unidad_funcional(unidad)
@@ -103,7 +102,7 @@ class ContratosDeVentaController < ApplicationController
       i = 1
       cuotas = f.zip(m).sort_by { |c| c[0].to_time }
       primer = cuotas.shift
-      @contrato.agregar_pago_inicial(primer[0],primer[1])
+      @contrato.agregar_pago_inicial(primer[0], primer[1])
       cuotas.map do |fecha, monto|
         @contrato.agregar_cuota vencimiento: fecha, monto_original: monto,
           descripcion: "Cuota ##{i}"

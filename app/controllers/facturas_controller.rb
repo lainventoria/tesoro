@@ -5,9 +5,6 @@ class FacturasController < ApplicationController
   before_action :set_tercero, only: [:create, :update]
   before_action :set_order, only: [:cobros, :pagos]
 
-  autocomplete :tercero, :nombre, :extra_data => [:cuit]
-  autocomplete :tercero, :cuit, :extra_data => [:nombre]
-
   def index
     @facturas = @obra ? @obra.facturas : Factura.all
     @facturas = params[:saldadas].present? ? @facturas.saldadas : @facturas.por_saldar
@@ -85,6 +82,8 @@ class FacturasController < ApplicationController
 
   private
 
+    # FIXME como está escrito los últimos sobreescriben a los primeros.. por
+    # qué no if/else entonces?
     def set_tercero
       if params[:tercero_id]
         @tercero = Tercero.find(params[:tercero_id])
@@ -97,7 +96,7 @@ class FacturasController < ApplicationController
         )
       end
 
-      if ( @tercero.present? && @factura.present? )
+      if @tercero.present? && @factura.present?
         @factura.tercero = @tercero
       end
     end
@@ -108,7 +107,9 @@ class FacturasController < ApplicationController
         :tipo, :numero, :situacion, :tercero_id, :importe_neto, :iva,
         :descripcion, :importe_total, :fecha, :fecha_pago, :obra_id,
         :importe_neto_moneda, :iva_moneda, :importe_total_moneda,
-        tercero_attributes: [ :nombre, :cuit ]
+        tercero_attributes: [
+          :nombre, :cuit
+        ]
       )
     end
 end
