@@ -28,7 +28,7 @@ class UnidadFuncional < ActiveRecord::Base
   end
 
   def para_mostrar
-    self.tipo + ' - ' + self.descripcion
+    "#{self.tipo} - #{self.descripcion}"
   end
 
   protected
