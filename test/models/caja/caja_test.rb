@@ -7,14 +7,6 @@ class CajaTest < ActiveSupport::TestCase
     @caja = create :caja
   end
 
-  test 'es válida' do
-    [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :caja
-      assert_valid_factory metodo, :chequera
-      assert_valid_factory metodo, :cuenta
-    end
-  end
-
   test 'las cuentas deben tener banco' do
     refute build(:cuenta, banco: nil).valid?
   end

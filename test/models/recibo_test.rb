@@ -2,12 +2,6 @@
 require 'test_helper'
 
 class ReciboTest < ActiveSupport::TestCase
-  test 'es válido' do
-    [:build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :recibo
-    end
-  end
-
   test 'El recibo es válido si no completa la factura' do
     factura = create :factura, importe_neto: Money.new(1000), iva: Money.new(210)
     recibo = create :recibo, factura: factura

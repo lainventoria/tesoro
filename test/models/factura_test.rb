@@ -2,12 +2,6 @@
 require 'test_helper'
 
 class FacturaTest < ActiveSupport::TestCase
-  test 'es válida' do
-    [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :factura
-    end
-  end
-
   test 'es un pago?' do
     @pago = create :factura, situacion: 'pago'
     @cobro = create :factura, situacion: 'cobro'

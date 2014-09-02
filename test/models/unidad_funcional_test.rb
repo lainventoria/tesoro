@@ -2,13 +2,6 @@
 require 'test_helper'
 
 class UnidadFuncionalTest < ActiveSupport::TestCase
-
-  test 'es válida' do
-     [ :build, :build_stubbed, :create ].each do |metodo|
-      assert_valid_factory metodo, :unidad_funcional
-    end
-  end
-
   test 'cada unidad se vende a un solo tercero' do
     uf = create :unidad_funcional
     cv = create :contrato_de_venta
@@ -36,5 +29,4 @@ class UnidadFuncionalTest < ActiveSupport::TestCase
     assert_equal 0, UnidadFuncional.disponibles.count
     assert_not_equal 0, UnidadFuncional.vendidas.count
   end
-
 end

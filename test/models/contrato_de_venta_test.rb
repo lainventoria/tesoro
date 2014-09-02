@@ -23,7 +23,6 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     cv.agregar_cuota(attributes_for(:cuota))
 
     assert_equal 5, cv.cuotas.count
-
   end
 
   test 'el monto original es la suma de las unidades funcionales' do

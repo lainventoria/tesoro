@@ -2,13 +2,6 @@
 require 'test_helper'
 
 class ChequeTest < ActiveSupport::TestCase
-  test 'es válido' do
-    [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :cheque
-      assert_valid_factory metodo, :cheque_de_terceros
-    end
-  end
-
   test 'el cheque está vencido' do
     cheque = create :cheque, fecha_vencimiento: Time.now - rand(360000)
 
