@@ -14,13 +14,13 @@ class RecibosControllerTest < ActionController::TestCase
       factura: create(:factura, situacion: 'pago')
     create :recibo, situacion: 'interno'
 
-    assert Recibo.count == 3, [ Recibo.count.to_s + ' recibos en controlador']
+    assert Recibo.count == 3
     assert Recibo.where(situacion: 'pago').count == 1
 
     get :pagos
     assert_response :success
     assert_not_nil assigns(:recibos)
-    assert assigns(:recibos).count == 1, [ assigns(:recibos).count.to_s + ' recibos asignados' ]
+    assert assigns(:recibos).count == 1
   end
 
   test 'accede a la lista global de recibos de cobro' do
@@ -30,13 +30,13 @@ class RecibosControllerTest < ActionController::TestCase
       factura: create(:factura, situacion: 'pago')
     create :recibo, situacion: 'interno'
 
-    assert Recibo.count == 3, [ Recibo.count.to_s + ' recibos en controlador']
+    assert Recibo.count == 3
     assert Recibo.where(situacion: 'cobro').count == 1
 
     get :cobros
     assert_response :success
     assert_not_nil assigns(:recibos)
-    assert assigns(:recibos).count == 1, [ assigns(:recibos).count.to_s + ' recibos asignados' ]
+    assert assigns(:recibos).count == 1
   end
 
   test 'accede a la lista de recibos de pago' do
@@ -67,7 +67,6 @@ class RecibosControllerTest < ActionController::TestCase
     assert_not_nil assigns(:recibos)
   end
 
-
   test 'accede a crear' do
     get :new, factura_id: @factura
     assert_response :success
@@ -81,7 +80,7 @@ class RecibosControllerTest < ActionController::TestCase
         factura_id: @factura,
         recibo: attributes_for( :recibo, importe: importe_permitido, factura_id: @factura),
         causa_tipo: 'cheque-de-terceros',
-        causa: {cheque_id: create(:cheque)}
+        causa: { cheque_id: create(:cheque) }
     end
 
     assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))

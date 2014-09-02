@@ -12,7 +12,7 @@ class UnidadFuncional < ActiveRecord::Base
   validates_inclusion_of :tipo, in: TIPOS
   validates_presence_of :tipo, :obra_id, :precio_venta
 
-  before_destroy :chequear_no_se_usa
+  before_destroy :chequear_que_no_se_use
 
   monetize :precio_venta_centavos, with_model_currency: :precio_venta_moneda
   monetize :precio_venta_final_centavos, with_model_currency: :precio_venta_final_moneda
@@ -33,9 +33,7 @@ class UnidadFuncional < ActiveRecord::Base
 
   protected
 
-    def chequear_no_se_usa
-      if self.contrato_de_venta.present?
-        errors.add :no_debe_tener_contratos
-      end
+    def chequear_que_no_se_use
+      errors.add :no_debe_tener_contratos if self.contrato_de_venta.present?
     end
 end
