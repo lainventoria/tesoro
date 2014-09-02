@@ -10,9 +10,9 @@ class Cheque < ActiveRecord::Base
   class ErrorEnUsarParaPagar < ActiveRecord::ActiveRecordError; end;
 
   # Los cheques tienen una cuenta sólo si son propios o han sido depositados
-  belongs_to :cuenta, ->{ where(situacion: 'banco') },
+  belongs_to :cuenta, -> { where(situacion: 'banco') },
     class_name: 'Caja'
-  belongs_to :chequera, ->{ where(situacion: 'chequera') },
+  belongs_to :chequera, -> { where(situacion: 'chequera') },
     class_name: 'Caja'
 
   has_one :obra, through: :chequera
@@ -45,21 +45,16 @@ class Cheque < ActiveRecord::Base
 
   before_validation :adoptar_banco_de_cuenta
 
+  scope :depositados, -> { where(estado: 'depositado') }
+  scope :de_terceros, -> { where(situacion: 'terceros') }
+  scope :propios, -> { where(situacion: 'propio') }
+
   # Trae todos los cheques vencidos, si se le pasa una fecha trae los
   # vencidos a ese momento
   # TODO testear
-  scope :vencidos, lambda { |time = nil|
-    time = Time.now if not time
-    where('fecha_vencimiento < ?', time)
-  }
-
-  # Trae todos los cheques depositados
-  scope :depositados, lambda {
-    where(estado: 'depositado')
-  }
-
-  scope :de_terceros, ->{ where(situacion: 'terceros') }
-  scope :propios, ->{ where(situacion: 'propio') }
+  def self.vencidos(time = nil)
+    where('fecha_vencimiento < ?', time || Time.now)
+  end
 
   def self.construir(params)
     cheque_de_terceros_id = params.extract! :cheque_id

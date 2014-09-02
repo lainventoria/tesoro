@@ -8,6 +8,7 @@ require 'minitest/rails'
 require 'minitest/rails/capybara'
 
 # Revisar la validez de las factories definidas
+DatabaseCleaner.clean_with :truncation
 FactoryGirl.lint
 
 # Borrar todas las tablas de la DB

@@ -5,6 +5,7 @@ class UnidadFuncional < ActiveRecord::Base
   has_one :tercero, through: :contrato_de_venta
 
   # Los tipos que puede tener una unidad funcional
+  # FIXME no es demasiado hardcodeo esto?
   TIPOS = %w(Departamento Cochera Baulera)
 
   # Validaciones
@@ -16,25 +17,11 @@ class UnidadFuncional < ActiveRecord::Base
   monetize :precio_venta_centavos, with_model_currency: :precio_venta_moneda
   monetize :precio_venta_final_centavos, with_model_currency: :precio_venta_final_moneda
 
-  scope :disponibles, lambda {
-    where(contrato_de_venta: nil)
-  }
-
-  scope :vendidas, lambda {
-    where.not(contrato_de_venta: nil)
-  }
-
-  scope :departamentos, lambda {
-    where(tipo: 'Departamento')
-  }
-
-  scope :cocheras, lambda {
-    where(tipo: 'Cochera')
-  }
-
-  scope :bauleras, lambda {
-    where(tipo: 'Baulera')
-  }
+  scope :disponibles, -> { where(contrato_de_venta: nil) }
+  scope :vendidas, -> { where.not(contrato_de_venta: nil) }
+  scope :departamentos, -> { where(tipo: 'Departamento') }
+  scope :cocheras, -> { where(tipo: 'Cochera') }
+  scope :bauleras, -> { where(tipo: 'Baulera') }
 
   def disponible?
     self.contrato_de_venta.nil?
@@ -45,10 +32,10 @@ class UnidadFuncional < ActiveRecord::Base
   end
 
   protected
+
     def chequear_no_se_usa
       if self.contrato_de_venta.present?
         errors.add :no_debe_tener_contratos
       end
     end
-
 end

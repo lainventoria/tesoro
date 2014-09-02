@@ -11,32 +11,24 @@ class Cuota < ActiveRecord::Base
   validates_numericality_of :monto_original_centavos, greater_than: 0
   validates_presence_of :vencimiento, :descripcion
 
+  # cuotas con facturas emitidas
+  scope :emitidas, -> { where.not(factura: nil) }
+  # cuotas sin factura emitida
+  scope :pendientes, -> { where(factura: nil) }
+
   # mostrar todas las cuotas vencidas
   # que no sean el pago inicial porque es como la cuota 0
-  scope :vencidas, lambda { |time = nil|
-    time = Time.now if not time
-    where.not(descripcion: 'Pago inicial').where('vencimiento < ?', time)
-  }
+  def self.vencidas(time = nil)
+    # FIXME no habíamos sacado este not irrelevante?
+    where.not(descripcion: 'Pago inicial').where('vencimiento < ?', time || Time.now)
+  end
 
-  scope :sin_vencer, lambda { |time = nil|
-    time = Time.now if not time
-    where('vencimiento > ?', time)
-  }
-
-  # cuotas con facturas emitidas
-  scope :emitidas, lambda {
-    where.not(factura: nil)
-  }
-
-  # cuotas sin factura emitida
-  scope :pendientes, lambda {
-    where(factura: nil)
-  }
+  def self.sin_vencer(time = nil)
+    where('vencimiento > ?', time || Time.now)
+  end
 
   def vencida?(time = nil)
-    time = Time.now if not time
-
-    vencimiento < time
+    vencimiento < (time || Time.now)
   end
 
   # el monto actualizado es el monto original por el proporcional del

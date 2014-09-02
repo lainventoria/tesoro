@@ -3,19 +3,19 @@ class Obra < ActiveRecord::Base
   has_many :cajas, dependent: :restrict_with_error
   has_many :cheques, through: :cajas
   has_many :facturas, dependent: :restrict_with_error
-  has_many :recibos, ->{ uniq }, through: :cajas
+  has_many :recibos, -> { uniq }, through: :cajas
   has_many :retenciones, through: :facturas
   has_many :unidades_funcionales, class_name: 'UnidadFuncional'
   has_many :contratos_de_venta, class_name: 'ContratoDeVenta'
 
   # TODO mejorar esta cosa
-  has_one :chequera_propia, ->{ where(tipo: 'Chequera propia') },
+  has_one :chequera_propia, -> { where(tipo: 'Chequera propia') },
     class_name: 'Caja'
-  has_one :chequera, ->{ where(tipo: 'Chequera') },
+  has_one :chequera, -> { where(tipo: 'Chequera') },
     class_name: 'Caja'
-  has_one :caja_ganancias, ->{ where(tipo: 'Retenciones de Ganancias') },
+  has_one :caja_ganancias, -> { where(tipo: 'Retenciones de Ganancias') },
     class_name: 'Caja'
-  has_one :caja_cargas_sociales, ->{ where(tipo: 'Retenciones de Cargas Sociales') },
+  has_one :caja_cargas_sociales, -> { where(tipo: 'Retenciones de Cargas Sociales') },
     class_name: 'Caja'
 
   after_create :crear_cajas
