@@ -19,8 +19,7 @@ class Cuota < ActiveRecord::Base
   # mostrar todas las cuotas vencidas
   # que no sean el pago inicial porque es como la cuota 0
   def self.vencidas(time = nil)
-    # FIXME no habíamos sacado este not irrelevante?
-    where.not(descripcion: 'Pago inicial').where('vencimiento < ?', time || Time.now)
+    where('vencimiento < ?', time || Time.now)
   end
 
   def self.sin_vencer(time = nil)
