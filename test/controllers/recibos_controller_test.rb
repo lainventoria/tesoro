@@ -3,7 +3,8 @@ require 'test_helper'
 
 class RecibosControllerTest < ActionController::TestCase
   setup do
-    @factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    @factura = create :factura, importe_neto: Money.new(3000),
+      iva: Money.new(3000 * 0.21)
   end
 
   test 'accede a la lista global de recibos de pago' do

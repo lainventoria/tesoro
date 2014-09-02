@@ -17,7 +17,7 @@ class EfectivoTest < ActiveSupport::TestCase
   end
 
   test 'sabe construirse' do
-    assert_nothing_raised { Efectivo.construir({ algo: 'bonito'}) }
+    assert_nothing_raised { Efectivo.construir({ algo: 'bonito' }) }
   end
 
   test 'usar como pago devuelve un movimiento completo' do

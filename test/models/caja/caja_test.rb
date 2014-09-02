@@ -29,7 +29,7 @@ class CajaTest < ActiveSupport::TestCase
     end
 
     # a menos que tengan numeros diferentes
-    assert create :caja, tipo: 'Personal', obra_id: '1234', numero:'1'
+    assert create :caja, tipo: 'Personal', obra_id: '1234', numero: '1'
   end
 
   test 'emite cheques propios' do
@@ -44,7 +44,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'no permite archivar hasta que el saldo es 0' do
-    [ 'ARS', 'USD' ].each do |moneda|
+    ['ARS', 'USD'].each do |moneda|
       assert @caja.depositar!(Money.new(1000, moneda))
 
       assert_not @caja.archivar, @caja.errors.inspect

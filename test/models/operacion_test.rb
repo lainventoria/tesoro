@@ -16,7 +16,7 @@ class OperacionTest < ActiveSupport::TestCase
   end
 
   test 'sabe construirse' do
-    assert_nothing_raised { Operacion.construir({ algo: 'bonito'}) }
+    assert_nothing_raised { Operacion.construir({ algo: 'bonito' }) }
   end
 
   test 'transfiere fondos entre cajas' do

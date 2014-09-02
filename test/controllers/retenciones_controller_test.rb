@@ -3,7 +3,8 @@ require 'test_helper'
 
 class RetencionesControllerTest < ActionController::TestCase
   setup do
-    @factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    @factura = create :factura, importe_neto: Money.new(3000),
+      iva: Money.new(3000 * 0.21)
     @retencion = create :retencion, factura: @factura
   end
 

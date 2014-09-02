@@ -19,10 +19,10 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test 'se cancela con recibos' do
-    factura = create :factura, importe_neto: Money.new(2000), iva: Money.new(2000*0.21)
+    factura = create :factura, importe_neto: Money.new(2000), iva: Money.new(2000 * 0.21)
     2.times do
       recibo = create :recibo, factura: factura
-      recibo.pagar_con efectivo_por(Money.new(1000*1.21))
+      recibo.pagar_con efectivo_por(Money.new(1000 * 1.21))
     end
 
     assert factura.reload.cancelada?
@@ -32,14 +32,14 @@ class FacturaTest < ActiveSupport::TestCase
   end
 
   test 'desbloquear factura despues de cancelada' do
-    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000*0.21)
+    factura = create :factura, importe_neto: Money.new(3000), iva: Money.new(3000 * 0.21)
     recibo = create :recibo, factura: factura
-    recibo.pagar_con efectivo_por(Money.new(3000*1.21))
+    recibo.pagar_con efectivo_por(Money.new(3000 * 1.21))
 
     assert factura.reload.cancelada?
 
     factura.importe_neto = Money.new(4000)
-    factura.iva = Money.new(4000*0.105)
+    factura.iva = Money.new(4000 * 0.105)
     assert factura.save
 
     refute factura.reload.cancelada?

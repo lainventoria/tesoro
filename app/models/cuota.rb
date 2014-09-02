@@ -34,7 +34,7 @@ class Cuota < ActiveRecord::Base
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
   def monto_actualizado(periodo = nil)
-    monto_original * ( indice_actual(periodo).valor / contrato_de_venta.indice.valor )
+    monto_original * (indice_actual(periodo).valor / contrato_de_venta.indice.valor)
   end
 
   # obtiene el indice actual según el indice del contrato y el
