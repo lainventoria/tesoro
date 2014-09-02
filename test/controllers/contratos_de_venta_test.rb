@@ -4,8 +4,6 @@ require 'test_helper'
 class ContratosDeVentaControllerTest < ActionController::TestCase
   setup do
     @contrato = create :contrato_de_venta
-    indice = create :indice
-    indice.save
   end
 
   test 'accede a la lista de contratos' do
@@ -20,9 +18,11 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
   end
 
   test 'crea' do
+    create :cuota
+    create :indice, :para_cuotas
+
     obra = create :obra
     unidad = create :unidad_funcional
-    cuota = create :cuota
     tercero = create :tercero
 
     assert_difference('ContratoDeVenta.count') do
