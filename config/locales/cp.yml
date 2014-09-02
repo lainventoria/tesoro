@@ -33,6 +33,7 @@ es:
           attributes:
             base:
               medio_de_pago_invalido: 'Medio de pago (%{causa}) inválido: %{mensaje}'
+              no_se_puede_borrar_por_movimientos_trackeables: 'No se puede borrar este recibo porque tiene cheques y/o retenciones asociados'
             movimientos:
               sobrepasan_el_saldo: 'Sobrepasan el saldo'
               no_son_en_la_misma_moneda: 'Todos los %{situacion}s deben realizarse en la misma moneda'

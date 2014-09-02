@@ -186,6 +186,7 @@ class Recibo < ActiveRecord::Base
         # TODO Caso especial a reingenierizar
         movimientos.first.try :delete
       elsif movimientos.collect(&:causa).any?(&:trackeable?)
+        errors.add(:base, :no_se_puede_borrar_por_movimientos_trackeables)
         false
       else
         movimientos.all?(&:destroy)
