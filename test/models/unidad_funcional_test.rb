@@ -14,7 +14,7 @@ class UnidadFuncionalTest < ActiveSupport::TestCase
   end
 
   test 'hay unidades estan disponibles' do
-    uf = create :unidad_funcional
+    create :unidad_funcional
 
     assert_equal 1, UnidadFuncional.disponibles.count
   end

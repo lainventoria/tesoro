@@ -21,7 +21,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'no permite tipos iguales en una misma obra y con el mismo numero' do
-    caja1 = create :caja, tipo: 'Personal', obra_id: '1234', numero: ''
+    create :caja, tipo: 'Personal', obra_id: '1234', numero: ''
 
     # no permite cajas con mismo tipo
     assert_raise ActiveRecord::RecordInvalid do
