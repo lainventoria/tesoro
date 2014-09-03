@@ -7,14 +7,6 @@ class CajaTest < ActiveSupport::TestCase
     @caja = create :caja
   end
 
-  test 'es válida' do
-    [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :caja
-      assert_valid_factory metodo, :chequera
-      assert_valid_factory metodo, :cuenta
-    end
-  end
-
   test 'las cuentas deben tener banco' do
     refute build(:cuenta, banco: nil).valid?
   end
@@ -29,7 +21,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'no permite tipos iguales en una misma obra y con el mismo numero' do
-    caja1 = create :caja, tipo: 'Personal', obra_id: '1234', numero: ''
+    create :caja, tipo: 'Personal', obra_id: '1234', numero: ''
 
     # no permite cajas con mismo tipo
     assert_raise ActiveRecord::RecordInvalid do
@@ -37,7 +29,7 @@ class CajaTest < ActiveSupport::TestCase
     end
 
     # a menos que tengan numeros diferentes
-    assert create :caja, tipo: 'Personal', obra_id: '1234', numero:'1'
+    assert create :caja, tipo: 'Personal', obra_id: '1234', numero: '1'
   end
 
   test 'emite cheques propios' do
@@ -52,7 +44,7 @@ class CajaTest < ActiveSupport::TestCase
   end
 
   test 'no permite archivar hasta que el saldo es 0' do
-    [ 'ARS', 'USD' ].each do |moneda|
+    ['ARS', 'USD'].each do |moneda|
       assert @caja.depositar!(Money.new(1000, moneda))
 
       assert_not @caja.archivar, @caja.errors.inspect

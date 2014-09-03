@@ -37,9 +37,9 @@ class Caja < ActiveRecord::Base
     end
   end
 
-  scope :cuentas, ->{ where(situacion: 'banco') }
-  scope :chequeras, ->{ where(situacion: 'chequera') }
-  scope :de_efectivo, ->{ where(situacion: 'efectivo') }
+  scope :cuentas, -> { where(situacion: 'banco') }
+  scope :chequeras, -> { where(situacion: 'chequera') }
+  scope :de_efectivo, -> { where(situacion: 'efectivo') }
 
   def self.con_fondos_en(moneda)
     joins(:movimientos).where('movimientos.monto_moneda = ?', moneda)

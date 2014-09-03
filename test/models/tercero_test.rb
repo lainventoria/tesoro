@@ -2,13 +2,6 @@
 require 'test_helper'
 
 class TerceroTest < ActiveSupport::TestCase
-
-  test 'es válido' do
-     [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :tercero
-    end
-  end
-
   test 'sabe si es un proveedor' do
     proveedor = create :proveedor
 

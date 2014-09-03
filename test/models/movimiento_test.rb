@@ -2,12 +2,6 @@
 require 'test_helper'
 
 class MovimientoTest < ActiveSupport::TestCase
-  test 'es válido' do
-    [ :build, :build_stubbed, :create].each do |metodo|
-      assert_valid_factory metodo, :movimiento
-    end
-  end
-
   test 'usa pesos argentinos por default' do
     assert_equal 'ARS', build(:movimiento).monto_moneda
   end

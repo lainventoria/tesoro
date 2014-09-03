@@ -52,7 +52,7 @@ end
 namespace :load do
   task :defaults do
     # Guardamos la configuración en shared/config
-    set :config_path, ->{ shared_path.join('config') }
+    set :config_path, -> { shared_path.join('config') }
     # Sacamos la configuración del tmp de rails de acuerdo al stage (e.g.
     # tmp/production-config)
     set :config_local_path, "tmp/#{fetch(:stage)}-config"

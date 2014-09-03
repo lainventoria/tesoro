@@ -18,13 +18,13 @@ class Retencion < ActiveRecord::Base
   has_one :tercero, through: :factura
 
   # Las retenciones se pagan desde una cuenta
-  belongs_to :cuenta, ->{ where(situacion: 'banco') },
+  belongs_to :cuenta, -> { where(situacion: 'banco') },
     class_name: 'Caja'
 
   # Todas las retenciones pertenecen a una especie de chequera, que es donde
   # se contabilizan los pagos. Técnicamente no es una chequera pero por ahora
   # es lo mismo
-  belongs_to :chequera, ->{ where(situacion: 'chequera') },
+  belongs_to :chequera, -> { where(situacion: 'chequera') },
     class_name: 'Caja'
 
   has_many :recibos, through: :movimientos

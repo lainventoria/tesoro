@@ -37,6 +37,6 @@ end
 
 namespace :load do
   task :defaults do
-    set :backup_path, ->{ shared_path.join('backup') }
+    set :backup_path, -> { shared_path.join('backup') }
   end
 end
