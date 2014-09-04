@@ -10,7 +10,7 @@ feature 'Recibos' do
     scenario 'Esta el boton' do
       visit edit_factura_recibo_path(@recibo.factura, @recibo)
       page.must_have_content 'Editar Recibo'
-      page.must_have_link 'Borrar Recibo', href: factura_recibos_path(@recibo.factura)
+      page.must_have_link 'Borrar Recibo'
     end
 
     scenario 'Un pago efectivo' do
