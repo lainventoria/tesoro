@@ -12,6 +12,7 @@ feature 'Editar Obra' do
 
   scenario 'Guardar cambios', js: true do
     find('#btnGuardar').click
+
     page.must_have_content 'Obra actualizada con éxito'
     find('input#obra_nombre').value.must_equal 'nuevo nombre'
     find('input#obra_direccion').value.must_equal 'nueva direccion'
@@ -19,6 +20,7 @@ feature 'Editar Obra' do
 
   scenario 'Cancelar cambios' do
     click_link 'Volver a Obra'
+
     find('input#obra_nombre').value.must_equal @obra.nombre
     find('input#obra_direccion').value.must_equal @obra.direccion
   end

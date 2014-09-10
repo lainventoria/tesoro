@@ -24,8 +24,8 @@ feature 'Vistas minimas' do
   scenario 'Widgets en vista detallada' do
     visit obra_path(@obra)
 
-    page.must_have_content 'Situacion Economica'
-    page.must_have_content 'Situacion Financiera'
+    page.must_have_content 'Situación Económica'
+    page.must_have_content 'Situación Financiera'
     page.must_have_content 'Unidades Funcionales'
     page.must_have_link 'Listar Unidades Funcionales', obra_unidades_funcionales_path(@obra)
   end
