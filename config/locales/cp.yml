@@ -1,5 +1,5 @@
 es:
-  avisar_que_faltan_indices: 'No hay índices cargados para este mes! Todas las cuotas se indexan temporalmente en base al último indice cargado'
+  avisar_si_faltan_indices: 'No hay índices cargados para este mes! Todas las cuotas se indexan temporalmente en base al último indice cargado'
   activerecord:
     errors:
       models:
