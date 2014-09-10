@@ -4,20 +4,17 @@ require './test/test_helper'
 feature 'Avisar que faltan indices' do
   background { create :indice, :para_cuotas }
 
-  scenario 'todavía no se cargaron los indices del mes' do
+  scenario 'todavía no se cargaron los índices del mes' do
     visit root_path
 
-    page.must_have_content 'No hay indices cargados'
+    page.must_have_content 'No hay índices cargados'
   end
 
   scenario 'ir y cargar el indice', js: true do
-    indice = Indice.presente
-
-    visit edit_indice_path(indice)
+    visit edit_indice_path(Indice.presente)
 
     find('#btnGuardar').click
 
-    page.wont_have_content 'No hay indices cargados'
-
+    page.wont_have_content 'No hay índices cargados'
   end
 end

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :avisar_que_faltan_indices
+  before_action :avisar_si_faltan_indices
 
   protected
 
@@ -84,6 +84,6 @@ class ApplicationController < ActionController::Base
     end
 
     def avisar_que_faltan_indices
-      flash.notice = t :avisar_que_faltan_indices if Indice.presente.temporal?
+      flash.notice = t :avisar_si_faltan_indices if Indice.presente.temporal?
     end
 end
