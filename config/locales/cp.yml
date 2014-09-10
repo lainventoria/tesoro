@@ -1,4 +1,5 @@
 es:
+  avisar_que_faltan_indices: 'No hay indices cargados para este mes!'
   activerecord:
     errors:
       models:
