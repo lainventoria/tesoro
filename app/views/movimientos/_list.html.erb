@@ -4,7 +4,6 @@
 <%# TODO todos estos pueden ir a helpers %>
 <% params[:controller] == 'cajas' ? lista_cajas = '' : lista_cajas = 'hidden' %>
 <% params[:controller] == 'recibos' ? lista_recibos = '' : lista_recibos = 'hidden' %>
-<% params[:action] == 'edit' ? boton_borrar = '' : boton_borrar = 'hidden' %>
 <% movimientos.pluck(:monto_moneda).uniq.count == 2 ? lista_efectivo = '' : lista_efectivo = 'hidden' %>
 
 <table class="table table-hover table-condensed">
@@ -15,13 +14,12 @@
       <th class='text-right <%= lista_recibos %>'>Monto &nbsp;</th>
       <th class='text-right <%= lista_cajas %>'>Monto ARS &nbsp;</th>
       <th class='text-right <%= lista_cajas %> <%= lista_efectivo %>'>Monto USD &nbsp;</th>
-      <th class='<%= boton_borrar %>'></th>
     </tr>
   </thead>
   <tbody>
     <%# TODO convertir a `render movimientos` cuando las variables sean helpers %>
     <%= render partial: 'movimientos/movimiento', collection: movimientos,
         locals: { lista_cajas: lista_cajas, lista_recibos: lista_recibos,
-                  lista_efectivo: lista_efectivo, boton_borrar: boton_borrar } %>
+                  lista_efectivo: lista_efectivo } %>
   </tbody>
 </table>
