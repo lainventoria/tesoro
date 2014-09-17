@@ -3,7 +3,6 @@
   <thead>
     <tr>
       <th></th>
-      <th>Obra</th>
       <th>Tipo</th>
       <th>Descripción</th>
       <th class="text-right">Precio de Venta</th>
@@ -15,7 +14,6 @@
     <% unidades.each do |unidad| %>
       <tr class="ir-a" data-uri="<%= obra_unidad_funcional_path(unidad.obra, unidad) %>">
         <td><%= link_to '', [ unidad.obra, unidad ] , class: 'glyphicon glyphicon-eye-open' %></td>
-        <td><%= unidad.obra.nombre %></td>
         <td><%= unidad.tipo %></td>
         <td><%= unidad.descripcion %></td>
         <td class="text-right"><%= formatted_number(unidad.precio_venta, unidad.precio_venta_moneda) %></td>
