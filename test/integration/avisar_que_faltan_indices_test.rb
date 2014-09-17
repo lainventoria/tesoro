@@ -7,7 +7,7 @@ feature 'Avisar que faltan indices' do
   scenario 'todavía no se cargaron los índices del mes' do
     visit root_path
 
-    page.must_have_content 'No hay índices cargados'
+    page.must_have_content 'No hay índice de construcción cargado'
   end
 
   scenario 'ir y cargar el indice', js: true do
@@ -15,6 +15,6 @@ feature 'Avisar que faltan indices' do
 
     find('#btnGuardar').click
 
-    page.wont_have_content 'No hay índices cargados'
+    page.wont_have_content 'No hay índice de construcción cargado'
   end
 end
