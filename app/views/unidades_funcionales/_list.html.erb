@@ -5,6 +5,7 @@
       <th></th>
       <th>Obra</th>
       <th>Tipo</th>
+      <th>Descripción</th>
       <th class="text-right">Precio de Venta</th>
       <th></th>
     </tr>
@@ -16,6 +17,7 @@
         <td><%= link_to '', [ unidad.obra, unidad ] , class: 'glyphicon glyphicon-eye-open' %></td>
         <td><%= unidad.obra.nombre %></td>
         <td><%= unidad.tipo %></td>
+        <td><%= unidad.descripcion %></td>
         <td class="text-right"><%= formatted_number(unidad.precio_venta, unidad.precio_venta_moneda) %></td>
         <td class="text-center">
           <% if unidad.contrato_de_venta.present? %>
