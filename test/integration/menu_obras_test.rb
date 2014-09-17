@@ -5,6 +5,7 @@ require './test/test_helper'
 
 feature 'Menu de obras' do
   background do
+    cargar_seeds
     @obra1 = create :obra
   end
 
