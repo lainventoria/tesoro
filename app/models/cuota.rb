@@ -51,10 +51,11 @@ class Cuota < ActiveRecord::Base
     indice
   end
 
-  # pagar la cuota genera una factura de cobro que el tercero adeuda
+  # Para pagar la cuota hay que generar una factura de cobro que el tercero adeuda
   def generar_factura(periodo = nil)
     unless factura.present?
       vencimiento_actual = self.vencimiento
+
       # si la cuota se paga antes de tiempo, el monto actualizado se
       # calcula al indice del mes actual en lugar del indice del mes de
       # vencimiento
@@ -65,15 +66,13 @@ class Cuota < ActiveRecord::Base
 
       Factura.transaction do
         # FIXME falta el número
-        self.factura = Factura.new(situacion: 'cobro',
-          importe_neto: monto_actualizado(periodo),
+        factura.create situacion: 'cobro', importe_neto: monto_actualizado(periodo),
           fecha: vencimiento_actual,
           fecha_pago: vencimiento_actual + 10.days,
           descripcion: descripcion,
           tipo: contrato_de_venta.tipo_factura,
           tercero: tercero,
-          obra: obra)
-        self.save
+          obra: obra
       end
     end
 
