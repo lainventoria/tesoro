@@ -13,6 +13,7 @@
       <th>Denominación <%= sort_links :denominacion %></th>
       <th>Período <%= sort_links :valor %></th>
       <th>Valor</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -23,6 +24,11 @@
         <td><%= indice.denominacion %></td>
         <td><%= indice.periodo %></td>
         <td><%= indice.valor %></td>
+        <td>
+          <% if indice.temporal? %>
+            <%= link_to 'temporal', edit_indice_path(indice), class: 'label label-warning' %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

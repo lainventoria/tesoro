@@ -17,5 +17,15 @@ feature 'Índices' do
         page.must_have_content 'Mano de obra'
       end
     end
+
+    scenario 'Los índices temporales muestran una etiqueta' do
+      indice = create :indice, :para_cuotas, temporal: true
+
+      visit indices_path
+
+      within "tr[data-uri='#{indice_path(indice)}']" do
+        page.must_have_link 'temporal', edit_indice_path(indice)
+      end
+    end
   end
 end
