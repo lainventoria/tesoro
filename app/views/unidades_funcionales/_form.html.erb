@@ -29,6 +29,13 @@
         <%= f.text_field :descripcion, class:"form-control" %>
       </div>
 
+      <% unless @unidad.disponible? %>
+        <div class="field form-group col-md-2">
+          <%= f.label :precio_venta_final %>
+          <p class="form-control"><%= formatted_number(@unidad.precio_venta_final, @unidad.precio_venta_final_moneda) %></p>
+        </div>
+      <% end %>
+
     </div>
 
   </fieldset>
