@@ -1,7 +1,7 @@
 # encoding: utf-8
 require './test/test_helper'
 
-feature 'Vistas minimas' do
+feature 'Vistas mínimas' do
   background do
     @obra =  create :obra
   end
@@ -51,13 +51,13 @@ feature 'Vistas minimas' do
     visit obra_path(@obra)
 
     click_link 'Editar Obra'
-    assert current_path == edit_obra_path(@obra)
+    current_path.must_equal edit_obra_path(@obra)
   end
 
   scenario 'Navega a listado de obras' do
     visit obra_path(@obra)
 
     click_link 'Listar Obras'
-    assert current_path == obras_path
+    current_path.must_equal obras_path
   end
 end
