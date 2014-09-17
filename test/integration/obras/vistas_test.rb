@@ -30,7 +30,7 @@ feature 'Vistas mínimas' do
     page.must_have_link 'Listar Unidades Funcionales', obra_unidades_funcionales_path(@obra)
   end
 
-  scenario 'Se crean las cuentas, cajas y chequeras automaticamente' do
+  scenario 'Se crean las cuentas, cajas y chequeras automáticamente' do
     visit obra_cajas_path(@obra)
 
     page.must_have_content 'Obra'
