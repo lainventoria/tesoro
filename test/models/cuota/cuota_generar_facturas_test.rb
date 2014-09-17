@@ -35,4 +35,8 @@ class CuotaGenerarFacturaTest < ActiveSupport::TestCase
   test 'hay un plazo de 10 días para pagar esa factura' do
     assert_equal @cuota.vencimiento + 10.days, @factura.fecha_pago.to_date
   end
+
+  test 'si ya tiene factura no genera otra' do
+    assert_equal @factura, @cuota.generar_factura
+  end
 end
