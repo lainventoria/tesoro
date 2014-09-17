@@ -17,12 +17,15 @@ class Indice < ActiveRecord::Base
     temporal
   end
 
-  def self.presente(denominacion = nil)
-    por_fecha_y_denominacion(Date.today, denominacion || 'Costo de construcción')
+  def self.hay_alguno_este_mes?(denominacion)
+    where(denominacion: denominacion).
+      where(periodo: Date.today.beginning_of_month).
+      where(temporal: false).
+      any?
   end
 
   def self.por_fecha_y_denominacion(fecha, denominacion)
-    periodo = fecha.beginning_of_month()
+    periodo = fecha.beginning_of_month
 
     # obtener el indice para este periodo
     indice = Indice.where(periodo: periodo).
