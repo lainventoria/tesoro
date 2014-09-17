@@ -40,19 +40,6 @@ class CuotaConContratoTest < ActiveSupport::TestCase
     assert @cv.cuotas.vencidas.first.vencida?, @cv.cuotas.vencidas.inspect
   end
 
-  test 'las cuotas generan facturas de cobro' do
-    c = @cv.cuotas.first
-    f = c.generar_factura
-
-    assert_equal c.factura, f
-    assert f.cobro?
-    assert_equal c.monto_actualizado, f.importe_neto
-    assert_equal c.tercero, f.tercero
-    assert_equal c.obra, f.obra
-    assert_equal c.contrato_de_venta.tipo_factura, f.tipo
-    assert_equal c.vencimiento + 10.days, f.fecha_pago.to_date
-  end
-
   test 'las cuotas que no están vencidas se pagan al indice actual' do
     c = @cv.cuotas.sin_vencer.pendientes.sample
     refute c.vencida?, c.vencimiento
