@@ -3,8 +3,6 @@ require './test/test_helper'
 
 feature 'Unidades Funcionales' do
   background do
-    cargar_seeds
-
     @obra = create :obra
     @uf = create :unidad_funcional, obra: @obra
   end
