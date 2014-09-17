@@ -17,6 +17,10 @@ class Indice < ActiveRecord::Base
     temporal
   end
 
+  def self.presente(denominacion = nil)
+    por_fecha_y_denominacion(Date.today, denominacion || 'Costo de construcción')
+  end
+
   def self.por_fecha_y_denominacion(fecha, denominacion)
     periodo = fecha.beginning_of_month()
 

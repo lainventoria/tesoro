@@ -1,7 +1,10 @@
+# encoding: utf-8
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  before_action :avisar_si_faltan_indices
 
   protected
 
@@ -79,5 +82,9 @@ class ApplicationController < ActionController::Base
       else
         {}
       end
+    end
+
+    def avisar_si_faltan_indices
+      flash.notice = t :avisar_si_faltan_indices if Indice.presente.temporal?
     end
 end
