@@ -143,4 +143,31 @@ module ApplicationHelper
   def monedas
     ['ARS', 'USD']
   end
+
+  # Convierte todos los mensajes de la lista en html bonito. Normalmente
+  # `lista` es el flash, `tipo` es la llave (:notice, :error, etc)
+  def mensajes(lista)
+    lista.collect do |tipo, mensaje|
+      content_tag :div, class: alerta(tipo) do
+        content_tag(:button, '×', class: 'close', data: { dismiss: 'alert' }) +
+        mensaje
+      end
+    end.join.html_safe
+  end
+
+  private
+
+    def alerta(tipo)
+      'alert alert-dismissable ' +
+      case tipo.to_sym
+        when :error
+          'alert-danger'
+        when :notice, :success
+          'alert-success'
+        when :alert
+          'alert-warning'
+        else
+          tipo
+      end
+    end
 end
