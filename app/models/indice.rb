@@ -3,6 +3,7 @@ class Indice < ActiveRecord::Base
   DENOMINACIONES = ['Costo de construcción', 'Materiales', 'Mano de obra']
 
   has_many :cuotas
+  has_many :contratos_de_venta
   validates_presence_of :periodo, :denominacion, :valor
   validates_inclusion_of :denominacion, in: DENOMINACIONES
   validates_uniqueness_of :denominacion, scope: :periodo

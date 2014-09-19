@@ -1,3 +1,4 @@
+<div class="row">
 <h2>Detalle de Indice</h2>
 
 <%= render 'form' %>
@@ -10,3 +11,15 @@
   <span class="glyphicon glyphicon-edit"></span>
   Editar Indice
 </a>
+</div>
+
+<div class="row">
+<% if @indice.contratos_de_venta.any? %>
+  <h4>Contratos utilizando este índice</h4>
+  <%= render 'contratos_de_venta/list', contratos: @indice.contratos_de_venta %>
+<% else %>
+  <div class="alert alert-info">
+    <h4>Ningún contrato está utilizando este índice</h4>
+  </div>
+<% end %>
+</div>
