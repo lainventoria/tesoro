@@ -27,5 +27,15 @@ feature 'Índices' do
         page.must_have_link 'temporal', edit_indice_path(indice)
       end
     end
+
+    scenario 'El índice tiene una lista de contratos asociados' do
+      i = Indice.first
+      cv = create :contrato_de_venta, indice: i, obra: (create :obra)
+
+      visit indice_path(i)
+
+      page.must_have_link nil, obra_contrato_de_venta_path(cv.obra, cv)
+
+    end
   end
 end
