@@ -5,6 +5,8 @@ es:
       models:
         retencion:
           attributes:
+            base:
+              no_borrar_si_tiene_recibos: 'La retención no se puede borrar porque tiene recibos asociados'
             factura:
               debe_ser_un_pago: 'La factura asociada debe ser un pago'
             estado:

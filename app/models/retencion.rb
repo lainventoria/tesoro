@@ -42,6 +42,8 @@ class Retencion < ActiveRecord::Base
 
   after_create :contabilizar_deuda
 
+  before_destroy :no_borrar_si_tiene_recibos
+
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
   state_machine :estado, initial: :emitida do
@@ -174,5 +176,9 @@ class Retencion < ActiveRecord::Base
 
     def borrar_recibo_temporal
       recibos.where(situacion: 'temporal').first.destroy
+    end
+
+    def no_borrar_si_tiene_recibos
+      errors.add(:retencion, :no_borrar_si_tiene_recibos) if recibos.any?
     end
 end
