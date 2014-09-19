@@ -91,7 +91,7 @@ $(document).ready(function(){
   var agregar_cuota = function( fecha_ , monto_ ) {
     html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>';
     html += '<input type="hidden" name="fechas[]" value="' + fecha_.toString() + '" />';
-    html += '<input type="text" data-role="money" name="montos[]" class="monto form-control" value="' + monto_ + '" /></td>';
+    html += '<input readonly type="text" data-role="money" name="montos[]" class="monto form-control" value="' + monto_ + '" /></td>';
     html += '<td><a href="#" class="quitar-cuota"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
     $('#contrato_de_venta_cuotas_table').append(html);
     actualizar_total_cuotas();
