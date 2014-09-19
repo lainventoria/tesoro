@@ -188,9 +188,11 @@
       <tfoot>
         <tr>
           <td><strong>Total</strong></td>
-          <td colspan="3" class="form-control">
+          <td colspan="3">
             <% unless @contrato.new_record? %>
               <%= formatted_number(@contrato.total_de_cuotas, @contrato.total_de_cuotas.currency) %>
+            <% else %>
+              <input type="text" data-role="money" id="cuotas_total" class="form-control" readonly />
             <% end %>
           </td>
         </tr>
