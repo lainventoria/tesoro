@@ -27,6 +27,7 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
 
     assert_difference('ContratoDeVenta.count') do
       post :create, obra_id: obra, fechas: ['21/7/2014'], indice: 'anterior',
+        fecha: Date.today,
         montos: [unidad.precio_venta],
         contrato_de_venta: attributes_for(
           :contrato_de_venta, obra_id: obra, tercero_id: tercero),
