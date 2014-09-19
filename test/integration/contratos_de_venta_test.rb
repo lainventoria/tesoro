@@ -4,6 +4,8 @@ require './test/test_helper'
 feature 'Contratos de Venta' do
   background do
     @obra = create :obra
+    @uf = create :unidad_funcional, obra: @obra, precio_venta_centavos: 1000000
+    @uf2 = create :unidad_funcional, obra: @obra, precio_venta_centavos: 1000000, descripcion: '2B'
   end
 
   scenario 'Cargar un nuevo contrato' do
@@ -15,8 +17,6 @@ feature 'Contratos de Venta' do
   end
 
   scenario 'Agregar una unidad funcional', js: true do
-    @uf = create :unidad_funcional, obra: @obra, precio_venta_centavos: 1000000
-
     visit new_obra_contrato_de_venta_path(@obra)
 
     within 'form' do
@@ -33,9 +33,6 @@ feature 'Contratos de Venta' do
   end
 
   scenario 'Agregar varias unidades funcionales y cambiarles el precio', js: true do
-    @uf = create :unidad_funcional, obra: @obra, precio_venta_centavos: 1000000
-    @uf2 = create :unidad_funcional, obra: @obra, precio_venta_centavos: 1000000, descripcion: '2B'
-
     visit new_obra_contrato_de_venta_path(@obra)
 
     within 'form' do
@@ -51,6 +48,33 @@ feature 'Contratos de Venta' do
       end
 
       first('#contrato_de_venta_total').value.must_equal '30,000.00'
+    end
+  end
+
+  scenario 'Generar cuotas', js: true do
+    visit new_obra_contrato_de_venta_path(@obra)
+
+    within 'form' do
+      select(@obra.unidades_funcionales.first.para_mostrar, from: 'contrato_de_venta_unidades_funcionales')
+      click_link('contrato_de_venta_unidad_funcional_agregar')
+
+      fill_in 'contrato_de_venta_cantidad_cuotas', with: '10'
+      fill_in 'contrato_de_venta_monto_cuotas', with: '2000'
+      fill_in 'contrato_de_venta_fecha_primera_cuota', with: '25/08/2014'
+
+      click_link('contrato_de_venta_generar_cuotas')
+
+      within '#contrato_de_venta_cuotas_table' do
+        page.must_have_content '25 Aug 2014'
+
+        all('.monto').count.must_equal 10
+        all('.monto').each do |m|
+          m.value.must_equal '2,000.00'
+        end
+
+      end
+
+      find_by_id('cuotas_total').value.must_equal '20,000.00'
     end
   end
 end
