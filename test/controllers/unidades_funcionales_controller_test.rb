@@ -23,7 +23,16 @@ class UnidadesFuncionalesControllerTest < ActionController::TestCase
       post :create, obra_id: obra, unidad_funcional: attributes_for(:unidad_funcional, obra_id: obra)
     end
     unidad = assigns(:unidad)
-    assert_redirected_to obra_unidad_funcional_path(obra, unidad )
+    assert_redirected_to obra_unidad_funcional_path(obra, unidad)
+  end
+
+  test 'crea varias veces' do
+    obra = create :obra
+    assert_difference('UnidadFuncional.count') do
+      post :create, obra_id: obra, seguir_cargando: 1, unidad_funcional: attributes_for(:unidad_funcional, obra_id: obra)
+    end
+    unidad = assigns(:unidad)
+    assert_redirected_to new_obra_unidad_funcional_path(obra)
   end
 
   test 'muestra a través de su obra' do
