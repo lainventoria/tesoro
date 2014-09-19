@@ -31,10 +31,12 @@
 
   <div class="col-md-offset-1">
     <h4>Detalle de Recibos
-      <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_recibo_path(@factura) %>">
-        <span class="glyphicon glyphicon-plus"></span>
-        Recibo
-      </a>
+      <% unless @factura.saldo == 0 %>
+        <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_recibo_path(@factura) %>">
+          <span class="glyphicon glyphicon-plus"></span>
+          Recibo
+        </a>
+      <% end %>
     </h4>
     <% @recibos = @factura.recibos %>
     <%= render 'recibos/list' %>
