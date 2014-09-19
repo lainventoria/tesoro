@@ -189,7 +189,9 @@
         <tr>
           <td><strong>Total</strong></td>
           <td colspan="3" class="form-control">
-            <%= formatted_number(@contrato.total_de_cuotas, @contrato.total_de_cuotas.currency) %>
+            <% unless @contrato.new_record? %>
+              <%= formatted_number(@contrato.total_de_cuotas, @contrato.total_de_cuotas.currency) %>
+            <% end %>
           </td>
         </tr>
       </tfoot>
