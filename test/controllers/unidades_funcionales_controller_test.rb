@@ -23,7 +23,7 @@ class UnidadesFuncionalesControllerTest < ActionController::TestCase
       post :create, obra_id: obra, unidad_funcional: attributes_for(:unidad_funcional, obra_id: obra)
     end
     unidad = assigns(:unidad)
-    assert_redirected_to obra_unidad_funcional_path(obra, unidad)
+    assert_redirected_to obra_unidades_funcionales_path(obra)
   end
 
   test 'crea varias veces' do

@@ -31,7 +31,7 @@ class UnidadesFuncionalesController < ApplicationController
             redirect_to new_obra_unidad_funcional_path(@unidad.obra),
               notice: 'Unidad funcional creada con éxito.'
           else
-            redirect_to [@unidad.obra, @unidad],
+            redirect_to obra_unidades_funcionales_path(@unidad.obra),
               notice: 'Unidad funcional creada con éxito.'
           end
         end
