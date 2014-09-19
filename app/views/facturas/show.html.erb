@@ -43,10 +43,12 @@
   <% if @factura.pago? %>
     <div class="col-md-offset-1">
       <h4>Detalle de Retenciones
-        <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_retencion_path(@factura) %>">
-          <span class="glyphicon glyphicon-plus"></span>
-          Retencion
-        </a>
+        <% unless @factura.retenciones.count == Retencion::SITUACIONES.count %>
+          <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_retencion_path(@factura) %>">
+            <span class="glyphicon glyphicon-plus"></span>
+            Retencion
+          </a>
+        <% end %>
       </h4>
       <% @retenciones = @factura.retenciones %>
       <%= render 'retenciones/list', lista_larga: 'hidden' %>
