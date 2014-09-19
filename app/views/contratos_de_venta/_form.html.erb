@@ -86,7 +86,9 @@
       <% if @contrato.new_record? %>
         <%= f.select(:relacion_indice, ContratoDeVenta::RELACIONES_INDICE, { class: 'form-control' } ) %>
       <% else %>
-        <p><%= @contrato.indice.periodo %></p>
+        <p class="form-control">
+          <%= link_to "#{@contrato.indice.periodo} - #{@contrato.indice.denominacion} - #{@contrato.indice.valor}",
+                [@contrato.indice] %></p>
       <% end %>
     </div>
 
