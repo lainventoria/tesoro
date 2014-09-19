@@ -85,6 +85,6 @@ class ApplicationController < ActionController::Base
     end
 
     def avisar_si_faltan_indices
-      flash.notice = t :avisar_si_faltan_indices unless Indice.hay_alguno_este_mes?('Costo de construcción')
+      flash[:alert] = t :avisar_si_faltan_indices unless Indice.hay_alguno_este_mes?('Costo de construcción')
     end
 end
