@@ -89,11 +89,12 @@ $(document).ready(function(){
 
   // CUOTAS
   var agregar_cuota = function( fecha_ , monto_ ) {
-    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>' + monto_;
+    html = '<tr><td>' + $.datepicker.formatDate('dd M yy', fecha_ ) + '</td><td>';
     html += '<input type="hidden" name="fechas[]" value="' + fecha_.toString() + '" />';
-    html += '<input type="hidden" name="montos[]" class="monto" value="' + monto_ + '" /></td>';
+    html += '<input type="text" data-role="money" name="montos[]" class="monto form_control" value="' + monto_ + '" /></td>';
     html += '<td><a href="#" class="quitar-cuota"><span class="glyphicon glyphicon-remove-circle text-danger"></span></a></td></tr>';
     $('#contrato_de_venta_cuotas_table').append(html);
+    $('input[data-role=money]').autoNumeric('init');
     actualizar_total_cuotas();
   }
 
@@ -102,7 +103,7 @@ $(document).ready(function(){
     $('.monto').each(function(){
       sum += Number($(this).val());
     });
-      
+
     $('#cuotas_total').autoNumeric('set',sum);
 
     if ( $('#cuotas_total').autoNumeric('get') != $('#contrato_de_venta_total').autoNumeric('get') ) {
@@ -140,9 +141,11 @@ $(document).ready(function(){
     $('#contrato_de_venta_cuotas_table').html('')
     generar_cuotas();
   });
- 
+
   // Quitar cuota click
   $('#contrato_de_venta_cuotas_table').on('click','.quitar-cuota',function(e){
+    e.preventDefault();
+    e.stopPropagation();
     $t = $(e.target);
     $t.closest('tr').remove();
     actualizar_total_cuotas();
