@@ -13,7 +13,7 @@ class ContratoDeVenta < ActiveRecord::Base
   has_many :unidades_funcionales, class_name: 'UnidadFuncional', dependent: :nullify
 
   validates_presence_of :indice_id, :tercero_id, :obra_id,
-    :unidades_funcionales, :relacion_indice
+    :unidades_funcionales, :relacion_indice, :fecha
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
   validates_inclusion_of :relacion_indice, in: RELACIONES_INDICE
   validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
@@ -50,8 +50,7 @@ class ContratoDeVenta < ActiveRecord::Base
     self.cuotas << cuota
   end
 
-  # crea un pago inicial con la fecha de vencimiento igual a la fecha
-  # del contrato
+  # crea un pago inicial
   # TODO chequear que sea el único?
   def agregar_pago_inicial(fecha, monto)
     agregar_cuota(descripcion: 'Pago inicial', vencimiento: fecha, monto_original: monto)

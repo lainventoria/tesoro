@@ -77,7 +77,7 @@ class ContratosDeVentaController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_de_venta_params
       params.require(:contrato_de_venta).permit(
-        :tercero_id, :obra_id, :relacion_indice, :tipo_factura,
+        :tercero_id, :obra_id, :relacion_indice, :tipo_factura, :fecha,
         tercero_attributes: [
           :nombre, :cuit
         ]

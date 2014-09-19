@@ -81,6 +81,15 @@
     <h3>Plan de Pagos</h3>
 
     <div class="field form-group">
+      <label>Fecha del contrato</label>
+      <div class="input-group date">
+        <%= f.text_field :fecha, { class: 'form-control', value: formatted_date(@contrato.fecha) } %>
+        <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      </div>
+    </div>
+
+
+    <div class="field form-group">
       <label>Índice</label>
 
       <% if @contrato.new_record? %>
