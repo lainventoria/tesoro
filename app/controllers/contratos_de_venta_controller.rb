@@ -23,9 +23,8 @@ class ContratosDeVentaController < ApplicationController
 
   def create
     @contrato = ContratoDeVenta.new(contrato_de_venta_params)
-    @contrato.fecha = DateTime.now
 
-    @contrato.indice = @contrato.indice_para(Date.today)
+    @contrato.indice = @contrato.indice_para(@contrato.fecha)
     agregar_unidades
     agregar_cuotas
 
