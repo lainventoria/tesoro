@@ -40,5 +40,20 @@ feature 'Recibos' do
 
       page.must_have_content 'No se puede borrar'
     end
+
+    scenario 'Un pago retencion' do
+      retencion = create :retencion, monto: Money.new(100)
+      @recibo.pagar_con retencion
+      @recibo.save
+
+      visit edit_factura_recibo_path(@recibo.factura, @recibo)
+
+      page.must_have_content 'Retencion'
+      page.must_have_content retencion.monto
+
+      find('a.btn.btn-danger[data-method=delete]').click
+
+      page.must_have_content 'No se puede borrar'
+    end
   end
 end
