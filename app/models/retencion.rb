@@ -46,6 +46,8 @@ class Retencion < ActiveRecord::Base
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
+  scope :sin_aplicar, -> { where(estado: :emitida) }
+
   state_machine :estado, initial: :emitida do
     event :pagar do
       transition :emitida  => :pagada
