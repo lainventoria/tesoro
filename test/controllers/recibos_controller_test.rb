@@ -86,7 +86,7 @@ class RecibosControllerTest < ActionController::TestCase
     assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
   end
 
-  test 'crea retencion' do
+  test 'crea con retencion' do
     importe_permitido = @factura.saldo
 
     # La retencion crea un recibo temporal o interno...

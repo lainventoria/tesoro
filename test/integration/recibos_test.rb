@@ -48,8 +48,8 @@ feature 'Recibos' do
 
       visit edit_factura_recibo_path(@recibo.factura, @recibo)
 
-      page.must_have_content 'Retencion'
-      page.must_have_content 100
+      page.must_have_link 'Retencion',
+        href: obra_caja_retencion_path(@recibo.movimientos.last.caja.obra, @recibo.movimientos.last.caja, @recibo.movimientos.last.causa)
 
       find('a.btn.btn-danger[data-method=delete]').click
 
