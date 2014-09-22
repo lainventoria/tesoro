@@ -63,6 +63,8 @@ es:
               no_debe_tener_contratos: 'La unidad funcional no puede tener contratos de venta al momento de borrarse.'
         contrato_de_venta:
           attributes:
+            base:
+              todo_en_la_misma_moneda: 'La moneda de las cuotas debe ser la misma que la de las unidades funcionales'
             cuotas:
               total_igual_a_monto_total: 'El monto total no coincide con el total de cuotas'
             tercero:

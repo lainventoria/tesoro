@@ -17,7 +17,8 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
   validates_inclusion_of :relacion_indice, in: RELACIONES_INDICE
   validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
-    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total
+    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total,
+    :todo_en_la_misma_moneda
 
   before_validation :calcular_monto_total
 
@@ -136,6 +137,21 @@ class ContratoDeVenta < ActiveRecord::Base
     def cuotas_en_la_misma_moneda
       if cuotas.collect(&:monto_original_moneda).uniq.count > 1
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
+      end
+    end
+
+    # Valida que las cuotas estén en la misma moneda que las unidades
+    # funcionales
+    def todo_en_la_misma_moneda
+      # no hace falta si no hay cuotas
+      return unless cuotas.any?
+
+      # usamos la primera porque ya validamos que estén todas en la
+      # misma moneda
+      if unidades_funcionales.first.precio_venta_final_moneda !=
+         cuotas.first.monto_original_moneda
+
+         errors.add(:base, :todo_en_la_misma_moneda)
       end
     end
 end
