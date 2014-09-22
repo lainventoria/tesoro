@@ -184,7 +184,7 @@ class Retencion < ActiveRecord::Base
       movimiento.recibo = nil
       recibo_temporal.movimientos.delete movimiento
 
-      temp.destroy
+      recibo_temporal.destroy
     end
 
     def no_borrar_si_tiene_recibos
