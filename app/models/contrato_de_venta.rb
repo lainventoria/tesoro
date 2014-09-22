@@ -28,18 +28,6 @@ class ContratoDeVenta < ActiveRecord::Base
 
   normalize_attribute :tipo_factura, with: [ :strip, :blank, { truncate: { length: 1 } }, :upcase ]
 
-  # TODO refactorizar. Los métodos que terminan en ? son para que
-  # devuelvan booleans
-  def monedas?
-    unidades_funcionales.collect(&:precio_venta_moneda).uniq
-  end
-
-  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
-  # booleans
-  def moneda?
-    monedas?.first
-  end
-
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
     cuotas.create(attributes)
@@ -71,7 +59,7 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_cuotas
-    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda?)
+    Money.new(cuotas.collect(&:monto_original_centavos).sum, cuotas.first.monto_original_moneda)
   end
 
   def total_de_unidades_funcionales
@@ -83,7 +71,7 @@ class ContratoDeVenta < ActiveRecord::Base
       end
     end.sum
 
-    Money.new monto, moneda?
+    Money.new(monto, unidades_funcionales.first.precio_venta_final_moneda)
   end
 
   def periodo_para(fecha)
