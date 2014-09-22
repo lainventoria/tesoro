@@ -38,6 +38,15 @@
 
     </div>
 
+    <% if @editar %>
+      <div class="row">
+        <div class="field form-group">
+          <label>Seguir cargando</label>
+          <input type="checkbox" name="seguir_cargando" value="1" />
+        </div>
+      </div>
+    <% end %>
+
   </fieldset>
 
 <% end %>

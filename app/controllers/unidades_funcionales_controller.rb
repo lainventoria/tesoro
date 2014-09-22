@@ -21,13 +21,19 @@ class UnidadesFuncionalesController < ApplicationController
   end
 
   def create
+    seguir_cargando = params[:seguir_cargando].present?
     @unidad = UnidadFuncional.new unidad_funcional_params
 
     respond_to do |format|
       if @unidad.save
         format.html do
-          redirect_to [@unidad.obra, @unidad],
-            notice: 'Unidad funcional creada con éxito.'
+          if seguir_cargando
+            redirect_to new_obra_unidad_funcional_path(@unidad.obra),
+              notice: 'Unidad funcional creada con éxito.'
+          else
+            redirect_to obra_unidades_funcionales_path(@unidad.obra),
+              notice: 'Unidad funcional creada con éxito.'
+          end
         end
         format.json do
           render action: 'show', status: :created, location: @unidad
