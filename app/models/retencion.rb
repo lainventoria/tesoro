@@ -178,7 +178,7 @@ class Retencion < ActiveRecord::Base
 
     def borrar_recibo_temporal
       recibo_temporal = recibos.where(situacion: 'temporal').first
-      movimiento = temp.movimientos.first
+      movimiento = recibo_temporal.movimientos.first
 
       # Des-asociamos para no borrar el movimiento
       movimiento.recibo = nil
