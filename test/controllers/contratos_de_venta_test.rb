@@ -55,11 +55,12 @@ class ContratosDeVentaControllerTest < ActionController::TestCase
   test 'actualiza' do
     monto_original = @contrato.monto_total
     tercero = create :tercero
-    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: { tercero_id: [tercero] }
+    patch :update, id: @contrato, obra_id: @contrato.obra, contrato_de_venta: { tercero_id: [tercero] }, fecha: Date.yesterday
 
     contrato = assigns(:contrato)
     assert_redirected_to obra_contrato_de_venta_path(contrato.obra,contrato)
     assert contrato.tercero = tercero
+    assert contrato.fecha = Date.yesterday
   end
 
   test 'destruye' do
