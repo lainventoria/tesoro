@@ -11,7 +11,6 @@ feature 'Menu de obras' do
     visit pagos_facturas_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: pagos_facturas_path
       page.click_link @obra.nombre
     end
 
@@ -22,7 +21,6 @@ feature 'Menu de obras' do
     visit pagos_recibos_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: pagos_recibos_path
       page.click_link @obra.nombre
     end
 
@@ -33,7 +31,6 @@ feature 'Menu de obras' do
     visit cobros_facturas_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: cobros_facturas_path
       page.click_link @obra.nombre
     end
 
@@ -44,7 +41,6 @@ feature 'Menu de obras' do
     visit cobros_recibos_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: cobros_recibos_path
       page.click_link @obra.nombre
     end
 
@@ -56,7 +52,6 @@ feature 'Menu de obras' do
     visit obras_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: root_path
       page.click_link @obra.nombre
     end
 
@@ -67,7 +62,6 @@ feature 'Menu de obras' do
     visit indices_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: indices_path
       page.click_link @obra.nombre
     end
 
@@ -78,7 +72,6 @@ feature 'Menu de obras' do
     visit terceros_path
 
     within '#listado_de_obras' do
-      page.must_have_link 'Todas las obras', href: terceros_path
       page.click_link @obra.nombre
     end
 
