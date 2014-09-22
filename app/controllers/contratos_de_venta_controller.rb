@@ -23,9 +23,8 @@ class ContratosDeVentaController < ApplicationController
 
   def create
     @contrato = ContratoDeVenta.new(contrato_de_venta_params)
-    @contrato.fecha = DateTime.now
 
-    @contrato.indice = @contrato.indice_para(Date.today)
+    @contrato.indice = @contrato.indice_para(@contrato.fecha)
     agregar_unidades
     agregar_cuotas
 
@@ -77,7 +76,7 @@ class ContratosDeVentaController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def contrato_de_venta_params
       params.require(:contrato_de_venta).permit(
-        :tercero_id, :obra_id, :relacion_indice, :tipo_factura,
+        :tercero_id, :obra_id, :relacion_indice, :tipo_factura, :fecha,
         tercero_attributes: [
           :nombre, :cuit
         ]
