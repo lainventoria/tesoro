@@ -72,6 +72,8 @@ es:
     attributes:
       retencion:
         situacion: 'Tipo'
+      obra:
+        direccion: 'Dirección'
   activemodel:
     errors:
       models:
