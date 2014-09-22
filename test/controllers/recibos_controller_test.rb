@@ -93,12 +93,13 @@ class RecibosControllerTest < ActionController::TestCase
     assert_difference('Recibo.count',2) do
       post :create,
         factura_id: @factura,
-        recibo: attributes_for( :recibo, importe: importe_permitido, factura_id: @factura),
+        recibo: attributes_for(:recibo, importe: importe_permitido, factura_id: @factura),
         causa_tipo: 'retencion',
         causa: { retencion_id: create(:retencion) }
     end
 
-    assert @factura.recibos.last.movimientos.any?
+    assert Recibo.last.movimientos.count > 0,
+[Recibo.last.movimientos,Recibo.last]
 
     assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
   end
