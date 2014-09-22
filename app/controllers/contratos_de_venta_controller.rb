@@ -102,10 +102,14 @@ class ContratosDeVentaController < ApplicationController
       i = 1
       cuotas = f.zip(m).sort_by { |c| c[0].to_time }
       primer = cuotas.shift
+
       @contrato.agregar_pago_inicial(primer[0], Money.new(primer[1].gsub(/[,\.]/,'').to_i, moneda))
+
       cuotas.map do |fecha, monto|
         @contrato.agregar_cuota vencimiento: fecha, monto_original: Money.new(monto.gsub(/[,\.]/, '').to_i, moneda),
           descripcion: "Cuota ##{i}"
+
+        i+=1
       end
     end
 
