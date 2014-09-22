@@ -87,8 +87,7 @@ class ContratosDeVentaController < ApplicationController
     def agregar_unidades
       params[:unidades_funcionales].each do |uf|
         unidad = UnidadFuncional.find(uf.first)
-        p = uf[1]['precio_venta'].sub(',', '').sub('.', '').to_i
-        unidad.precio_venta_final_centavos = p
+        unidad.precio_venta_final_centavos = uf[1]['precio_venta'].gsub(/[,\.]/, '').to_i
         unidad.precio_venta_final_moneda = uf[1]['precio_venta_moneda']
         @contrato.agregar_unidad_funcional(unidad)
       end
@@ -96,14 +95,16 @@ class ContratosDeVentaController < ApplicationController
 
     # TODO refactorizar
     def agregar_cuotas
+      moneda = @contrato.unidades_funcionales.first.precio_venta_final_moneda
+
       f = params[:fechas]
       m = params[:montos]
       i = 1
       cuotas = f.zip(m).sort_by { |c| c[0].to_time }
       primer = cuotas.shift
-      @contrato.agregar_pago_inicial(primer[0], primer[1])
+      @contrato.agregar_pago_inicial(primer[0], Money.new(primer[1].gsub(/[,\.]/,'').to_i, moneda))
       cuotas.map do |fecha, monto|
-        @contrato.agregar_cuota vencimiento: fecha, monto_original: monto,
+        @contrato.agregar_cuota vencimiento: fecha, monto_original: Money.new(monto.gsub(/[,\.]/, '').to_i, moneda),
           descripcion: "Cuota ##{i}"
       end
     end
