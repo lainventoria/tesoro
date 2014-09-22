@@ -189,7 +189,7 @@
           <% @contrato.cuotas.each do |cuota| %>
             <tr>
               <td><%= cuota.vencimiento %></td>
-              <td><%= cuota.monto_original %></td>
+              <td><%= formatted_number(cuota.monto_original, cuota.monto_original_moneda) %></td>
               <td></td>
             </tr>
           <% end %>
@@ -198,12 +198,13 @@
 
       <tfoot>
         <tr>
-          <td>Total</td>
+          <td><strong>Total</strong></td>
           <td colspan="3">
-            <%# FIXME la lógica no va en las vistas %>
-            <input type="text" class="form-control"
-              value="<%= (@contrato.cuotas.collect(&:monto_original_centavos).sum() / 100) %>"
-              data-role="money" readonly id="cuotas_total" />
+            <% unless @contrato.new_record? %>
+              <%= formatted_number(@contrato.total_de_cuotas, @contrato.total_de_cuotas.currency) %>
+            <% else %>
+              <input type="text" data-role="money" id="cuotas_total" class="form-control" readonly value="" />
+            <% end %>
           </td>
         </tr>
       </tfoot>
