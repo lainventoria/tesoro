@@ -17,4 +17,12 @@ class RetencionTest < ActiveSupport::TestCase
     assert retencion.destroy
     assert recibo.reload.movimientos.count == 0
   end
+
+
+  test 'borrar el recibo temporal y que este todo piola' do
+    retencion = create :retencion, monto: Money.new(1000)
+    retencion.borrar_recibo_temporal
+    assert Movimiento.any?
+  end
+
 end
