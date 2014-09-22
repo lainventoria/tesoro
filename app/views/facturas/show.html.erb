@@ -19,22 +19,24 @@
 
 <div class="col-md-4">
   <div class="row">
-    <div class="field form-group col-md-5 col-md-offset-1">
+    <div class="field form-group col-md-offset-1">
       <label>Saldo remanente</label><br>
-      <span class="form-control text-right" disabled><%= formatted_number(@factura.saldo) %></span>
+      <span class="form-control text-right" disabled><%= formatted_number(@factura.saldo, @factura.saldo.currency) %></span>
     </div>
-    <div class="field form-group col-md-5 col-md-offset-1">
+    <div class="field form-group col-md-offset-1">
       <label>Total Recibos</label><br>
-      <span class="form-control text-right" disabled><%= formatted_number(@factura.importe_total - @factura.saldo) %></span>
+      <span class="form-control text-right" disabled><%= formatted_number(@factura.importe_total - @factura.saldo, @factura.importe_total.currency) %></span>
     </div>
   </div>
 
   <div class="col-md-offset-1">
     <h4>Detalle de Recibos
-      <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_recibo_path(@factura) %>">
-        <span class="glyphicon glyphicon-plus"></span>
-        Recibo
-      </a>
+      <% unless @factura.saldo == 0 %>
+        <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_recibo_path(@factura) %>">
+          <span class="glyphicon glyphicon-plus"></span>
+          Recibo
+        </a>
+      <% end %>
     </h4>
     <% @recibos = @factura.recibos %>
     <%= render 'recibos/list' %>
@@ -43,10 +45,12 @@
   <% if @factura.pago? %>
     <div class="col-md-offset-1">
       <h4>Detalle de Retenciones
-        <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_retencion_path(@factura) %>">
-          <span class="glyphicon glyphicon-plus"></span>
-          Retencion
-        </a>
+        <% unless @factura.retenciones.count == Retencion::SITUACIONES.count %>
+          <a type="button" class="btn btn-sm btn-primary pull-right" href="<%= con_obra? new_factura_retencion_path(@factura) %>">
+            <span class="glyphicon glyphicon-plus"></span>
+            Retencion
+          </a>
+        <% end %>
       </h4>
       <% @retenciones = @factura.retenciones %>
       <%= render 'retenciones/list', lista_larga: 'hidden' %>
