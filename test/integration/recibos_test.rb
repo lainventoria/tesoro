@@ -49,7 +49,7 @@ feature 'Recibos' do
       visit edit_factura_recibo_path(@recibo.factura, @recibo)
 
       page.must_have_content 'Retencion'
-      page.must_have_content retencion.monto
+      page.must_have_content 100
 
       find('a.btn.btn-danger[data-method=delete]').click
 
