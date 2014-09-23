@@ -59,7 +59,15 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_cuotas
-    Money.new(cuotas.collect(&:monto_original_centavos).sum, cuotas.first.monto_original_moneda)
+    moneda = if cuotas.any?
+      cuotas.first.monto_original_moneda
+    elsif unidades_funcionales.any?
+      unidades_funcionales.first.precio_venta_final_moneda
+    else
+      'ARS'
+    end
+
+    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda)
   end
 
   def total_de_unidades_funcionales
