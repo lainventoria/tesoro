@@ -18,12 +18,10 @@ class RetencionTest < ActiveSupport::TestCase
     assert recibo.reload.movimientos.count == 0
   end
 
-
   test 'borrar el recibo temporal y que este todo piola' do
     retencion = create :retencion, monto: Money.new(1000)
     recibo = create :recibo, situacion: 'pago'
     retencion.usar_para_pagar recibo
     assert Movimiento.any?
   end
-
 end
