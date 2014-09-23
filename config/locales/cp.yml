@@ -61,6 +61,8 @@ es:
           attributes:
             base:
               no_debe_tener_contratos: 'La unidad funcional no puede tener contratos de venta al momento de borrarse.'
+            contrato_de_venta:
+              no_se_definio_precio_de_venta_final: 'No se definió un precio de venta final al crear el contrato de esta unidad funcional'
         contrato_de_venta:
           attributes:
             base:
