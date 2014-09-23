@@ -17,7 +17,8 @@ class ContratoDeVenta < ActiveRecord::Base
   validates_numericality_of :monto_total_centavos, greater_than_or_equal_to: 0
   validates_inclusion_of :relacion_indice, in: RELACIONES_INDICE
   validate :unidades_funcionales_en_la_misma_moneda, :cuotas_en_la_misma_moneda,
-    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total
+    :tercero_es_cliente, :total_de_cuotas_es_igual_al_monto_total,
+    :todo_en_la_misma_moneda
 
   before_validation :calcular_monto_total
 
@@ -26,18 +27,6 @@ class ContratoDeVenta < ActiveRecord::Base
   monetize :monto_total_centavos, with_model_currency: :monto_total_moneda
 
   normalize_attribute :tipo_factura, with: [ :strip, :blank, { truncate: { length: 1 } }, :upcase ]
-
-  # TODO refactorizar. Los métodos que terminan en ? son para que
-  # devuelvan booleans
-  def monedas?
-    unidades_funcionales.collect(&:precio_venta_moneda).uniq
-  end
-
-  # TODO refactorizar. Los métodos que terminan en ? son para que devuelvan
-  # booleans
-  def moneda?
-    monedas?.first
-  end
 
   # crea una cuota con un monto específico
   def crear_cuota(attributes = {})
@@ -70,7 +59,15 @@ class ContratoDeVenta < ActiveRecord::Base
   end
 
   def total_de_cuotas
-    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda?)
+    moneda = if cuotas.any?
+      cuotas.first.monto_original_moneda
+    elsif unidades_funcionales.any?
+      unidades_funcionales.first.precio_venta_final_moneda
+    else
+      'ARS'
+    end
+
+    Money.new(cuotas.collect(&:monto_original_centavos).sum, moneda)
   end
 
   def total_de_unidades_funcionales
@@ -82,7 +79,7 @@ class ContratoDeVenta < ActiveRecord::Base
       end
     end.sum
 
-    Money.new monto, moneda?
+    Money.new(monto, unidades_funcionales.first.precio_venta_final_moneda)
   end
 
   def periodo_para(fecha)
@@ -136,6 +133,21 @@ class ContratoDeVenta < ActiveRecord::Base
     def cuotas_en_la_misma_moneda
       if cuotas.collect(&:monto_original_moneda).uniq.count > 1
         errors.add(:cuotas, :debe_ser_la_misma_moneda)
+      end
+    end
+
+    # Valida que las cuotas estén en la misma moneda que las unidades
+    # funcionales
+    def todo_en_la_misma_moneda
+      # no hace falta si no hay cuotas
+      return unless cuotas.any?
+
+      # usamos la primera porque ya validamos que estén todas en la
+      # misma moneda
+      if unidades_funcionales.first.precio_venta_final_moneda !=
+         cuotas.first.monto_original_moneda
+
+         errors.add(:base, :todo_en_la_misma_moneda)
       end
     end
 end

@@ -33,7 +33,7 @@ class CuotaConContratoTest < ActiveSupport::TestCase
   end
 
   test 'listar cuotas vencidas' do
-    assert_equal 2, @cv.cuotas.vencidas.count, @cv.cuotas.vencidas.inspect
+    assert_equal 2, @cv.cuotas.vencidas.count
   end
 
   test 'algunas cuotas están vencidas' do

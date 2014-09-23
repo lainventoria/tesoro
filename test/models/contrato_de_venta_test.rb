@@ -72,4 +72,14 @@ class ContratoDeVentaTest < ActiveSupport::TestCase
     cv.tipo_factura = '     abc___'
     assert_equal 'A', cv.tipo_factura
   end
+
+  test 'las cuotas y las unidades funcionales se guardan en la misma moneda' do
+    cv = build :contrato_de_venta
+    uf_usd = create :unidad_funcional, precio_venta_final: Money.new(1000, 'USD')
+
+    cv.agregar_unidad_funcional(uf_usd)
+    cv.agregar_cuota(attributes_for(:cuota))
+
+    refute cv.valid?
+  end
 end

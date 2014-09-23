@@ -61,16 +61,19 @@ es:
           attributes:
             base:
               no_debe_tener_contratos: 'La unidad funcional no puede tener contratos de venta al momento de borrarse.'
+            contrato_de_venta:
+              no_se_definio_precio_de_venta_final: 'No se definió un precio de venta final al crear el contrato de esta unidad funcional'
         contrato_de_venta:
           attributes:
+            base:
+              todo_en_la_misma_moneda: 'La moneda de las cuotas debe ser la misma que la de las unidades funcionales'
             cuotas:
               total_igual_a_monto_total: 'El monto total no coincide con el total de cuotas'
+              debe_ser_la_misma_moneda: 'todas las cuotas deben tener la misma moneda'
             tercero:
               debe_ser_cliente: 'debe ser un cliente'
             unidades_funcionales:
               debe_ser_la_misma_moneda: 'todas las unidades funcionales deben tener la misma moneda'
-            cuotas:
-              debe_ser_la_misma_moneda: 'todas las cuotas deben tener la misma moneda'
     attributes:
       retencion:
         situacion: 'Tipo'

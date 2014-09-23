@@ -11,6 +11,7 @@ class UnidadFuncional < ActiveRecord::Base
   # Validaciones
   validates_inclusion_of :tipo, in: TIPOS
   validates_presence_of :tipo, :obra_id, :precio_venta
+  validate :vender_con_precio_de_venta_final
 
   before_destroy :chequear_que_no_se_use
 
@@ -35,5 +36,11 @@ class UnidadFuncional < ActiveRecord::Base
 
     def chequear_que_no_se_use
       errors.add :no_debe_tener_contratos if self.contrato_de_venta.present?
+    end
+
+    def vender_con_precio_de_venta_final
+      return unless contrato_de_venta.present?
+
+      errors.add(:contrato_de_venta, :no_se_definio_precio_de_venta_final) if precio_venta_final.nil?
     end
 end
