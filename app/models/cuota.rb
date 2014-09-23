@@ -19,15 +19,15 @@ class Cuota < ActiveRecord::Base
   # mostrar todas las cuotas vencidas
   # que no sean el pago inicial porque es como la cuota 0
   def self.vencidas(time = nil)
-    where('vencimiento < ?', time || Time.now)
+    where.not(descripcion: 'Pago inicial').where('vencimiento < ?', time || Date.today)
   end
 
   def self.sin_vencer(time = nil)
-    where('vencimiento > ?', time || Time.now)
+    where.not(descripcion: 'Pago inicial').where('vencimiento > ?', time || Date.today)
   end
 
   def vencida?(time = nil)
-    vencimiento < (time || Time.now)
+    vencimiento < (time || Date.today)
   end
 
   # el monto actualizado es el monto original por el proporcional del
