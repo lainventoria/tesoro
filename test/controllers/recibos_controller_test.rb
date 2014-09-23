@@ -90,16 +90,18 @@ class RecibosControllerTest < ActionController::TestCase
     importe_permitido = @factura.saldo
 
     # La retencion crea un recibo temporal o interno...
-    assert_difference('Recibo.count',2) do
+    assert_difference('Recibo.count') do
       post :create,
         factura_id: @factura,
         recibo: attributes_for(:recibo, importe: importe_permitido, factura_id: @factura),
-        causa_tipo: 'retencion',
-        causa: { retencion_id: create(:retencion) }
+        causa_tipo: 'retenciones',
+        causa: { 
+          retencion_id: create(:retencion, monto: importe_permitido, factura: @factura) 
+        }
     end
 
-    assert Recibo.last.movimientos.count > 0,
-[Recibo.last.movimientos,Recibo.last]
+    assert @factura.reload.recibos.where(situacion: 'temporal').first.movimientos.any?, 
+      "tiene movimientos el recibo?"
 
     assert_redirected_to factura_recibo_path(@factura, assigns(:recibo))
   end
