@@ -119,8 +119,9 @@ class Retencion < ActiveRecord::Base
     Retencion.transaction do
       if movimiento = deuda_pendiente
         movimiento.causa = self
+        borrar_recibo_temporal
         movimiento.recibo = este_recibo
-        aplicar and borrar_recibo_temporal
+        aplicar
         movimiento
       else
         movimiento = movimientos.build
