@@ -37,7 +37,7 @@ feature 'Vistas mínimas' do
     page.must_have_content 'Administración'
     page.must_have_content 'Seguridad'
     page.must_have_content 'Administración B'
-    page.must_have_content 'Cta. Corriente'
+    page.must_have_content 'Cuenta Corriente'
     page.must_have_content 'Cheques en Cartera B'
     page.must_have_content 'Cheques en Cartera'
     page.must_have_content 'Cheques Propios'

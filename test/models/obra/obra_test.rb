@@ -10,7 +10,7 @@ class ObraTest < ActiveSupport::TestCase
     assert_equal 1, obra.cajas.where(tipo: 'Administración').count
     assert_equal 1, obra.cajas.where(tipo: 'Administración B').count
     assert_equal 1, obra.cajas.where(tipo: 'Seguridad').count
-    assert_equal 1, obra.cajas.where(tipo: 'Cta. Corriente').count
+    assert_equal 1, obra.cajas.where(tipo: 'Cuenta Corriente').count
     assert_equal 1, obra.cajas.where(tipo: 'Cheques en Cartera').count
     assert_equal 1, obra.cajas.where(tipo: 'Cheques Propios').count
     assert_equal 1, obra.cajas.where(tipo: 'Cheques en Cartera B').count
