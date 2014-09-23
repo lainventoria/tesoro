@@ -73,6 +73,8 @@ class Cuota < ActiveRecord::Base
           tipo: contrato_de_venta.tipo_factura,
           tercero: tercero,
           obra: obra
+
+        self.save
       end
     end
 
