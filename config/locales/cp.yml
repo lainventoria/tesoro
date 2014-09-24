@@ -97,3 +97,4 @@ es:
     error_en_usar_para_pagar: 'No se puede usar ese cheque para pagar'
   retencion:
     no_existe: 'La retención no existe'
+    ya_fue_usada: 'La retención ya fue usada como pago'

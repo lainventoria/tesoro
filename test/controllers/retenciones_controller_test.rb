@@ -53,4 +53,16 @@ class RetencionesControllerTest < ActionController::TestCase
       get :show, obra_id: create(:obra), id: @retencion
     end
   end
+
+  test 'crea retencion' do
+    assert_difference('Retencion.count') do
+      post :create, factura_id: @factura, retencion: {
+          factura: @factura,
+          situacion: :cargas_sociales,
+          monto: @factura.importe_neto * 0.2,
+          fecha_vencimiento:  Date.tomorrow,
+          documento: fixture_file_upload('retencion.pdf', 'application/pdf')
+        }
+    end
+  end
 end
