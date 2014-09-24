@@ -116,7 +116,7 @@ class Caja < ActiveRecord::Base
   # excepción para frenar la transacción
   def extraer(cantidad, lanzar_excepcion = false)
     if cantidad.positive? &&
-      (cantidad <= total(cantidad.currency.iso_code) || chequera?)
+      (cantidad <= total(cantidad.currency.iso_code) || chequera? || cuenta?)
       depositar(cantidad * -1, false)
     else
       raise ErrorEnExtraccion, I18n.t('cajas.error_en_extraccion') if lanzar_excepcion
