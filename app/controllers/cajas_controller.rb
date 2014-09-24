@@ -5,9 +5,9 @@ class CajasController < ApplicationController
   before_action :set_order, only: [ :show ]
 
   def index
-    @cajas =     (@obra ? @obra.cajas : Caja).de_efectivo
-    @cuentas =   (@obra ? @obra.cajas : Caja).cuentas
-    @chequeras = (@obra ? @obra.cajas : Caja).chequeras
+    @cajas =     (@obra ? @obra.cajas : Caja).de_efectivo.order('tipo')
+    @cuentas =   (@obra ? @obra.cajas : Caja).cuentas.order('tipo')
+    @chequeras = (@obra ? @obra.cajas : Caja).chequeras.order('tipo')
   end
 
   def show

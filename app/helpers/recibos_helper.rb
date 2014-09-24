@@ -73,11 +73,11 @@ module RecibosHelper
   end
 
   def cuentas_de_donde_transferir
-    @factura.obra.cajas.cuentas
+    @factura.obra.cajas.cuentas.order('tipo')
   end
 
   def cuentas_de_donde_emitir
-    @factura.obra.cajas.cuentas
+    @factura.obra.cajas.cuentas.order('tipo')
   end
 
   def chequeras_para_cheques_de_terceros
