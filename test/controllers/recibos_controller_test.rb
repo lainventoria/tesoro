@@ -72,6 +72,15 @@ class RecibosControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'accede a crear con recibo retencioso' do
+    retencion = create :retencion, factura: @factura
+    @factura.reload
+
+    get :new, factura_id: @factura
+
+    assert_redirected_to edit_factura_recibo_path(@factura,@factura.recibo_de_retenciones)
+  end
+
   test 'crea' do
     importe_permitido = @factura.saldo
 
