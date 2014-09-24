@@ -46,8 +46,6 @@ class Retencion < ActiveRecord::Base
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
-  scope :sin_aplicar, -> { where(estado: :emitida) }
-
   state_machine :estado, initial: :emitida do
     event :pagar do
       transition :emitida  => :pagada
@@ -117,15 +115,16 @@ class Retencion < ActiveRecord::Base
   # para validaciones y cosas así, ya que este método se llama desde Recibo.
   def usar_para_pagar(este_recibo)
     Retencion.transaction do
-      if movimiento = deuda_pendiente
+      if ! fue_usada_como_pago?
+        movimiento = chequera.extraer(monto, true)
         movimiento.causa = self
-        cambiar_movimiento_de_recibo este_recibo
-        borrar_recibo_temporal
+        este_recibo.movimientos << movimiento
+        este_recibo.save
         aplicar
         movimiento
       else
         movimiento = movimientos.build
-        movimiento.errors.add :base, I18n.t('retencion.no_existe')
+        movimiento.errors.add :base, I18n.t('retencion.ya_fue_usada')
       end
     end
   end
@@ -140,10 +139,6 @@ class Retencion < ActiveRecord::Base
 
   def se_pago?
     recibos.where(situacion: 'interno').any?
-  end
-
-  def deuda_pendiente
-    recibos.where(situacion: 'temporal').first.movimientos.first
   end
 
   private
@@ -162,36 +157,16 @@ class Retencion < ActiveRecord::Base
       end
     end
 
-    # Genera un recibo temporal para almacenar la deuda que representa esta
-    # retención. Este recibo se reemplaza al usar la retención como pago
+    # Genera un recibo para almacenar la deuda que representa esta
+    # retención. Este recibo se editara al usar la retención como pago
     def contabilizar_deuda
       Retencion.transaction do
-        temporal = Recibo.temporal_nuevo
-        movimiento = chequera.extraer(monto, true)
-        movimiento.causa = self
-        temporal.movimientos << movimiento
-        temporal.save
+        recibo = factura.recibo_de_retenciones || Recibo.pago_nuevo
+        usar_para_pagar recibo
       end
 
       rescue ActiveRecord::ActiveRecordError => excepcion
         self.errors.add(:base, excepcion.message)
-    end
-
-    def recibo_temporal
-       recibos.where(situacion: 'temporal').first
-    end
-
-    def cambiar_movimiento_de_recibo(a_este)
-      movimiento = recibo_temporal.movimientos.first
-
-      movimiento.recibo = nil
-      recibo_temporal.movimientos.delete movimiento
-
-      movimiento.recibo = a_este
-    end
-
-    def borrar_recibo_temporal
-      recibo_temporal.destroy
     end
 
     def no_borrar_si_tiene_recibos

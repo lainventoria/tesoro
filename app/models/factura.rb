@@ -112,4 +112,11 @@ class Factura < ActiveRecord::Base
       self.tercero = Tercero.where(attributes.merge({ relacion: 'ambos' })).first_or_create
     end
   end
+
+  # si tenemos un recibo de retenciones lo devolvemos
+  # este recibo se crea al crear una retencion y se edita al intentar crear
+  # un recibo manualmente
+  def recibo_de_retenciones
+    recibos.last if recibos.last.present? and recibos.last.solo_tiene_retenciones?
+  end
 end

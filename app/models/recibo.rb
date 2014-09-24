@@ -40,6 +40,10 @@ class Recibo < ActiveRecord::Base
     create(situacion: 'temporal', fecha: Time.now)
   end
 
+  def self.pago_nuevo
+    create(situacion: 'pago', fecha: Time.now)
+  end
+
   # Es un recibo de pago?
   def pago?
     situacion == 'pago'
@@ -64,6 +68,10 @@ class Recibo < ActiveRecord::Base
 
   def actualizar_situacion
     self.situacion = factura.situacion
+  end
+
+  def solo_tiene_retenciones?
+    movimientos.all? { |mov| mov.causa_type == 'Retencion' }
   end
 
   def pagar_o_cobrar_con(algo)
