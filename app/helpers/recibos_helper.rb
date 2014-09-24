@@ -73,13 +73,7 @@ module RecibosHelper
   end
 
   def cuentas_de_donde_transferir
-    cuentas = @factura.obra.cajas.cuentas
-
-    if @factura.pago?
-      cuentas.con_fondos_en(@factura.importe_total_moneda).uniq
-    else
-      cuentas
-    end
+    @factura.obra.cajas.cuentas
   end
 
   def cuentas_de_donde_emitir
