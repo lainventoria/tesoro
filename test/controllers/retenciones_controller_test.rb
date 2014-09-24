@@ -58,21 +58,11 @@ class RetencionesControllerTest < ActionController::TestCase
     assert_difference('Retencion.count') do
       post :create, factura_id: @factura, retencion: {
           factura: @factura,
-          situacion: :ganancias,
+          situacion: :cargas_sociales,
           monto: @factura.importe_neto * 0.2,
           fecha_vencimiento:  Date.tomorrow,
-
-          # Un documento válido
-          documento_file_name:     'fake.pdf',
-          documento_content_type:  'application/pdf',
-          documento_file_size:     1024,
-          documento_updated_at:    '2014-04-06T04:24:29-03:00'
+          documento: fixture_file_upload('retencion.pdf', 'application/pdf')
         }
     end
-
-    # la retencion crea un recibo
-    assert @factura.reload.recibos.last.movimientos.any?, 
-      "tiene movimientos el recibo?"
-
   end
 end
