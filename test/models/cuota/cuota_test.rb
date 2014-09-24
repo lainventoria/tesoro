@@ -16,4 +16,13 @@ class CuotaTest < ActiveSupport::TestCase
     m = build(:cuota, descripcion: nil)
     refute m.save
   end
+
+  test 'genera facturas sólo para las cuotas vencidas' do
+    create(:cuota, vencimiento: Date.tomorrow)
+    2.times { create(:cuota, vencimiento: Date.yesterday) }
+
+    assert_difference 'Factura.count', 2 do
+      assert_equal 2, Cuota.facturar_vencidas.size
+    end
+  end
 end

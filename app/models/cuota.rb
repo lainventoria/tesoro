@@ -26,6 +26,10 @@ class Cuota < ActiveRecord::Base
     where.not(descripcion: 'Pago inicial').where('vencimiento > ?', time || Date.today)
   end
 
+  def self.facturar_vencidas
+    vencidas.each &:generar_factura
+  end
+
   def vencida?(time = nil)
     vencimiento < (time || Date.today)
   end
