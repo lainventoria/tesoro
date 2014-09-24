@@ -40,8 +40,8 @@ class Recibo < ActiveRecord::Base
     create(situacion: 'temporal', fecha: Time.now)
   end
 
-  def self.pago_nuevo
-    create(situacion: 'pago', fecha: Time.now)
+  def self.pago_nuevo(factura)
+    create(situacion: 'pago', fecha: Time.now, factura: factura)
   end
 
   # Es un recibo de pago?
