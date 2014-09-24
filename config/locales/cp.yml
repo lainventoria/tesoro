@@ -98,3 +98,12 @@ es:
   retencion:
     no_existe: 'La retención no existe'
     ya_fue_usada: 'La retención ya fue usada como pago'
+  tareas:
+    gestionar:
+      cuotas_vencidas:
+        cuotas_procesadas:
+          one: 'Se procesó 1 cuota.'
+          other: 'Se procesaron %{count} cuotas.'
+        facturas_generadas:
+          one: 'Se generó 1 factura nueva.'
+          other: 'Se generaron %{count} facturas nuevas.'
