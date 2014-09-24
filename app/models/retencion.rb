@@ -115,7 +115,7 @@ class Retencion < ActiveRecord::Base
   # para validaciones y cosas así, ya que este método se llama desde Recibo.
   def usar_para_pagar(este_recibo)
     Retencion.transaction do
-      if ! fue_usada_como_pago?
+      unless fue_usada_como_pago?
         movimiento = chequera.extraer(monto, true)
         movimiento.causa = self
         este_recibo.movimientos << movimiento
