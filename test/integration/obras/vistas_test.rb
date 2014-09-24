@@ -36,13 +36,11 @@ feature 'Vistas mínimas' do
     page.must_have_content 'Obra'
     page.must_have_content 'Administración'
     page.must_have_content 'Seguridad'
-    page.must_have_content 'Administración X'
-    # TODO cambiar 'Caja de Ahorro' a 'Cta. Corriente' cuando se ajusten los
-    # modelos para que se cree con ese nombre
-    page.must_have_content 'Caja de Ahorro'
-    page.must_have_content 'Chequera X'
-    page.must_have_content 'Chequera'
-    page.must_have_content 'Chequera propia'
+    page.must_have_content 'Administración B'
+    page.must_have_content 'Cuenta Corriente'
+    page.must_have_content 'Cheques en Cartera B'
+    page.must_have_content 'Cheques en Cartera'
+    page.must_have_content 'Cheques Propios'
     page.must_have_content 'Retenciones de Ganancias'
     page.must_have_content 'Retenciones de Cargas Sociales'
   end

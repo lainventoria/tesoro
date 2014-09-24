@@ -9,9 +9,9 @@ class Obra < ActiveRecord::Base
   has_many :contratos_de_venta, class_name: 'ContratoDeVenta'
 
   # TODO mejorar esta cosa
-  has_one :chequera_propia, -> { where(tipo: 'Chequera propia') },
+  has_one :chequera_propia, -> { where(tipo: 'Cheques Propios') },
     class_name: 'Caja'
-  has_one :chequera, -> { where(tipo: 'Chequera') },
+  has_one :chequera, -> { where(tipo: 'Cheques en Cartera') },
     class_name: 'Caja'
   has_one :caja_ganancias, -> { where(tipo: 'Retenciones de Ganancias') },
     class_name: 'Caja'
@@ -100,12 +100,12 @@ class Obra < ActiveRecord::Base
       end
 
       # Estas cajas solo aceptan factura de tipo X
-      cajas.create tipo: 'Administración X', situacion: 'efectivo', tipo_factura: 'X'
-      cajas.create tipo: 'Chequera X', situacion: 'chequera', tipo_factura: 'X'
+      cajas.create tipo: 'Administración B', situacion: 'efectivo', tipo_factura: 'X'
+      cajas.create tipo: 'Cheques en Cartera B', situacion: 'chequera', tipo_factura: 'X'
 
-      cajas.create tipo: 'Caja de Ahorro', situacion: 'banco', banco: 'Cambiame'
-      cajas.create tipo: 'Chequera', situacion: 'chequera'
-      cajas.create tipo: 'Chequera propia', situacion: 'chequera'
+      cajas.create tipo: 'Cuenta Corriente', situacion: 'banco', banco: 'Cambiame'
+      cajas.create tipo: 'Cheques en Cartera', situacion: 'chequera'
+      cajas.create tipo: 'Cheques Propios', situacion: 'chequera'
       cajas.create tipo: 'Retenciones de Ganancias', situacion: 'chequera'
       cajas.create tipo: 'Retenciones de Cargas Sociales', situacion: 'chequera'
     end
