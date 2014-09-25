@@ -166,6 +166,11 @@ module ApplicationHelper
     end.join.html_safe
   end
 
+  # para usar en select_month y select_year
+  def date_from_params
+    params[:date].present? ? Date.strptime("#{params[:date][:year]}, #{params[:date][:month]}, 1", '%Y, %m, %d') : Date.today
+  end
+
   private
 
     def alerta(tipo)
