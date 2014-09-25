@@ -9,6 +9,7 @@
       <th>Contrato</th>
       <th>Monto</th>
       <th>Monto Indexado</th>
+      <th>Índice</th>
     </tr>
   </thead>
 
@@ -25,9 +26,14 @@
         <td><%= formatted_date cuota.vencimiento %></td>
         <td><%= link_to "#{cuota.contrato_de_venta.tercero.nombre} - #{formatted_date(cuota.contrato_de_venta.fecha)}", [@obra,cuota.contrato_de_venta] %></td>
         <td><%= formatted_number(cuota.monto_original_centavos, cuota.monto_original_moneda) %></td>
-        <td><%= link_to formatted_number(cuota.monto_actualizado(cuota.vencimiento).cents,
-                  cuota.monto_actualizado(cuota.vencimiento).currency),
-                  cuota.indice %></td>
+        <td><%= formatted_number(cuota.monto_actualizado(cuota.vencimiento).cents,
+                  cuota.monto_actualizado(cuota.vencimiento).currency) %></td>
+        <td>
+          <%= link_to "#{cuota.indice.denominacion} - #{cuota.indice.valor}", cuota.indice %>
+          <% if cuota.indice.temporal? %>
+            <span class="label label-warning">temporal</span>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
