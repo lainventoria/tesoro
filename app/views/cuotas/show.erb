@@ -1,0 +1,57 @@
+<h2>
+  <%= @cuota.descripcion %>
+  <span class="label <%= etiqueta_de_cuota(@cuota) %>"><%= @cuota.estado %></span>
+</h2>
+
+<%= form_for([@obra, @cuota]) do |f| %>
+  <fieldset>
+    <div class="row">
+      <div class="field form-group">
+        <%= f.label :descripcion %>
+        <p class="form-control"><%= @cuota.descripcion %>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :contrato_de_venta %>
+        <p class="form-control">
+          <%= link_to "#{@cuota.tercero.nombre} - #{formatted_date(@cuota.contrato_de_venta.fecha)}",
+                [@obra,@cuota.contrato_de_venta] %>
+        </p>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :monto_original %>
+        <p class="form-control"><%= formatted_number(@cuota.monto_original, @cuota.monto_original_moneda) %></p>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :monto_actualizado %>
+        <p class="form-control">
+          <%= formatted_number(@cuota.monto_actualizado(@cuota.vencimiento).cents,
+                @cuota.monto_actualizado(@cuota.vencimiento).currency) %></p>
+      </div>
+
+      <div class="field form-group">
+        <%= f.label :indice %>
+        <p class="form-control">
+          <%= link_to "#{@cuota.indice.denominacion} - #{@cuota.indice.valor}", @cuota.indice %>
+          <% if @cuota.indice.temporal? %>
+            <span class="label label-warning">temporal</span>
+          <% end %>
+        </p>
+      </div>
+
+
+      <div class="field form-group">
+        <%= f.label :factura %>
+        <% if @cuota.factura.present? %>
+          <p class="form-control">
+            <%= link_to "#{@cuota.factura.descripcion} - #{formatted_date(@cuota.factura.fecha)}", [@obra,@cuota.factura] %>
+          </p>
+        <% else %>
+          <p><%= link_to "Generar factura", [@obra], class: 'btn btn-info' %></p>
+        <% end %>
+      </div>
+    </div>
+  </fieldset>
+<% end %>

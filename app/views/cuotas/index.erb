@@ -1,0 +1,37 @@
+<h2>Listado de Cuotas</h2>
+
+<table id="cuotas" class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Estado</th>
+      <th>Vencimiento</th>
+      <th>Contrato</th>
+      <th>Monto</th>
+      <th>Monto Indexado</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cuotas.each do |cuota| %>
+      <tr>
+        <td></td>
+        <td><%= case cuota.estado
+                  when 'vencida' then link_to 'vencida', [@obra, cuota], class: 'label label-warning'
+                  when 'pendiente' then link_to 'pendiente', [@obra, cuota.factura], class: 'label label-info'
+                  when 'cobrada' then link_to 'cobrada', [@obra, cuota.factura], class: 'label label-success'
+                end
+        %></td>
+        <td><%= formatted_date cuota.vencimiento %></td>
+        <td><%= link_to "#{cuota.contrato_de_venta.tercero.nombre} - #{formatted_date(cuota.contrato_de_venta.fecha)}", [@obra,cuota.contrato_de_venta] %></td>
+        <td><%= formatted_number(cuota.monto_original_centavos, cuota.monto_original_moneda) %></td>
+        <td><%= link_to formatted_number(cuota.monto_actualizado(cuota.vencimiento).cents,
+                  cuota.monto_actualizado(cuota.vencimiento).currency),
+                  cuota.indice %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+  </tfoot>
+</table>

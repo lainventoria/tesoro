@@ -34,6 +34,18 @@ class Cuota < ActiveRecord::Base
     vencimiento < (time || Date.today)
   end
 
+  def pendiente?
+    factura.nil?
+  end
+
+  def estado
+    estado = 'vencida' if vencida?
+    estado = 'facturada' unless pendiente?
+    estado = 'cobrada' if !pendiente? && factura.cancelada?
+
+    estado || ''
+  end
+
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
   def monto_actualizado(periodo = nil)
