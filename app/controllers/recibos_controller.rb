@@ -26,8 +26,14 @@ class RecibosController < ApplicationController
   end
 
   def new
-    @recibo = @factura.recibos.build fecha: Time.now
-    @editar = true
+    if @factura.recibo_de_retenciones.present?
+      redirect_to edit_factura_recibo_path(@factura,
+        @factura.recibo_de_retenciones), 
+        notice: 'Usted tenía retenciones pendientes.'
+    else
+      @recibo = @factura.recibos.build fecha: Time.now
+      @editar = true
+    end
   end
 
   def edit

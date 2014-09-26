@@ -161,7 +161,7 @@ class Retencion < ActiveRecord::Base
     # retención. Este recibo se editara al usar la retención como pago
     def contabilizar_deuda
       Retencion.transaction do
-        recibo = factura.recibo_de_retenciones || Recibo.pago_nuevo
+        recibo = factura.recibo_de_retenciones || Recibo.pago_nuevo(factura)
         usar_para_pagar recibo
       end
 
