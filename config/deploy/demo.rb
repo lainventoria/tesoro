@@ -1,4 +1,4 @@
-set :branch, :develop
+set :branch, 'feature/demo-cambia-color-barra-navegacion'
 set :rails_env, :production
 set :deploy_user, 'gestionar'
 set :deploy_host, 'gestionar.lainventoria.com.ar'
