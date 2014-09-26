@@ -168,7 +168,19 @@ module ApplicationHelper
 
   # para usar en select_month y select_year
   def date_from_params
-    params[:date].present? ? Date.strptime("#{params[:date][:year]}, #{params[:date][:month]}, 1", '%Y, %m, %d') : Date.today
+    if params[:date].present?
+      # toda esta verga porque month es "" en lugar de nil cuando mandás
+      # un valor vacío
+      month = if params[:date][:month].empty?
+        1
+      else
+        params[:date][:month]
+      end
+
+      Date.strptime("#{params[:date][:year]}, #{month}, 1", '%Y, %m, %d')
+    else
+      Date.today
+    end
   end
 
   private

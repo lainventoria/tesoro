@@ -1,7 +1,7 @@
 <h2>Listado de Cuotas</h2>
 <form method="get" class="form-inline" role="form">
   <div class="form-group">
-    <%= select_month(date_from_params, {}, class: 'form-control') %>
+    <%= select_month(date_from_params, prompt: 'todo el año', class: 'form-control') %>
     <%= select_year(date_from_params, {}, class: 'form-control') %>
     <input type="submit" class="btn btn-info" value="Filtrar"/>
   </div>
