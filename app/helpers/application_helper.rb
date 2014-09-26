@@ -146,7 +146,7 @@ module ApplicationHelper
   def etiqueta_de_cuota(cuota)
     case cuota.estado
       when 'vencida' then 'label-warning'
-      when 'pendiente' then 'label-info'
+      when 'facturada' then 'label-info'
       when 'cobrada' then 'label-success'
     end
   end
