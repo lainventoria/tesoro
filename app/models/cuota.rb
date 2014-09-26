@@ -88,7 +88,8 @@ class Cuota < ActiveRecord::Base
           descripcion: descripcion,
           tipo: contrato_de_venta.tipo_factura,
           tercero: tercero,
-          obra: obra
+          obra: obra,
+          iva: Money.new(0, monto_original_moneda)
 
         self.save
       end
