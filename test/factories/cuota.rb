@@ -8,4 +8,3 @@ FactoryGirl.define do
     descripcion 'cuota de prueba'
   end
 end
-
