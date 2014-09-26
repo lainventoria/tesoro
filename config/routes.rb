@@ -64,7 +64,11 @@ Rails.application.routes.draw do
     # /obra/contrato_de_venta
     resources :contratos_de_venta
 
-    resources :cuotas, only: [ :index, :show ]
+    resources :cuotas, only: [ :index, :show ] do
+      member do
+        get 'generar_factura'
+      end
+    end
   end
 
   # /caja

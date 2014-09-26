@@ -28,4 +28,18 @@ class CuotasController < ApplicationController
     @editar = false
     @cuota = @obra.cuotas.find(params[:id])
   end
+
+  def generar_factura
+    cuota = @obra.cuotas.find(params[:id])
+
+    respond_to do |format|
+      if cuota.generar_factura
+        format.html { redirect_to [@obra, cuota.factura], notice: 'Factura generada con éxito' }
+        format.json { render action: 'show', status: :created, location: cuota.factura }
+      else
+        format.html { redirect_to [@obra, cuota], errors: 'No se pudo generar una factura' }
+        format.json { render json: cuota.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end

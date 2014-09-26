@@ -23,7 +23,7 @@
   <tbody>
     <% @cuotas.each do |cuota| %>
       <tr>
-        <td></td>
+        <td><%= link_to '', [@obra, cuota], class: 'glyphicon glyphicon-eye-open' %></td>
         <td><%= case cuota.estado
                   when 'vencida' then link_to 'vencida', [@obra, cuota], class: 'label label-warning'
                   when 'pendiente' then link_to 'pendiente', [@obra, cuota.factura], class: 'label label-info'
