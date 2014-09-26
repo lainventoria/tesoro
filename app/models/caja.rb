@@ -111,9 +111,9 @@ class Caja < ActiveRecord::Base
     end
   end
 
-  # Sólo si la caja tiene suficiente saldo o es una chequera, devolvemos el
-  # movimiento realizado, caso contrario no devolvemos nada, opcionalmente una
-  # excepción para frenar la transacción
+  # Sólo si se extrae de una cuenta, una chequera, o una caja con suficiente saldo,
+  # devolvemos el movimiento realizado, caso contrario no devolvemos nada,
+  # opcionalmente una excepción para frenar la transacción
   def extraer(cantidad, lanzar_excepcion = false)
     if cantidad.positive? &&
       (cantidad <= total(cantidad.currency.iso_code) || chequera? || cuenta?)
