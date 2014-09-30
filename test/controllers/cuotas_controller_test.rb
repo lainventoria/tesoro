@@ -18,7 +18,7 @@ class CuotasControllerTest < ActionController::TestCase
   end
 
   test 'genera factura' do
-    get :generar_factura, obra_id: @cuota.contrato_de_venta.obra, id: @cuota
+    put :generar_factura, obra_id: @cuota.contrato_de_venta.obra, id: @cuota
 
     @cuota.reload
 
