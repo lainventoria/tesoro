@@ -148,6 +148,7 @@ module ApplicationHelper
       when 'vencida' then 'label-warning'
       when 'facturada' then 'label-info'
       when 'cobrada' then 'label-success'
+      else ''
     end
   end
 
