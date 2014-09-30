@@ -39,7 +39,7 @@ class CuotaTest < ActiveSupport::TestCase
     assert_equal 'facturada', c.estado
   end
 
-  test 'una cuota esta cancelada cuando la factura se paga' do
+  test 'una cuota está cancelada cuando la factura se paga' do
     c = build(:cuota, vencimiento: Date.yesterday)
     c.generar_factura
     r = create(:recibo, factura: c.factura)
