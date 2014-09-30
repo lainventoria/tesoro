@@ -96,7 +96,7 @@ class Recibo < ActiveRecord::Base
         save
       else
         errors.add :base, :medio_de_pago_invalido,
-                    causa: pago.causa_type,
+                    causa: pago.causa.class.model_name.human,
                     mensaje: parse_errors(pago.errors)
         false
       end
@@ -116,7 +116,7 @@ class Recibo < ActiveRecord::Base
           save
         else
           errors.add :base, :medio_de_cobro_invalido,
-            causa: cobro.causa_type,
+            causa: cobro.causa.class.model_name.human,
             mensaje: parse_errors(cobro.errors)
         end
       else
