@@ -47,9 +47,9 @@
         <%= link_to "#{@cuota.factura.descripcion} - #{formatted_date(@cuota.factura.fecha)}", [@obra,@cuota.factura] %>
       </p>
     <% else %>
-      <%= form_tag(generar_factura_obra_cuota_path(@obra,@cuota), method: :put) do %>
-        <%= submit_tag 'Generar factura', class: 'btn btn-info' %>
-      <% end %>
+      <p><%= link_to 'Generar factura',
+        generar_factura_obra_cuota_path(@obra,@cuota), method: :put,
+        class: 'btn btn-info' %></p>
     <% end %>
   </div>
 </div>
