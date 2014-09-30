@@ -25,4 +25,15 @@ class CuotaTest < ActiveSupport::TestCase
       assert_equal 2, Cuota.facturar_vencidas.size
     end
   end
+
+  test 'obtiene las cuotas cobradas' do
+    2.times {
+      (create :cuota, vencimiento: Date.yesterday).generar_factura
+    }
+
+    assert_difference 'Cuota.cobradas.count' do
+      r = build :recibo, factura: Cuota.first.factura
+      r.pagar_con efectivo_por(Cuota.first.factura.importe_total)
+    end
+  end
 end
