@@ -97,18 +97,27 @@ class Retencion < ActiveRecord::Base
 
   # Las retenciones extraen de su cuenta y saldan la chequera cuando
   # se le paga a la AFIP
-  def pagar!
-    Cheque.transaction do
+  def pagar!(desde_esta_cuenta)
+    return nil unless can_pagar?
+
+    Retencion.transaction do
+      self.cuenta = desde_esta_cuenta
+
+      # FIXME el método 'pagar' tira false siempre y no sé por qué :|
+      self.estado = 'pagada'
+
       recibo = Recibo.interno_nuevo
 
+      # Extrae de la cuenta
       salida = cuenta.extraer(monto, true)
       salida.causa = self
+
+      # Y salda la deuda en la chequera de AFIP
       entrada = chequera.depositar(monto, true)
       entrada.causa = self
 
+      # Registra los movimientos
       recibo.movimientos << salida << entrada
-
-      pagar
     end
   end
 
