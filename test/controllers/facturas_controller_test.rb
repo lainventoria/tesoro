@@ -93,4 +93,18 @@ class FacturasControllerTest < ActionController::TestCase
 
     assert_redirected_to ruta
   end
+
+  test 'muestra facturas de pago' do
+    create :factura, situacion: 'pago'
+
+    get :pagos
+    assert_response :success
+  end
+
+  test 'muestra facturas de cobro' do
+    create :factura, situacion: 'cobro'
+
+    get :cobros
+    assert_response :success
+  end
 end
