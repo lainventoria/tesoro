@@ -49,7 +49,7 @@
       </div>
       <div class="field form-group col-md-6" >
         <label>Nro. Factura</label>
-        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero.first(10) %>: <%= @factura.descripcion.first(40) %></span>
+        <span class="form-control" disabled><%= @factura.tipo.first(1) %>-<%= @factura.numero || 'S/N' %>: <%= @factura.descripcion.first(40) %></span>
       </div>
 
     </div>

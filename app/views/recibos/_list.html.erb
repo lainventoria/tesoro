@@ -24,7 +24,7 @@
         <td><%= formatted_date(recibo.fecha) %></td>
         <% if ! recibo.interno? %>
           <td class="<%= lista_larga %>"><%= recibo.factura.tercero.nombre.first(30) %></td>
-          <td class="<%= lista_larga %>"><%= recibo.factura.tipo.first(1) %>-<%= recibo.factura.numero.first(10) %>: <%= recibo.factura.descripcion.first(30) %></td>
+          <td class="<%= lista_larga %>"><%= recibo.factura.tipo.first(1) %>-<%= recibo.factura.numero || 'S/N' %>: <%= recibo.factura.descripcion.first(30) %></td>
         <% end %>
         <td class="<%= lista_larga %>"><%= formatted_date (recibo.fecha) %></td>
         <td class="text-right <%= muestra_importe %>"><%= recibo.importe_moneda %></td>
