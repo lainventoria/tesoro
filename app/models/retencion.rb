@@ -69,6 +69,10 @@ class Retencion < ActiveRecord::Base
     end
   end
 
+  def self.vencidas(fecha = nil)
+    where('fecha_vencimiento < ?', fecha || Date.today)
+  end
+
   def self.construir(params)
     id_ret = params.extract! :retencion_id
 

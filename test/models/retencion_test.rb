@@ -17,7 +17,7 @@ class RetencionTest < ActiveSupport::TestCase
     assert recibo.reload.movimientos.count == 0
   end
 
-  test 'crear la retención y que este todo piola' do
+  test 'crear la retención y que esté todo piola' do
     retencion = create :retencion, monto: Money.new(1000)
     assert retencion.recibos.any?
     assert retencion.recibos.last.movimientos.any?
@@ -40,5 +40,13 @@ class RetencionTest < ActiveSupport::TestCase
     factura = create :factura, importe_neto: Money.new(100), iva: 0
     retencion = create :retencion, monto: Money.new(50), factura: factura
     assert factura.reload.saldo == Money.new(50)
+  end
+
+  test 'las retenciones se vencen' do
+    factura = create :factura
+    retencion = create :retencion, factura: factura, fecha_vencimiento: Date.yesterday
+
+    assert_equal 1, Retencion.vencidas.count
+    assert_equal 0, Retencion.vencidas(Date.yesterday).count
   end
 end
