@@ -79,6 +79,9 @@ es:
         situacion: 'Tipo'
       obra:
         direccion: 'Dirección'
+    models:
+      retencion: 'Retención'
+      operacion: 'Operación'
   activemodel:
     errors:
       models:
