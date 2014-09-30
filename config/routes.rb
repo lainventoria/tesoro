@@ -66,7 +66,7 @@ Rails.application.routes.draw do
 
     resources :cuotas, only: [ :index, :show ] do
       member do
-        get 'generar_factura'
+        put 'generar_factura'
       end
     end
   end
