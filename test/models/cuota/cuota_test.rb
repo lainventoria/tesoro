@@ -27,9 +27,7 @@ class CuotaTest < ActiveSupport::TestCase
   end
 
   test 'obtiene las cuotas cobradas' do
-    2.times {
-      (create :cuota, vencimiento: Date.yesterday).generar_factura
-    }
+    (create :cuota, vencimiento: Date.yesterday).generar_factura
 
     assert_difference 'Cuota.cobradas.count' do
       r = build :recibo, factura: Cuota.first.factura
