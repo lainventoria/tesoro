@@ -6,10 +6,11 @@ feature 'Retenciones' do
     @factura = create :factura
   end
 
-  scenario 'Esta el boton' do
+  scenario 'Hay un botón para crearlas' do
     visit factura_path(@factura)
-    page.must_have_link 'Retencion', new_obra_factura_retencion_path(
-      @factura.obra, @factura)
+
+    page.must_have_link 'Retención',
+      href: new_factura_retencion_path(@factura)
   end
 
   scenario 'Se pueden crear' do
