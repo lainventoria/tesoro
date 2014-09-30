@@ -17,6 +17,7 @@ class Cuota < ActiveRecord::Base
   scope :pendientes, -> { where(factura: nil) }
 
   # traer todas las cuotas cobradas
+  # FIXME convertir a máquina de estados
   def self.cobradas
     emitidas.select { |c| c.factura.cancelada?  }
   end
