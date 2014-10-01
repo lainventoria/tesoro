@@ -23,7 +23,7 @@ class IndicesController < ApplicationController
   def edit
     @editar = true
 
-    flash[:notice] = "Al modificar este índice se afectarán #{Indice.where(temporal: true).where('periodo > ?', @indice.periodo).count} índices temporales"
+    flash[:notice] = "Al modificar este índice se afectarán #{Indice.where(temporal: true).where('periodo > ?', @indice.periodo).count} índices temporales y se reindexarán sus facturas si las tuviesen."
   end
 
   # POST /indices
