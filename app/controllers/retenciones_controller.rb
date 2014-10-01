@@ -69,7 +69,7 @@ class RetencionesController < ApplicationController
       retencion = Retencion.find(params[:retencion_id])
 
       if retencion.pagar!(cuenta)
-        format.html { redirect_to [retencion.obra, retencion.cuenta],
+        format.html { redirect_to retenciones_path,
           notice: 'Retención pagada con éxito' }
         format.json { render json: retencion.recibos.where(situacion: 'interno') }
       else
