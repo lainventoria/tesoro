@@ -34,7 +34,7 @@
 
         <% @campos = [
             factura.tipo.first(1),
-            factura.numero,
+            factura.numero.first(10),
             formatted_date(factura.fecha),
             formatted_date(factura.fecha_pago),
             factura.tercero.nombre.first(20),
