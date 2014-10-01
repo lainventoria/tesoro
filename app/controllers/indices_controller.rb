@@ -10,7 +10,7 @@ class IndicesController < ApplicationController
 
   # GET /indice/1
   def show
-    @editar=false
+    @editar = false
   end
 
   # GET /indices/new
@@ -21,7 +21,9 @@ class IndicesController < ApplicationController
 
   # GET /indices/1/edit
   def edit
-    @editar=true
+    @editar = true
+
+    flash[:notice] = "Al modificar este índice se afectarán #{Indice.where(temporal: true).where('periodo > ?', @indice.periodo).count} índices temporales"
   end
 
   # POST /indices
