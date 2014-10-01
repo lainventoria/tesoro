@@ -7,8 +7,7 @@
       <th>Cliente</th>
       <th class="text-right">Cuotas</th>
       <th class="text-right">Cuotas pendientes</th>
-      <th class="text-right">Cuotas vencidas</th>
-      <th class="text-right">Cuotas emitidas</th>
+      <th class="text-right">Cuotas por cobrar</th>
       <th class="text-right">Cuotas cobradas</th>
       <th class="text-right">Monto Total</th>
       <th class="text-right">Cobrado</th>
@@ -38,8 +37,7 @@
           @campos_numeros = [
             contrato.cuotas.count,
             contrato.cuotas.pendientes.count,
-            contrato.cuotas.vencidas.count,
-            contrato.cuotas.emitidas.count,
+            contrato.cuotas.emitidas.count - contrato.cuotas.cobradas.count,
             contrato.cuotas.cobradas.count,
             formatted_number(contrato.monto_total, contrato.monto_total_moneda),
             formatted_number(cuotas_cobradas_total, cuotas_cobradas_total.currency),
