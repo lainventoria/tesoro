@@ -9,10 +9,13 @@ class Indice < ActiveRecord::Base
   validates_uniqueness_of :denominacion, scope: :periodo
   validates_numericality_of :valor
 
-  # cuando se actualiza un índice a su valor definitivo deja de ser
-  # temporal
-#  before_update :ahora_es_definitivo
   after_update  :indexar_al_ultimo, :actualizar_cuotas
+
+  # Traer todos los indices temporales futuros a este indice y por lo
+  # tanto afectados por sus actualizaciones
+  def temporales_futuros
+    Indice.where(temporal: true).where('periodo > ?', periodo)
+  end
 
   def temporal?
     temporal
@@ -57,13 +60,6 @@ class Indice < ActiveRecord::Base
 
   private
 
-    def ahora_es_definitivo
-      self.temporal = false
-
-      # no dejar que temporal devuelva false
-      true
-    end
-
     # actualiza el monto de las facturas cuando se modifica el indice
     def actualizar_cuotas
       Factura.transaction do
@@ -81,7 +77,7 @@ class Indice < ActiveRecord::Base
     def indexar_al_ultimo
       Indice.transaction do
         Indice.where(temporal: true).
-          where('periodo > ?', periodo).each do |indice|
+          temporales_futuros.each do |indice|
 
           indice.update(valor: valor)
         end
