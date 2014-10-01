@@ -11,8 +11,8 @@ class Indice < ActiveRecord::Base
 
   # cuando se actualiza un índice a su valor definitivo deja de ser
   # temporal
-  before_update :ahora_es_definitivo
-  after_update  :actualizar_cuotas
+#  before_update :ahora_es_definitivo
+  after_update  :indexar_al_ultimo, :actualizar_cuotas
 
   def temporal?
     temporal
@@ -72,6 +72,18 @@ class Indice < ActiveRecord::Base
             cuota.factura.importe_neto = cuota.monto_actualizado
             cuota.factura.save!
           end
+        end
+      end
+    end
+
+    # cuando se actualiza este indice, todos los indices temporales
+    # subsiguientes adoptan el valor actual
+    def indexar_al_ultimo
+      Indice.transaction do
+        Indice.where(temporal: true).
+          where('periodo > ?', periodo).each do |indice|
+
+          indice.update(valor: valor)
         end
       end
     end

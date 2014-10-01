@@ -22,4 +22,30 @@ class IndiceTest < ActiveSupport::TestCase
 
     assert i2 == i, [periodo, denominacion, i, i2]
   end
+
+  test 'al tener muchos temporales, hay que reindexar las cuotas al ir actualizándolos' do
+    cv = create :contrato_de_venta
+    5.times do |t|
+      cv.agregar_cuota(attributes_for(:cuota).merge({
+        monto_original: cv.monto_total / 5,
+        vencimiento: Date.today + t.months
+      }))
+    end
+
+    # generar todos los indices temporales
+    cv.cuotas.each do |cuota|
+      cuota.monto_actualizado
+    end
+
+    # generar una factura que se va a ir actualizando
+    cv.cuotas.last.generar_factura
+    monto_factura = cv.cuotas.last.factura.importe_total
+
+    cv.cuotas[2].indice.update!(valor: cv.cuotas[2].indice.valor * 2)
+
+    assert_equal cv.cuotas[2].indice.valor, cv.cuotas.last.reload.indice.valor
+    assert_not_equal monto_factura, cv.cuotas.last.factura.importe_total
+    # sigue siendo temporal
+    assert cv.cuotas.last.indice.temporal?
+  end
 end
