@@ -41,6 +41,17 @@ class CajaExtraccionesTest < ActiveSupport::TestCase
     assert chequera.movimientos.include? movimiento
   end
 
+  test 'las cuentas pueden quedar en negativo' do
+    cuenta = create :cuenta
+    assert_equal Money.new(0), cuenta.total
+
+    movimiento = cuenta.extraer Money.new(1000)
+
+    assert_instance_of Movimiento, movimiento
+    assert_equal Money.new(-1000), movimiento.monto
+    assert cuenta.movimientos.include? movimiento
+  end
+
   test 'extrae en cualquier moneda si alcanza' do
     create :movimiento, caja: @caja, monto: Money.new(2000, 'USD')
 
