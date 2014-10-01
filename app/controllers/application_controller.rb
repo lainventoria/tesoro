@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
     # para cargar las columnas porque ordenar
     def set_order
       sort = params[:sort].present? ? params[:sort] : 'id'
+      # FIXME cambiar puntos por guiones para tener automagia
       if sort == 'terceros_nombre'
         sort = 'terceros.nombre'
       end

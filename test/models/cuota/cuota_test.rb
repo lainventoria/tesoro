@@ -25,4 +25,29 @@ class CuotaTest < ActiveSupport::TestCase
       assert_equal 2, Cuota.facturar_vencidas.size
     end
   end
+
+  test 'una cuota vencida tiene estado correspondiente' do
+    c = build(:cuota, vencimiento: Date.yesterday)
+
+    assert_equal 'vencida', c.estado
+  end
+
+  test 'una cuota con factura tiene estado correspondiente' do
+    c = build(:cuota, vencimiento: Date.yesterday)
+    c.generar_factura
+
+    assert_equal 'facturada', c.estado
+  end
+
+  test 'una cuota está cancelada cuando la factura se paga' do
+    c = build(:cuota, vencimiento: Date.yesterday)
+    c.generar_factura
+    r = create(:recibo, factura: c.factura)
+    r.pagar_con(Efectivo.new(monto: c.factura.importe_total,
+      caja: create(:caja, :con_fondos, monto: c.factura.importe_total, tipo_factura: c.factura.tipo)))
+
+    c.factura.reload
+
+    assert_equal 'cobrada', c.estado
+  end
 end

@@ -7,6 +7,7 @@ class Obra < ActiveRecord::Base
   has_many :retenciones, through: :facturas
   has_many :unidades_funcionales, class_name: 'UnidadFuncional'
   has_many :contratos_de_venta, class_name: 'ContratoDeVenta'
+  has_many :cuotas, through: :contratos_de_venta
 
   # TODO mejorar esta cosa
   has_one :chequera_propia, -> { where(tipo: 'Cheques Propios') },

@@ -1,0 +1,50 @@
+<h2>Listado de Cuotas</h2>
+<form method="get" class="form-inline" role="form">
+  <div class="form-group">
+    <%= select_month(date_from_params, prompt: 'todo el año', class: 'form-control') %>
+    <%= select_year(date_from_params, {}, class: 'form-control') %>
+    <input type="submit" class="btn btn-info" value="Filtrar"/>
+  </div>
+</form>
+
+<table id="cuotas" class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Estado</th>
+      <th>Vencimiento</th>
+      <th>Contrato</th>
+      <th>Monto</th>
+      <th>Monto Indexado</th>
+      <th>Índice</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cuotas.each do |cuota| %>
+      <tr>
+        <td><%= link_to '', [@obra, cuota], class: 'glyphicon glyphicon-eye-open' %></td>
+        <td><%= case cuota.estado
+                  when 'vencida' then link_to 'vencida', [@obra, cuota], class: 'label label-warning'
+                  when 'facturada' then link_to 'facturada', [@obra, cuota.factura], class: 'label label-info'
+                  when 'cobrada' then link_to 'cobrada', [@obra, cuota.factura], class: 'label label-success'
+                end
+        %></td>
+        <td><%= formatted_date cuota.vencimiento %></td>
+        <td><%= link_to "#{cuota.contrato_de_venta.tercero.nombre} - #{formatted_date(cuota.contrato_de_venta.fecha)}", [@obra,cuota.contrato_de_venta] %></td>
+        <td><%= formatted_number(cuota.monto_original_centavos, cuota.monto_original_moneda) %></td>
+        <td><%= formatted_number(cuota.monto_actualizado(cuota.vencimiento).cents,
+                  cuota.monto_actualizado(cuota.vencimiento).currency) %></td>
+        <td>
+          <%= link_to "#{cuota.indice.denominacion} - #{cuota.indice.valor}", cuota.indice %>
+          <% if cuota.indice.temporal? %>
+            <span class="label label-warning">temporal</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+  </tfoot>
+</table>

@@ -111,6 +111,7 @@ module ApplicationHelper
       when 'indices' then url_for(params.merge({ obra_id: nil }))
       when 'unidades_funcionales' then url_for(params)
       when 'contratos_de_venta' then url_for(params)
+      when 'cuotas' then url_for(params)
       # para cualquier otra cosa, imitar con_obra?
       else url_for(params.merge({ obra_id: obra.try(:id) }))
     end

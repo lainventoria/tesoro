@@ -34,6 +34,18 @@ class Cuota < ActiveRecord::Base
     vencimiento < (time || Date.today)
   end
 
+  def pendiente?
+    factura.nil?
+  end
+
+  def estado
+    estado = 'vencida' if vencida?
+    estado = 'facturada' unless pendiente?
+    estado = 'cobrada' if !pendiente? && factura.cancelada?
+
+    estado || ''
+  end
+
   # el monto actualizado es el monto original por el proporcional del
   # indice actual y el indice original
   def monto_actualizado(periodo = nil)
@@ -69,14 +81,18 @@ class Cuota < ActiveRecord::Base
       end
 
       Factura.transaction do
-        # FIXME falta el número
-        create_factura situacion: 'cobro', importe_neto: monto_actualizado(periodo),
+        create_factura(
+          numero: '',
+          situacion: 'cobro',
+          importe_neto: monto_actualizado(periodo),
           fecha: vencimiento_actual,
           fecha_pago: vencimiento_actual + 10.days,
           descripcion: descripcion,
           tipo: contrato_de_venta.tipo_factura,
           tercero: tercero,
-          obra: obra
+          obra: obra,
+          iva: Money.new(0, monto_original_moneda)
+        ) # ; !!!
 
         self.save
       end
