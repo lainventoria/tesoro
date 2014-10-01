@@ -16,6 +16,12 @@ class Cuota < ActiveRecord::Base
   # cuotas sin factura emitida
   scope :pendientes, -> { where(factura: nil) }
 
+  # traer todas las cuotas cobradas
+  # FIXME convertir a máquina de estados
+  def self.cobradas
+    emitidas.select { |c| c.factura.cancelada?  }
+  end
+
   # mostrar todas las cuotas vencidas
   # que no sean el pago inicial porque es como la cuota 0
   def self.vencidas(time = nil)

@@ -1,0 +1,10 @@
+<%# Crea una barra de progreso si le pasamos value %>
+<div class="progress">
+  <div class="progress-bar progress-bar-success"
+       role="progressbar"
+       aria-valuenow="<%= value.to_i %>"
+       aria-valuemin="0"
+       aria-valuemax="100"
+       style="width: <%= value.to_i %>%">
+  </div>
+</div>

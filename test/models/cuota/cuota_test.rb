@@ -50,4 +50,13 @@ class CuotaTest < ActiveSupport::TestCase
 
     assert_equal 'cobrada', c.estado
   end
+
+  test 'obtiene las cuotas cobradas' do
+    (create :cuota, vencimiento: Date.yesterday).generar_factura
+
+    assert_difference 'Cuota.cobradas.count' do
+      r = build :recibo, factura: Cuota.first.factura
+      r.pagar_con efectivo_por(Cuota.first.factura.importe_total)
+    end
+  end
 end
