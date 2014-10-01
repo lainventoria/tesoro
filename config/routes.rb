@@ -19,7 +19,9 @@ Rails.application.routes.draw do
 
       # /obra/factura/retención
       # Ver las retenciones de cada factura para esta obra
-      resources :retenciones
+      resources :retenciones do
+        put 'pagar'
+      end
     end
 
     # /obra/recibo/* pero no crear recibos sin facturas asociadas

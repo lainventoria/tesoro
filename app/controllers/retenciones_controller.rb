@@ -63,6 +63,23 @@ class RetencionesController < ApplicationController
     end
   end
 
+  def pagar
+    respond_to do |format|
+      cuenta = Caja.find(params[:retencion][:cuenta_id])
+      retencion = Retencion.find(params[:retencion_id])
+
+      if retencion.pagar!(cuenta)
+        format.html { redirect_to [retencion.obra, retencion.cuenta],
+          notice: 'Retención pagada con éxito' }
+        format.json { render json: retencion.recibos.where(situacion: 'interno') }
+      else
+        format.html { redirect_to [retencion.obra, retencion.factura, retencion],
+          notice: 'No se pudo pagar la retención' }
+        format.json { render json: retencion.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
     def set_retencion
@@ -90,7 +107,7 @@ class RetencionesController < ApplicationController
 
     def retencion_params
       params.require(:retencion).permit(
-        :monto, :documento, :factura_id, :fecha_vencimiento, :situacion
+        :monto, :documento, :factura_id, :fecha_vencimiento, :situacion, :cuenta_id
       )
     end
 end
