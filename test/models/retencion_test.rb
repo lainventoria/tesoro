@@ -50,11 +50,10 @@ class RetencionTest < ActiveSupport::TestCase
     assert_equal 0, Retencion.vencidas(Date.yesterday).count
   end
 
-
   test 'las retenciones se pagan' do
     factura = create :factura
     retencion = create :retencion, factura: factura
-    cuenta = create :caja, :con_fondos, monto: retencion.monto
+    cuenta = create :caja, :con_fondos, monto: retencion.monto, situacion: 'banco', banco: 'los odio a todos'
 
     assert retencion.pagar!(cuenta)
     assert_equal 'pagada', retencion.estado

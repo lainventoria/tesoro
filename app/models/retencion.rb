@@ -99,10 +99,11 @@ class Retencion < ActiveRecord::Base
   # se le paga a la AFIP
   def pagar!(desde_esta_cuenta)
     return nil unless can_pagar?
+    # tiene que ser un banco
+    return nil unless desde_esta_cuenta.banco?
 
     Retencion.transaction do
       self.cuenta = desde_esta_cuenta
-
       # FIXME el método 'pagar' tira false siempre y no sé por qué :|
       self.estado = 'pagada'
 
@@ -118,7 +119,14 @@ class Retencion < ActiveRecord::Base
 
       # Registra los movimientos
       recibo.movimientos << salida << entrada
+
+      # Guardar estado, recibo y cuenta
+      save
     end
+
+    rescue ActiveRecord::ActiveRecordError => excepcion
+      self.errors.add(:base, excepcion.message)
+      false
   end
 
   # Usar esta retención como medio de pago. La asociamos como causa del movimiento

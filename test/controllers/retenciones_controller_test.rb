@@ -65,4 +65,24 @@ class RetencionesControllerTest < ActionController::TestCase
         }
     end
   end
+
+  test 'paga una retención' do
+    cuenta = create :caja, :con_fondos,
+      monto: @retencion.monto,
+      obra: @retencion.obra,
+      situacion: 'banco',
+      banco: 'los odio a todos'
+
+    put :pagar, obra_id: @retencion.obra,
+      factura_id: @factura,
+      retencion_id: @retencion,
+      retencion: { cuenta_id: cuenta }
+    assert_redirected_to retenciones_path
+
+    @retencion.reload
+
+    assert_equal 'pagada', @retencion.estado
+    assert_equal 0, cuenta.total
+    assert_equal 0, @retencion.chequera.total
+  end
 end
