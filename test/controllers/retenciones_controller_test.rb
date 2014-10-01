@@ -81,7 +81,7 @@ class RetencionesControllerTest < ActionController::TestCase
 
     @retencion.reload
 
-    assert_equal 'pagada', @retencion.estado
+    assert_equal 'cerrada', @retencion.estado
     assert_equal 0, cuenta.total
     assert_equal 0, @retencion.chequera.total
   end

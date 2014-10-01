@@ -56,7 +56,7 @@ class RetencionTest < ActiveSupport::TestCase
     cuenta = create :caja, :con_fondos, monto: retencion.monto, situacion: 'banco', banco: 'los odio a todos'
 
     assert retencion.pagar!(cuenta)
-    assert_equal 'pagada', retencion.estado
+    assert_equal 'cerrada', retencion.estado
 
     assert_equal 0, cuenta.total
     assert_equal 0, retencion.chequera.total

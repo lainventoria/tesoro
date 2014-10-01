@@ -104,8 +104,7 @@ class Retencion < ActiveRecord::Base
 
     Retencion.transaction do
       self.cuenta = desde_esta_cuenta
-      # FIXME el método 'pagar' tira false siempre y no sé por qué :|
-      self.estado = 'pagada'
+      pagar
 
       recibo = Recibo.interno_nuevo
 
