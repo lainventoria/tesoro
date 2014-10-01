@@ -82,7 +82,9 @@ class Cuota < ActiveRecord::Base
 
       Factura.transaction do
         # FIXME falta el número
-        create_factura situacion: 'cobro', importe_neto: monto_actualizado(periodo),
+        create_factura(
+          situacion: 'cobro',
+          importe_neto: monto_actualizado(periodo),
           fecha: vencimiento_actual,
           fecha_pago: vencimiento_actual + 10.days,
           descripcion: descripcion,
@@ -90,6 +92,7 @@ class Cuota < ActiveRecord::Base
           tercero: tercero,
           obra: obra,
           iva: Money.new(0, monto_original_moneda)
+        ) # ; !!!
 
         self.save
       end
