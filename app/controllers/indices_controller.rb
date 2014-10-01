@@ -77,6 +77,6 @@ class IndicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def indice_params
-      params.require(:indice).permit(:periodo, :denominacion, :valor)
+      params.require(:indice).permit(:periodo, :denominacion, :valor, :temporal)
     end
 end
