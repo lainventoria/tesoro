@@ -107,4 +107,13 @@ class FacturasControllerTest < ActionController::TestCase
     get :cobros
     assert_response :success
   end
+
+  test 'accede a las facturas de cobro cuando hay cuotas por pagar' do
+    create :factura, situacion: 'cobro'
+    c = build(:cuota, vencimiento: Date.yesterday)
+    c.generar_factura
+
+    get :cobros
+    assert_response :success
+  end
 end

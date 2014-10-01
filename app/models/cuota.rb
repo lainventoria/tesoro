@@ -81,8 +81,8 @@ class Cuota < ActiveRecord::Base
       end
 
       Factura.transaction do
-        # FIXME falta el número
         create_factura(
+          numero: '',
           situacion: 'cobro',
           importe_neto: monto_actualizado(periodo),
           fecha: vencimiento_actual,
