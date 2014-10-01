@@ -11,7 +11,7 @@ set :repo_url, 'git@github.com:lainventoria/cp.git'
 # set :pty, false
 # set :keep_releases, 5
 
-set :rbenv_ruby, '2.0.0-p353'
+set :rbenv_ruby, '2.1.2'
 
 set :linked_files, %w{config/database.yml config/secrets.yml}
 
