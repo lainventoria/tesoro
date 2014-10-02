@@ -94,7 +94,7 @@ class CuotaConContratoTest < ActiveSupport::TestCase
 
     # al cambiar el valor del indice, se dispara la actualizacion de
     # montos de facturas por Indice.after_update
-    assert c.indice.update(valor: c.indice.valor * 2, temporal: false)
+    c.indice.update(valor: c.indice.valor * 2, temporal: false)
     refute c.indice.temporal?
     assert c.factura.reload
 
