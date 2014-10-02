@@ -5,6 +5,7 @@
 # como medio de pago de la misma
 class Retencion < ActiveRecord::Base
   include CausaDeMovimientos
+  class ErrorEnPagar < ActiveRecord::ActiveRecordError; end;
 
   SITUACIONES = %w(ganancias cargas_sociales)
   # TODO estados (usada, pagada, emitida)
@@ -98,9 +99,9 @@ class Retencion < ActiveRecord::Base
   # Las retenciones extraen de su cuenta y saldan la chequera cuando
   # se le paga a la AFIP
   def pagar!(desde_esta_cuenta)
-    return nil unless can_pagar?
+    raise ErrorEnPagar, I18n.t('retenciones.no_se_puede_pagar') unless can_pagar?
     # tiene que ser un banco
-    return nil unless desde_esta_cuenta.banco?
+    raise ErrorEnPagar, I18n.t('retenciones.tiene_que_ser_un_banco') unless desde_esta_cuenta.banco?
 
     Retencion.transaction do
       self.cuenta = desde_esta_cuenta
@@ -122,10 +123,6 @@ class Retencion < ActiveRecord::Base
       # Guardar estado, recibo y cuenta
       save
     end
-
-    rescue ActiveRecord::ActiveRecordError => excepcion
-      self.errors.add(:base, excepcion.message)
-      false
   end
 
   # Usar esta retención como medio de pago. La asociamos como causa del movimiento
