@@ -61,4 +61,14 @@ class RetencionTest < ActiveSupport::TestCase
     assert_equal 0, cuenta.total
     assert_equal 0, retencion.chequera.total
   end
+
+  test 'no se puede pagar una retención desde una caja de efectivo' do
+    factura = create :factura
+    retencion = create :retencion, factura: factura
+    cuenta = create :caja, :con_fondos, monto: retencion.monto, situacion: 'efectivo'
+
+    assert_raise Retencion::ErrorEnPagar do
+      retencion.pagar!(cuenta)
+    end
+  end
 end

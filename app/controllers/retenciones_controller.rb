@@ -68,13 +68,19 @@ class RetencionesController < ApplicationController
       cuenta = Caja.find(params[:retencion][:cuenta_id])
       retencion = Retencion.find(params[:retencion_id])
 
-      if retencion.pagar!(cuenta)
+      begin
+        pagada = retencion.pagar!(cuenta)
+      rescue Retencion::ErrorEnPagar, Caja::ErrorEnExtraccion, Caja::ErrorEnDeposito => excepcion
+        mensaje = excepcion.message
+      end
+
+      if pagada
         format.html { redirect_to retenciones_path,
           notice: 'Retención pagada con éxito' }
         format.json { render json: retencion.recibos.where(situacion: 'interno') }
       else
-        format.html { redirect_to [retencion.obra, retencion.factura, retencion],
-          notice: 'No se pudo pagar la retención' }
+        format.html { redirect_to edit_obra_factura_retencion_path(retencion.obra, retencion.factura, retencion),
+          notice: mensaje || 'No se pudo pagar la retención' }
         format.json { render json: retencion.errors, status: :unprocessable_entity }
       end
     end
