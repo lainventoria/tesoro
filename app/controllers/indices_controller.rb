@@ -32,7 +32,7 @@ class IndicesController < ApplicationController
 
     respond_to do |format|
       if @indice.save
-        format.html { redirect_to @indice, notice: 'Indice creado con éxito' }
+        format.html { redirect_to @indice, notice: 'Índice creado con éxito' }
         format.json { render action: 'show', status: :created, location: @indice }
       else
         format.html { render action: 'new' }
@@ -46,7 +46,7 @@ class IndicesController < ApplicationController
   def update
     respond_to do |format|
       if @indice.update(indice_params)
-        format.html { redirect_to @indice, notice: 'Indice actualizado con éxito.' }
+        format.html { redirect_to @indice, notice: 'Índice actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

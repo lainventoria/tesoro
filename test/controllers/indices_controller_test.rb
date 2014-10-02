@@ -27,7 +27,7 @@ class IndicesControllerTest < ActionController::TestCase
     assert_redirected_to indice_path(assigns(:indice))
   end
 
-  test 'should show indice' do
+  test 'should show índice' do
     get :show, id: @indice
     assert_response :success
   end
@@ -37,14 +37,14 @@ class IndicesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test 'should update indice' do
+  test 'should update índice' do
     patch :update, id: @indice, indice: {
       denominacion: @indice.denominacion, periodo: @indice.periodo, valor: @indice.valor
     }
     assert_redirected_to indice_path(assigns(:indice))
   end
 
-  test 'should destroy indice' do
+  test 'should destroy índice' do
     assert_difference('Indice.count', -1) do
       delete :destroy, id: @indice
     end

@@ -82,6 +82,7 @@ es:
     models:
       retencion: 'Retención'
       operacion: 'Operación'
+      indice: 'Índice'
   activemodel:
     errors:
       models:
