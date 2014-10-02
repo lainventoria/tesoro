@@ -9,12 +9,21 @@ class Indice < ActiveRecord::Base
   validates_uniqueness_of :denominacion, scope: :periodo
   validates_numericality_of :valor
 
-  after_update  :indexar_al_ultimo, :actualizar_cuotas
+  after_update :indexar_al_ultimo, :actualizar_cuotas, if: :valor_changed?
 
-  # Traer todos los indices temporales futuros a este indice y por lo
+  # Traer todos los índices temporales siguientes a este índice y por lo
   # tanto afectados por sus actualizaciones
-  def temporales_futuros
-    Indice.where(temporal: true).where('periodo > ?', periodo)
+  def temporales_siguientes
+    Indice.where(temporal: true).
+      where('periodo > ?', periodo).order(periodo: :asc)
+  end
+
+  # Trae el índice del mismo tipo siguiente a este
+  def siguiente
+    Indice.where(denominacion: denominacion).
+      where('periodo > ?', periodo).
+      order(periodo: :asc).
+      first
   end
 
   def temporal?
@@ -31,21 +40,21 @@ class Indice < ActiveRecord::Base
   def self.por_fecha_y_denominacion(fecha, denominacion)
     periodo = fecha.beginning_of_month
 
-    # obtener el indice para este periodo
+    # obtener el índice para este período
     indice = Indice.where(periodo: periodo).
       where(denominacion: denominacion).
       order(:periodo).
       first
 
-    # si no existe ese indice
+    # si no existe ese índice
     if indice.nil?
-      # obtener el último indice disponible
+      # obtener el último índice disponible
       indice_anterior = Indice.where(denominacion: denominacion).
         order(:periodo).last
 
-      raise 'Faltan los indices' if indice_anterior.nil?
+      raise 'Faltan los índices' if indice_anterior.nil?
 
-      # y crear un indice temporal con el valor del ultimo indice
+      # y crear un índice temporal con el valor del último índice
       # disponible
       indice = Indice.new(temporal: true,
         denominacion: denominacion,
@@ -72,15 +81,11 @@ class Indice < ActiveRecord::Base
       end
     end
 
-    # cuando se actualiza este indice, todos los indices temporales
-    # subsiguientes adoptan el valor actual
+    # cuando se actualiza este índice, se actualiza el temporal
+    # siguiente hasta que nos encontramos con uno que no es
     def indexar_al_ultimo
       Indice.transaction do
-        Indice.where(temporal: true).
-          temporales_futuros.each do |indice|
-
-          indice.update(valor: valor)
-        end
+        siguiente.update(valor: valor) if siguiente.try(:temporal?)
       end
     end
 end
