@@ -22,8 +22,11 @@ class IndicesController < ApplicationController
   # GET /indices/1/edit
   def edit
     @editar = true
+    facturas_futuras = @indice.temporales_siguientes.collect { |i| i.cuotas.count(:factura_id) }.sum
 
-    flash[:notice] = "Al modificar este índice se afectarán #{@indice.temporales_siguientes.count} índices temporales y se reindexarán sus facturas si las tuviesen."
+    if facturas_futuras > 0
+      flash[:notice] = "Al modificar este índice se recalcularán los montos de #{facturas_futuras} facturas."
+    end
   end
 
   # POST /indices
