@@ -32,8 +32,8 @@
         %></td>
         <td><%= formatted_date cuota.vencimiento %></td>
         <td><%= link_to "#{cuota.contrato_de_venta.tercero.nombre} - #{formatted_date(cuota.contrato_de_venta.fecha)}", [@obra,cuota.contrato_de_venta] %></td>
-        <td><%= formatted_number(cuota.monto_original_centavos, cuota.monto_original_moneda) %></td>
-        <td><%= formatted_number(cuota.monto_actualizado(cuota.vencimiento).cents,
+        <td><%= formatted_number(cuota.monto_original, cuota.monto_original_moneda) %></td>
+        <td><%= formatted_number(cuota.monto_actualizado(cuota.vencimiento),
                   cuota.monto_actualizado(cuota.vencimiento).currency) %></td>
         <td>
           <%= link_to "#{cuota.indice.denominacion} - #{cuota.indice.valor}", cuota.indice %>
