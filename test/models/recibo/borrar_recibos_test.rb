@@ -14,8 +14,8 @@ class BorrarRecibosTest < ActiveSupport::TestCase
   end
 
   test 'borra sus movimientos a menos que alguno tenga causa trackeable' do
-    retencion = create :retencion, monto: Money.new(1000)
-    @recibo.pagar_con retencion
+    cheque = create :cheque
+    @recibo.pagar_con cheque
 
     assert_no_difference -> { Movimiento.count } do
       refute @recibo.destroy

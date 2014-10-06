@@ -140,7 +140,7 @@ class Retencion < ActiveRecord::Base
         aplicar
       else
         movimiento = movimientos.build
-        movimiento.errors.add :base, I18n.t('retencion.ya_fue_usada')
+        movimiento.errors.add :base, I18n.t('retenciones.ya_fue_usada')
       end
 
       movimiento
