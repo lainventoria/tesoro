@@ -1,0 +1,12 @@
+<%= form_for [retencion.obra, retencion],
+             html: { class: 'form-inline pull-right' },
+             url: obra_factura_retencion_pagar_path(retencion.obra, retencion.factura, retencion),
+             method: :put do |f| %>
+  <%= f.collection_select(:cuenta_id,
+        retencion.obra.cajas.where(situacion: 'banco'),
+        :id,
+        :tipo, { prompt: '-Seleccione Caja-' },
+        { class: 'form-control input-sm' } ) %>
+  <%= f.submit class: 'btn btn-sm btn-info', value: 'Pagar' %>
+<% end %>
+

@@ -5,6 +5,7 @@
 # como medio de pago de la misma
 class Retencion < ActiveRecord::Base
   include CausaDeMovimientos
+  class ErrorEnPagar < ActiveRecord::ActiveRecordError; end;
 
   SITUACIONES = %w(ganancias cargas_sociales)
   # TODO estados (usada, pagada, emitida)
@@ -69,6 +70,10 @@ class Retencion < ActiveRecord::Base
     end
   end
 
+  def self.vencidas(fecha = nil)
+    where('fecha_vencimiento < ?', fecha || Date.today)
+  end
+
   def self.construir(params)
     id_ret = params.extract! :retencion_id
 
@@ -93,18 +98,30 @@ class Retencion < ActiveRecord::Base
 
   # Las retenciones extraen de su cuenta y saldan la chequera cuando
   # se le paga a la AFIP
-  def pagar!
-    Cheque.transaction do
+  def pagar!(desde_esta_cuenta)
+    raise ErrorEnPagar, I18n.t('retenciones.no_se_puede_pagar') unless can_pagar?
+    # tiene que ser un banco
+    raise ErrorEnPagar, I18n.t('retenciones.tiene_que_ser_un_banco') unless desde_esta_cuenta.banco?
+
+    Retencion.transaction do
+      self.cuenta = desde_esta_cuenta
+      pagar
+
       recibo = Recibo.interno_nuevo
 
+      # Extrae de la cuenta
       salida = cuenta.extraer(monto, true)
       salida.causa = self
+
+      # Y salda la deuda en la chequera de AFIP
       entrada = chequera.depositar(monto, true)
       entrada.causa = self
 
+      # Registra los movimientos
       recibo.movimientos << salida << entrada
 
-      pagar
+      # Guardar estado, recibo y cuenta
+      save
     end
   end
 

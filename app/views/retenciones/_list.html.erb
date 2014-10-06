@@ -12,6 +12,7 @@
       <th>Estado</th>
       <th class="<%= lista_larga %>">Factura</th>
       <th class="text-right">Monto</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -24,6 +25,11 @@
         <td><%= retencion.estado.capitalize %></td>
         <td class="<%= lista_larga %>"><%= retencion.factura.descripcion.first(40) %></td>
         <td class="text-right"><%= formatted_number(retencion.monto, retencion.monto_moneda) %></td>
+        <td>
+          <% unless retencion.se_pago? %>
+            <%= render 'retenciones/pagar', retencion: retencion %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -65,4 +65,37 @@ class RetencionesControllerTest < ActionController::TestCase
         }
     end
   end
+
+  test 'paga una retención' do
+    cuenta = create :caja, :con_fondos,
+      monto: @retencion.monto,
+      obra: @retencion.obra,
+      situacion: 'banco',
+      banco: 'los odio a todos'
+
+    put :pagar, obra_id: @retencion.obra,
+      factura_id: @factura,
+      retencion_id: @retencion,
+      retencion: { cuenta_id: cuenta }
+    assert_redirected_to retenciones_path
+
+    @retencion.reload
+
+    assert_equal 'cerrada', @retencion.estado
+    assert_equal 0, cuenta.total
+    assert_equal 0, @retencion.chequera.total
+  end
+
+  test 'no paga una retención si la cuenta no es banco' do
+    cuenta = create :caja, :con_fondos,
+      monto: @retencion.monto,
+      situacion: 'efectivo'
+
+    put :pagar, obra_id: @retencion.obra,
+      factura_id: @factura,
+      retencion_id: @retencion,
+      retencion: { cuenta_id: cuenta }
+    assert_redirected_to edit_obra_factura_retencion_path(@retencion.obra, @factura, @retencion)
+    assert_equal I18n.t('retenciones.tiene_que_ser_un_banco'), request.flash[:notice]
+  end
 end

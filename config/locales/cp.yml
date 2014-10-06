@@ -99,9 +99,11 @@ es:
     error_en_extraccion: 'Monto incorrecto o fondos insuficientes de dicha moneda'
   cheques:
     error_en_usar_para_pagar: 'No se puede usar ese cheque para pagar'
-  retencion:
+  retenciones:
     no_existe: 'La retención no existe'
     ya_fue_usada: 'La retención ya fue usada como pago'
+    tiene_que_ser_un_banco: 'La cuenta desde la que se paga la retención tiene que ser una cuenta bancaria'
+    no_se_puede_pagar: 'La retención no se puede pagar'
   tareas:
     gestionar:
       cuotas_vencidas:
