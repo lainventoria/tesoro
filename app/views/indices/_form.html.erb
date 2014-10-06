@@ -6,6 +6,7 @@
 
   <fieldset <%= editar_o_bloquear %> >
     <div class="row">
+      <%= hidden_field_tag 'indice[temporal]', false %>
       <div class="field form-group col-md-6">
         <%= f.label :denominacion %><br>
         <%= f.select :denominacion, Indice::DENOMINACIONES,

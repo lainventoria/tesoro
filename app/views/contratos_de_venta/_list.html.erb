@@ -30,7 +30,7 @@
             cuotas_cobradas_total = contrato.cuotas.cobradas.collect { |c| c.factura.importe_total }.sum
             porcentaje_cobrado = contrato.monto_total / cuotas_cobradas_total
           else
-            cuotas_cobradas_total = Money.new(0, contrato.cuotas.first.monto_original_moneda)
+            cuotas_cobradas_total = Money.new(0)
             porcentaje_cobrado = 0
           end
 

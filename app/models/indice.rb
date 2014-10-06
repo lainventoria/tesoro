@@ -9,10 +9,22 @@ class Indice < ActiveRecord::Base
   validates_uniqueness_of :denominacion, scope: :periodo
   validates_numericality_of :valor
 
-  # cuando se actualiza un índice a su valor definitivo deja de ser
-  # temporal
-  before_update :ahora_es_definitivo
-  after_update  :actualizar_cuotas
+  after_update :indexar_al_ultimo, :actualizar_cuotas, if: :valor_changed?
+
+  # Traer todos los índices temporales siguientes a este índice y por lo
+  # tanto afectados por sus actualizaciones
+  def temporales_siguientes
+    Indice.where(temporal: true).
+      where('periodo > ?', periodo).order(periodo: :asc)
+  end
+
+  # Trae el índice del mismo tipo siguiente a este
+  def siguiente
+    Indice.where(denominacion: denominacion).
+      where('periodo > ?', periodo).
+      order(periodo: :asc).
+      first
+  end
 
   def temporal?
     temporal
@@ -28,21 +40,21 @@ class Indice < ActiveRecord::Base
   def self.por_fecha_y_denominacion(fecha, denominacion)
     periodo = fecha.beginning_of_month
 
-    # obtener el indice para este periodo
+    # obtener el índice para este período
     indice = Indice.where(periodo: periodo).
       where(denominacion: denominacion).
       order(:periodo).
       first
 
-    # si no existe ese indice
+    # si no existe ese índice
     if indice.nil?
-      # obtener el último indice disponible
+      # obtener el último índice disponible
       indice_anterior = Indice.where(denominacion: denominacion).
         order(:periodo).last
 
-      raise 'Faltan los indices' if indice_anterior.nil?
+      raise 'Faltan los índices' if indice_anterior.nil?
 
-      # y crear un indice temporal con el valor del ultimo indice
+      # y crear un índice temporal con el valor del último índice
       # disponible
       indice = Indice.new(temporal: true,
         denominacion: denominacion,
@@ -57,13 +69,6 @@ class Indice < ActiveRecord::Base
 
   private
 
-    def ahora_es_definitivo
-      self.temporal = false
-
-      # no dejar que temporal devuelva false
-      true
-    end
-
     # actualiza el monto de las facturas cuando se modifica el indice
     def actualizar_cuotas
       Factura.transaction do
@@ -73,6 +78,14 @@ class Indice < ActiveRecord::Base
             cuota.factura.save!
           end
         end
+      end
+    end
+
+    # cuando se actualiza este índice, se actualiza el temporal
+    # siguiente hasta que nos encontramos con uno que no es
+    def indexar_al_ultimo
+      Indice.transaction do
+        siguiente.update(valor: valor) if siguiente.try(:temporal?)
       end
     end
 end

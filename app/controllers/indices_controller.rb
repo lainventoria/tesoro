@@ -10,7 +10,7 @@ class IndicesController < ApplicationController
 
   # GET /indice/1
   def show
-    @editar=false
+    @editar = false
   end
 
   # GET /indices/new
@@ -21,7 +21,12 @@ class IndicesController < ApplicationController
 
   # GET /indices/1/edit
   def edit
-    @editar=true
+    @editar = true
+    facturas_futuras = @indice.temporales_siguientes.collect { |i| i.cuotas.count(:factura_id) }.sum
+
+    if facturas_futuras > 0
+      flash[:notice] = "Al modificar este índice se recalcularán los montos de #{facturas_futuras} facturas."
+    end
   end
 
   # POST /indices
@@ -30,7 +35,7 @@ class IndicesController < ApplicationController
 
     respond_to do |format|
       if @indice.save
-        format.html { redirect_to @indice, notice: 'Indice creado con éxito' }
+        format.html { redirect_to @indice, notice: 'Índice creado con éxito' }
         format.json { render action: 'show', status: :created, location: @indice }
       else
         format.html { render action: 'new' }
@@ -44,7 +49,7 @@ class IndicesController < ApplicationController
   def update
     respond_to do |format|
       if @indice.update(indice_params)
-        format.html { redirect_to @indice, notice: 'Indice actualizado con éxito.' }
+        format.html { redirect_to @indice, notice: 'Índice actualizado con éxito.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -77,6 +82,6 @@ class IndicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def indice_params
-      params.require(:indice).permit(:periodo, :denominacion, :valor)
+      params.require(:indice).permit(:periodo, :denominacion, :valor, :temporal)
     end
 end

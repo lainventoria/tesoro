@@ -121,11 +121,12 @@ class Retencion < ActiveRecord::Base
         este_recibo.movimientos << movimiento
         este_recibo.save
         aplicar
-        movimiento
       else
         movimiento = movimientos.build
         movimiento.errors.add :base, I18n.t('retencion.ya_fue_usada')
       end
+
+      movimiento
     end
   end
 

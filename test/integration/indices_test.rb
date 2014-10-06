@@ -35,7 +35,6 @@ feature 'Índices' do
       visit indice_path(i)
 
       page.must_have_link nil, obra_contrato_de_venta_path(cv.obra, cv)
-
     end
   end
 end
