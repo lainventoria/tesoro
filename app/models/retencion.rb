@@ -43,7 +43,7 @@ class Retencion < ActiveRecord::Base
 
   after_create :contabilizar_deuda
 
-  before_destroy :no_borrar_si_tiene_recibos
+  before_destroy :no_borrar_si_se_pago, prepend: true
 
   monetize :monto_centavos, with_model_currency: :monto_moneda
 
@@ -187,7 +187,7 @@ class Retencion < ActiveRecord::Base
         self.errors.add(:base, excepcion.message)
     end
 
-    def no_borrar_si_tiene_recibos
-      errors.add(:retencion, :no_borrar_si_tiene_recibos) if recibos.any?
+    def no_borrar_si_se_pago
+      !se_pago?
     end
 end
