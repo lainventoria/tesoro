@@ -188,6 +188,6 @@ class Retencion < ActiveRecord::Base
     end
 
     def no_borrar_si_se_pago
-      !['pagada', 'cerrada'].include? estado
+      !(pagada? || cerrada?)
     end
 end
