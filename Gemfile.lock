@@ -208,6 +208,7 @@ GEM
     rdoc (4.1.2)
       json (~> 1.4)
     ref (1.0.5)
+    ruby-graphviz (1.2.1)
     rubyzip (1.1.6)
     sass (3.2.19)
     sass-rails (4.0.3)
@@ -293,6 +294,7 @@ DEPENDENCIES
   rails (= 4.1.4)
   rails-i18n
   rails3-jquery-autocomplete
+  ruby-graphviz
   sass-rails (~> 4.0.0)
   sdoc
   selenium-webdriver

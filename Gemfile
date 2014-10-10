@@ -59,6 +59,8 @@ group :development do
   # Deploy con capistrano
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+  # Dibujar máquinas de estado
+  gem 'ruby-graphviz'
 end
 
 group :development, :test do
