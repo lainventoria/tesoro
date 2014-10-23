@@ -17,6 +17,22 @@ class RetencionTest < ActiveSupport::TestCase
     assert recibo.reload.movimientos.count == 0
   end
 
+  test 'no borrar retenciones si se las pagó' do
+    retencion = create :retencion
+    retencion.pagar!(create :caja, :con_fondos,
+      monto: retencion.monto, situacion: 'banco',
+      banco: 'los odio a todos')
+
+    refute retencion.destroy
+  end
+
+  test 'se puede borrar si está aplicada' do
+    retencion = create :retencion, estado: 'aplicada'
+
+    assert_equal 'aplicada', retencion.estado
+    assert retencion.destroy
+  end
+
   test 'crear la retención y que esté todo piola' do
     retencion = create :retencion, monto: Money.new(1000)
     assert retencion.recibos.any?
