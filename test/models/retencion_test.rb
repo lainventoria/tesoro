@@ -27,7 +27,7 @@ class RetencionTest < ActiveSupport::TestCase
   end
 
   test 'se puede borrar si está aplicada' do
-    retencion = create :retencion, factura: create(:factura)
+    retencion = create :retencion, estado: 'aplicada'
 
     assert_equal 'aplicada', retencion.estado
     assert retencion.destroy
