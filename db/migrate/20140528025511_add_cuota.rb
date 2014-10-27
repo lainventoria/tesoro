@@ -8,7 +8,6 @@ class AddCuota < ActiveRecord::Migration
       t.string :descripcion
 
       # TODO: migración para agregar UnidadFuncional
-
     end
   end
 end

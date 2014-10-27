@@ -6,7 +6,6 @@ class AddIndice < ActiveRecord::Migration
       t.date      :periodo
       t.string    :denominacion
       t.decimal   :indice
-
     end
   end
 end
