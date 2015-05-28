@@ -6,9 +6,12 @@ GIT
 
 GIT
   remote: git://github.com/mauriciopasquier/yaml_db.git
-  revision: 453df1cbdde28303d8b9753babb5120f6ee6ef9d
+  revision: 8af2eecfd90dbf3b233592bfd2a7e6077bc86f73
+  branch: order-join-tables
   specs:
-    yaml_db (0.2.3)
+    yaml_db (0.3.0)
+      rails (>= 3.0, < 4.3)
+      rake (>= 0.8.7)
 
 GEM
   remote: https://rubygems.org/
@@ -129,8 +132,8 @@ GEM
       railties (>= 3.2.16)
     jquery-ui-themes (0.0.11)
       httparty
-    json (1.8.1)
-    libv8 (3.16.14.5)
+    json (1.8.2)
+    libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -286,6 +289,7 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails
   jquery-ui-themes
+  libv8 (= 3.16.14.3)
   minitest-rails-capybara
   money-rails
   mysql2

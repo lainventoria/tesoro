@@ -13,8 +13,11 @@ gem 'state_machine', github: 'lainventoria/state_machine'
 
 # DB
 # Permite importar y exportar datos en formato yml
-gem 'yaml_db', github: 'mauriciopasquier/yaml_db'
+gem 'yaml_db', github: 'mauriciopasquier/yaml_db', branch: 'order-join-tables'
 gem 'mysql2'
+
+# Estamos varados acá hasta que se arregle el tema con gcc 4.9
+gem 'libv8', '3.16.14.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
