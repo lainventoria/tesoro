@@ -18,6 +18,7 @@
       <th>Iva</th>
       <th>Relacion <%= sort_links :relacion %></th>
       <th>Cuit</th>
+      <th>Facturas</th>
     </tr>
   </thead>
 
@@ -33,6 +34,7 @@
         <td><%= tercero.iva %></td>
         <td><%= tercero.relacion %></td>
         <td><%= tercero.cuit %></td>
+        <td><%= tercero.facturas.count %></td>
       </tr>
     <% end %>
   </tbody>
