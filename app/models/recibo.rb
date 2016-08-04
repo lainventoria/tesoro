@@ -208,6 +208,9 @@ class Recibo < ActiveRecord::Base
 
     def actualizar_importe_cache
       self.importe_cache = importe
+      # devolver true porque los callbacks necesitan un valor de retorno
+      # booleano o algo que evalue a boolean y Money no lo es
+      true
     end
 
     def garantizar_importe_cache_moneda_compatible

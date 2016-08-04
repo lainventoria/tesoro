@@ -98,6 +98,9 @@ class Factura < ActiveRecord::Base
   # El importe total o bruto es el neto con el IVA incluido
   def calcular_importe_total
     self.importe_total = importe_neto + iva
+
+    # los callbacks necesitan true o algo que evalue a true
+    true
   end
 
   # TODO esto en realidad tiene que calcular el saldo en base a los
