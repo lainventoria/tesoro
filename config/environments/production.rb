@@ -26,8 +26,18 @@ Rails.application.configure do
   config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
 
+  # Incluye todos los js y css en la precompilación de activos
+  # sin esto, compila correctamente los activos de la app,
+  # pero no incluye los activos de (las gemas?) bootstrap
+  # config.assets.precompile = ['*.js', '*.css']
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  # TODO hay un fallo al pre-compilar los activos de bootstrap
+  # hasta que se resuelva, habilitamos la compilación en vivo
+  # TODO potencial solucion
+  # http://stackoverflow.com/questions/25385864/rails-assets-not-compiling-when-pushing-to-production
+  # --> https://github.com/twbs/bootstrap-sass/issues/649
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
   config.assets.digest = true

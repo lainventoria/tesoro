@@ -5,9 +5,9 @@
 #   gem 'sqlite3'
 development:
   adapter: mysql2
-  database: gestionar_dev
+  database: tesoro
   username: <%= ENV['MYSQL_USER'] || ENV['USER'] %>
-  password: <%= ENV['MYSQL_PASS'] %>
+# password: <%= ENV['MYSQL_PASS'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -20,6 +20,5 @@ test:
 
 production:
   adapter: mysql2
-  database: gestionar_prod
+  database: tesoro
   username: <%= ENV['MYSQL_USER'] || ENV['USER'] %>
-  password: <%= ENV['MYSQL_PASS'] %>

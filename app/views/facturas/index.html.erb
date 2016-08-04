@@ -33,8 +33,8 @@
         <td><%= link_to raw('<i class="glyphicon glyphicon-eye-open" title="Ver factura"></i>'), [@obra, factura] %></td>
 
         <% @campos = [
-            factura.tipo.first(1),
-            factura.numero.first(10),
+            factura.tipo,
+            factura.numero,
             formatted_date(factura.fecha),
             formatted_date(factura.fecha_pago),
             factura.tercero.nombre.first(20),

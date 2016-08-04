@@ -4,7 +4,7 @@ gem 'rails', '4.1.4'
 
 # Modelos
 
-gem 'money-rails'
+gem 'money-rails', '~> 0.12.0'
 # Normaliza con varios métodos la entrada de usuario
 gem 'attribute_normalizer'
 gem 'paperclip'
@@ -14,7 +14,7 @@ gem 'state_machine', github: 'lainventoria/state_machine'
 # DB
 # Permite importar y exportar datos en formato yml
 gem 'yaml_db', github: 'mauriciopasquier/yaml_db'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -80,4 +80,9 @@ group :test do
   # Para los tests de integración
   gem 'selenium-webdriver'
   gem 'minitest-rails-capybara'
+end
+
+group :production do
+  # Servidor para produccion
+  gem 'thin'
 end
